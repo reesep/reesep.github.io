@@ -16,7 +16,7 @@
 |   M 12/7   |      Iteration                             |         |   Lab 3  (If Statements)    |       |             |
 |   T 12/8   |      Lists and Iteration                   |         |                             |       |  Program 1 Due (GPA)  |
 |   W 12/9   |      Modules + Strings                     |         |   Lab 4   (Strings)         |       |             |
-|   TH 12/10 |      Recursion                             |         |                             |       |             |
+|   TH 12/10 |      Variable Scope + Recursion            |         |                             |       |             |
 |   F 12/11  |      Files                                 |         |   Lab 5 (Files)             |       |             |
 | **Week 3** |
 |   M 12/14  |      Files                                 |         |   Lab 6  (Review)           |       |   Program 2 Due (Poker)          |
@@ -33,7 +33,7 @@
 | **Week 5** |
 |   M 12/28  |     Numpy                                  |         |   Lab 9 (Numpy)             |       |             |
 |   T 12/29  |     Matplotlib                             |         |                             |       |    Progam 4 Due (Scoregami)    |
-|   W 12/30  |     Matplotlib                             |         |   Lab 10  (Matplotlib)      |       |             |
+|   W 12/30  |     Matplotlib + Pandas                    |         |   Lab 10  (Matplotlib)      |       |             |
 |   TH 12/31 |     Pandas                                 |         |                             |       |             |
 |   F 1/1    |       OFF                                  |         |                             |       |             |
 | **Week 6** |
