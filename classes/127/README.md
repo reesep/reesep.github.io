@@ -79,16 +79,16 @@ I will be in Bozeman for most of the snowmester and I am also fine with meeting 
 ### Course Outcomes
 By the end of this course, students should be be able to:
 
-Utilize lists, files, dictionaries and arrays to solve problems in Python.
-Utilize fundamental object oriented principles such as classes, objects, methods and inheritance to solve problems in Python.
-Utilize data science libraries to solve data science problems in Python.
-Understand the broad area of data science and its relevance.
+* Utilize lists, files, dictionaries and arrays to solve problems in Python.  
+* Utilize fundamental object oriented principles such as classes, objects, methods and inheritance to solve problems in Python.  
+* Utilize data science libraries to solve data science problems in Python.  
+* Understand the broad area of data science and its relevance.  
 
 ### Grading
 
-30% - Exams (Two exams @ 15% each) 
-30% - Programs (5 Progams @ 6% each)
-25% - Labs (2.5% each x 10) Lowest lab grade will be dropped 
+30% - Exams (Two exams @ 15% each)  
+30% - Programs (5 Progams @ 6% each)  
+25% - Labs (2.5% each x 10) Lowest lab grade will be dropped  
 10% - Watching Online Lectures  
 5% - 1 on 1 Meetings w/ Reese  
 
