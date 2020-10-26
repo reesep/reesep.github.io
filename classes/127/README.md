@@ -75,7 +75,9 @@ I will be in Bozeman for most of the snowmester and I am also fine with meeting 
 * Credits: 4
 * Corequisite: M 151Q
 * Recommended Prerequisite: Prior programming experience OR CSCI 107
-* Description: Provides a gentle introduction to the exciting world of big data and data science. Students expand their ability to solve problems with Python by learning to deploy lists, files, dictionaries and object-oriented programming. Data science libraries are introduced that enable data to be manipulated and displayed.
+* Description: Provides a gentle introduction to the exciting world of big data and data science. Students expand their ability to solve problems with Python by learning to deploy lists, files, dictionaries and object-oriented programming. Data science libraries are introduced that enable data to be manipulated and displayed.  
+
+Note from Reese: While prior programming experience or 107 is recommeneded as a prerequisite, you can still easily succeed in this course if you have never programmed before. Just be ready to put in a little more effort. 
 
 ### Course Outcomes
 By the end of this course, students should be be able to:
