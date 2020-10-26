@@ -54,9 +54,9 @@ Monday, Tuesday, Wednesday, Thursday, Friday 10:10 AM - 12:05 PM
 
 Each day will contain either 2 hours-ish of lectures OR 1 hour of lecture and 1 hour of lab  
 
-Lecture: Lectures and delivery of lectures will be done asynchronously, which means we do not "meet" for lectures. There is no live zoom lecture. Lectures will be posted on D2L before class time everyday. It is your responsibility to watch the lectures.
+**Lecture:** Lectures and delivery of lectures will be done asynchronously, which means we do not "meet" for lectures. There is no live zoom lecture. Lectures will be posted on D2L before class time everyday. It is your responsibility to watch the lectures.
 
-Lab: Labs will be done synchronously(??) in Webex. There will be roughly two labs each week (see course schedule for lab dates and times). The labs will take place during the 2nd half of class time (11:05 - 12:05) on the days when labs happen. Lab attendance is not required. On the days with 2 hours of lecture, there will not be a lab  
+**Lab:** Labs will be done synchronously(??) in Webex. There will be roughly two labs each week (see course schedule for lab dates and times). The labs will take place during the 2nd half of class time (11:05 - 12:05) on the days when labs happen. Lab attendance is not required. On the days with 2 hours of lecture, there will not be a lab  
 
 ### Instructor  
 Reese Pearsall  
