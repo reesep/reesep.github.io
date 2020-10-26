@@ -1,4 +1,5 @@
-# CSCI 127 - The Joy and Beauty of Data     [ Snow-mester 2020 ]
+# CSCI 127 - The Joy and Beauty of Data  
+# Snowmester 2020
 
 
 
@@ -51,7 +52,7 @@ Note: This schedule is subject to change and will be updated throughout the snow
 
 Monday, Tuesday, Wednesday, Thursday, Friday 10:10 AM - 12:05 PM  
 
-Each day will contain either 2 hours of lectures OR 1 hour of lecture and 1 hour of lab  
+Each day will contain either 2 hours-ish of lectures OR 1 hour of lecture and 1 hour of lab  
 
 Lecture: Lectures and delivery of lectures will be done asynchronously, which means we do not "meet" for lectures. There is no live zoom lecture. Lectures will be posted on D2L before class time everyday. It is your responsibility to watch the lectures.
 
