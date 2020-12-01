@@ -6,9 +6,9 @@
 # print out the product
 
 
-num1 = int(input("Enter a number: "))
-num2 = int(input("Enter another number: "))
+ num1 = int(input("Enter a number: "))
+ num2 = int(input("Enter another number: "))
 
-product = num1 * num2
+ product = num1 * num2
 
-print("The answer is",product)
+ print("The answer is",product)
