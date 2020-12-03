@@ -1,0 +1,25 @@
+
+
+
+
+# Your code should go above this line. Do NOT change any of the given code below
+
+def main():
+
+
+                        # name, passing yards, touchdown passes, interceptions
+    calculate_qb_points("Patrick Mahomes",4031,26,5)
+    calculate_qb_points("Tom Brady",4057,24,8)
+    print("")
+    
+                        # name, rushing yards, touchdowns, fumbles
+    calculate_rb_points("Christian McCaffrey",1387,15,0)
+    calculate_rb_points("Derrick Henry",1540,16,3)
+    print("")
+    
+                        # name, receptions, receiving yards, touchdowns 
+    calculate_wr_points("Michael Thomas",149,1725,9)
+    calculate_wr_points("Julio Jones",99,1394,6)
+    print("")
+
+main()

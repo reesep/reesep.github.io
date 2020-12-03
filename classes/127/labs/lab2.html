@@ -1,0 +1,113 @@
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 127, Lab 2
+</title>
+</head>
+
+<body>
+
+<h1>Lab 2: Fantasy Football Points Calculator </h1>
+<h2> <a href=""> Lab 2 Overview Video (Coming soon)</a> </h2>
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, December 4th no later at 11:59 p.m.</li>
+  <li>Partner Information:You may complete this assignment individually or with exactly one partner.</li> 
+  <li> Submission Instructions (working alone): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-Lab2.py</b> to the BrightSpace(D2L) Lab 2 Dropbox. </li>
+   <li> Submission Instructions (working with a partner): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-PartnerFirstName-PartnerLastName-Lab2.py</b> to the BrightSpace(D2L) Lab 2 Dropbox. </li>   
+  <li>Deadline Reminder: Late passes can be used on this assingment. However, if you do not use a late pass and submit it past the deadline, you submission will lose some points (see late assingment policy). After 48 hours,
+	  the dropbox will close and you will no longer be able to submit </li>
+</ul>
+
+<hr />
+
+<h2>In order to complete this lab, you will need to understand</h2>
+
+<ul>
+  <li> Functions  </li>
+  <li> Variables and data types </li>
+  <li> User input</li> 
+</ul>
+
+<hr />
+
+
+<h3>Background </h3>
+<p> Fantasy Football is a math-based game based on the real-life production of NFL players. At the beginning of the season, participants will draft their roster of current NFL players and the winner is determined by who's team scores more "fantasty points". 
+    Participants earn these virtual fantasy points based on how well their players perform in their real-life games. Participants draft players that play different positions on the football field, including quarterbacks (throwers), runningbacks (runners), and wide receivers (catchers). <br>
+	The formulas for calculating total fantasy points varies by what position the players play. <br> <br>
+	Quarterbacks:
+	<ul>
+		<li> 1 point for every 25 passing yards </li>
+		<li> 4 points for throwing a touchdown  </li>
+		<li> -2 points for throwing an interception
+	</ul>
+	<br>
+	Runningbacks:
+	<ul>
+		<li> 1 point for every 10 rushing yards </li>
+		<li> 6 points for a touchdown </li>
+		<li> -2 points for every fumble </li>
+	</ul>
+	<br>
+	Wide Receiver:
+	<ul>
+		<li> 1 point for every reception </li>
+		<li> 1 point for every 10 receiving yards </li>
+		<li> 6 points for every touchdown </li>
+	</ul>
+	<br>
+	
+	For example, quarterback Patrick Mahomes had 4031 passing yards, 26 touchdowns, and 5 interceptions in the 2019 season, which is a total of 255.24 fantasy points (161.24 points from passing yards, 104 points from touchdowns, and -10 points from interceptions)
+	
+<h3> Directions </h3>
+
+<p>
+	Using <a href="lab2.txt"> lab2.py </a> as a starting point, add the three necessary functions (calculate_qb_points, calculate_rb_points, and calculate_wr_points) that will calculate the total fantasy points for its respective position.
+	<br>
+		The functions should take in the name of the player and the three required stats to calculate fantasy points as input parameters. The functions should calculate the total fantasy points and then output a nice message 
+		telling how many fantasy points that player earned in 2019 (rounded to two decimal places). Do NOT modify any of the code in the main() function
+</p>
+
+
+
+<h3> Required Output </h3>
+<p> When your program is run, it should follow a very similar output and have the correct points as seen in <a href="lab2_output1.jpg"> this example output </a>
+
+
+<h3> Required Python Comment </h3>
+<p> Place a Python comment at the top of your Python solution that is formatted as follows </p>
+<pre>
+# -----------------------------------------+
+# Your name                                |  &lt;-- e.g. Reese Pearsall
+# CSCI 127, Lab 2                          |
+# Last Updated: Month Day, Year            |  &lt;-- e.g. December 3, 2020
+# -----------------------------------------|
+# A brief description of the assignment.   |  &lt;-- can be more than 1 line 
+# -----------------------------------------+
+</pre>
+<h3>Grading (10 points) </h3>
+
+
+<ul>
+  <li>2 points - calculate_qb_points is correctly defined and displays the correct number of fantasy points earned </li> 
+  <li>2 points - calculate_rb_points is correctly defined and displays the correct number of fantasy points earned </li> 
+  <li>2 points - calculate_wr_points is correctly defined and displays the correct number of fantasy points earned </li>
+  <li>2 points - The number of fantasy points earned is rounded to two decimal places </li>
+  <li>1 point - The sample output is followed in your submission </li>
+  <li>1 point - The required Python comment appears at the top of your file</li>
+</ul>
+
+<h3> Grading turnaround </h3>
+<p> I will try to have your grades posted within 4 days after the submission deadline </p>
+
+
+</body>
+</html>
