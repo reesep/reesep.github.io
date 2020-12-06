@@ -1,0 +1,111 @@
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 127, Lab 3
+</title>
+</head>
+
+<body>
+
+<h1>Lab 3: Where to eat in Bozeman? </h1>
+<h2> <a href=""> Lab 3 Overview Video (coming soon!) </a> </h2>
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Monday, December 7th no later at 11:59 p.m.</li>
+  <li>Partner Information:You may complete this assignment individually or with exactly one partner.</li> 
+  <li> Submission Instructions (working alone): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-Lab3.py</b> to the BrightSpace(D2L) Lab 2 Dropbox. </li>
+   <li> Submission Instructions (working with a partner): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-PartnerFirstName-PartnerLastName-Lab3.py</b> to the BrightSpace(D2L) Lab 2 Dropbox. </li>   
+  <li>Deadline Reminder: Late passes can be used on this assingment. However, if you do not use a late pass and submit it past the deadline, you submission will lose some points (see late assingment policy). After 48 hours,
+	  the dropbox will close and you will no longer be able to submit </li>
+</ul>
+
+<hr />
+
+<h2>In order to complete this lab, you will need to understand</h2>
+
+<ul>
+  <li> If statements </li>
+  <li> Functions  </li>
+  <li> Variables and data types </li>
+  <li> User input</li> 
+</ul>
+
+<hr />
+
+
+<h3>Background and Directions</h3>
+<p> It's often difficult to figure out where to eat at in Bozeman. You will be creating a program that asks the user for (1) what kind of food they are interested in and (2) how much money the have. The user will only answer with the following kinds of food: Asian, Mexican, Italian, Pizza, or Burgers. The user can have any amount of money
+    Using that information, you will use logic to recommend a restauraunt 
+    to the user. The logic, which you will write, will be in a function called determine_restaurant() . This function  will return the name of the restaruant that it recommends. The logic used in your program should follow the following criteria: </p>	
+	<ul>
+		<li> If the user ever has less 5 dollars or less, then <b>"Nowhere! You need more money!"</b> should be returned </li>
+		<li> If the user selects Asian food and has between 5 and 12 dollars, then <b>"Panda Express" </b>should be returned </li>
+		<li> If the user selects Asian food and has 12 or more dollars, then <b>"Dave's Sushi" </b>should be returned </li>
+		<li> If the user selects Mexican food and has between 5 and 12 dollars, then <b>"Taco Bell"</b> should be returned </li>
+		<li> If the user selects Mexican food and has 12 or more dollars, then <b>"Sante Fe Reds"</b> should be returned </li>
+		<li> If the user selects Italian food and has between 5 and 12 dollars, then <b>"Olive Garden"</b> should be returned </li>
+		<li> If the user selects Italian food and has 12 or more dollars, then <b>"Blacksmith Kitchen"</b> should be returned </li>
+		<li> If the user selects pizza and has between 5 and 12 dollars, then <b>"Domino's Pizza"</b> should be returned </li>
+		<li> If the user selects pizza and has  12 or more dollars, then <b>"Bridger Brewing</b> should be returned </li>
+		<li> If the user selects burgers and has between 5 and 12 dollars, then <b>"McDonalds"</b> should be returned </li>
+		<li> If the user selects burgers and has 12 or more dollars, then <b>"Burger Bob's"</b> should be returned </li>
+		
+	</ul>
+	
+	
+	<p> You might find <a href="lab4_diagram.JPG"> this flowchart </a> helpful for understanding the logic of the program </p>
+	
+<h3> Hints </h3>
+
+<ul>
+	<li> There are many ways of structuing your selection statements in this assingment. I would recommend using nested if statements. </li>
+	<li> The user input and printing is already done for you. Your task is to implement the logic and return the correct values. <li>
+	<li> For checking the type of food, you should be comparing the input parameter to the lowercase representation of the food </li>
+	<ul>
+		<li> For example, your if statement should read if(type_of_food == "asian"). It should NOT read if(type_of_food == "Asian") </li>
+	</ul>
+</ul>
+
+
+
+ 
+
+<h3> Sample Output </h3>
+<p> <a href="lab3_output1.JPG"> This sample output </a> shows a few test cases of how your program should function when ran. (Note that this sample output does not cover all possible outcomes that you need to implement)
+
+
+<h3> Required Python Comment </h3>
+<p> Place a Python comment at the top of your Python solution that is formatted as follows </p>
+<pre>
+# -----------------------------------------+
+# Your name                                |  &lt;-- e.g. Reese Pearsall
+# CSCI 127, Lab 3                         |
+# Last Updated: Month Day, Year            |  &lt;-- e.g. December 3, 2020
+# -----------------------------------------|
+# A brief description of the assignment.   |  &lt;-- can be more than 1 line 
+# -----------------------------------------+
+</pre>
+<h3>Grading (10 points) </h3>
+
+
+<ul>
+  <li>2 points - determine_restaurant() returns the correct reponses for Asian food</li> 
+  <li>2 points - determine_restaurant() returns the correct reponses for Mexican food </li> 
+  <li>2 points - determine_restaurant() returns the correct reponses for Italian food </li>
+  <li>2 points - determine_restaurant() returns the correct reponses for pizza </li>
+  <li>2 points - determine_restaurant() returns the correct reponses for burgers </li>
+</ul>
+
+<h3> Grading turnaround </h3>
+<p> I will try to have your grades posted within 4 days after the submission deadline </p>
+
+
+</body>
+</html>
