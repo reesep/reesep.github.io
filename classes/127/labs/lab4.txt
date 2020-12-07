@@ -1,0 +1,59 @@
+
+
+
+# Your code should go above this line. Do NOT change anything below this line
+
+def main():
+
+    print("Welcome to your virtual shopping list")
+
+    grocery_list = ["Eggs","Milk","Bread"]
+
+    choice = 0
+    while(choice != 5):
+        print("1. View shopping list")
+        print("2. Add item to shopping list")
+        print("3. Remove item from shopping list")
+        print("4. Check if item is on shopping list")
+        print("5. Exit Program")
+
+        choice = int(input("Your choice? "))
+
+        if(choice == 1): # if user selects choice 1 (view list)
+            print("")
+            print_grocery_list(grocery_list)
+            print("")
+            
+        elif(choice == 2): # if user selects choice 2 (add item to list)
+            print("")
+            item = input("What item do you want to add to your list? ")
+            grocery_list = add_to_grocery_list(grocery_list,item)
+            print("")
+            
+        elif(choice == 3): # if user selects choice 3 (remove item from list)
+            print("")
+            item = input("What item would you like to remove form your list? ")
+            grocery_list = remove_from_grocery_list(grocery_list,item)
+            print("")
+            
+        elif(choice == 4): # if user selects choice 4 (check if item on list)
+            print("")
+            item = input("What item do you want to check on your list? ")
+            check_if_item_on_list(grocery_list,item)
+            print("")
+            
+        elif(choice == 5): # if user selects choice 5 (exit)
+            break
+        else:
+            
+            print("Invalid choice, please try again")
+
+
+    print("Thank you for using the virtual shopping list. Goodbye")
+
+
+main()  
+
+    
+        
+        
