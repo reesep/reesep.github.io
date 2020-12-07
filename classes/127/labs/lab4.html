@@ -31,46 +31,38 @@ CSCI 127, Lab 3
 <h2>In order to complete this lab, you will need to understand</h2>
 
 <ul>
-  <li> If statements </li>
-  <li> Functions  </li>
-  <li> Variables and data types </li>
-  <li> User input</li> 
+  <li> Iteration </li>
+  <li> Lists  </li>
+  <li> Functions </li> 
 </ul>
 
 <hr />
 
 
 <h3>Background and Directions</h3>
-<p> It's often difficult to figure out where to eat at in Bozeman. You will be creating a program that asks the user for (1) what kind of food they are interested in and (2) how much money the have. The user will only answer with the following kinds of food: Asian, Mexican, Italian, Pizza, or Burgers. The user can have any amount of money
-    Using that information, you will use logic to recommend a restaurant  
-    to the user. The logic, which you will write, will be in a function called determine_restaurant(). This function  will return the name of the restaurant  that it recommends. The logic used in your program should follow the following criteria: </p>	
+<p>
+	You will be creating a virtual shopping list. Users can (1) view the grocery list, (2) add to the grocery list, (3) remove something from the grocery list, or (4) check to see if they already have an item on the list
+	<br>
+	<p> Using <a href="lab4.txt"> lab4.py as a starting point </a>, define and fill in the missing functions. The grocery list is represented by a python list</p>
 	<ul>
-		<li> If the user ever has 5 dollars or less, then <b>"Nowhere! You need more money!"</b> should be returned </li>
-		<li> If the user selects Asian food and has between 5 and 12 dollars, then <b>"Panda Express" </b>should be returned </li>
-		<li> If the user selects Asian food and has 12 or more dollars, then <b>"Dave's Sushi" </b>should be returned </li>
-		<li> If the user selects Mexican food and has between 5 and 12 dollars, then <b>"Taco Bell"</b> should be returned </li>
-		<li> If the user selects Mexican food and has 12 or more dollars, then <b>"Sante Fe Reds"</b> should be returned </li>
-		<li> If the user selects Italian food and has between 5 and 12 dollars, then <b>"Olive Garden"</b> should be returned </li>
-		<li> If the user selects Italian food and has 12 or more dollars, then <b>"Blacksmith Kitchen"</b> should be returned </li>
-		<li> If the user selects pizza and has between 5 and 12 dollars, then <b>"Domino's Pizza"</b> should be returned </li>
-		<li> If the user selects pizza and has  12 or more dollars, then <b>"Bridger Brewing</b> should be returned </li>
-		<li> If the user selects burgers and has between 5 and 12 dollars, then <b>"McDonalds"</b> should be returned </li>
-		<li> If the user selects burgers and has 12 or more dollars, then <b>"Burger Bob's"</b> should be returned </li>
-		
+		<li> <b> print_grocery_list() </b> should take in the grocery list, and print it out in a nice, numbered manner as seen in <a href = "lab4_printlist.jpg"> this screenshot </a> </li>
+		<li> <b> add_to_grocery_list() </b> should take in the grocery list and an item the user wants to add. You will add it to the list and then return the new list with the new item added </li>
+		<li> <b> remove_from_grocery_list() </b> should take in the grocery list and an item the user wants to remove. You will remove that item from the list and then return the new list with the item removed </li>
+		<li> <b> check_if_item_on_list() </b> should take in the grocery list and an item the user wants to check if its already on the list. If the item is already on the list, then <b> "<insert item name here> is already on your grocery list!" </b> should be printed out.
+				If the item is not on the list, then <b> "<insert item name here> is not on your grocery list!" </b> should be printed out.</li>
 	</ul>
+</p>
 	
 	
-	<p> Using <a href="lab3.txt"> lab3.py as a starting point </a>, define and fill in the determine_restaurant() function so that the correct restaurant recommendation is returned. You might find <a href="lab3_diagram.jpg"> this flowchart </a> helpful for understanding the logic of the program </p>
+
 	
 <h3> Hints </h3>
 
 <ul>
-	<li> There are many ways of structuring  your selection statements in this assignment. I would recommend using nested if statements. </li>
-	<li> The user input and printing is already done for you. Your task is to implement the logic and return the correct values. </li>
-	<li> For checking the type of food, you should be comparing the input parameter to the lowercase representation of the food </li>
-	<ul>
-		<li> For example, your if statement should read if(type_of_food == "asian"). It should NOT read if(type_of_food == "Asian") </li>
-	</ul>
+	<li> We've talked about easy ways to add and remove things from lists</li>
+	<li> Is your list not updating properly after adding/removing? Make sure you are returning the correct value </li>
+	<li> Note that the items are case sensitive, so make sure that you input "Bread" and not "bread" when removing an item, for example.
+
 </ul>
 
 
@@ -78,7 +70,7 @@ CSCI 127, Lab 3
  
 
 <h3> Sample Output </h3>
-<p> <a href="lab3_output1.JPG"> This sample output </a> shows a few test cases of how your program should function when ran. (Note that this sample output does not cover all possible outcomes that you need to implement)
+<p> When your program is run, it should follow a similar behavior as seen in <a href="lab4_output1.JPG"> this sample output </a> and <a href="lab4_output2.jpg"> this sample output </a>. 
 
 
 <h3> Required Python Comment </h3>
@@ -86,7 +78,7 @@ CSCI 127, Lab 3
 <pre>
 # -----------------------------------------+
 # Your name                                |  &lt;-- e.g. Reese Pearsall
-# CSCI 127, Lab 3                          |
+# CSCI 127, Lab 4                          |
 # Last Updated: Month Day, Year            |  &lt;-- e.g. December 3, 2020
 # -----------------------------------------|
 # A brief description of the assignment.   |  &lt;-- can be more than 1 line 
@@ -96,11 +88,12 @@ CSCI 127, Lab 3
 
 
 <ul>
-  <li>2 points - determine_restaurant() returns the correct responses  for Asian food</li> 
-  <li>2 points - determine_restaurant() returns the correct responses  for Mexican food </li> 
-  <li>2 points - determine_restaurant() returns the correct responses  for Italian food </li>
-  <li>2 points - determine_restaurant() returns the correct responses  for pizza </li>
-  <li>2 points - determine_restaurant() returns the correct responses  for burgers </li>
+  <li>2 points - print_grocery_list() is defined and properly prints out the list of groceries just like in the sample output</li> 
+  <li>2 points - add_to_grocery_list() is defined and properly adds the item to the grocery list </li> 
+  <li>2 points - remove_from_grocery_list() is defined and properly removes the item from the grocery list </li>
+  <li>2 points - check_if_item_on_list() is defined and properly prints out whether or not the item already exists on the list </li>
+  <li>1 point - The sample output is followed in your submission </li>
+  <li>1 point - The required Python comment appears at the top of your file</li>
 </ul>
 
 <h3> Grading turnaround </h3>
