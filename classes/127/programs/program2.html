@@ -136,6 +136,27 @@ in a general fashion.
 </ul>
 
 
+<h2> More Testing Data </h2>
+<p> Want to test your program with a different dataset? This helps ensure that your logic works and validates the correctness of your program. Replace your main function with this function: </p>
+<pre>
+def main():
+    print("CSCI 127: Poker Hand Evaluation Program")
+    print("---------------------------------------")
+
+    evaluate([[14, "spades"], [10, "spades"], [8, "spades"], [2, "hearts"], [5, "spades"]])     # nothing
+    evaluate([[14, "spades"], [6, "spades"], [8, "spades"], [6, "hearts"], [5, "spades"]])      # 1 pair
+    evaluate([[14, "spades"], [6, "spades"], [14, "clubs"], [6, "hearts"], [5, "spades"]])      # 2 pair
+    evaluate([[14, "spades"], [6, "spades"], [8, "spades"], [6, "hearts"], [6, "clubs"]])       # 3 of a kind
+    evaluate([[3, "spades"], [5, "spades"], [6, "spades"], [4, "hearts"], [2, "spades"]])       # straight
+    evaluate([[4, "spades"], [6, "spades"], [4, "diamonds"], [6, "hearts"], [6, "clubs"]])      # full house
+    evaluate([[14, "spades"], [6, "spades"], [6, "diamonds"], [6, "hearts"], [6, "clubs"]])     # 4 of a kind
+    evaluate([[13, "spades"], [11, "spades"], [12, "spades"], [9, "spades"], [10, "spades"]])   # straight flush
+    evaluate([[13, "spades"], [11, "spades"], [12, "spades"], [14, "spades"], [10, "spades"]])  # royal flush
+
+</pre>
+
+
+<p> Remember to include the original main() function when you submit your program </p>
 
 
 
