@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Week 3 Day 1 </title>
+</head>
+
+<body>
+
+<h1>Monday December 14th, 2020</h1>
+
+
+<h2>Lecture Recordings </h2>
+<ul>
+	<li> <a href="https://montana.techsmithrelay.com/7dUw">(1/4) Week 3 Overview  </a></li>
+	<li> <a href="https://montana.techsmithrelay.com/3fla">(2/4) Intro to Files </a> </li>
+	<li> <a href="https://montana.techsmithrelay.com/LSDD">(3/4) More on files </a> </li>
+	<li> <a href="https://montana.techsmithrelay.com/uepY">(4/4) More examples with our books file </a></li>
+</ul> 
+
+<h2> Lecture Slides </h2>
+<ul>
+	<li>  </a></li>
+</ul>
+
+
+<h2> Examples from Lecture </h2>
+<ul>
+	<li> <a href="examples/grocery_list_store.txt"> grocery_list_store.py</a></li>
+	<li> <a href="examples/books.txt"> books.py</a></li>
+
+</ul>
+<h2> Goals </h2>
+<ul>
+	<li> Understand what files are and how to open one in Python  </li>
+	<li> Understand how to read from a file in Python </li>
+	<li> Understand how to extract and calculate meaningful information from a file</li>
+</ul>
+
+<h2> To Do </h2>
+<ul>
+	<li> Start on Lab 5 </li>
+	<li> Work on Program 2 </li>
+</ul>
+
+<h2> Example Test Questions </h2>
+<ul>
+	<li></li>
+</ul>
+
+
+<br>
+<h2> <a href="../main.html"> Click here to go back to course schedule </a>
+
+</body>
+</html>
