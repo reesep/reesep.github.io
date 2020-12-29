@@ -1,0 +1,51 @@
+# -----------------------------------------+
+# CSCI 127, Joy and Beauty of Data         |
+# Program 4: Scorigami                     |
+# Your Name(, Your Partner's Name)         |
+# Last Modified: ??, 2020/2021             |
+# -----------------------------------------+
+# Provide a brief overview of the program. |
+# -----------------------------------------+
+
+#-----------------------------------------------------#
+#Your Class Definition and Methods should go here
+
+
+
+#-----------------------------------------------------#
+#Your other functions should go here
+
+
+
+
+#-----------------------------------------------------#
+
+def main():
+    all_scorigamis = fill_scorigami_dictionary()  #TO DO- Define and write the fill_scorigami_dictionary function
+                                                         # You will likely need to define and create the Scorigami class here as well
+    answer = 0 
+    while(answer != 5):
+        print("")
+        print_menu() #TO DO- Define and write the print_menu function
+
+        answer = int(input("Which would you like to do? "))
+
+        if answer == 1:
+            print("")
+            get_information_for_score(all_scorigamis) #TO DO- Define and write the get_information_for_score function
+        if answer == 2:
+            print("")
+            search_scorigamis_by_team(all_scorigamis) #TO DO- Define and write the search_scorigamis_by_team function
+        if answer == 3: 
+            print("")
+            search_scorigamis_by_year(all_scorigamis) #TO DO- Define and write the search_scorigamis_by_year function
+        if answer == 4:
+            print("")
+            team_with_most_scorigamis(all_scorigamis) #TO DO- Define and write the team_with_most_scorigamis function
+        
+
+          
+    
+
+
+main()
