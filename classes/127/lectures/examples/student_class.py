@@ -49,18 +49,18 @@ class Student():
             print(self.name,"has ????? years left")
 
 
-    def __str__(self):
-
-        answer = "Name: " + self.name + "\n"
-        answer += "Major: " + self.major + "\n"
-        answer += "GPA: " + str(self.gpa) + "\n"
-        answer += "Student ID: " + self.student_id + "\n"
-        answer += "Year: " + self.year + "\n"
-        answer += "Minor: " + self.minor + "\n"
-        answer += "Champ Change: " + str(self.champ_change)
-                  
-        
-        return answer
+##    def __str__(self):
+##
+##        answer = "Name: " + self.name + "\n"
+##        answer += "Major: " + self.major + "\n"
+##        answer += "GPA: " + str(self.gpa) + "\n"
+##        answer += "Student ID: " + self.student_id + "\n"
+##        answer += "Year: " + self.year + "\n"
+##        answer += "Minor: " + self.minor + "\n"
+##        answer += "Champ Change: " + str(self.champ_change)
+##                  
+##        
+##        return answer
 
 
 
