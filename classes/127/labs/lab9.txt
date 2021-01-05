@@ -71,9 +71,9 @@ def main(how_many):
     print("Number of Large Straights:", large_straights)
     print("Percent:", "{:.2f}%".format(large_straights * 100 / how_many))
 	
-	## Part 2
-	data = [low_rolls, three_of_a_kinds, large_straights]
-	graph_yahtzee_data(data)
+## Part 2
+data = [low_rolls, three_of_a_kinds, large_straights]
+graph_yahtzee_data(data)
 	
 	
 
