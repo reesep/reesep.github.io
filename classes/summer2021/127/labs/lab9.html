@@ -1,0 +1,78 @@
+
+<html>
+
+<head>
+<title>CSCI 127, In-Lab 9</title>
+</head>
+
+<body>
+
+<h1>Lab 9: NumPy and Matplotilib</h1>
+
+<h2> <a href="https://montana.techsmithrelay.com/ogqi"> Lab 9 Overview Video </a> </h2>
+
+<h2>Logistics</h2>
+<ul>
+<li>Due: Thursday, January 7th no later than 11:59 p.m.</li>
+<li>Partner Information:You may complete this assignment individually or with exactly one partner.</li> 
+  <li> Submission Instructions (working alone): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-Lab9.py</b> to the BrightSpace(D2L) Lab 9 Dropbox. </li>
+   <li> Submission Instructions (working with a partner): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-PartnerFirstName-PartnerLastName-Lab9.py</b> to the BrightSpace(D2L) Lab 9 Dropbox. </li>   
+  <li>Deadline Reminder: Late passes can be used on this assignment. However, if you do not use a late pass and submit it past the deadline, you submission will lose some points (see late assignment policy). After 48 hours,
+	  the dropbox will close and you will no longer be able to submit </li>
+</ul>
+
+<h2>In order to complete this lab, you will need to understand</h2>
+<ul>
+	<li> Numpy Arrays </li>
+	<li> Matplotlib </li>
+	<li> Object Oriented Programming </li>
+</ul>
+
+<h2>Background</h2>
+<ul>
+<li>In a modified game of Yahtzee, five eight-sided dice are rolled once.</li>
+<li>For this assignment, you will simulate this modified game
+    of Yahtzee to determine how likely certain outcomes are.</li>
+<li>In this modified version of Yahtzee, a <b>Low Roll</b> occurs
+    when each of the five dice is either a 1 or an 2.
+    For example, 1-1-1-1-1 or 2-2-1-2-1.</li>
+<li>In this modified version of Yahtzee, a <b>Three of a Kind</b> occurs
+    when three of the dice show the same number.  
+    The other two dice must not show this number
+    and must also be different from one another.  
+    For example, 4-7-4-4-2 but not 4-7-4-4-7.</li>
+<li>In this modified version of Yahtzee, a <b>large straight</b> occurs
+    when the five numbers can be arranged consecutively 
+    (for example, 1-3-4-2-5 or 5-7-4-6-3).  Hint: the numpy library
+    contains a sort function.</li> 
+</ul>
+
+
+<h2>Part 1: Numpy</h2>
+<ul>
+<li>Download <a href="lab9.txt">lab11.py</a>, rename it according to 
+    the instructions above, and make sure you understand it.</li>
+<li>Take the program above and modify it by adding the missing methods
+    such that when the program is run, it might produce 
+    <a href="https://www.cs.montana.edu/paxton/classes/csci127/inlabs/lab11/output.txt">this output</a>.  Note that your percents may be slightly different due to random values being generated each time
+	you run the program, but your percents should still be pretty close. Do not change any of the
+    existing Python code.</li>
+</ul>
+
+<h2>Part 2: Matplotlib</h2>
+<ul>
+<li> Fill in the <b>graph_yahtzee_data</b> function so that it creates a bar chart showing the number of occurances for each type of roll. Your graph should look exactly <a href="lab9_output.JPG"> like this </a>. Make sure you pay attenthion to attention
+     to the small details about the graph, such as the title, figure, labels, colors, and axis ticks. </li>
+</ul>
+
+<h2>Grading - 10 points</h2>
+<ul>
+<li>2 points - Low Rolls are identified correctly.</li>
+<li>2 points - Three of a Kinds are identified correctly.</li>
+<li>2 points - Large straights are identified correctly.</li>
+<li> 4 points - Bar chart is correctly created and matches the sample output exactly </li>
+</ul>
+
+</body>
+
+</html>

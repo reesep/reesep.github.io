@@ -1,0 +1,114 @@
+
+<html>
+
+<head>
+<title>CSCI 127, Program 4</title>
+</head>
+
+<body>
+
+<h1>Program 4: Scorigami</h1>
+
+
+<h2> <a href="https://montana.techsmithrelay.com/OMyF"> Program 4 Overview Video </a> </h2>
+
+
+<h2>Logistics</h2>
+<ul>
+<li>Due Date: Tuesday, January 5th no later than 11:59 p.m.</li>
+<li>Partner Information:You may complete this assignment individually or with exactly one partner.</li> 
+  <li> Submission Instructions (working alone): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-Program4.py</b> to the BrightSpace(D2L) Program 4 Dropbox. </li>
+   <li> Submission Instructions (working with a partner): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-PartnerFirstName-PartnerLastName-Program4.py</b> to the BrightSpace(D2L) Program 4 </li>   
+  <li>Deadline Reminder: Late passes can be used on this assignment. However, if you do not use a late pass and submit it past the deadline, you submission will lose some points (see late assignment policy). After 48 hours,
+	  the dropbox will close and you will no longer be able to submit </li>
+</ul>
+
+<h2>In order to complete this lab, you will need to understand</h2>
+<ul>
+	<li> Object Oriented Programming </li>
+	<li> Dictionaries </li>
+	<li> Files (reading) </li>
+	<li> ... and mostly everything else we've talked about this semester </li>
+</ul>
+
+
+
+
+<h2>Background Information</h2>
+<ul>
+<li>  <b> Scorigami </b> is the art of building final scores that have never happened before in NFL history. Due to the unique nature of how points are scored in (American) Football, where it is impossible to score 1 point on its own, 
+	 as well as the rarity of the 2 point safety and 8 point touchdown and 2 point conversion, there are a lot of scores that are possible, but have never happened.</li>
+	 
+	 For example, on December 26th, 2020, the final score between the Miami Dolphins and Las Vegas Raiders was 26-25. This game ended in a Scorigami. This was the first time in NFL history where a game ended in the score of 26-25. On Christmas day, there was also
+	 a final score of 33-52 between the Minnesota Vikings and New Orleans Saints. This was also scorigami.
+	 
+	 To learn more about scorigami, watch <a href="https://youtu.be/9l5C8cGMueY">this super cool video</a>. You can also visit <a href="https://nflscorigami.com/"> this website to visualize all the different scorigamis that have happened in the past 50+ years</a>
+	 
+	 
+	 For this assingment, you will be building a program that reads in information from a file of NFL scores since 2019. You will be using a dictionary to hold information about different NFL scores.
+    
+    
+</ul>
+
+<h2>Assignment</h2>
+<ul>
+<li>Using <a href="program4.txt">program4.py</a> (renamed according to the
+    instructions above) as a starting point,
+    supply the missing functions, missing class, and missing class methods. You will need to implement six different functions: </li>
+<li><b>fill_scorigami_dictionary()</b> should read in from <a href="nfl_scores.csv"> nfl_scores.csv </a> and fill a dictionary with information with all unique scores. At the end of this function, you should return the filled dictionary </li>
+	<ul>
+		<li> The keys for the dictionary should be a <b> tuple </b> that contains a certain score. (21,7), (30,15), etc. <b> NOTE: </b> the score (X,Y) is the same score as (Y,X) and should be treated as the same score</li>
+		<li> The values for the dictionary should be a <b> Scorigami object </b>. Each scorigami object has a (1) Home Team (2) Away Team (3) Week (4) Year and (5) Location/Stadium. You will need to extract this information from the file. </li>
+		<li> This means you will define a Scorigami class. This class will need a constructor and __str__ method. You will also include any other reader/writer methods that you need. (getYear(), getHomeTeam(), etc)</li>
+	</ul>
+<li> For all remaining functions,<b> you should NOT open the file anymore </b>. You should only be using your dictionary with information </li>
+
+<li>The function <b>get_information_for_score</b> should allow the user to search for a score in the dictionary. If the score exists, it should print out what two teams were involved, the week, the year, and location of the game.
+	If the score has not happened yet, then "That score has not happened yet!" should be printed out. See sample output</li>
+<li>The function <b>search_scorigamis_by_team</b> should allow the user to search for all Scorigamis that involved a certain team. The function should print out information for each game as well as the total number of Scorigamis found. For example, if the user searches for "Oakland Raiders", then it should print out the total number of Scorigamis that included the Oakland raiders and 
+	information for all Scorigamis where the Oakland Raiders were either the home team or away team. Note that the user should be able to put in a team name in all lowercase, uppercase, or a mixture of both. See sample output</li>
+<li>The function <b>search_scorigamis_by_year</b> should allow to user to input a year. The function should then print out the number of Scorigamis that happened that year and information for each of the Scorigami games that occured. </li>
+<li>The function <b>team_with_most_scorigamis</b> should calculate which team was involved in the most Scorigamis and how many Scorigamis they were involved in. The answer should always be "San Francisco 49ers with 99 total scorigamis". <i> Hint: </i>
+	consider creating a new dictionary, where the keys will be each team, and the values will be the total number of scorigamis involving that team. You might find the billionaires.py example helpful here... </li>
+<li>The function <b>print_menu()</b> is a very simple function that should print out the menu that you see in the sample output </li>
+</ul> 
+
+
+<h2> Sample output/transcripts </h2>
+<p> When your program is run, an interaction with a user could produce:
+	<ul>
+		<li> <a href="program4output1.JPG">this sample transcript for the <b> get_information_for_score() </b> function</a> </li>
+		<li> <a href="program4output2.JPG">this sample transcript for the <b> search_scorigamis_by_team() </b> function</a> </li>
+		<li> <a href="program4output3.JPG">thissample transcript for the <b> search_scorigamis_by_year() </b> function</a> </li>
+		<li> <a href="program4output4.JPG">this sample transcript for the <b> team_with_most_scorigamis() </b> function</a> </li>
+		
+	</ul>
+</p>
+
+
+<h2> Helpful examples from class </h2>
+<ul>
+	<li> <a href="../lectures/examples/billionaires.txt"> billionaires.py </a> for how to create objects using information from a file and how to iterate through data structure of objects for certain functions</li>
+	<li> <a href="../lectures/examples/raven_py.txt"> raven.py </a> for how to store unique items (unique scores) in dictionaries </li>
+	
+</ul>
+
+
+<h2>Grading - 100 points</h2>
+<ul>
+<li> 15 points- The <b>fill_scorigami_dictionary()</b> is defined and returns a dictionary with the appropriate information </li>
+<li> 5 points- The Scorigami class is correctly defined </li>
+<li> 10 points- The constructor, __str__ method, and other needed methods for the Scorigami class are correct </li>
+<li> 15 points- The <b>get_information_for_score</b> function is implemented correctly and displays the correct output </li>
+<li> 15 points- The <b>search_scorigamis_by_team</b> function is implemented correctly and displays the correct output </li>
+<li> 15 points- The <b>search_scorigamis_by_year</b> function is implemented correctly and displays the correct output </li>
+<li> 15 points- The <b>team_with_most_scorigamis</b> function is implemented correctly and displays the correct output </li>
+<li> 5 points- The <b> print_menu() </b> function is correct </li>
+<li> 5 points- The sample output is matched. For each difference, you will be deducted 1 point </li>
+
+</ul>
+
+</body>
+
+</html>
+

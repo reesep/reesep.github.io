@@ -1,0 +1,112 @@
+
+<html>
+
+<head>
+<title>CSCI 127, In-Lab 7</title>
+</head>
+
+<body>
+
+<h1>Lab 7: Dictionaries </h1>
+
+<h2>Logistics</h2>
+<ul>
+<li>Due: Tuesday, December 22nd  no later than 11:59 p.m..</li>
+<li>Partner Information:You may complete this assignment individually or with exactly one partner.</li> 
+  <li> Submission Instructions (working alone): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-Lab7.py</b> to the BrightSpace(D2L) Lab 7 Dropbox. </li>
+   <li> Submission Instructions (working with a partner): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-PartnerFirstName-PartnerLastName-Lab7.py</b> to the BrightSpace(D2L) Lab 7 Dropbox. </li>   
+  <li>Deadline Reminder: Late passes can be used on this assignment. However, if you do not use a late pass and submit it past the deadline, you submission will lose some points (see late assignment policy). After 48 hours,
+	  the dropbox will close and you will no longer be able to submit </li>
+</ul>
+
+<h2>In order to complete this lab, you will need to understand</h2>
+<ul>
+	<li> Dictionaries </li>
+	<li> Files (reading and writing)
+</ul>
+
+<h2>Background Information</h2>
+<ul>
+<li>ASCII (American Standard Code for Information Interchange) 
+    is an older code used by computers to represent characters (such as
+    the character "X") with 8 binary digits (or bits).  Here is an
+    <a href="https://www.sciencebuddies.org/science-fair-projects/references/table-of-8-bit-ascii-character-codes">ASCII table</a>. 
+    Today, Unicode UTF-16, a 16 bit code is more commonly used.</li>
+<li>Download <a href="lab7.txt">lab7.py</a>, rename it according to
+    the instructions above, and make sure you understand it.</li>
+<li>Download input file <a href="ascii-codes.csv">ascii-codes.csv</a>
+    to the same directory where you downloaded <i>lab7.py</i>.
+    Each line in <i>ascii-codes.csv</i> contains 8 bits (0s and 1s), 
+    followed by a comma, followed by the character that the 8 bits 
+    represents.  In general, the character will be of length 1
+    such as the character <b>X</b>.  However,
+    there are two exceptions: " " is represented by <i>space</i> 
+    and "," is represented by <i>comma</i>.</li>   
+</ul> 
+
+<h2>Assignment</h2>
+<ul>
+<li>Take the program above and modify it by adding the <i>create_dictionary</i>
+    function.  The parameter <i>file_name</i> is the name of a csv file
+    that contains an unknown number of lines that reflect ASCII encodings.
+    The format of this file is described in the bullet above.
+    The function should return a dictionary where
+    the keys are characters and the values are the 8 bit 
+    representations.  Note: use " " and "," as keys instead of <i>space</i>
+    and <i>comma</i>. </li>
+<li>Take the program above and modify it by adding the <i>translate</i>
+    function.  The parameter <i>sentence</i> consists of an unknown number
+    of characters.  The parameter <i>dictionary</i> is the dictionary that was
+    created by the <i>create_dictionary</i> function.  The parameter
+    <i>file_name</i> is the name of the output file where all output should
+    be sent.  In the output file, each character in <i>sentence</i> should
+    appear on its own line, followed by a space, followed by its 8 bit
+    representation.  If a character does not appear in the
+    <i>dictionary</i>, the word <i>UNKNOWN</i> should appear instead of
+    an 8 bit representation.</li>
+</ul>
+
+<h2> Required Output </h2>
+<ul>	
+<li>When the program is run,
+    it should produce the following three output files:
+    <a href="https://www.cs.montana.edu/paxton/classes/csci127/inlabs/lab7/output-1.txt">output-1.txt</a>,
+    <a href="https://www.cs.montana.edu/paxton/classes/csci127/inlabs/lab7/output-2.txt">output-2.txt</a> and
+    <a href="https://www.cs.montana.edu/paxton/classes/csci127/inlabs/lab7/output-3.txt">output-3.txt</a>.</li>
+</ul>
+
+<h2> Required Python Comment </h2>
+<p> Place a Python comment at the top of your Python solution that is formatted as follows </p>
+<pre>
+# -----------------------------------------+
+# Your name                                |  &lt;-- e.g. Reese Pearsall
+# CSCI 127, Lab 7                          |
+# Last Updated: Month Day, Year            |  &lt;-- e.g. December 3, 2020
+# -----------------------------------------|
+# A brief description of the assignment.   |  &lt;-- can be more than 1 line 
+# -----------------------------------------+
+</pre>
+
+
+
+<h2>Grading - 10 points</h2>
+<ul>
+<li>3 points - The create_dictionary function returns a dictionary
+    that contains the correct binary code for each character of length one.</li>
+<li>1 point - The create_dictionary function returns a dictionary
+    that contains the correct binary code for " " and ",".</li>
+<li>4 points - When your program is tested with different values for
+    the variable <i>sentence</i>, characters that exist in the dictionary
+    are translated correctly.  For each different character that is translated 
+    incorrectly, one point will be deducted.</li>
+<li>1 point - When your program is tested with different values for
+    the variable <i>sentence</i>, characters that do NOT exist in the dictionary
+    are translated correctly to <i>UNKNOWN</i>.</li>
+<li>1 point - The format of any output files created 
+    match the format of the sample output files exactly.</li> 
+</ul>
+
+
+</body>
+
+</html>

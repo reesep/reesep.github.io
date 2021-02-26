@@ -1,0 +1,19 @@
+
+
+#Your code will go above this line. Do NOT change anything below this line
+
+def main():
+
+    type_of_food = input("What kind of food are you interested in (Asian, Mexican, Italian, Pizza, Burgers)? ")
+    money = float(input("How much money do you have (in dollars)? "))
+
+    recommendation = determine_restaurant(type_of_food.lower(),money)
+
+    print("I recommend getting food from:",recommendation)
+
+
+main()                
+
+                    
+
+    

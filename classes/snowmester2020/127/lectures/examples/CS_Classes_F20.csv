@@ -1,0 +1,26 @@
+﻿listing,enrolled,class size,title,prof,credits,level,lab,spring
+CS 145RA,159,over 100,Web Design,DeFrance,3,100,TRUE,TRUE
+CSCI 107,81,75 to 99,Joy and Beauty of Computing,Paxton,3,100,FALSE,TRUE
+CSCI 112,71,50 to 74,Programming with C I,Cummings,3,100,TRUE,TRUE
+CSCI 127,188,over 100,Joy and Beauty of Data,DeFrance,4,100,TRUE,TRUE
+CSCI 132,104,over 100,Bsc Data Structures/Algorithms,Lloyd,4,100,TRUE,TRUE
+CSCI 204,55,50 to 74,Multimedia Dev Methods,Lloyd,3,200,TRUE,FALSE
+CSCI 215CS,94,75 to 99,Social & Ethical Issues in CS,Cummings,3,200,FALSE,TRUE
+CSCI 232,96,75 to 99,Data Structures and Algorithms,Mumey,4,200,TRUE,TRUE
+CSCI 246,98,75 to 100,Discrete Structures,Zhu,3,200,FALSE,FALSE
+CSCI 305,60,50 to 74,Concepts/Programming Languages,Lloyd,3,300,FALSE,FALSE
+CSCI 338,78,75 to 99,Computer Science Theory.,Yaw,3,300,FALSE,FALSE
+CSCI 366,86,75 to 99,Computer Systems,Gross,3,300,FALSE,TRUE
+CSCI 432,31,25 to 49,Advanced Algorithm Topics,Fasy,3,400,FALSE,FALSE
+CSCI 440,87,75 to 99,Database Systems,Gross,3,400,FALSE,FALSE
+CSCI 447,42,25 to 49,Machine Learning: Soft Computing,Sheppard,3,400,FALSE,FALSE
+CSCI 460,61,50 to 74,Operating Systems,Peters,3,400,FALSE,FALSE
+CSCI 466,65,50 to 74,Networks,Wittie,3,400,FALSE,FALSE
+CSCI 482R,30,25 to 49,Int Project Instruction,Izurieta,1,400,FALSE,FALSE
+CSCI 491,41,25 to 49,Web Developmeent,DeFrance,3,400,FALSE,FALSE
+CSCI 494-01,48,25 to 49,UX Design Thinking,Stanley,3,400,FALSE,FALSE
+CSCI 494-02,3,under 25,Comp Topo & Geometry,Fasy,3,400,FALSE,FALSE
+CSCI 538,14,under 25,Computability,Zhu,3,500,FALSE,FALSE
+CSCI 550,24,under 25,Concepts/Programming Languages,Millman,3,500,FALSE,FALSE
+CSCI 594,13,under 25,Clustering Techniques,Neeley,3,500,FALSE,FALSE
+ESOF 322,85,75 to 99,Software Engineering,Izurieta,3,300,FALSE,FALSE
