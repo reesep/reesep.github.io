@@ -1,25 +1,19 @@
 
 
-
-
-# Your code should go above this line. Do NOT change any of the given code below
+#Your code will go above this line. Do NOT change anything below this line
 
 def main():
 
+    type_of_food = input("What kind of food are you interested in (Asian, Mexican, Italian, Pizza, Burgers)? ")
+    money = float(input("How much money do you have (in dollars)? "))
 
-                        # name, passing yards, touchdown passes, interceptions
-    calculate_qb_points("Patrick Mahomes",4031,26,5)
-    calculate_qb_points("Tom Brady",4057,24,8)
-    print("")
-    
-                        # name, rushing yards, touchdowns, fumbles
-    calculate_rb_points("Christian McCaffrey",1387,15,0)
-    calculate_rb_points("Derrick Henry",1540,16,3)
-    print("")
-    
-                        # name, receptions, receiving yards, touchdowns 
-    calculate_wr_points("Michael Thomas",149,1725,9)
-    calculate_wr_points("Julio Jones",99,1394,6)
-    print("")
+    recommendation = determine_restaurant(type_of_food.lower(),money)
 
-main()
+    print("I recommend getting food from:",recommendation)
+
+
+main()                
+
+                    
+
+    
