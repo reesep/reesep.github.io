@@ -1,0 +1,14 @@
+
+# Write a program that will ask the user what
+# year they were born. The program should then
+# calculate how old they are.
+
+
+year = int(input("Enter year you were born "))
+
+
+years_old = 2021 - year
+
+
+print("Congratulations! You are",years_old,"years old")
+

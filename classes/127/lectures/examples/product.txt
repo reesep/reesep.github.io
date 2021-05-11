@@ -1,14 +1,20 @@
 
+# Write a program that takes in two numbers as
+# input. The program should then calculate the
+# product of those two numbers
+
+# get the inputs
+
+num1 = int(input("Enter a number: "))
+num2 = int(input("Enter another number: "))
 
 
-# Write a program that takes in two numbers from the
-# user. Then, multiply those two numbers together and
-# print out the product
+
+# calculate the product
+
+answer = num1 * num2
 
 
- num1 = int(input("Enter a number: "))
- num2 = int(input("Enter another number: "))
+# print out answer
 
- product = num1 * num2
-
- print("The answer is",product)
+print("The product is: ",answer)

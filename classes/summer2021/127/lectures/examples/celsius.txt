@@ -1,0 +1,16 @@
+
+# Write a program that will take in a farenheit
+# temperature and the output the conversion to
+# celsius
+
+
+# Ask for a temp in F
+f = float(input("Enter a temp in F "))
+
+
+# Follow the formula to convert to C
+answer = (f - 32) * 5/9
+
+
+# Print answer
+print("The temperature is",answer)
