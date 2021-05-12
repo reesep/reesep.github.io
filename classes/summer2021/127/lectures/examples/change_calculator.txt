@@ -1,0 +1,23 @@
+# Change calculator program
+
+#ask user for # of coins
+
+
+#quarters = int(input("Enter number of quarters: "))
+#dimes = int(input("Enter number of dimes: "))
+#nickels = int(input("Enter number of nickels: "))
+#pennies = int(input("Enter number of pennies: "))
+
+def calculate_value(quarters, dimes, nickels, pennies):
+    value = (quarters * .25) + (dimes * .1) + (nickels * .05) + (pennies * .01)
+    return value
+
+
+def main():
+    print("Hello World")
+    answer = calculate_value(6,3,0,1)
+    print(answer)
+
+main()
+
+

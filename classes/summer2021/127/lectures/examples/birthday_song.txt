@@ -1,19 +1,22 @@
 
-#  Write a function that takes in a name and prints out the
-#  happy birthday song using  that name
+
+# Write a program that will print out the happy birthday song given some name
+# The birthday song should be part of some function.
 
 
-def birthday_song(name):
-    print("Happy Birthday to you")
-    print("Happy Birthday to you")
+
+def sing_birthday_song(name):
+    print("Happy Birthday to You!")
+    print("Happy Birthday to You!")
     print("Happy Birthday dear",name)
-    print("Happy Birthday to you")
+    print("Happy Birthday to You!")
+
+
 
 def main():
-    name = input("Enter the birthday person: ")
-    birthday_song(name)
-    
 
-
+    sing_birthday_song("John")
+    sing_birthday_song("Reese")
+    sing_birthday_song("Jane")
 
 main()

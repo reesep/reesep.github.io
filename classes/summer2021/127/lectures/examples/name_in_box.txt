@@ -1,0 +1,19 @@
+
+#write a program that will ask the user for
+# their name. Then the program should print out
+# their name in a box
+
+
+# +----------------+
+# | Reese Pearsall |
+# +----------------+
+
+name = input("Enter your name")
+
+
+print("+----------------+")
+print("|{:^16}|".format(name))
+print("+----------------+")
+
+
+print("I am {0} feet tall and {1:.1f} pounds".format(6,180.777))
