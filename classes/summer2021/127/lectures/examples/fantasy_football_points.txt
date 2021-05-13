@@ -1,0 +1,31 @@
+
+
+# Write a function that will take in the name of player,
+# # of passing yards, # of touchdowns, and # of interceptions.
+# The program should then calculate and print out the number
+# of fantasy football points scored.
+
+
+
+def calculate_qb_points(name, passing_yards, touchdowns, ints):
+
+    points = (passing_yards / 25) + (touchdowns * 4) + (ints * -2)
+
+    print(name,"scored","{:.1f} fantasy points in 2019".format(points))
+
+    
+
+
+
+def main():
+
+                        # name, passing yards, touchdown passes, interceptions
+    calculate_qb_points("Patrick Mahomes",4031,26,5)
+    print("")
+    calculate_qb_points("Tom Brady",4057,24,8)
+    print("")
+    calculate_qb_points("Josh Allen",5002,36,3)
+    print("")
+
+
+main()

@@ -1,0 +1,41 @@
+
+# Write a function that will calculate the
+# cost per square inch of a circular pizza,
+# given its diameter (inches) and price.
+# You should then call the function a few
+# different times with different input values
+
+
+
+def calculate_ppsi(diameter, price):
+    area = (3.14159) * (diameter/2)  ** 2
+    answer = price / area
+
+    return answer
+
+
+
+def main():
+
+    #large
+    d = 14
+    p = 14.99
+
+    print("Price per square inch for",d,"inch sized pizza at",p,"dollars is {:.2f}".format(calculate_ppsi(d,p)))
+
+    #medium
+    d = 12
+    p = 12.49
+
+    print("Price per square inch for",d,"inch sized pizza at",p,"dollars is {:.2f}".format(calculate_ppsi(d,p)))
+
+    #small
+    d = 10
+    p = 9.99
+
+    print("Price per square inch for",d,"inch sized pizza at",p,"dollars is {:.2f}".format(calculate_ppsi(d,p)))
+
+main()    
+
+
+

@@ -1,0 +1,17 @@
+
+# Write a function that takes in 3 exam scores and
+# returns the average of the exam scores
+
+
+def avg_exam_scores(exam1, exam2, exam3):
+    average = (exam1 + exam2 + exam3) / 3
+    return average
+
+
+
+
+print(avg_exam_scores(90,80,70))
+print(avg_exam_scores(52,44,88))
+print(avg_exam_scores(95,92,98))
+
+

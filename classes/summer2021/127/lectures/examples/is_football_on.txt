@@ -1,13 +1,16 @@
 
 
-# Given a time and day of the week, check to see if football is on TV
+# football is on during Sundays, Mondays and Thursdays
+# football is only on between 7 and 10 pm
 
-day = "Sunday"  # day of the week
-time = 7.30 #7:30 PM
+day = "Sunday"
+time = 2
 
-if( (day == "Sunday" or day == "Monday" or day == "Thursday") and 6.0 < time < 9.0):
-    print("Football is on tonight")
-    print("Yahoo!")
-
-
-
+if(day == "Sunday" or day == "Monday" or day == "Thursday"):
+    if (7 <= time <= 10):
+        print("Football is on!")
+        print("woo hoo!")
+    else:
+        print("football is not on")
+else:
+    print("football is not on")
