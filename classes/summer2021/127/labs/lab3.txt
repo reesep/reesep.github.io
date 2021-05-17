@@ -1,0 +1,19 @@
+
+import random # random module is required. Do not delete this line
+
+## Your code should go below this comment
+
+
+                
+            
+            
+# Do not change any of the code below. Your code should go above this comment
+
+def get_random_number():
+    return random.randint(1,10)
+
+def main():
+    number_of_problems = int(input("How many problems would you like to be generated? "))
+    play_math_game(number_of_problems)
+    
+main()
