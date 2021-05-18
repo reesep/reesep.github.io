@@ -1,36 +1,27 @@
-
 # Write a Python program that asks the user to enter
 # two integers: one for the number of rows and one for
-# the number of columns. The program should then
-# produce a text-based drawing where each position in
-# the drawing is randomly determined with equal
-# probability to be either a "*" or a "-". For example,
-# with 4 rows and 6 columns, the drawing might look
-# like this:
-
-#**-*-*
-#--**--
-#-*--*-
-#---*-*
+# the number of columns. The program should then produce
+# a text-based drawing where each position in the
+# drawing is randomly determined with equal probability
+# to be either a "*" or a "-". For example, with 4 rows
+# and 6 columns, the drawing might look like this:
 
 import random
 
-rows = int(input("enter numbers of rows: "))
-columns = int(input("enter numbers of columns: "))
+rows = int(input("Enter number of rows"))
+cols = int(input("Enter number of columns"))
 
 
-rowtext = ""
+for j in range(rows):
+    line_text = ""
+    for i in range(cols):
+        rand = random.randint(1,2)
 
-for y in range(rows):
+        if rand == 1:
+            line_text += "*"
+        elif rand== 2:
+            line_text += "-"
 
-    rowtext = ""
-    for x in range(columns):
+    print(line_text)
 
-        val = random.randint(1,2)
-        if val == 1:
-            rowtext += "*"
-        elif val == 2:
-            rowtext += "-"
-
-    print(rowtext)
 

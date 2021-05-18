@@ -1,0 +1,83 @@
+
+# Write a python program that will simulate a game of
+# rock paper scissors against a computer. The user is
+# given 3 lives and if the user ever loses to the
+# computer, they lose a life. The user gets a point
+# every time they beat the computer. The game ends
+# when the user loses all of their lives
+
+import random
+
+def get_random_choice():
+
+    num = random.randint(1,3)
+    if num == 1:
+        return "rock"
+    elif num == 2:
+        return "paper"
+    elif num == 3:
+        return "scissors"
+
+def determine_winner(user, comp):
+
+    #if user picks rock
+    if(user == "rock" and comp == "rock"):
+        return "tie"
+    elif(user == "rock" and comp == "paper"):
+        return "loss"
+    elif(user == "rock" and comp == "scissors"):
+        return "win"
+
+    #if user picks paper
+    elif(user == "paper" and comp == "rock"):
+        return "win"
+    elif(user == "paper" and comp == "paper"):
+        return "tie"
+    elif(user == "paper" and comp == "scissors"):
+        return "loss"
+
+    #if user picks scissors
+    elif(user == "scissors" and comp == "rock"):
+        return "loss"
+    elif(user == "scissors" and comp == "paper"):
+        return "win"
+    elif(user == "scissors" and comp == "scissors"):
+        return "tie"
+
+    
+
+
+
+def main():
+
+    num_of_lives = 3
+    points = 0
+
+    while(num_of_lives != 0):
+
+        user_choice = input("Rock, paper, or Scissors? ")
+        
+        user_choice = user_choice.lower()#convert to only lowercase letters
+        computer_choice = get_random_choice()
+
+        winner  = determine_winner(user_choice, computer_choice)
+        print("You selected",user_choice)
+        print("Computer selected",computer_choice)
+        print(winner)
+
+        if(winner == "win"):
+            points += 1
+        elif(winner == "loss"):
+            num_of_lives -= 1
+
+        print("Points:",points)
+        print("Lives remaining:",num_of_lives)
+
+
+    print("Game over! You scored",points,"points")
+
+
+main()
+
+
+
