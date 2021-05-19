@@ -7,18 +7,18 @@
 <head>
 <link rel="stylesheet" href="../../style.css" type="text/css" />
 <title>
-CSCI 127, Lab 3
+CSCI 127, Lab 4
 </title>
 </head>
 
 <body>
 
-<h1>Lab 4: Grocery Shopping List </h1>
-<h2> <a href="https://montana.techsmithrelay.com/1OAQ"> Lab 4 Overview Video </a> </h2>
+<h1>Lab 4: Mean, Median, and Mode </h1>
+<h2> <a href=""> Lab 4 Overview Video </a> </h2>
 <h2>Due Date and Submission Requirements</h2>
 
 <ul>
-  <li>Due Date: Thursday, December 10th no later at 11:59 p.m.</li>
+  <li>Due Date: Monday, May 24th no later at 11:59 p.m.</li>
   <li>Partner Information:You may complete this assignment individually or with exactly one partner.</li> 
   <li> Submission Instructions (working alone): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-Lab4.py</b> to the BrightSpace(D2L) Lab 4 Dropbox. </li>
    <li> Submission Instructions (working with a partner): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-PartnerFirstName-PartnerLastName-Lab4.py</b> to the BrightSpace(D2L) Lab 4 Dropbox. </li>   
@@ -40,16 +40,20 @@ CSCI 127, Lab 3
 
 
 <h3>Background and Directions</h3>
+
+<h3> <b> You are NOT allowed to import any external  modules (numpy, statistics, math, etc) for this lab. Doing so will result in a major loss of points</b> </h3>
+
 <p>
-	You will be creating a virtual shopping list. Users can (1) view the grocery list, (2) add to the grocery list, (3) remove something from the grocery list, or (4) check to see if they already have an item on the list
+	You will be writing a program that will calculate the mean, median, and mode of some integer dataset
 	<br>
-	<p> Using <a href="lab4.txt"> lab4.py as a starting point </a>, define and fill in the missing functions. The grocery list is represented by a python list</p>
+	<p> Using <a href="lab4.txt"> lab4.py as a starting point </a>, define and fill in the missing functions. </p>
 	<ul>
-		<li> <b> print_grocery_list() </b> should take in the grocery list, and print it out in a nice, numbered manner as seen in <a href = "lab4_printlist.JPG"> this screenshot </a> </li>
-		<li> <b> add_to_grocery_list() </b> should take in the grocery list and an item the user wants to add. You will add it to the list and then return the new list with the new item added </li>
-		<li> <b> remove_from_grocery_list() </b> should take in the grocery list and an item the user wants to remove. You will remove that item from the list and then return the new list with the item removed </li>
-		<li> <b> check_if_item_on_list() </b> should take in the grocery list and an item the user wants to check if its already on the list. If the item is already on the list, then <b> "<insert item name here> is already on your grocery list!" </b> should be printed out.
-				If the item is not on the list, then <b> "<insert item name here> is not on your grocery list!" </b> should be printed out.</li>
+		<li> <b> calculate_mean() </b> should take in the list, calculate the mean of the dataset and print it out in  as seen in <a href = "lab4_output1.JPG"> this screenshot </a>. The mean is the average of all the numbers in the list </li>
+		<li> <b> calculate_median() </b> should take in the list, calculate the median of the dataset and print it out in  as seen in <a href = "lab4_output1.JPG"> this screenshot </a>. The median is the middle value of the <b>sorted</b> integer list. If there is no definite middle value, it will be the average between the two middle values. </li>
+		<li> <b> calculate_mode() </b> should take in the list, calculate the mode of the dataset and print it out in  as seen in <a href = "lab4_output1.JPG"> this screenshot </a>. The mode is the number(s) that occur the most in the list. There may be more than one mode value. You can assume that there will always be at least one mode value.</li>
+		<ul>
+			<li> Note: If your program can only identify one of the mode values, you will still receive full credit. 
+	    </ul>
 	</ul>
 </p>
 	
@@ -59,9 +63,15 @@ CSCI 127, Lab 3
 <h3> Hints </h3>
 
 <ul>
-	<li> We've talked about easy ways to add and remove things from lists</li>
-	<li> Is your list not updating properly after adding/removing? Make sure you are returning the correct value </li>
-	<li> Note that the items are case sensitive, so make sure that you input "Bread" and not "bread" when removing an item, for example.
+	<li> There are lots of helpful examples that we did in lecture. Check them out below</li>
+	<li> Calculating the mean should be pretty easy. For  calculating the median, the formula will change depending on whether the size of the list is even or odd. Consider checking if the size of the list is even or odd first.</li>
+	<li> For calculating the mode, consider using the .count() list function discussed in lecture. If you want to go the extra mile and have your program detect all mode values, consider the strategy below:</li>
+	<ul>
+		<li> Create an empty list. This is the list that will contain all mode values </li>
+		<li> Whenever you find a new highest mode value, empty the list and add the new value </li>
+		<li> If you find a mode value that is equal to what is already in the mode value list, and the number is not already in the list, add it to the list </li>
+		<li> After your for loop finished, you should have a list that contains your mode values </li>
+	</ul>
 
 </ul>
 
@@ -70,7 +80,7 @@ CSCI 127, Lab 3
  
 
 <h3> Sample Output </h3>
-<p> When your program is run, it should follow a similar behavior as seen in <a href="lab4_output1.JPG"> this sample output </a> and <a href="lab4_output2.JPG"> this sample output </a>. 
+<p> When your program is run, it should look exactly like <a href="lab4_output1.JPG"> this sample output. </a>
 
 
 <h3> Required Python Comment </h3>
@@ -79,7 +89,7 @@ CSCI 127, Lab 3
 # -----------------------------------------+
 # Your name                                |  &lt;-- e.g. Reese Pearsall
 # CSCI 127, Lab 4                          |
-# Last Updated: Month Day, Year            |  &lt;-- e.g. December 3, 2020
+# Last Updated: Month Day, Year            |  &lt;-- e.g. May 3, 2021
 # -----------------------------------------|
 # A brief description of the assignment.   |  &lt;-- can be more than 1 line 
 # -----------------------------------------+
@@ -88,10 +98,9 @@ CSCI 127, Lab 3
 
 
 <ul>
-  <li>2 points - print_grocery_list() is defined and properly prints out the list of groceries just like in the sample output</li> 
-  <li>2 points - add_to_grocery_list() is defined and properly adds the item to the grocery list </li> 
-  <li>2 points - remove_from_grocery_list() is defined and properly removes the item from the grocery list </li>
-  <li>2 points - check_if_item_on_list() is defined and properly prints out whether or not the item already exists on the list </li>
+  <li>2 points - calculate_mean() correctly calculates and prints out the mean value</li> 
+  <li>3 points - calculate_median() correctly calculates and prints out the median value </li> 
+  <li>3 points - calculate_mode() correctly calculates and prints out the mode value </li>
   <li>1 point - The sample output is followed in your submission </li>
   <li>1 point - The required Python comment appears at the top of your file</li>
 </ul>

@@ -1,17 +1,19 @@
 
-scores = [0, 31, 27, 31, 49, 21, 17, 25] #[msu-score-1, opponent-score-1, msu-score2, 
-                                         # opponent-score2, …]
-wins= 0
+        #[msu-score1, opp-score1, msu-score2, opp-score2, ...]
+scores = [0, 31, 27, 31, 49, 21, 17, 25, 27, 21]
+
+wins = 0
 losses = 0
-                #range(start,stopping,step)
+
 for i in range(0,len(scores),2):
-
-    if(scores[i] > scores[i+1]):
+    if(scores[i] > scores[i + 1]):
         wins += 1
-    else:
+    elif(scores[i] < scores[i+1]):
         losses += 1
-    #check to see if the current score (i) is greater/less than the next score in list
+
+    
 
 
+## The missing code goes here. Assume that every game results in either a win or loss
 
 print("MSU has", wins, "win(s) and", losses," loss(es)")
