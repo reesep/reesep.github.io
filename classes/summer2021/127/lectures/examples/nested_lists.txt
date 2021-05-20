@@ -1,37 +1,38 @@
+
+
+
 populations = [["California", 38332521],
-["Texas", 26448193],
-["New York", 19651127], 
-["Florida", 19552860],
-["Illinois", 12882135],
-["Pennsylvania", 12773801], 
-["Ohio", 11570808], 
-["Georgia", 9992167],
-["Michigan", 9895622], 
-["North Carolina",9848060] ]
+               ["Texas", 26448193],
+               ["New York", 19651127], 
+               ["Florida", 19552860],
+               ["Illinois", 12882135],
+               ["Pennsylvania", 12773801], 
+               ["Ohio", 11570808], 
+               ["Georgia", 9992167],
+               ["Michigan", 9895622], 
+               ["North Carolina",9848060]
+               ] 
 
 
-
-def calculate_top_10_population(populations):
+def total_population(populations):
 
     total = 0
     for each_state in populations:
         total += each_state[1]
+    print(total)
 
-    return total
-
-
-def calculate_percentage(populations):
+def percentage_per_state(populations):
 
     for each_state in populations:
-
-        percent = (each_state[1] / 316128839) * 100
-
-        print(each_state[0],"holds",percent,"percent of the total US population")
-
-    
+        #316128839 is the total US population
+        percentage = (each_state[1] / 316128839) * 100
+        print("{0} has {1:.2f}% of the total US population".format(each_state[0],percentage))
+        
 
 
+def main():
 
-answer = calculate_top_10_population(populations)
-print(answer)
-calculate_percentage(populations)
+    total_population(populations)
+    percentage_per_state(populations)
+
+main()

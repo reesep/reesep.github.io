@@ -1,0 +1,42 @@
+
+
+champions =[
+    [2000,"St. Louis Rams"],[2001,"Baltimore Ravens"],
+    [2002,"New England Patriots"], [2003,"Tampa Bay Buccaneers"],
+    [2004,"New England Patriots"], [2005,"New England Patriots"],
+    [2006,"Pittsburgh Steelers"], [2007,"Indianapolis Colts"],
+    [2008,"New York Giants"], [2009,"Pittsburgh Steelers"],
+    [2010,"New Orleans Saints"], [2011,"Green Bay Packers"],
+    [2012,"New York Giants"], [2013,"Baltimore Ravens"],
+    [2014,"Seattle Seahawks"], [2015,"New England Patriots"],
+    [2016,"Denver Broncos"], [2017,"New England Patriots"],
+    [2018,"Philidelphia Eagles"], [2019,"New England Patriots"],
+    [2020,"Kansas City Chiefs"], [2021,"Tampa Bay Buccaneers"]
+    ]
+
+
+#This might be helpful for program 2
+def back_to_back(champions):
+
+    #print out back to back champions
+    for x in range(len(champions)-1):
+        if(champions[x][1] == champions[x+1][1]):
+            print(champions[x][1],"in",champions[x][0],"and",champions[x+1][0])
+
+    
+    # this program was tweaked to print back-to-back-to-back champions (3-in a row)
+##    for x in range(len(champions)-2):
+##        if(champions[x][1] == champions[x+1][1] == champions[x+2][1]):
+##            print(champions[x][1],"in",champions[x][0],"and",champions[x+1][0],"and",champions[x+2][0])
+        
+
+
+
+
+def main():
+
+    back_to_back(champions)
+
+    
+
+main()
