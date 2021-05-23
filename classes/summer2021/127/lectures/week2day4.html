@@ -45,6 +45,27 @@
 
 <h2> Example Test Questions </h2>
 <ul>
+
+	<li> Write a function that will accept some string (of any length). The function should print out how many vowels (a, e, i, o, u) appear in the string) </li> </br>
+
+	<li> Consider a nested list of information about food at the fast food restaurant. 
+	
+		<pre>
+			[ ["Burger",4.99,500], ["Cheeseburger",5.99,600], ["Fries", 2.99, 350], ["Chicken Sandwhich", 5.99, 400], ["Soda Pop", 1.99, 150], ["Milkshake",3.99, 275]]
+			
+			#A burger costs 4.99$ and has 500 calories. A cheeseburger costs 5.99$ and has 600 calories... and so on
+		
+		</pre>
+		
+		Using this information, write a function that will take in a list of items the user would like to order. The function should calculate the total cost and calories of their order. For example, if ["Burger","Fries","Milkshake"] is passed into the function,
+		then your function should be printing out:
+		<pre>
+			Total Cost of Order: $11.97
+			Total Calories of Order: 1125
+		</pre>
+	</li>
+
+
 	<li>Consider a nested list that contains information about days running a lemonade stand. Each day contains the total revenue of that day and the total expenses for that day. For example consider the following nested list: [[31,10],[60,23], [42,12]] . $31 is the total revenue for day 1 and $10 is the total expenses for day 1. $60 is
 	    the total revenue for day 2, etc. Write a function that will calculate the profit for each day as well as the total profit overall from the lemonade stand. For example, if [[31,10],[60,23], [42,12]] is the input, then the following output should be produced: </li>
 		<pre>
@@ -55,7 +76,17 @@
 		</pre>
 		<br>
 	<li> Consider a nested list that contains a score from a sports game. The Lists contain the team name and how many points they scores. For example, the nested could look like [["Bears",33],["Falcons",27]]. Write a python function that will take in a nested list and return which team won the game.
-	     The winning team is the team that scores the most points. For example, if [["Bears",33],["Falcons",27]] is the input, then "Bears" should be returned. If [["Tigers",33],["Lions",63]] is the input, then "Lions" should be returned.</li>
+	     The winning team is the team that scores the most points. For example, if [["Bears",33],["Falcons",27]] is the input, then "Bears" should be returned. If [["Tigers",33],["Lions",63]] is the input, then "Lions" should be returned.</li> <br>
+		 
+	<li> Consider a nexted list that represents a single 3x3 block from a soduku puzzle. For example, [ [3,7,1], [4,8,2], [9,5,6] ] would represent the following square:
+	
+		<pre>
+			3  7  1
+			4  8  2
+			9  5  6
+		</pre>
+		For the square to be valid, each number 1-9 must be included <b> exactly once </b>. Write a function, valid_soduku(), that will take in a nested list of this information and return True is the nested list would be a valid 3x3 soduku block. The function should
+		return False if the nested list is not a valid. For example, [ [3,7,1], [4,8,2], [9,5,6] ] --> True,   [ [2,7,2], [3,8,4], [1,5,6] ] --> False. Once you solve it, try again but only use <b> one <b> if statement (with no and/or statements). </li>
 		 
 		
 </ul>
