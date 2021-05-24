@@ -1,26 +1,25 @@
-
 import math
 
 
-
-degree = float(input("Enter an angle in degrees: "))
-
-
-option = input("Sine, cosine, tangent? ")
+x = math.pi
+y = math.e
+print(x,y)
 
 
+degrees = float(input("Enter degrees: "))
+operation = input("Enter operation (Sin, Cos, Tan): ")
 
-if(option.lower() == "sine"):
-    radians = math.radians(degree)
-    answer = math.sin(radians)
-    print(answer)
+radians = math.radians(degrees)
+operation = operation.lower()
 
-if(option.lower() == "cosine"):
-    radians = math.radians(degree)
-    answer = math.cos(radians)
-    print(answer)
+if(operation == "sin"):
+    print(math.sin(radians))
+elif(operation == "cos"):
+    print(math.cos(radians))
+    #do cos function
+elif(operation == "tan"):
+    print(math.tan(radians))
+    #do tan function
 
-if(option.lower() == "tangent"):
-    radians = math.radians(degree)
-    answer = math.tan(radians)
-    print(answer)
+    
+
