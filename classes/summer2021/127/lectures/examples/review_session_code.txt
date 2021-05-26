@@ -1,0 +1,89 @@
+
+
+def calculate_trip_cost(family_members, nights):
+
+    cost = ((family_members * 220) * 2) + (185 * nights) + (family_members * 100)+ 20
+
+    return cost
+
+# Your function will go above this comment. You should not modify anything below.
+
+family_members = int(input("How many family members are going to Disneyworld? "))
+nights = int(input("How many nights are you staying in the hotel? "))
+
+answer = calculate_trip_cost(family_members, nights)
+print("The total cost of the trip is $", answer)
+
+
+
+# Question 3
+
+
+month = input("Enter a month:")
+date = int(input("Enter a date:"))
+
+month = month.lower()
+if(month == "june"):
+    if(date >= 20):
+        print("It is summer!")
+    elif(date < 20):
+        print("It is not summer!")
+elif(month == "july"):
+    print("It is summer!")
+elif(month == "august"):
+    print("It is summer!")
+elif(month == "september"):
+    if(date <= 22):
+        print("It is summer!")
+    elif(date > 22):
+        print("It is not summer!")
+else:
+    print("It is not summer!")
+
+
+        
+
+
+
+def calculate_profit(days):
+
+    day = 1
+    total_profit = 0
+    for each_day in days:
+
+        profit = each_day[0] - each_day[1]
+        total_profit += profit
+        print("Day",day,"profit: $"+str(profit))
+        day += 1
+
+    print("Total Profit: $"+str(total_profit))
+
+
+# [[day1-revenue, day1-expenses], [day2-revenue, day2-expenses], etc]
+days = [[31,10], [60,23], [42,12], [20,8]] 
+calculate_profit(days)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
