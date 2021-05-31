@@ -1,20 +1,21 @@
 
+
 <html>
 
 <head>
-<title>CSCI 127, Lab 5</title>
+<title>CSCI 127, Lab 6</title>
 </head>
 
 <body>
 
-<h1>Lab 5: Review</h1>
+<h1>Lab 6: Files</h1>
 
-<h2> <a href=""> Lab 5  Overview Video</a> </h2>
+<h2> <a href=""> Lab 6  Overview Video</a> </h2>
 
 
 <h2>Logistics</h2>
 <ul>
-<li>Due: (If you do option 2) Wednesday, May 26th no later than 11:59 p.m.</li>
+<li>Due: Thursday, June 3rd no later than 11:59 p.m.</li>
   <li>Partner Information:You may complete this assignment individually or with exactly one partner.</li> 
   <li> Submission Instructions (working alone): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-Lab6.py</b> to the BrightSpace(D2L) Lab 6 Dropbox. </li>
    <li> Submission Instructions (working with a partner): Upload your solution (.py file), entitled <b>YourFirstName-YourLastName-PartnerFirstName-PartnerLastName-Lab6.py</b> to the BrightSpace(D2L) Lab 6 Dropbox. </li>   
@@ -22,38 +23,71 @@
 	  the dropbox will close and you will no longer be able to submit </li>
 </ul>
 
-<h2>Learning Outcomes</h2>
+<h2>In order to complete this lab, you will need to understand</h2>
 <ul>
-<li> Review for the Midterm Exam</li>
+	<li> Files </li>
+	<li> ... and everything else we've talked about this semester </li>
 </ul>
+
 
 <h2>Assignment</h2>
-<p> You have two options for lab 6. You must choose one of them.
-
 <ul>
-<h3> Option 1: Live virtual review session </h3>
-<li> I will be hosting a live, virtual review session in my webex room at <b> 11:00 AM on Thursday, December 17th. </b> We will be going over the practice exam and also some practice exam problems. I will also answer any questions about stuff we've 
-     learned so far if you bring them. If you show up and attend this review session, you will get a 10/10 for lab 6. You do <b> not </b> need to submit anything on D2L </li>
-	 <br>
-	 <h3> Option 2: Do any two example exam questions </h3>
-	 <li> If you dont want to attend the review session, or can't make it, that is fine (I will likely record it anyway). Your other option is to attempt to solve <b> any </b> two example test questions that are listed on the course website. This will be ultimately based
-	      on effort. You don't necessarily need to get them correct (although you really should try to). If you attempted two different questions and I can tell you put in effort, you will get a 10/10 for lab 6. If you do this option, you must upload your .py file with your you really should try to). If you attempted two different questions and I can tell you put in effort, you will get a 10/10 for lab 6. If you do this option, you must upload your .py file with your
-		  solution(s) to D2L.
-	  </li>
-	 
+<li>Download the file <a href="earthquakes.csv">earthquakes.csv</a>.  
+    This input file is
+    described in detail <a href="https://think.cs.vt.edu/corgis/csv/earthquakes/">here</a>.</li>
+<li>Download <a href="lab5.txt">lab6.py</a> into the same directory
+    where the earthquakes.csv file is located and rename it according 
+    to the instructions in the Logistics section.</li>
+<li>Implement the <b>average_magnitude</b> function such that it
+    calculates and returns the average magnitude of the recorded
+    earthquakes.</li>
+<li>Implement the <b>earthquake_locations</b> function such that it
+    identifies every unique location (use the <i>name</i> field in the file)
+    and prints them in alphabetical order.</li>
+<li>Implement the <b>count_earthquakes</b> function.  The function should
+    calculate the number of recorded earthquakes that have a magnitude
+    greater than or equal to the low bound and less than or equal
+    to the high bound.  The user will specify the bounds and  
+    you may assume that the user will enter valid numbers.</li>
 </ul>
 
+<h2> Hints </h2>
+<ul>
+	<li> You might run into some issues when finding the unique locations for <b> earthquake_locations</b>. One thing to notice is that the <b> locations.full  </b> has commas in the locations. Sometimes 
+     there are two commas there and something there are no commas there. How does that affect things when you do <b> .split </b> ?	Think about how you can access <b> location.name </b> in a different way... </li>
+</ul>
 
+<h2>Sample Run</h2>
+<ul>
+<li>In this <a href="https://www.cs.montana.edu/paxton/classes/csci127/inlabs/lab6/output.txt">sample run</a>, the user inputs 5.0 for
+    the lower bound and 6.0 for the upper bound.</li>
+</ul>
+
+<h3> Required Python Comment </h3>
+<p> Place a Python comment at the top of your Python solution that is formatted as follows </p>
+<pre>
+# -----------------------------------------+
+# Your name                                |  &lt;-- e.g. Reese Pearsall
+# CSCI 127, Lab 6                          |
+# Last Updated: Month Day, Year            |  &lt;-- e.g. May 3, 2021
+# -----------------------------------------|
+# A brief description of the assignment.   |  &lt;-- can be more than 1 line 
+# -----------------------------------------+
+</pre>
 
 
 
 <h2>Grading - 10 points</h2>
 <ul>
-<li>10 points - You attended the in person review session.</li>
-<h3> <b> OR </b> </h3>
-<li>10 points - You attempted and put in effort into solving two example test questions </li>
+<li>2 points - The <b>average_magnitude</b> function is correct.</li>
+<li>3 points - The <b>earthquake_locations</b> function finds all
+    of the unique locations (2 points) and prints each unique location
+    once in sorted order (1 point).  </li>
+<li>3 points - The <b>count_earthquakes</b> function is correct.</li>
+<li>2 points - The format of the output matches exactly the format
+    of the output transcript.  For each type of difference, 1 point
+    will be deducted.</li>
 </ul>
-
 
 </body>
 
