@@ -1,0 +1,55 @@
+
+
+
+
+
+def video_games_by_score():
+
+    ratings_dict = { 
+        (0,9): 0,
+        (10,19): 0,
+        (20,29): 0,
+        (30,39): 0,
+        (40,49): 0,
+        (50,59): 0,
+        (60,69): 0,
+        (70,79): 0,
+        (80,89): 0,
+        (90,100): 0
+        }
+
+
+
+    file = open("video_games.csv","r")
+    file.readline()
+    for each_line in file:
+        row = each_line.split(",")
+
+        rating = int(row[-27].replace('"',""))
+
+        for each_key in ratings_dict:
+
+            if( rating >= each_key[0] and rating <= each_key[1]):
+
+                ratings_dict[each_key] += 1
+
+    for key,val in ratings_dict.items():
+        print(key,val)
+    
+
+
+
+
+
+
+
+
+
+
+def main():
+
+    video_games_by_score()
+
+
+
+main()

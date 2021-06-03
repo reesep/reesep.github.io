@@ -1,0 +1,49 @@
+
+
+
+# freq = {  word: freq-that-word,
+#           word2: freq-that-word,
+#        }
+
+def raven_count(file_name):
+
+    freq = {}
+
+    file = open(file_name, "r")
+    
+    for each_line in file:
+        each_line = each_line.strip()
+        each_line = each_line.replace(".","")
+        each_line = each_line.replace("!","")
+        each_line = each_line.replace("?","")
+        each_line = each_line.replace('"',"")
+        each_line = each_line.replace('-',"")
+        each_line = each_line.replace(';',"")
+        each_line = each_line.replace(':',"")
+                                       
+        row = each_line.lower().split(" ")
+
+        for each_word in row:
+
+            if each_word not in freq:
+                freq[each_word] = 1
+            else:
+                freq[each_word] += 1
+
+
+    for key,val in freq.items():
+        print(key,val)
+
+    file.close()
+
+
+
+
+
+
+
+def main():
+
+    raven_count("raven.txt")
+
+main()
