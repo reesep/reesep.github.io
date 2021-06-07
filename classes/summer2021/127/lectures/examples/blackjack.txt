@@ -6,14 +6,19 @@ class Card():
     def __init__(self,rank,suit):
         self.rank = rank
         self.suit = suit
-        #number represetation of rank
-        self.value = self.assign_value(self.rank)
 
-    def getValue(self):
+        #numeric rank (12, 8, 3,etc)
+        self.value = self.convert_to_number(self.rank)
+
+    
+    def get_value(self):
         return self.value
 
+    def __str__(self):
+        answer = str(self.value) + " of " + self.suit
+        return answer
 
-    def assign_value(self,word):
+    def convert_to_number(self,rank):
 
         word_to_rank = {}
         word_to_rank["two"] = 2
@@ -29,41 +34,46 @@ class Card():
         word_to_rank["queen"] = 10
         word_to_rank["king"] = 10
         word_to_rank["ace"] = 11
+        
+        return word_to_rank[rank]
 
-        return word_to_rank[word]
-
-
-    def __str__(self):
-        return self.rank + " of " + self.suit + " Value: " + str(self.value)
-
-
-def process_hand(hand_list):
-
-    sum_of_hand = 0
-    for each_card in hand_list:
+def process_hand(list_of_cards,dealer_cards):
+    #sum up total ranks of hand
+    user_total = 0
+    for each_card in list_of_cards:
         print(each_card)
-        sum_of_hand += each_card.getValue()
+        user_total += each_card.get_value()
+    print("Total:",user_total)
 
-    print("Hand total:",sum_of_hand)
+    #sum up dealer cards
+    dealer_total = 0
+    for r in range(random.randint(2,3)):
 
-    if(sum_of_hand > 21):
-        print("You busted! Try another hand")
+        rand = random.randint(0,len(dealer_cards)-1)
+        print(dealer_cards[rand])
+        dealer_total += dealer_cards[rand].get_value()
+    print("Dealer Total:",dealer_total)
 
-    elif(sum_of_hand <= 21):
-
-
-        dealer_score = random.randint(10,21)
-        print("Dealer Score:",dealer_score)
-
-        if sum_of_hand > dealer_score:
-            print("You win!")
-        elif sum_of_hand < dealer_score:
-            print("You lose!")
+    #determine the winner
+    if(user_total > 21):
+        if(dealer_total > 21):
+            print("Its a tie!")
         else:
-            print("It's a tie!")
+            print("Dealer wins!")
+    elif(dealer_total > 21):
+        if(user_total > 21):
+            print("Its a tie!")
+        else:
+            print("User wins!")
+    elif(dealer_total > user_total):
+        print("Dealer wins!")
+    elif(dealer_total < user_total):
+        print("User wins!")
+    else:
+        print("Its a tie!")
+    
 
     print("")
-
     
 
 def main():
@@ -82,12 +92,11 @@ def main():
     three = Card("three", "clubs")
     two = Card("two", "spades")
 
-
-    process_hand([ace])
-    process_hand([six,seven,two])
-    process_hand([two,three,four,five,six,eight])
+    possible_cards = [ace,king,queen,jack,ten,nine,eight,seven,six,five,four,three,two]
 
 
-
+    process_hand([ace],possible_cards)
+    process_hand([six,seven,two],possible_cards)
+    process_hand([two,three,four,five,six,eight],possible_cards)
 
 main()
