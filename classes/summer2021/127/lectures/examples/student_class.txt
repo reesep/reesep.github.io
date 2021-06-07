@@ -1,78 +1,74 @@
 
 class Student():
 
-    #all students have a name, major, GPA, ID, Year
-    def __init__(self,name,major,student_id,gpa="Undefined",year="Freshman"):
+    #constructor
+    def __init__(self,name,major,student_id,gpa="N/A",year="Freshman"):
         self.name = name
         self.major = major
-        self.student_id = student_id
         self.gpa = gpa
+        self.student_id = student_id
         self.year = year
-        self.champ_change = 0
         self.minor = "N/A"
+        self.champ_change = 0
 
-   
-    #reader methods (getters)
+    #reader methods
     def getName(self):
         return self.name
-
     def getMajor(self):
         return self.major
-
-    def getGpa(self):
+    def getGPA(self):
         return self.gpa
-
+    def getStudentID(self):
+        return self.student_id
     def getYear(self):
         return self.year
+    def getMinor(self):
+        return self.minor
 
-    #writer methods (setters)
-    def setMajor(self,newMajor):
-        self.major = newMajor
+    #writer methods
+    def setMinor(self,new_minor):
+        self.minor = new_minor
+    def setMajor(self,new_major):
+        self.major = new_major
 
-    def setYear(self,newYear):
-        self.year = newYear
-
-    def setMinor(self,newMinor):
-        self.minor = newMinor
-
-    def calculateYearsLeft(self):
-
-        if self.year == "Freshman":
-            print(self.name,"has 3 years left")
-        elif self.year == "Sophomore":
-            print(self.name,"has 2 years left")
-        elif self.year == "Junior":
-            print(self.name,"has 1 years left")
-        elif self.year == "Senior":
-            print(self.name,"has less than a year left")
-        else:
-            print(self.name,"has ????? years left")
-
-
+    #special str method (overrides what gets printed out)
     def __str__(self):
-
-        answer = "Name: " + self.name + "\n"
-        answer += "Major: " + self.major + "\n"
-        answer += "GPA: " + str(self.gpa) + "\n"
-        answer += "Student ID: " + self.student_id + "\n"
-        answer += "Year: " + self.year + "\n"
-        answer += "Minor: " + self.minor + "\n"
-        answer += "Champ Change: " + str(self.champ_change)
-                  
-        
+        answer = self.name + " is a " + self.year + " studying " + self.major
         return answer
 
 
+    def determine_years_left(self):
 
+        if(self.year == "Freshman"):
+            print("You have ~3 years left")
+        elif(self.year == "Sophomore"):
+            print("You have ~2 years left")
+        elif(self.year == "Junior"):
+            print("You have ~1 year left")
+        elif(self.year == "Senior"):
+             print("You have less than one year left")
+
+
+    
 
 def main():
 
-    #create a student
-    newstudent = Student("Sam","Biology","42141241")
-    student1 = Student("James","Computer Science","04293401",4.0,"Junior")
-    student2 = Student("Sally","Math","41982641901",3.6,"Sophomore")
+    #want to create a new student
+    # James, Computer Science, 4.0, 123456789, Junior
+    new_student = Student("Reese","Sociology","1A2B3C")
+    transfer_student = Student("Sarah","Biology","1634634","3.1","Sophomore")
 
-    print(newstudent)
 
+    print(new_student)
+    new_student.setMajor("Computer Science")
+    print(new_student)
+
+    new_student.determine_years_left()
+
+
+
+
+    
+    
 
 main()
