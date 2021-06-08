@@ -1,51 +1,103 @@
 # -----------------------------------------+
 # CSCI 127, Joy and Beauty of Data         |
-# Program 4: Scorigami                     |
+# Program 4: Pokedex                       | 
 # Your Name(, Your Partner's Name)         |
-# Last Modified: ??, 2020/2021             |
+# Last Modified: ??, 2021                  |
 # -----------------------------------------+
 # Provide a brief overview of the program. |
 # -----------------------------------------+
 
-#-----------------------------------------------------#
-#Your Class Definition and Methods should go here
 
 
+## The missing class should go above this line.
+# You will also need to fill in the functions below
 
-#-----------------------------------------------------#
-#Your other functions should go here
+def create_pokedex(file_name):
+    pass
+
+def lookup_by_number(pokedex,number): #menu option 1
+    pass
+    
+def lookup_by_name(pokedex,name): #menu option 2
+    pass
+    
+def total_by_type(pokedex,input_type): #menu option 3
+    pass
+
+def number_per_generation(pokedex): #menu option 4
+    ## Note: This function should return a dictionary.
+    # There is no need to print stuff in this function
+    pass
 
 
+## DO NOT change anything below this line
+
+def print_menu():
+
+    print("1. Print Pokemon by Number")
+    print("2. Print Pokemon by Name")
+    print("3. Count Number of Pokemon by Type")
+    print("4. Count Number of Pokemon by Generation")
 
 
-#-----------------------------------------------------#
+def check_for_errors(pokedex):
+    if not isinstance(pokedex,list):
+        print("ERROR: Value returned from create_pokedex() function is not a list")
+        print("Please make sure you are saving your objects to a list")
+
+    first = pokedex[0]
+    if not isinstance(first,Pokemon):
+        print("ERROR: Data inside your pokedex list are not Pokemon Objects")
+        print("Please make sure you are creating Pokemon objects from the file")
 
 def main():
-    all_scorigamis = fill_scorigami_dictionary()  #TO DO- Define and write the fill_scorigami_dictionary function
-                                                         # You will likely need to define and create the Scorigami class here as well
-    answer = 0 
-    while(answer != 5):
-        print("")
-        print_menu() #TO DO- Define and write the print_menu function
 
-        answer = int(input("Which would you like to do? "))
+    pokedex = create_pokedex("pokemon.csv")
 
-        if answer == 1:
-            print("")
-            get_information_for_score(all_scorigamis) #TO DO- Define and write the get_information_for_score function
-        if answer == 2:
-            print("")
-            search_scorigamis_by_team(all_scorigamis) #TO DO- Define and write the search_scorigamis_by_team function
-        if answer == 3: 
-            print("")
-            search_scorigamis_by_year(all_scorigamis) #TO DO- Define and write the search_scorigamis_by_year function
-        if answer == 4:
-            print("")
-            team_with_most_scorigamis(all_scorigamis) #TO DO- Define and write the team_with_most_scorigamis function
+    #call function above to make sure you are following the rules for assignment
+    check_for_errors(pokedex)
+
+    while(True):
+
+        print_menu()
+        user_choice = input("Select a choice from above: ")
         
+        if(user_choice == "1"):
 
-          
-    
+            number = input("Enter a Pokemon number: ")
+            lookup_by_number(pokedex,number)
+            
+        elif(user_choice == "2"):
+        
+            name = input("Enter a Pokemon name: ")
+            lookup_by_name(pokedex,name)
 
+        elif(user_choice == "3"):
+
+            input_type = input("Enter a Pokemon Type: ")
+            total_by_type(pokedex,input_type)
+
+        elif(user_choice == "4"):
+            #This function MUST return a dictionary
+            generation_dictionary = number_per_generation(pokedex)
+            
+            if not isinstance(generation_dictionary, dict):
+                print("ERROR: value returned from number_per_generation() function is not a dictionary")
+                print("Make sure you are creating a filling a dictionary --> {1: #ofGen1Pokemon, 2: #ofGen2Pokemon, ... }")
+
+            #Prints out dictionary as seen in sample output
+            print("Generation   Number of Pokemon")
+            print("------------------------------")
+            for key in  sorted(generation_dictionary):
+                print("{}              {}".format(key,generation_dictionary[key]))
+            print() 
+            
+
+        elif(user_choice == "5"):
+            print("Thank you. Goodbye")
+            break
+
+        else:
+            print("Invalid input. Please try again")
 
 main()

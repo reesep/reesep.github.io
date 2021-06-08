@@ -1,0 +1,120 @@
+
+
+
+class Billionaire():
+
+    def __init__(self,name,cn, age, worth, location,gender):
+        self.name = name
+        self.company_name = cn
+        self.age = age
+        self.worth = worth
+        self.location = location
+        self.gender = gender
+
+
+    #getter methods
+    def getWorth(self):
+        return self.worth
+
+    def getName(self):
+        return self.name
+
+    def getAge(self):
+        return self.age
+
+    def getLocation(self):
+        return self.location
+    
+    def getCompanyName(self):
+        return self.company_name
+
+    def getGender(self):
+        return self.gender
+
+    def __str__(self):
+        answer = self.name + " ("+ self.company_name +")" + "\n"
+        answer += "Worth: " + str(self.worth)
+        return answer    
+
+def search_by_money(billionaire_list):
+
+    threshold = float(input("Enter threshold: "))
+
+    for each_bil in billionaire_list:
+        if each_bil.getWorth() > threshold:
+            print(each_bil)
+
+def count_by_gender(billionaire_list):
+
+    num_of_males = 0
+    num_of_females = 0
+    unknown = 0
+    for each_bil in billionaire_list:
+
+        gender = each_bil.getGender()
+        if gender == "male":
+            num_of_males += 1
+        elif gender == "female":
+            num_of_females += 1
+        else:
+            unknown += 1
+
+    print("Number of Males: ",num_of_males)
+    print("Number of Females: ",num_of_females)
+    print("Unknown: ",unknown)
+
+
+def count_by_region(billionaire_list):
+
+    region = {}
+    # { continent1: #ofbillionaires, continent: #ofbillionares,...
+    for each_bil in billionaire_list:
+        
+        c = each_bil.getLocation()
+
+        if c not in region:
+            region[c] = 1
+        else:
+            region[c] += 1
+
+    del region["0"]
+   
+    for key,val in region.items():
+        print(key,val)
+
+
+def main():
+
+    file = open("billionaires.csv","r")
+    file.readline()
+
+    billionaire_list = []
+    
+    for each_line in file:
+        row = each_line.split(",")
+
+        name = row[0]
+        company_name = row[4]
+        age = int(row[-14])
+        worth = float(row[-7])
+        location = row[-9]
+        gender = row[-13]
+
+        b = Billionaire(name, company_name, age, worth, location,gender)
+        billionaire_list.append(b)
+
+
+    #search_by_money(billionaire_list)
+    #count_by_gender(billionaire_list)
+    count_by_region(billionaire_list)
+    
+
+main()
+
+
+
+
+
+
+
+

@@ -1,0 +1,92 @@
+
+
+class Quarterback():
+
+    def __init__(self,name,attempts,completions, passing_yards,  tds, ints):
+        self.name = name
+        self.attempts = attempts
+        self.completions = completions
+        self.passing_yards = passing_yards
+        self.tds = tds
+        self.ints = ints
+
+
+    def __str__(self):
+
+        answer = "Name: " + self.name + "\n"
+        answer += "Passing: " + str(self.completions) + "/" + str(self.attempts)
+        answer += " for " + str(self.passing_yards) + " passing yards" + "\n"
+        answer += "TDs: " + str(self.tds) + "\n"
+        answer += "INTs: " + str(self.ints) + "\n"
+
+        return answer
+
+    #reader methods
+    def getName(self):
+        return self.name
+    def getPassingYDs(self):
+        return self.passing_yards
+    def getAttempts(self):
+        return self.attempts
+    def getComp(self):
+        return self.completions
+    def getTDs(self):
+        return self.tds
+    def getINTs(self):
+        return self.ints
+
+    
+    #setter methods
+    def setTDs(self,new_td):
+        self.tds = new_td
+
+    def setINTs(self,new_int):
+        self.ints = new_ints
+
+    # "other" methods
+    def calcCompPercentage(self):
+        answer = (self.completions/self.attempts) * 100
+        return answer
+        
+    def calcPYPA(self):
+        answer = (self.passing_yards / self.attempts)
+        return answer
+
+    def calcPasserRating(self):
+
+        a = (self.completions / self.attempts  - .3) * 5
+        b = (self.passing_yards / self.attempts - 3) * .25
+        c = (self.tds / self.attempts) * 20
+        d = 2.375 - (self.ints / self.attempts * 25)
+
+        answer = ( (a + b + c + d) / 6 ) * 100
+        return answer
+
+def main():
+
+
+    qb12 = Quarterback("Tom Brady",45,30,300,3,1)
+    gb_qb = Quarterback("Aaron Rodgers",42,27,422,4,2)
+    qb10 = Quarterback("Eli Manning",30,17,261,1,3)
+
+    print(qb12)
+    print("Completion %:",qb12.calcCompPercentage())
+    print("Passing Yards per attempt:",qb12.calcPYPA())
+    print("Quarterback Rating:",qb12.calcPasserRating())
+    print()
+
+    print(gb_qb)
+    print("Completion %:",gb_qb.calcCompPercentage())
+    print("Passing Yards per attempt:",gb_qb.calcPYPA())
+    print("Quarterback Rating:",gb_qb.calcPasserRating())
+    print()
+
+    print(qb10)
+    print("Completion %:",qb10.calcCompPercentage())
+    print("Passing Yards per attempt:",qb10.calcPYPA())
+    print("Quarterback Rating:",qb10.calcPasserRating())
+    print()
+    
+
+
+main()
