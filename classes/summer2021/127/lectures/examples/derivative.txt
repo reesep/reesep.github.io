@@ -1,0 +1,42 @@
+
+import numpy as np
+
+
+x = 1
+
+coe_list = []
+
+while(True):
+
+    ans = input("Enter coefficent for term"+str(x) + ": ")
+    
+    if(ans == "q"):
+        break
+
+    coe = int(ans)
+
+    coe_list.append(coe)
+
+
+    x += 1
+
+
+print(coe_list)
+
+
+arr = np.array(coe_list)
+
+p = np.poly1d(arr)
+
+print(np.poly1d(p))
+
+
+deriv = np.polyder(p)
+print(deriv)
+
+
+
+
+
+
+
