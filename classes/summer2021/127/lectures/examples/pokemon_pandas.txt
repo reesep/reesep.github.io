@@ -1,0 +1,92 @@
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("pokemon.csv")
+
+# print column headers
+print(df.columns)
+
+#### print info from certain column
+##print((df["generation"]))
+##
+### two columns
+##data = df[["number","name"]]
+##print(data)
+
+
+##print single row
+#print(df.iloc[100:105])
+
+##print single spot
+#print(df.iloc[150,1])
+
+##iterate through rows
+#for index, row in df.iterrows():
+    #print(index,row['name'],row['generation'])
+
+## pull only water type pokemon
+#water_df = df.loc[df['type1'] == "Water" ]
+#print(water_df)
+
+
+## sort dataframe data
+#print(df.sort_values('type1'))
+#print(df.sort_values(['type1',"speed"]))
+
+## create new CSV
+#fire_pokemon = df.loc[ (df['type1'] == "Fire") | (df['type2'] == "Fire")]
+#print(fire_pokemon)
+#fire_pokemon.to_csv("fire_pokemon.csv")
+
+
+## Bar graph of top 5 strongest water type pokemon
+
+#create new dataframe with only water type pokemon
+water_pokemon = df.loc[(df['type1'] == "Water") | (df['type2'] == "Water")]
+
+#sort by most highest stat totals
+water_pokemon = water_pokemon.sort_values('total',ascending=False)
+
+#take a slice of top 5 dataframe rows
+top_five = water_pokemon[0:5]
+
+print(top_five)
+
+
+top_five.plot.bar(x="name", y='total',rot=0,legend=None,color=["blue","lightblue"],edgecolor="black")
+
+
+plt.xlabel("Name")
+plt.ylabel("Stat Total")
+plt.title("Top 5 Strongest Water Type Pokemon")
+
+plt.show()
+
+
+## generation pie chart
+frequencies = df["generation"].value_counts()
+
+frequencies.plot.pie(y="generation",colors=["red","blue"])
+
+
+
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
