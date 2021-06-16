@@ -1,0 +1,233 @@
+
+########### Question 2
+
+##def calculate_number_of_flights(start,destination,airports):
+##
+##    direct_flights = airports[start]
+##    if destination in direct_flights:
+##        print("To go from",start,"to",destination,"will take 1 flight")
+##    else:
+##        #check for a connecting flight of some kind
+##        found = 0
+##        for each_flight in direct_flights:
+##            if each_flight in airports:
+##                if destination in airports[each_flight]:
+##                    found = 1
+##                    print("To go from",start,"to",destination,"will take 2 flight")
+##                    
+##        if found == 0:
+##            print("not possible or would take more than 1 flight")
+##        
+##        
+##
+##
+##
+#### Your function should above this line. Do not change anything below this line
+##airports = { "Los Angeles":["Boston","New York","Denver","Salt Lake City"],
+##             "Billings":["Denver","Seattle","Salt Lake City"],
+##             "Bozeman":["Denver","Billings"],
+##             "Denver":["Los Angeles","Bozeman","New York","Boston","Atlanta"],
+##             "Atlanta":["Dallas"] }
+##            
+##start = input("What is your starting airport?")
+##destination = input("What airport is your destination?")
+##
+##calculate_number_of_flights(start,destination,airports)
+
+
+########### Question 3
+##class Zoo():
+##
+##    def __init__(self,name):
+##        self.name = name
+##        self.list_of_animals = []
+##
+##    def add_animal(self,new_animal):
+##        self.list_of_animals.append(new_animal)
+##
+##    def find_by_location(self,location):
+##        counter = 0
+##        for each_animal in self.list_of_animals:
+##
+##            if each_animal.getLocation().lower() == location.lower():
+##                counter += 1
+##        print("There are",counter," animals in the", self.name," from", location)
+##        
+##
+##    def __str__(self):
+##        answer = "Welcome to the " + self.name +"\n"
+##        answer += "There are the animals we have:" + "\n"
+##        for each_animal in self.list_of_animals:
+##            answer += str(each_animal)
+##
+##        return answer
+##
+##class Animal():
+##
+##    def __init__(self,name,continent,color):
+##        self.name = name
+##        self.continent = continent
+##        self.color = color
+##
+##    def __str__(self):
+##        answer = "*" + self.color + " "
+##        answer += self.name
+##        answer += " from " + self.continent + "\n"
+##        return answer
+##    def getLocation(self):
+##        return self.continent
+##
+##
+#### Your code should go above this line. Do not change anything below
+##
+##zoo = Zoo("Montana Zoo")
+##
+##animal1 = Animal("Panda","Asia","Black and White")
+##zoo.add_animal(animal1)
+##
+##animal2 = Animal("Flamingo","South America","Pink")
+##zoo.add_animal(animal2)
+##
+##animal3 = Animal("Tiger","Asia","Orange")
+##zoo.add_animal(animal3)
+##
+##animal4 = Animal("Rhino","Africa","Gray")
+##zoo.add_animal(animal4)
+##
+##print(zoo)
+##
+##location = input("Enter a continent: ")
+##zoo.find_by_location(location)
+
+########### Question 4
+##class Classrom():
+##
+##    def __init__(self,teacher,room,roster):
+##        self.teacher = teacher
+##        self.room = room
+##        self.roster = roster
+##
+##    def __str__(self):
+##
+##        answer = self.teacher + "'s class" + "\n"
+##        answer += self.room + "\n"
+##        num = 1
+##        for each_child in self.roster:
+##            answer += str(num) + ". " +(each_child) + "\n"
+##            num += 1
+##
+##        return answer
+##
+##class FirstGrade(Classrom):
+##
+##    def __init__(self,teacher,ta,room,roster):
+##        Classrom.__init__(self,teacher,room,roster)
+##        self.ta = ta
+##
+##
+##class ThirdGrade(Classrom):
+##
+##    def __init__(self,teacher,book,room,roster):
+##        Classrom.__init__(self,teacher,room,roster)
+##        self.book = book
+##
+##
+##class FifthGrade(Classrom):
+##
+##    def __init__(self,teacher,field_trip,room,roster):
+##        Classrom.__init__(self,teacher,room,roster)
+##        self.field_trip = field_trip
+##      
+##
+##
+##import numpy as np
+##
+### Your code and four classes should go above this comment. Do not change anything below
+##def main():
+##
+##    first_graders = np.array(["Casey","Kylee","Jonah","Sarah"])
+##    first_grade = FirstGrade("Mrs. Richmond","Ms. Stacey","Room 113",first_graders)
+##    print(first_grade)
+##
+##    third_graders = np.array(["Jacob","Haley","Noah","Angel"])
+##    third_grade = ThirdGrade("Mrs. Severson","Sideways Stories from Wayside School","Room 140",third_graders)
+##    print(third_grade)
+##
+##    fifth_graders = np.array(["Bailey","Matt","Connor","Alyssa"])
+##    fifth_grade = FifthGrade("Ms. Hill","Pictograph Caves","Room 132",fifth_graders)
+##    print(fifth_grade)
+##
+##
+##main()
+
+
+## Question 5
+import numpy as np # Do not import anything else
+import matplotlib.pyplot as plt
+
+units = ["CS", "ChBE", "Civil", "M&IE", "General", "CpE"] 
+enrollments = [552, 563, 731, 1463, 210, 410] # See question 1 for a description
+
+# Write the missing statements below this comment
+
+
+plt.figure("COE Enrollment Visualization")
+plt.title("Pie Chart of COE Enrollments")
+
+plt.pie(enrollments,colors=["blue","gold"],labels=units,counterclock=False,explode=[.02,.02,.02,.02,.02,.02])
+
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
