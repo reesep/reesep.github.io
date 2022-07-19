@@ -1,0 +1,255 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>
+       CSCI 476
+    </title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="page-header text-center">
+            <h1>CSCI 476: Computer Security</h1>
+            <h3>Fall 2022</h3>
+        </div>
+
+
+<h2> For course schedule, <a href="schedule.html"> click here </a>. </h2>
+
+<h2>Course Logistics</h2>
+<p>
+
+Tuesday, Thursday  3:05 PM - 4:20 PM <br>
+Location: Reid 102
+
+
+<h2>Instructor</h2>
+
+<img src="../../../images/avatar.jpg" ALIGN="left" width = "200" height = "250" alt="" />
+
+<ul>
+	<br><br><br>
+		<h4>
+      &nbsp; &nbsp; &nbsp; <a href="https://reesep.github.io">Reese Pearsall</a>  <br />
+	  &nbsp; &nbsp; &nbsp;  Email: reesepearsall@montana.edu <br />
+      &nbsp; &nbsp; &nbsp; Office Hours: MWF 2:10 - 3:00 PM, T 11:00 - 12:30 PM<br />
+      &nbsp; &nbsp; &nbsp; Office: Barnard Hall 361<br>
+	  &nbsp; &nbsp; &nbsp;  <br><br>
+	  &nbsp; &nbsp; &nbsp; I can also meet via Zoom if needed. Email me to arrange a time
+	   </h4>
+		
+	  <br><br><br><br><br>
+	  
+		
+</ul>
+
+<h2> Teacher Assistant </h2> 
+<ul>
+	<li> TBD</li>
+</ul>
+
+
+<h2>Textbook</h2>
+<ul>
+  <li> <a hef="https://www.amazon.com/Computer-Internet-Security-Hands-Approach/dp/1733003932">Computer & Internet Security: A Hands-on Approach by Wenliang Du <b>(2nd Edition) </b></a></li>
+  
+  <br>
+  <br>
+  
+  <li> Make sure you get the 2nd edition and <b>not</b> the 3rd edition. The 3rd edition is missing some topics that we cover in this course.</li>
+  
+</ul>
+
+<h2> Other Required Materials</h2>
+<ul>
+  <li> You will need access to a machine that can load a SEED Labs VM</li>
+</ul>
+
+<h2> Class Communication </h2>
+<ul>
+	<li> Discord server link</li>
+</ul>
+
+<h2> CSCI 476 Code Github Repository </h2>
+<ul>
+	<li> Link </li>
+</ul>
+
+<h2> Other Resources</h2>
+<ul>
+	<li> SEED Labs Website </li>
+	<li> SEED Labs Lectures </li>
+	<li> Linux man Pages </li>
+</ul>
+
+<h2>Catalog Description</h2>
+<ul>
+  <li>Credits: 3</li>
+  <br>
+  <li>Prerequisite: CSCI 232- Data Structures and Algorithms (Required)</li>
+  <li>Prerequisite: CSCI 460- Operating Systems (Recommended)</li>
+  <li>Prerequisite: CSCI 466- Networks (Recommended)</li>
+  <li>Prerequisite: CSCI 366- Computer Systems (STONGLY Recommended)</li>
+  <li>Prerequisite: CSCI 112- Programming in C (STRONGLY STRONGLY STRONGLY Recommended)</li>
+  <br>
+  <li>Description: Introduction to computer security. Covers security issues in software design and development from technical, social and legal viewpoints. Topics include cryptography, security models, software security, authentication, authorization, and system security</li>
+</ul>
+<p> <b> Note from Reese: </b> The prerequisite list is pretty beefy, but you will probably be ok if you have not taken CSCI 460 or CSCI 466. I will cover all the relevant background information from those classes during before starting each section. We will be tinkering around with memory (stack and heap, processes, etc) and working very closely with C programs. If you have not taken C programming or computer systems, I would highly recommend withdrawing and taking this class at a later time. Please email or chat with me if you have any concerns about prereqs for this course</p>
+
+<p> Before taking this class, I expect you to be fluent with basic programming in C and Python. You should be comfortable with basic Linux command line navigation. You should also be familiar with some of the fundamental concepts of a computer system (CPU, Assembly & Hexademical, Memory, Networks and HTTP)</p>
+
+<h2>Course Outcomes</h2>
+<p>
+  By the end of this course, students should be be able to: 
+</p>
+
+<ul>
+  <li>Understand important principles of securtiy and threats to the CIA triad </li>
+  <li>Understand a variety of relevant vulnerabilies and defenses in software security (SETUID, Shellshock, Buffer Overflow)  </li>
+  <li>Understand a variety of relevant vulnerabilies and defenses in network security (SQL Injection, XSS, TCP/IP attacks)</li>
+  <li>Understand a variety of relevant vulnerabilies and defenses in cryptography (Asymmetric, symmetric, One Way Hashing)</li>
+  <li>Given a system, develop a threat model, assess potential security weaknesses, and be able to think from the perspective of a threat actor </li>
+  <li>Make technical decisions during development of software with security in mind </li>
+</ul>
+
+
+<h2>Grading</h2>
+
+
+
+70% - Labs (10 @ 7% each) <br>
+15% - Research Project and Paper <br>
+15% - Final Exam <br>
+
+<h2> Grading Breakdown </h2>
+<b> Labs (70%) (10 labs @ 7% each)-  </b> The labs are the primary assignmnets and focus in this class. These are hands-on activities where you get to experience exploiting the vulnerabilities that we dicuss in lecture using the SEED labs VM.
+These are generally due every week and you have about 1 week to complete the labs. You will follow lab instructions and record your findings and output in a word document and submit it to D2L as a PDF.
+<br><br>
+<b> Research Project and Paper (15%)- </b> Because security covers such a large breadth of topics, we cannot dicuss every interesting topic in this 16-week course. The research project will allow you to explore a security-related topic of your choice and 
+    write a short report and presentation about your topic. You can choose any security-related topic that we do not cover in this course, but you must get it approved by Reese first.  You can generally submit your project anytime to D2L during semester before the final week.
+</b> 
+<br><br>
+<b> Final Exam (15%)- </b> The final exam will take place during finals week. This is a cumulative exam that will ask you conceptual questions about topics we've talked about. A note sheet is allowed and the exam will consist of free response questions.
+<br><br>
+
+
+<b>Extra Credit (?%)- </b> There will probably be extra credit opportunities at certain times during the semester.
+
+<h2>Grading Scale</h2>
+
+
+<ul>
+  <li>93+: A</li>
+  <li>90+: A-</li>
+  <li>87+: B+</li>
+  <li>83+: B</li>
+  <li>80+: B-</li>
+  <li>77+: C+</li>
+  <li>73+: C</li>
+  <li>70+: C-</li>
+  <li>67+: D+</li>
+  <li>63: D</li>
+  <li>60: D-</li>
+</ul>
+
+Q: Do you curve exams or final grades? <br>
+A: Maybe, but probably not. If exams or final grades are lower than I anticipated, then I may apply a curve. For final grades, if you are within 1% of the next letter grade, I will bump you up.
+
+
+<h2> Late Assignment Policy (IMPORTANT) </h2>
+I understand that you are taking several classes and can be busy with things outside of school. I want to offer some flexibility in the case that you cannot get a lab submittied on time.
+<br> <br>
+<b> You will be given 1 virtual late passes. </b> Late passes allow you to submit a lab up to 48 hours late with NO penalty-- no excuse required. 
+<br> <br>
+To use a late pass, you must indicate in your submission that you are electing to use a late pass (e.g. at the top of your lab report and in the comment box on your submission in D2L).
+<br> <br>
+Note that you cannot change this decision later. 
+<br><br>
+If you do not use a late pass, the penalties for late submissions are as follows:
+<ul>
+	<li> < 24 hours: 25% </li>
+	<li> < 48 Hours 50% </li>
+	<li> > 48 hours: no credit. </li>
+</ul>
+<br><br>
+
+
+
+
+<h2> Getting Help and Succeeding </h2>
+<p> Like with many CS assignments, you should not attempt to do an entire lab the night before it is due. Make sure you give yourself plenty of time to complete each assignment. </p>
+
+
+
+<h2>Collaboration Policy</h2>
+
+<p>
+  All students should read the 
+  <a href="http://www2.montana.edu/policy/student_conduct/">MSU
+  Student Conduct Code</a>.
+</p>
+<p> All labs will be individual submissions. </p>
+
+
+<p>
+  When it comes to labs, you <i> may </i> 
+</p>
+
+<ul>
+  <li>Share ideas with other students in the class.</li>
+  <li>Help other students troubleshoot problems.</li>
+  <li>Give hints or provide textbook page numbers/slide numbers to students seeking help</li>
+</ul>
+
+<p>
+  You may <i>NOT</i>
+</p>
+
+<ul>
+  <li>Share code and solutions you write with other students.</li>
+  <li>Submit solutions that you did not write.</li>
+  <li>Modify another student's solution and claim it as your own.</li>
+  <li>Share your report or solutions directly on Discord </li>
+</ul>
+
+<p>
+  Failure to abide by these rules will result in an "F"
+  for the course and being reported to the Dean of Students.
+</p>
+
+<h2> Plagiarism </h2>
+<p> You may not copy or modify solutions that are not your own (e.g. from the Internet, classmate, ...) for any graded material. Copying and pasting very small snippets of code is acceptable, however copying/pasting or stealing entire solutions from an external source is prohibited. I know how to use the Google and I have a Chegg membership, so If you find something, I will too! It is easy for me to tell if you copy and pasted code from the Internet, so please do not engage in such academic misconduct. If I find a student engaging in plagiarism, I will have to report you to the Dean of Students. </p>
+
+
+<h2>Diversity Statement</h2>
+<p>
+  Montana State University's campuses are committed to providing an 
+  environment that emphasizes the dignity and worth of every member of its 
+  community and that is free from harassment and discrimination based upon 
+  race, color, religion, national origin, creed, 
+  service in the uniformed services (as defined in state and federal law), 
+  veteran's status, sex, age, political ideas, marital or family status, 
+  pregnancy, physical or mental disability, genetic information, gender 
+  identity, gender expression, or sexual orientation.  Such an environment 
+  is necessary to a healthy learning, working, and living atmosphere because 
+  discrimination and harassment undermine human dignity and the positive 
+  connection among all people at our University. Acts of discrimination, 
+  harassment, sexual misconduct, dating violence, domestic violence, 
+  stalking, and retaliation will be addressed consistent with this policy. 
+</p>
+
+<hr />
+
+<address>
+  Last modified by Reese: July 18th, 2022.
+</address>
+
+</div>
+</body>
+</html>
