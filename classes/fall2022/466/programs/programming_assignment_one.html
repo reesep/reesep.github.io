@@ -27,7 +27,7 @@
 
 
     <h3> Overview</h3>
-
+	In this assignment, you will gain experience using sockets to write network applications. You will develop a client-server application that simulates the game rock, paper, scissors.
 
     <h3> GitHub Repo Setup </h3>
     <p> You will need to setup a private github repository for all your files. You will have one GitHub repository for all assignments in this course, with each assignment getting its own specific folder. </p>
@@ -45,10 +45,46 @@
 
     <h3> Instructions </h3>
 
+	For this assignment, you will develop two programs: <tt> client.py </tt> and <tt> server.py </tt>.
+	
+	
+	<h4>
+	client.py
+	</h4>
+	The "client" will represent a player in the rock paper scissors game. This program is run via the command line and takes 2 command line parameters:
+	
+	<pre>
+	
+		<b> python client.py [PORT_NUMBER] [HUMAN_OR_CPU] </b>
+		example:  <b>python client.py 5001 0 </b>  //port 5001, 0 = human playing
+	</pre>
+	
+	The <tt> PORT_NUMBER </tt> argument is the port that the socket will bind to. Remember that you should only use ports greater than 1024. The [HUMAN_OR_CPU] parameter will be either 0 or 1. If the value is 0, that means that a human is playing, and so the user will supply their choice as user input. If the value is 1, that means a CPU is playing. The CPU will make a random choice between rock, paper, or scissors. The client's choice will be send to the server via a socket. 
+	
+	
+	
+	<h4>
+	server.py
+	</h4>
+	This file will be your server. The server is provided a port number via command line input, and will begin to listen on that port for a socket connection
+	
+	<pre>
+		<b> python server.py [PORT_NUMBER] </b>
+	</pre>
+	
+	The server should accept messages from both of the clients. Once the server receives the player's choice, the server determines who the winner is and sends the outcome to both of the clients. If the server recieves something that is not "Rock" "Paper" or "Scissors" (not case-sensitive), the server should send a "404 Not Found" message and then ask again for the player's choice. If the clients provide a valid answer, the server to respond with a "200 OK" response message. 
+	
     <h3> Expected Output</h3>
 
+	
+	<h3> Video Demo </h3>
+	You will record a video demo that highlights the functionality of your program. You can do this with Panopto, or you can record with another recording software (such as OBS) and post it to youtube.
+	The video should show you running <tt> server.py</tt> and both of the <tt> client.py </tt>programs. You should run the programs with a player vs player scenario, and then a player vs CPU scenario. If you do not record a video demo, then you will lose <b> a very large amount </b> of points.
+	
     <h3> Submission Instructions</h3>
 
+	All your files need to be pushed to a  <tt> /PA1 </tt> folder on your GitHub. You need to include a <tt> README.md  </tt> in your <tt> /PA1 </tt> folder. The link to your video demo should appear at the very top of your README. Additionally, you should have a section thats describes how to run your program(s). When you are ready to submit, you will submit <b> just the link </b> to your private repository.
+	
 
 
 </body>
