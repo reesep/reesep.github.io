@@ -1,0 +1,276 @@
+
+
+<html>
+
+    <head>
+    
+        <title> CSCI 466 PA 2</title>
+    
+    
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    
+        <style>
+            h1 {text-align: center;}
+            h2 {text-align: center;}
+           
+            </style>
+    
+    </head>
+    
+    
+    
+    
+    <body>
+    
+        <div class="container">
+    
+        <h1 text-align:center> Programming Assignment 2: Reliable Data Transfer Pirate Translation</h1>
+    
+        <h2> Assigned Wednesday October 5th </h2>
+        <h2> Due Friday October 21st @11:59 PM</h2>
+    
+
+        <h3> GitHub Repo </h3>
+        <p> You will use the same GitHub repo from PA1. All of your files for this assignment should go inside a <tt> /PA2</tt> folder </p>
+    
+    
+        <h3> Overview</h3>
+        In this assignment, you will develop a reliable data transfer protocol between a client a server that communicate with sockets. The client program will ask for a sentence/phrase to be translated into pirate. Your program will divide up the original message into segments to send to the server. 
+        The server will receive these segments, reassemble them into the correct message, and translate them into pirate. The server segments this message and send them back to the original client where it will be reassembled into their translated sentence.  
+
+        <br>
+        For example, "That boy is my friend" will be translated to "That lad is me hearty".
+        
+        <h3> RDT Protocol</h3>
+
+        You will implement the Reliable Data Transfer 2.1 protocol. In this protocol, it is possible for messages and <b>acknowledgements (ACKs)</b> to arrive corrupted. If either one of those are corrupted, the sender or receiver needs to ask for a retransmission. This is a <b>stop-and-wait protocol</b>,
+        so the sender must wait to send the next message until it has received an ACK for the previous message. RDT 2.1 also uses <b>checksums</b> to detect bit errors or corrupted packets, and uses <b>sequence numbers</b> to identify different segments. NAKs will never be corrupted.
+
+        <h3> Segmentation</h3>
+        
+        One important responsibility of the transport layer is <b> segmentation </b>. When sending a message from point A to point B, the transport layer will divide up the application layer message into small segments, which will each receive a header before being sent into the network layer. 
+        The size of these segments are based on the Maximum Segment Size (MSS). This value will be an input parameter to your program.
+
+            <br>
+        <img src="segmentation.PNG" width=600" height="400"">
+
+
+
+        <h3> Instructions </h3>
+
+        
+        For this assignment, you will develop two programs: <tt> client.py </tt> and <tt> server.py </tt>.
+        
+        
+        <h3>
+        client.py
+        </h3>
+        The "client" will send a sentence that they would like to be translated to the server. This program is run via the command line and takes 3 command line parameters:
+        
+        <pre>
+        
+            <b> python client.py [PORT_NUMBER] [MAXIMUM_SEGMENT_SIZE] [PACKET_CORRUPT_PROBABILITY] </b>
+            example:  <b>python client.py 5001 4 .2 </b>  //port 5001, segments will be length of 4, 20% corruption probability
+        </pre>
+        
+        The <tt> PORT_NUMBER </tt> argument is the port that the socket will bind to. Remember that you should only use ports greater than 1024. 
+        The [MAXIMUM_SEGMENT_SIZE] will represent how big the segments will be. For example, if MTT=4, each segment will have 4 characters as its data. [PACKET_CORRUPT_PROBABILITY] is the probability that a packet will be corrupted upon its arrival. This can be expressed as a percent (20), or a decimal (.2). For example, if this value is .2, then the client will send a corrupted packet to the server ~20% of the time.
+        
+        The client will segment the original sentence and send the segments one by one, but the client must wait for an ACK from the server before it can send the next segment. It is possible that the ACK could be corrupted, so when ACKs/message arrive, the client will need to check the checksum and ask for a retransmission from the server if needed. NAKs CAN NOT be corrupted, which will make things easier.
+        
+
+        
+        <h3>
+        server.py
+        </h3>
+        This file will be your server. The server is run from the command line with the same three inputs
+        
+        <pre>
+            <b> python server.py [PORT_NUMBER] [MAXIMUM_SEGMENT_SIZE] [PACKET_CORRUPT_PROBABILITY] </b>
+            example:  <b>python server.py 5001 8 .1 </b>  //port 5001, segments will be length of 8, 10% corruption probability
+        </pre>
+        
+        When the translates the message, it will segment the pirate message based on its MSS value and send the segments back to the client.[PACKET_CORRUPT_PROBABILITY] is the probability that a packet will be corrupted upon its arrival. This can be expressed as a percent (10), or a decimal (.1). For example, if this value is .1, then the server will send a corrupted packet to the client ~10% of the time.
+        
+        <br><br>
+    
+        <img src="Slide1.PNG">
+
+    
+        <br>
+    
+        <h3> Packet Class </h3>
+        
+        You must define a packet class / struct in your program. You must be sending these objects through your socket between client and server. You can create a separate class for an ACK/NAK packet if you would like. Your class must have at least 
+        <br><br>
+        <tt> &nbsp;&nbsp; Class Packet {}
+        <ul>
+            <li> int sequence_number</li>
+            <li> int checksum   // can also be a string or boolean ("valid" or "invalid")</li>
+            <li> int ack_or_nak //ack = 1, nak=0, neither = 2</li>
+            <li> int length </li>
+            <li> string message</li>
+        }
+        </ul>
+        </tt>
+
+        <ul>
+            <li> The <b>sequence number</b> is a counter to keep track of every packet sent by a host. In TCP, the sequence number is based on the amount of bytes sent, but for this assignment the sequence number should happen by packet number. So that means the first packet sent gets a sequence number of 1, the second packet gets a sequence number of 2, and so on. When a host sends back a NAK, you will need to determine which packet to resend. The sequence number can also help you reassemble the message when all packets arrive to the other host.</li>
+            <li> The <b>checksum</b> is a flag (either true or false, or valid or invalid) that indicates whether a packet is corrupted. Upon packet arrival, if the checksum field is "invalid"/0/False, then the host must throw out that packet and ask for a retransmission </li>
+            <li> The <b>ack_or_nak</b> field indicates if a packet is an ack, a nak, or neither. How you implement this is up to you, but you could have 0 represent a nak, 1 represent an ACK, and 2 represent a normal message</li>
+            <li> The <b>length</b> field tells the host how long the message will be (# of characters in the string), this value should never exceed the MSS.</li>
+            <li> The <b>message</b> field is the segment of the sentence that needs to get sent to host for translation</li>
+        </ul>
+
+        <h4> Example packet </h4>
+
+        Packet(4,"valid",2,4,"my f") would be an uncorrupted packet with the message "my f" and has a sequence number 4. <br>
+        Packet(0,"valid",1,0,"") would be an uncorrupted acknowledgement (ACK) message
+
+
+
+
+        <h3> Pirate Language Translation file</h3>
+
+        I will provide you a basic csv file that includes some translations from english words to pirate words. Your server will need to read this file in order to translate the client's message.
+
+        Pirate CSV file: <a href="pirate.csv"> https://www.cs.montana.edu/pearsall/classes/fall2022/466/programs/pirate.csv</a>
+        
+
+
+        <h3> Programming Language </h3>
+        You are allowed to use a programming language of your choice. Although, you must use a language that supports:
+        <ul>
+            <li> Socket communication </li>
+            <li> OOP or Structs </li>
+            <li> Invocation from the command line/terminal</li>
+        </ul>
+
+        Python is the support language for this class, so Reese will not be able to help with technical issues or syntax issues if you select a language other than Python. Java, Rust, Go, C/C++ are all valid languages to use.
+
+
+        <h3> Hints </h3>
+        <ul>
+            <li> Do not tackle the whole problem in one go. Take it one step at a time. First just get two sockets to send/receive objects, then get message segmenting working, then sequence numbers, then acks, etc. </li>
+            <li> When a NAK is received, you will need to retransmit the last message sent, so you might need a data structure to store the previous message sent.</li>
+            <li> The server will not know how many packets to wait for. I recommend having your server/client accept packets until a message with a punctuation mark (. , ?, !) is received. When the host sees a message with a punctuation mark, stop the loop and begin assembling and translating</li>
+            <li> Translating to pirate should be basic file reading. You can use the comma as a delimiter, and then split the sentence into individual words and translate the words that have a match in the csv file</li>
+            <li> Dont submit code that doesnt work. If you can't get packet retransmission working properly, try to get everything else working.</li>
+        </ul>
+
+        <h3> Video Demo </h3>
+        You will record a video demo that highlights the functionality of your program. You can do this with Panopto, or you can record with another recording software (such as OBS) and post it to youtube as private or unlisted.
+        
+        Your video demo must also provide us a brief walkthrough of your code. This means your video demo will require commentary. Especially if you are using a language other than Python/Java, it will help Reese/Justin see that you followed the instructions.
+
+
+        <h3> Partners </h3>
+    
+        You are allowed to work with 1 (one) partner. If you work with a partner, you should only create one private repository. 
+    
+
+        <h3> Submission Info </h3>
+
+        <B> NEW:</B> BOTH MEMBERS MUST SUBMIT A REPO LINK TO D2L. All files should be pushed to your repository. You still need a README that contains the video link and information about your program.
+
+    
+        <h3> Grading Rubric (100 Points)</h3>
+    
+       <style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-1wig{font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-1wig">Requirement</th>
+    <th class="tg-0lax"><span style="font-weight:bold">Points</span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax">Your program has a server and client program that are ran from the command line with correct parameters (port, MSS, corrupt %)</td>
+    <td class="tg-0lax">5</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">Your program segments messages based on the MSS</td>
+    <td class="tg-0lax">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">Segments are sent one-by-one, and do not send until an ACK from the previous message has been receieved</td>
+    <td class="tg-0lax">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">Segments are properly retransmitted when packet corruption occurs</td>
+    <td class="tg-0lax">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">All packets include AT LEAST (1) sequence number (2) checksum, (3) ack_or_nak_filed, (4) length, and (5) message</td>
+    <td class="tg-0lax">5</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">Packets arrive in same order as they were sent</td>
+    <td class="tg-0lax">5</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">The original message is reassembled and translated into pirate</td>
+    <td class="tg-0lax">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">The pirate sentence is segmented and sent back to client properly</td>
+    <td class="tg-0lax">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">Packets are sent through sockets</td>
+    <td class="tg-0lax">5</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">Your code is submitted to a private Github repo that has a README desribed how to run your program(s) and contains a link to your video  demo</td>
+    <td class="tg-0lax">10</td>
+  </tr>
+</tbody>
+</table>
+       
+    
+            <br><br>
+            <b>Penalties</b>
+            <ul>
+                <li> Running code results in errors before runtime: -30 points </li>
+                <li> Running code results in errors during runtime: -15 points</li>
+                <li> No video demo: -50 points </li>
+                <li> Your repository is public: -100 points </li>
+                   </ul>
+    
+    
+    
+        <h3> Helpful Examples </h3>
+    
+        <ul>
+            <li><a href="../lectures/examples/socket_objects_server.py">socket_objects_server.py </a></li>
+            <li><a href="../lectures/examples/socket_objects_client.py">socket_objects_client.py </a></li>
+            <br>
+            <li><a href="../lectures/examples/reverse_server.py">reverse_server.py </a></li>
+            <li><a href="../lectures/examples/reverse_client.py">reverse_client.py </a></li>
+            <br>
+            <li><a href="../lectures/examples/countdown_server.py">countdown_server.py </a></li>
+            <li><a href="../lectures/examples/countdown_client.py">countdown_client.py </a></li>
+    
+            <br>
+    
+            <li> <a href="https://docs.python.org/3/library/socket.html">Sockets documentation</a></li>
+    
+        </ul>
+    
+    
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <a href="https://youtu.be/b3sOOBicyDY"> Solution</a>
+    </div>
+    </body>
+    
+    
+    </html>
