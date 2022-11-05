@@ -1,7 +1,7 @@
 ﻿Router,Action,Header/Condition
 A,Forward=B,dst_ip_address=10.1.1.2
 A,Forward=C,dst_ip_address=10.1.1.3
-A,Drop,dst_ip_addess=10.1.1.5
+A,Drop,dst_ip_address=10.1.1.5
 A,Forward=B,dst_tl_port=120
 A,Modify=dst_ip_address=10.1.1.3,dst_ip_address=10.1.1.9
 A,Forward=C,src_ip_address=192.42.7.66
