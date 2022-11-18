@@ -225,7 +225,7 @@ intentionally corrupt a bit in the ciphertext, decrypt the corrupted ciphertext,
 <ol>
   <li>Create a text file that is at least 1000 bytes long.</li>
   <li>Encrypt the file using the AES-128 cipher.</li>
-  <li>Intentionally corrupt the file: change a single bit in the 55th byte in the encrypted file. (You can achieve this corruption using any hex editor.)</li>
+  <li>Intentionally corrupt the file: change a single bit in the 55th byte in the encrypted file. (You can achieve this corruption using any hex editor. <tt>ghex ciphertext.txt</tt> will open it up in a hex editor</li>
   <li>Decrypt the corrupted ciphertext file using the correct key and IV.</li>
 </ol>
 
@@ -242,7 +242,7 @@ Please provide justification.</p>
 
 
 
-<h3 id="task-5-common-mistakes-with-ivs">Task 5: Common Mistakes with IVs</h3>
+<h3 id="task-5-common-mistakes-with-ivs">Task 6: Common Mistakes with IVs</h3>
 
 <p>Most of the encryption modes require an Initialization Vector (IV).
 Properties of an IV depend on the cryptographic scheme used.
@@ -251,13 +251,13 @@ If we are not careful in selecting IVs,
 The objective of this task is to help students understand some of the problems that arise if an IV is not chosen properly.
 <!-- The detailed guidelines for this task is provided in Chapter 21.5 of the SEED book. --></p>
 
-<h4 id="task-51-uniqueness-of-the-iv">Task 5.1: Uniqueness of the IV</h4>
+<h4 id="task-51-uniqueness-of-the-iv">Task 6.1: Uniqueness of the IV</h4>
 
 <p>A basic requirement for the IV is <strong><em>uniqueness</em></strong>, which means that no IV may be reused under the same key.
 To understand why, please encrypt the same plaintext using (1) two different IVs, and (2) the same IV.
 Please describe your observations and explain why the IV needs to be unique.</p>
 
-<h4 id="task-61-known-plaintext-attack">Task 5.2: Known Plaintext Attack</h4>
+<h4 id="task-61-known-plaintext-attack">Task 6.2: Known Plaintext Attack</h4>
 <!-- was Task 5.2 -->
 
 <p>One may argue that if the <em>plaintext</em> does not repeat, using the same IV (and key) is safe.
