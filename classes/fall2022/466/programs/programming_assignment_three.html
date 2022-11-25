@@ -30,116 +30,65 @@
         <h2> Due Monday November 14th @11:59 PM</h2>
     
 
-        <h2> TODO: Add program output, rubric, input file links</h2>
-
+        
 
         <h3> GitHub Repo </h3>
-        <p> You will use the same GitHub repo from PA1 and PA2. All of your files for this assignment should go inside a <tt> /PA2</tt> folder </p>
+        <p> You will use the same GitHub repo from PA1 and PA2. All of your files for this assignment should go inside a <tt> /PA3</tt> folder </p>
     
     
         <h3> Overview</h3>
-        In this assignment, you will simulate a network of routers that use SDN-based routing for their routing decisions. Routers will do actions (forward, drop, modify) packets based on a set of rules managed by a SDN. For this assignment you will be simulating a network with 4 routers. Each router has a list of machine IP addresses that are directly connected to it, a set of links to other routers, and a set of rules defined by a SDN.
-
-        <img src="pa3.PNG" width=800" height="400"">
-
-
-        <br>
-        For example, Router B has two links (Link to A, and Link to B) and has the subnet 10.2.2.0/24 connected to it. Packets that arrive to router B that have an destination IP address for one those two machines can be directly delivered.
-        
-
-        <h3> Packets </h3>
-        You will need to implement a packet class similarly to PA2. Each packet that gets sent into this network will have (AT LEAST) the following information:
-
-        <tt> &nbsp;&nbsp; Class Packet {}
-            <ul>
-                <li> int src_ip_address</li>
-                <li> int dst_ip_address  </li>
-                <li> int src_tl_port</li>
-                <li> int dst_tl_port </li>
-                <li> protocol </li>
-            }
-            </ul>
-            </tt>
-
-        <b>src_ip_address</b> is the source IP address for the packet. <b>dst_ip_address</b>is the destination IP address for the packet. <b>src_tl_port</b> and <b>dst_ip_address</b> are the source transport layer port, and destination transport layer ports of the packet, respectively. The <b> protcol</b> represents the protocol of the packet (HTTP, DNS, UDP, etc). 
-
-        The router will use these fields of the packet to make routing decisions (ie. Forward to Router B if dst_ip_address==10.2.2.3, or Drop packets with src_tl_port=80)
-
-
-        <h3> Routing Rules </h3>
-
-        You will read in a set of routing rules (actions) from an external csv file. There are three possible actions:
+        At a LAN-level, if two devices transmit messages to each other at the same time, collisions can occur. To prevent this from happening, we discussed several media access control (MAC) protocols. One type of MAC protocol is "taking turns", where each endpoint gets to take turns transmitting messages.
+        <br><br> In this assignment, you will implement the <a href="">token passing</a> protocol.
+        In this protocol, hosts are set up a ring-like topology, and a special packet (a "token"), is transmitted amongst the ring. The token can only be at one host, and hosts can only transmit messages when they have the token. Your program will use several instances of the same python program (node.py) that are connected via sockets to simulate a LAN that is using the token passing protocol. The token will always begin at the <b>head node</b>.
+<br><br>
+        Each host will have:  
         <br>
         <ul>
-            <li>Forward: this action will forward a packet to another router based on some condition</li>
-            <br>
-            <li>Drop: this action will drop a packet based on some condition</li>
-            <br>
-            <li>Modify: this action will modify the fields of the packet, and then retransmit it through the current router.</li>
-            <br>
+          <li> A sender port, which is the port that the host sends the token over</li>
+          <li> A receiving port, which is the port that they receive the token on</li>
+          <li> The number of packets that the host needs to send out. This number will be >= 0</li>
+          <li> A flag (true or false), to indicate if the node is the head node.</li>
+          <li> A node number (Node #1, Node #2, etc).</li>
         </ul>
-
-        Consider the following rules:
         
-        <br>
-        <img src="forwarding_rules.PNG" width=800" height="150"">
-        <br>
-        <br>
-        Router A gets 3 rules. If router A ever receives a packet that has a destination IP address of 10.1.1.2, it will always forward it to Router B. If a packet ever arrives with a destination IP address of 10.1.1.3, it will always forward it to router C. If router A gets a packet with a destination IP address of 10.1.1.5, it will drop the packet and move onto the next packet in the queue.
-        <br>
-        <br>
-        From that small snippet of rules defined above, consider a packet arrives to Router A that has a destination IP address of 10.1.1.3. Router A will check its rules, and see that it needs to forward it to Router C. The packet then arrives at router C, and router C will check its rules. Router C has a rule to drop all packets that have a dst_ip_address of 10.1.1.3, so the packet will be dropped bt router C.
-
-
-
-        <h3> Router Subroutine.</h3>
-
-        Whenever a packet arrives to router, that same procedure is usually followed. 
-
-        <script src="https://gist.github.com/reesep/b0dadb222a9132e642ed27466bbf9a51.js"></script>
-
-
-
-
-        <h3> Network setup</h3>
         
-        You will also need to define a Router class.
 
-        <tt> &nbsp;&nbsp; Class Router {}
-            <ul>
-                <li> list list_of_ip_addresses</li>
-                <li> list connections </li>
-                <li> dict rules</li>
-            }
-            </ul>
-            </tt>
-        
-        For router A, it will have a list of IP addresses of [10.6.6.3], and its connections will be [B,C], and it will have three rules {  Forward=B: dst_ip_address=10.1.1.2, Forward=C : dst_ip_address=10.1.1.3, Drop : dst_ip_address=10.1.1.5 }.
-            
+        <img src="pa4.PNG" width=800" height="400"">
+        <br>
+        <br>
+        When a node/host receives the tocken on its receving port, it will check its buffer/queue, and if it has packets to send out, it will send out on packet. Sending a packet simply means printing out a message to the screen, and removing a value from the buffer.
+       <br><br>
+        When a packet gets sent, there is a 25% chance that a new packet gets added to the host's buffer. If the host does not have any packets in its buffer to send out, it will simply pass the token to the next host, and then do some RNG to see if a new packet will get added to the buffer.
+        <br>
+        <br>
+        Your program should run indefintely. You do not need to implement a graceful termination for this protocol.
 
-        The data types do not have to be the same, but you will need a data structure to hold this information for each router.
+        <h3> Socket instructions </h3>
+        For all previous assignments, we have used TCP sockets, but for this assignment you should use <b> UDP sockets </b>. It will make setting up and transmitting messages in a ring topology much much easier. This means the code for using sockets will be slightly different. Examples for UDP sockets <a href="">can be found here.</a>
 
-
-            <br><br>
-
-        You will read in this information in from a file (routers.txt)
-        <img src="routers.png" width=800" height="150"">
 
         <h3> Programs </h3>
 
-        You will develope two files. The first is <tt>network.py</tt> which will have the logic for receiving the packet, and then sending the packet throughout the network. This is where you will implement all your parsing and rule checking. The second file you need is <tt> simulation.py</tt>, and its only
-        purpose is to send packets (via sockets) to network.py. 
+        You will develop one file, node.py. This program will handle setting up the sockets, receivng the token, sending the token, and managing the host's buffer.
+        Below is some very basic pseudo code you can use to guide yourself when implementing your solution:
+        <script src="https://gist.github.com/reesep/69a1c4da58065d5f63b2f8550a4bc604.js"></script>
 
         <br><br>
-        You will send several packets, and the packets information will be read in from a text file (packets.txt)
+        You will likely need an if block that handles the first very sending of the token in the head node.
 
-        <img src="packets.png" width=800" height="125"">
+        <br><br>
 
+        You will run these programs via the command line, and pass in the host information as command line arguments. The format will be
 
-        <br> 
-        You will have to create a Packet object for each row in this file.
+        <br><br>
+        <tt>python node.py  (send_port) (receive_port) (#_of_packets_in_buffer) (is_head) (node_#)</tt>
 
+        <br> <br>For example <tt>node.py 8081 8080 5 1 1</tt> would mean that this host is sending the token on port 8081, receiving the token on port 8080, has 5 packets currently in buffer, is the head node, and is node # 1.
 
+        <br><br>
+        Be sure that you are paying attention to the port numbers and make sure the ports are set up in a ring-like topology (see diagram above).
+        <br><br>
+        
         <h3> Programming Language </h3>
         You are allowed to use a programming language of your choice. Although, you must use a language that supports:
         <ul>
@@ -153,28 +102,28 @@
     
         <h3> Input Files </h3>
         <ul>
-            <li> <a href="rules.csv"> rules.csv (read by network.py)</a></li>
-            <li> <a href="packets.csv"> packets.csv (read by simulation.py)</a></li>
-            <li> <a href="routers.csv"> routers.csv (read by network.py)</a></li>
+            None!
         </ul>
 
         <h3> Sample output </h3>
         
-        <a href="output.out"> Click here to see an expected output of your program.</a> You program output does not have to match that exactly, but your program should print out the trace of the actions taken at each router.
+        <a href="https://www.youtube.com/watch?v=MpLoM8Y_xF0"> Click here to see an a sample demo of the program. </a>It's much easier to understand by watching a video instead of looking at a picture. There is no required output to match exactly, but it should be somewhat similar to what you see in the video. <b> Your video demo should include five hosts/teminals.</b>
 
 
 
         <h3> Assumptions</h3>
         <ul>
-            <li> You don't have to worry about rules that would create an infinite loop</li>
-            <li> There won't be any conflicting rules (ie a router wont have to forward AND drop the same packet.)</li> 
+            <li> There will only be one head node </li>
+            
         </ul>
 
 
         <h3> Hints </h3>
         <ul>
-            <li> Do not tackle the whole problem in one go. Take it one step at a time. First just get two sockets to send/receive objects, then get message segmenting working, then sequence numbers, then acks, etc. </li>
-            <li> Dont submit code that doesnt work. If you can't get packet forwarding working properly, try to get everything else working.</li>
+            <li> First get it working with two hosts, then three hosts, and then five hosts</li>
+            <li> This is possible with TCP sockets, but requires much more work</li>
+            <li> Dont submit code that errors out. If you can't get buffer management working, try to get everything else working.</li>
+            <li> Keep it simple. This assignment does not require a lot of code</li>
         </ul>
 
         <h3> Video Demo </h3>
@@ -194,58 +143,7 @@
 
     
         <h3> Grading Rubric (100 Points)</h3>
-        <style type="text/css">
-            .tg  {border-collapse:collapse;border-spacing:0;}
-            .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-              overflow:hidden;padding:10px 5px;word-break:normal;}
-            .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-              font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-            .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-            .tg .tg-0lax{text-align:left;vertical-align:top}
-            </style>
-            <table class="tg">
-            <thead>
-              <tr>
-                <th class="tg-0pky">Requirement</th>
-                <th class="tg-0pky">Points</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="tg-0pky">Your program reads in input from three files: router.csv rules.csv and packets.csv</td>
-                <td class="tg-0pky">10</td>
-              </tr>
-              <tr>
-                <td class="tg-0pky">You have a packet class/struct that contains information about the protocol, src/dst ports and src/dst ip addresses</td>
-                <td class="tg-0pky">5</td>
-              </tr>
-              <tr>
-                <td class="tg-0pky">You have a router class/struct that contains information about the router number, ip addresses, and links</td>
-                <td class="tg-0pky">5</td>
-              </tr>
-              <tr>
-                <td class="tg-0pky">Your simulation program sends packets to the network program via sockets</td>
-                <td class="tg-0pky">10</td>
-              </tr>
-              <tr>
-                <td class="tg-0pky">Your network program can forward packets correctly</td>
-                <td class="tg-0pky">20</td>
-              </tr>
-              <tr>
-                <td class="tg-0pky">Your network program can drop packets correctly</td>
-                <td class="tg-0pky">20</td>
-              </tr>
-              <tr>
-                <td class="tg-0lax">Your network program can modify packets correctly</td>
-                <td class="tg-0lax">20</td>
-              </tr>
-              <tr>
-                <td class="tg-0lax">Your solution exists in your GitHub repo that has a README.md describing how to run your program.</td>
-                <td class="tg-0lax">10</td>
-              </tr>
-            </tbody>
-            </table>
-    
+        
             <br><br>
             <b>Penalties</b>
             <ul>
@@ -260,6 +158,10 @@
         <h3> Helpful Examples </h3>
     
         <ul>
+
+            <li> UDP sender </li>
+            <li> UDP Reciever </li>
+
             <li><a href="../lectures/examples/socket_objects_server.py">socket_objects_server.py </a></li>
             <li><a href="../lectures/examples/socket_objects_client.py">socket_objects_client.py </a></li>
             <br>
