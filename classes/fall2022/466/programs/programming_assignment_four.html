@@ -23,23 +23,23 @@
     <body>
     
         <div class="container">
+
             <h1 text-align:center> Programming Assignment 4: Link Layer Token Passing Protocol</h1>
   
             <h2> Assigned Monday November 28th </h2>
             <h2> Due Sunday December 11th @11:59 PM</h2>
       
 
-        
-
-        <h3> GitHub Repo </h3>
+          <h3> GitHub Repo </h3>
         <p> You will use the same GitHub repo from PA1, PA2, and PA3. All of your files for this assignment should go inside a <tt> /PA4</tt> folder </p>
     
     
         <h3> Overview</h3>
+
         At a LAN-level, if two devices transmit messages to each other at the same time, collisions can occur. To prevent this from happening, we discussed several media access control (MAC) protocols. One type of MAC protocol is "taking turns", where each endpoint gets to take turns transmitting messages.
         <br><br> In this assignment, you will implement the <a href="https://www.tutorialspoint.com/token-passing-in-bit-map-protocol">token passing</a> protocol.
         In this protocol, hosts are set up a ring-like topology, and a special packet (a "token"), is transmitted amongst the ring. The token can only be at one host, and hosts can only transmit messages when they have the token. Your program will use several instances of the same python program (node.py) that are connected via sockets to simulate a LAN that is using the token passing protocol. The token will always begin at the <b>head node</b>.
-<br><br>
+
         Each host will have:  
         <br>
         <ul>
@@ -88,7 +88,8 @@
         Be sure that you are paying attention to the port numbers and make sure the ports are set up in a ring-like topology (see diagram above).
         <br><br>
         
-        <h3> Programming Language </h3>
+
+                <h3> Programming Language </h3>
         You are allowed to use a programming language of your choice. Although, you must use a language that supports:
         <ul>
             <li> Socket communication </li>
@@ -101,20 +102,21 @@
     
         <h3> Input Files </h3>
         <ul>
+
             None!
         </ul>
 
         <h3> Sample output </h3>
         
-        <a href="https://www.youtube.com/watch?v=MpLoM8Y_xF0"> Click here to see an a sample demo of the program. </a>It's much easier to understand by watching a video instead of looking at a picture. There is no required output to match exactly, but it should be somewhat similar to what you see in the video. <b> Your video demo should include five hosts/teminals.</b>
 
+        <a href="https://www.youtube.com/watch?v=MpLoM8Y_xF0"> Click here to see an a sample demo of the program. </a>It's much easier to understand by watching a video instead of looking at a picture. There is no required output to match exactly, but it should be somewhat similar to what you see in the video. <b> Your video demo should include five hosts/teminals.</b>
 
 
         <h3> Assumptions</h3>
         <ul>
+
             <li> There will only be one head node </li>
-            
-        </ul>
+         </ul>
 
 
         <h3> Hints </h3>
@@ -142,24 +144,28 @@
 
     
         <h3> Grading Rubric (100 Points)</h3>
-        
         <style type="text/css">
             .tg  {border-collapse:collapse;border-spacing:0;}
             .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
               overflow:hidden;padding:10px 5px;word-break:normal;}
             .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
               font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+
+
+            .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
             .tg .tg-0lax{text-align:left;vertical-align:top}
             </style>
             <table class="tg">
             <thead>
               <tr>
+
                 <th class="tg-0lax">Requirement</th>
                 <th class="tg-0lax">Points</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+
                 <td class="tg-0lax">Each host/node has a (1) sending port, (2) receiving port, (3) node #, (4) current amount of packets in buffer, and (5) if node is the head</td>
                 <td class="tg-0lax">15</td>
               </tr>
@@ -194,6 +200,10 @@
             </tbody>
             </table>
 
+
+
+    
+
             <br><br>
             <b>Penalties</b>
             <ul>
@@ -208,6 +218,7 @@
         <h3> Helpful Examples </h3>
     
         <ul>
+
 
             <li> <a href="../lectures/examples/udp_client.py">UDP client </a></li>
             <li> <a href="../lectures/examples/udp_server.py">UDP server </a></li>
@@ -229,9 +240,14 @@
     
     
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
         <a href="https://www.youtube.com/watch?v=jUiIpOS0vx8"> Solution</a>
+
+        <a href="https://youtu.be/b3sOOBicyDY"> Solution</a>
     </div>
     </body>
     
     
+
     </html>
+
