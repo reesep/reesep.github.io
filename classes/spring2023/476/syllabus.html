@@ -16,7 +16,7 @@
     <div class="container">
         <div class="page-header text-center">
             <h1>CSCI 476: Computer Security</h1>
-            <h3>Fall 2022</h3>
+            <h3>Spring 2023</h3>
         </div>
 
 
@@ -25,9 +25,9 @@
 <h2>Course Logistics</h2>
 <p>
 
-Tuesday, Thursday  3:05 PM - 4:20 PM <br>
-Location: Reid 102
-
+Monday, Wednesday, and Friday  4:10 PM - 5:00 PM <br>
+Location: Barnard Hall 103 <br>
+(Note: Due to my class schedule, class may start a couple minutes late on most days)
 
 <h2>Instructor</h2>
 
@@ -37,8 +37,8 @@ Location: Reid 102
 	<br><br>
 		<h4>
       &nbsp; &nbsp; &nbsp; <a href="https://www.cs.montana.edu/pearsall/">Reese Pearsall</a>  <br />
-	  &nbsp; &nbsp; &nbsp;  Email: reesepearsall@montana.edu <br />
-      &nbsp; &nbsp; &nbsp; Office Hours: Monday, Wednesday, Friday 10:00-10:50, Thursdays 1:00-2:30 <br />
+	  &nbsp; &nbsp; &nbsp;  Email: reese.pearsall@montana.edu <br />
+      &nbsp; &nbsp; &nbsp; Office Hours: Monday, Wednesday, Friday 1:00 - 2:00 PM, Tuesdays 11:00-12:00 and 1:00 - 2:00 <br />
       &nbsp; &nbsp; &nbsp; Office: Barnard Hall 361<br>
 	  &nbsp; &nbsp; &nbsp;  <br><br>
 	  &nbsp; &nbsp; &nbsp; I can also meet via Zoom if needed. Email me to arrange a time
@@ -51,25 +51,25 @@ Location: Reid 102
 
 <h2> Teaching Assistant and Grader</h2> 
 <ul>
-	<li> Karishma Rahman</li>
-  <li> Email: karishma.rahman.bd@gmail.com</li>
-  <li> Office Hours: Tuesdays 11:00 am to 12:00 pm and 1:10 - 2:00 in Barnard Hall 259</li>
+	<li> TBD</li>
+  <li> Email: TBD</li>
+  <li> Office Hours: TBD</li>
 </ul>
 
 
 <h2>Textbook</h2>
 <ul>
-  <li> <a hef="https://www.amazon.com/Computer-Internet-Security-Hands-Approach/dp/1733003932">Computer & Internet Security: A Hands-on Approach by Wenliang Du <b>(2nd Edition) </b></a></li>
+  <li> <a href="https://www.amazon.com/Computer-Internet-Security-Hands-Approach/dp/1733003940/ref=sr_1_2?crid=195GHQ7GBB8HO&keywords=wenliang+du&qid=1672784073&sprefix=wenliang+du%2Caps%2C151&sr=8-2">Computer & Internet Security: A Hands-on Approach by Wenliang Du <b>(3rd Edition) </b></a></li>
   
   <br>
   
-  <li> Make sure you get the 2nd edition and <b>not</b> the 3rd edition. The 3rd edition is missing some topics that we cover in this course.</li>
+  <li> Make sure you get the 3rd edition and <b>not</b> the 2nd edition. The 2nd edition does not include support for docker (a tool that we will heavily utilize in this course).</li>
   
 </ul>
 
 <h2> Other Required Materials</h2>
 <ul>
-  <li> You will need access to a machine that <a href="https://github.com/seed-labs/seed-labs/blob/master/manuals/vm/seedvm-manual.md">can load a SEED Labs VM</a></li>
+  <li> You will need access to a machine that <a href="https://github.com/seed-labs/seed-labs/blob/master/manuals/vm/seedvm-manual.md">can load a SEED Labs VM</a>. We will be using the VM for all the assignments in this course</li>
 </ul>
 
 <h2> Class Communication </h2>
@@ -89,6 +89,7 @@ Location: Reid 102
 	<li> <a href="https://seedsecuritylabs.org/index.html">SEED Labs Website</a> </li>
 	<li> <a href="https://www.kernel.org/doc/man-pages/">Linux man Pages </a></li>
   <li> <a href="https://www.virtualbox.org/"> VirtualBox </a></li>
+  <li> <a href="https://docs.docker.com/"> Docker</a> (already installed on our VM)</li>
 </ul>
 
 <h2>Catalog Description</h2>
@@ -105,6 +106,8 @@ Location: Reid 102
 
 <p> Before taking this class, I expect you to be comfortable with basic programming in C and Python. You should be comfortable with basic Linux command line navigation. You should also be familiar with some of the fundamental concepts of a computer system (CPU, Assembly & Hexademical, Memory, Networks and HTTP)</p>
 
+<br> <p>You will be <b> totally fine</b> if you have not taken CSCI 460 (Operating Systems) or CSCI 466 (Networks) </p>
+
 <h2>Course Outcomes</h2>
 <p>
   By the end of this course, students should be be able to: 
@@ -112,9 +115,9 @@ Location: Reid 102
 
 <ul>
   <li>Understand important principles of security and threats to the CIA triad </li>
-  <li>Understand a variety of relevant vulnerabilities and defenses in software security (SETUID, Shellshock, Buffer Overflow)  </li>
-  <li>Understand a variety of relevant vulnerabilities and defenses in network security (SQL Injection, XSS, TCP/IP attacks)</li>
-  <li>Understand a variety of relevant vulnerabilities and defenses in cryptography (Asymmetric, symmetric, One Way Hashing)</li>
+  <li>Understand a variety of relevant vulnerabilities and defenses in software security (SETUID, Shellshock, Buffer Overflow, Format Strings)  </li>
+  <li>Understand a variety of relevant vulnerabilities and defenses in network security (SQL Injection, XSS, DNS Cache Poisoning, Firewalls, TCP/IP attacks)</li>
+  <li>Understand a variety of relevant vulnerabilities and defenses in cryptography (Asymmetric, symmetric, One Way Hashing, RSA)</li>
   <li>Given a system, develop a threat model, assess potential security weaknesses, and be able to think from the perspective of a threat actor </li>
   <li>Make technical decisions during development of software with security in mind </li>
 </ul>
@@ -124,23 +127,22 @@ Location: Reid 102
 
 
 
-70% - Labs (10 @ 7% each) <br>
-15% - Research Project and Paper <br>
-15% - Final Exam <br>
+70% - Labs (12 @ ~6% each) (this will likely only be 11 labs)<br>
+15% - Research Project/Paper <br>
+15% - Final Lab <br>
 
 <h2> Grading Breakdown </h2>
-<b> Labs (70%) (10 labs @ 7% each)-  </b> The labs are the primary assignments and focus in this class. These are hands-on activities where you get to experience exploiting the vulnerabilities that we discuss in lecture using the SEED labs VM.
+<b> Labs (70%) (12 labs @ ~6% each)-  </b> The labs are the primary assignments and focus in this class. These are hands-on activities where you get to experience exploiting the vulnerabilities that we discuss in lecture using the SEED labs VM.
 These are generally due every week and you have about 1 week to complete the labs. You will follow lab instructions and record your findings/output in a word document and then submit it to D2L as a PDF. Labs are to be done individually.
 <br><br>
-<b> Research Project and Paper (15%)- </b> Because security covers such a large breadth of topics, we cannot discuss every interesting topic in this 16-week course. The research project will allow you to explore a security-related topic of your choice and 
-    write a short report and presentation about your topic. You can choose any security-related topic that we do not cover in this course, but you must get it approved by Reese first.  You can generally submit your project anytime to D2L during semester before the final week.
+<b> Research Project/Paper (15%)- </b> Because security covers such a large breadth of topics, we cannot discuss every interesting topic in this 16-week course. The research project will allow you to explore a security-related topic of your choice and 
+    write a short report OR presentation about your topic. You can choose any security-related topic that we do not cover in this course, but you must get it approved by Reese first.  You can generally submit your project anytime to D2L during semester before the final week.
 </b> 
 <br><br>
-<b> Final Exam (15%)- </b> The final exam will take place during finals week. This is a cumulative exam that will ask you conceptual questions about topics we've talked about. A note sheet is allowed and the exam will consist of free response questions.
+<b> Final Lab (15%)- </b> The final lab will be a cumulative lab that covers all the content from the semester. This will take about 2-3x longer than a typical lab to complete and will be due during finals week.
 <br><br>
 
-
-<b>Extra Credit (?%)- </b> There will probably be extra credit opportunities at certain times during the semester.
+<b>Extra Credit (?%)- </b> There will be extra credit opportunities at certain times during the semester. This extra credit is applied to your final grade, or your final lab grade
 
 <h2>Grading Scale</h2>
 
@@ -203,6 +205,7 @@ If you do not use a late pass, the penalties for late submissions are as follows
 
 <ul>
   <li>Share ideas with other students in the class.</li>
+  <li> Work together on labs in the same physical location. </li>
   <li>Help other students troubleshoot problems.</li>
   <li>Give hints or provide textbook page numbers/slide numbers to students seeking help</li>
 </ul>
