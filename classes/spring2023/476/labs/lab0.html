@@ -1,0 +1,264 @@
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Computer Security</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" type="image/x-icon" href="/cs476-2021-spring/favicon.ico">
+
+  <!-- Fonts & TextFormatting -->
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:500&display=swap" rel="stylesheet" />
+  <link href="../assets/all.css" rel="stylesheet"> <!--load all fontawesome styles -->
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/prism.css" /> <!-- Prism JS & CSS downloaded from: https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript+bash+c+csharp+cpp+cmake+docker+git+http+hpkp+hsts+java+javadoc+javadoclike+json+latex+liquid+makefile+markdown+markup-templating+mongodb+nasm+nginx+perl+php+phpdoc+php-extras+plsql+python+regex+ruby+rust+sql+vim+yaml&plugins=line-numbers+command-line+unescaped-markup+normalize-whitespace+toolbar -->
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <!-- Misc. -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"/>
+</head>
+
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid col-sm-12 p-4 mb-4">
+<div class="row flex-xl-nowrap m-0">
+
+<div class="d-none d-xl-block col-xl-2">
+</div>
+
+<div class="col-12 col-md-12 col-xl-8 bg-white rounded shadow-lg pb-4">
+<div>
+  <!--Thanks, Tim Holman! http://tholman.com/github-corners/ -->
+
+
+
+
+</div>
+
+<!-- ACTIVE Announcements -->
+
+<!-- OLD Announcements (hidden in comment environment) -->
+
+
+
+
+<h1 class="pb-4" id="lab-07-md5-collision-attack-lab">Lab 0: Environment Set up</h1>
+<h1 class="pb-4" id="lab-07-md5-collision-attack-lab">Due Sunday January 29th @ 11:59 PM</h1>
+
+
+<p>The goal of this labs is to get your SEED Labs VM set up. You will be using this virtual machine for all your labs during this semester, so it's important you get it set up correctly. You will also write a very basic hello program in C and Python, and demonstrate that you can run these programs from the command line.
+
+
+
+<h2 class="titletext" id="lab-tasks">Lab Tasks</h2>
+
+<h3 id="python-program">Task 1: Fill out the course questionnaire </h3>
+<p> Fill out the course questionnaire. It can be found here: <a href="https://forms.gle/6VUmcpawy5AHwGfw8">https://forms.gle/6VUmcpawy5AHwGfw8</a></p>
+
+
+<h3 id="python-program">Task 2: Join the Discord server </h3>
+<p> Join the discord server, give yourself the CSCI 476 tag ( <tt>!join-476</tt>), and change your nickname to your name (ex. Reese Pearsall or Reese P).</p>
+
+<h3 id="vm-setup">Task 3: Setting up and configuring your VM</h3>
+
+Follow the instructions for setting up the VM. The instructions can be found here: <a href=""https://github.com/seed-labs/seed-labs/blob/master/manuals/vm/seedvm-manual.md">https://github.com/seed-labs/seed-labs/blob/master/manuals/vm/seedvm-manual.md</a><div class=""></div>
+
+<br>
+
+We also went through these steps during lecture on 1/20. You can watch the recording for help.
+<br>
+<br>
+
+Once you configure and boot up your VM for the first time, you should see a screen like this:
+
+<center> <img src="seed_login.PNG"> </center>
+
+<br>
+
+The username is <tt> seed</tt> and the password is <b><tt> dees </tt></b> (seed spelled backwards). 
+
+<br><br>
+
+Once you see the desktop, you should have your VM ready to go!
+
+
+</p>
+
+
+
+<h3 id="c-program">Task 4: Writing and Running a basic Hello World C Program </h3>
+
+<p>We will be doing lots of work with C programs this semester, so in this task you will demonstrate that you can write a basic C program, compile it, and execute it all via the command line</p>
+
+<p> Open up a new terminal instance, and make a new directory called <tt>lab0</tt> using the <tt>mkdir</tt> command. Then move into your new directory using the <tt> cd </tt> command. Once you are inside your <tt>lab0/</tt> folder, its time to create a C file.</p>
+
+
+
+<p>You can use any text editor (VI, VIM, Nano, Linux GUI file editor) to write the C program. The code below is the source code for a very basic "Hello World" program:</p>
+
+<script src="https://gist.github.com/reesep/45d391d4b043d614c57a2471b77dcf86.js"></script>
+
+<br>
+
+<p> Save the program, and then return to the command line. It's time to compile! We will be using the GCC compiler to compile our C programs. Run the following command to compile your C program:</p>
+
+<code> gcc hello_world.c -o hello_world</code>
+
+<p> We now have an executable file (<tt>hello_world</tt>). We can now run it by typing:</p>
+
+<code> ./hello_world </code>
+
+<p> You should then see "Hello world" being printed out in your terminal. Congratulations. Take a screenshot/snippet of VM. This screenshot should include you creating, compiling, and running your C program.</p>
+
+<h3 id="python-program">Task 5: Writing and Running a basic Hello World Python Program </h3>
+
+<p>We will be using Python as well in class. In this task, we will write and run a basic "Hello World" Python program all via the command line</p>
+
+<br> Use a text editor to create a <tt>hello_world.py</tt> file and insert the following code:
+
+<script src="https://gist.github.com/reesep/bed8bf87e45150c5249cc9ebcfbe7900.js"></script>
+
+<p> pretty crazy stuff, I know. Python is not a compiled language, so we dont need to compile it like we did with the C program</p>
+
+To run it, we run the command:
+
+<code> python3 hello_world.py</code>
+
+<p> You should then see "Hello world" being printed out in your terminal. Congratulations. Take a screenshot/snippet of VM. This screenshot should include you creating and running your python program.</p>
+
+<h3> Submission </h3>
+<p> Take your two screenshots, and paste them into a single word document and <b> save it as a pdf</b>. Name your file to <tt>[FirstNameLastName]-Lab0.pdf</tt> and submit it to the correct D2L submission box.</p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+</div>
+
+<!-- Optional JavaScript for Bootstrap - jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="/cs476-2021-spring/assets/js/prism.js"></script>
+
+<script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    /*
+     * class hacking: add bootstrap/bootswatch class labels to my custom classes (notes, slides, etc.)
+     */
+
+    // admin styles
+    $('.new').addClass('badge badge-pill badge-primary');
+    $('.announcement').addClass('alert alert-primary').prepend('<h4 class="alert-heading">Class Announcement!</h4>');
+    $('.timestamp').prepend('&mdash;Posted ');
+    // $('.score').prepend(' &mdash; ');
+
+    // add icons / style class elements...
+    $( ".activity" ).each(function(index) {
+        $(this).html('<i class="fas fa-lightbulb pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".code" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-code pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".slides" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-pdf pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".pdf" ).each(function(index) {
+        $(this).html('<i class="fas fa-file pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".reading" ).each(function(index) {
+        $(this).html('<i class="fas fa-book pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".video" ).each(function(index) {
+        $(this).html('<i class="fas fa-play-circle pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+
+    // add links to all section headers...
+    $( ":header" ).each(function(index) {
+      var attr = $(this).attr('id');
+      if (typeof attr !== typeof undefined && attr !== false) {
+        $(this).html( '<a href="#' + attr + '">' +$(this).html()+ ' </a>' );
+      }
+    });
+
+    // add links to weeks on schedule
+    $('td[id^="week"]').filter(function () {
+        $(this).html(function(index, text){
+            return '<a href="#' + text.toLowerCase().replace(' ', '') + '"><strong>' + text + '</strong></a>';
+        });
+    });
+
+    // use javascript to detect all external links and add the target='_blank' attribute to them.
+    // -> thanks, https://code.luasoftware.com/tutorials/hugo/how-to-create-link-with-target-blanks-in-hugo-markdown/
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+        if (links[i].hostname != window.location.hostname) {
+            links[i].target = '_blank';
+        }
+    }
+
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    var TEX = MathJax.InputJax.TeX;
+    var COLS = function (W) {
+      var WW = [];
+      for (var i = 0, m = W.length; i < m; i++)
+        {WW[i] = TEX.Parse.prototype.Em(W[i])}
+      return WW.join(" ");
+    };
+    TEX.Definitions.Add({
+      environment: {
+        psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+      }
+    });
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js">
+</script>
+
+</body>
+
+</html>
