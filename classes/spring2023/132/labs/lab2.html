@@ -1,0 +1,112 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 2 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 2: Dog Walking Tracker Application</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Tuesday, January 31st at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solution (.java file), entitled <b>Dog.java</b> to the BrightSpace(D2L) Lab 1 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Write a basic Java class (Instance Fields, Methods, Constructor) </li>
+  <li> Gain practice writing different kinds of methods  </li>
+  <li> Use if statements to check conditions </li> 
+</ul>
+
+<hr />
+
+
+<h3>Background and Directions </h3>
+
+<p>
+	You've been tasked with writing the needed Java class for a dog walking tracking application. This class holds information about the dog, and tracks how well someone is walking their dog.
+	
+</p>
+
+<p>
+	
+    Using <a href="DogDemo.java">DogDemo.Java</a>, You will create a Java class, named Dog.java and supply the missing class definitions and methods. You will need to download or copy/paste this code into your local Java project folder. Your Dog.Java class will <b>not </b>have a <tt>public static void string args[] method</tt>
+
+    <br>
+
+    You first need to define the instance fields and constructor for the Dog class. Each dog will have:
+    <ul>
+        <li> A name (such as "Tater" or "Lucy")</li>
+        <li> A breed (such as "Dachshund" or "Aussie")</li>
+        <li> An age (such as 8 years old or 4 years old)</li>
+        <li> A weight (such as 14.3 lbs or 44.23 lbs)</li>
+        <li> Their weekly walk distances. This is a seven-length array of doubles that holds information for how many miles they were walked for each day during a week. For example, if the array is <tt> {0.1, 0.54, 0.0, 1.2, 1.8, 0.0, 1.1} </tt>, this means that the dog was walked 0.1 miles on Sunday, 0.54 miles on Monday, 0.0 miles on Tuesday, and so on...</li>
+    </ul>
+
+    <br>
+    Next, you will need to define and write the code for the following 5 methods.
+    <ul>
+        <li> <b>getName()</b>- This method returns the name of the dog</li>
+        <li> <b>getDogAge()</b>- This method returns the age of the dog <i>in dog years.</i> A dog's age in dog years is (7 * their current age). For example, if a dog is 2 years old, then they are 14 in dog years.</li>
+        <li> <b>printInfo()</b>- This method prints out information about a dog, including their name, breed, age, and weigh (see the sample output)</li>
+        <li> <b>getTotalMiles()</b>- This method computes and returns the total miles walked in a week. Here, you will use the Dog's weekly walking distance array and find the sum.</li>
+        <li> <b>checkWalkingScore</b>- This method takes in the total miles walked (a double) as input, and prints out a message depending on the value of the total miles walked.</li>
+        <ul>
+            <li> If a dog was walked a total of less than 3.5 miles in one week, then <tt>"(insert dog name here) needs to be walked more!"</tt> will be printed out</li>
+            <li> If a dog was walked a total of more than (or equal to) 3.5, but less than (or equal to) 5.0 miles in one week, then <tt>"(insert dog name here) is being walked a healthy amount!"</tt> will be printed out</li>
+            <li> If a dog was walked a total of more than 5.0 miles in one week, then <tt>"(insert dog name here) is being walked a lot!"</tt> will be printed out</li>
+        </ul>
+    </ul>
+
+    <h3> Rules </h3>
+    <p> <b> You are NOT allowed to modify DogDemo.Java.</b> If you modify DogDemo.Java in any way (other than changing the <tt>package</tt> statement line), the you will lose significant points!</p>
+
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="DogDemo.java">DogDemo.Java</a> </li>
+    </ul>
+</p>	
+
+<h3> Required Output </h3>
+<p> When your program is run, your output should look <b>exactly</b >the same as seen <a href="lab2_output.PNG"> in this screenshot </a>. 
+
+
+
+</pre>
+<h3>Grading (10 points) </h3>
+
+
+<ul>
+  <li>2 points - Your Dog class is correctly defined, and has a working constructor method</li> 
+  <li>1 points - getName() is correct </li> 
+  <li>1 point - getDogAge() is correct </li>
+  <li>1 points- printInfo() is correct </li>
+  <li>2 points- getTotalMiles() is correct </li>
+  <li>2 points- checkWalkingScore() is correct </li>
+  <li>1 point- your program matches the sample output exactly</li>
+</ul>
+
+
+<br><br><br>
+<p> here is <a href="tater.jpg">a picture of Tater</a>. He is a good boy</p>
+</body>
+</html>

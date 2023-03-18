@@ -1,0 +1,84 @@
+
+Welcome to Java Casino Slot Machine
+Press 1 to play the slots once
+Press 2 to play the slots X amount of times
+Press 3 to print out this machine's total winnings
+Press 4 to view your current credits
+Press 5 to exit
+2
+How many times would you like to roll the machine?
+12
+You don't have enough credits
+
+Welcome to Java Casino Slot Machine
+Press 1 to play the slots once
+Press 2 to play the slots X amount of times
+Press 3 to print out this machine's total winnings
+Press 4 to view your current credits
+Press 5 to exit
+2
+How many times would you like to roll the machine?
+3
+
+----------
+3   2   2   
+----------
+2   2   3   
+----------
+3   2   1   
+----------
+
+Total Winnings
+--------------
+--> Matching Column (+2 credit)
+You won a total of: 2 credits.
+
+----------
+2   3   1   
+----------
+1   1   3   
+----------
+2   1   2   
+----------
+
+Total Winnings
+--------------
+You won a total of: 0 credits.
+
+----------
+3   2   1   
+----------
+2   1   3   
+----------
+1   3   3   
+----------
+
+Total Winnings
+--------------
+--> Matching Diagonals (+2 credit)
+You won a total of: 2 credits.
+
+Welcome to Java Casino Slot Machine
+Press 1 to play the slots once
+Press 2 to play the slots X amount of times
+Press 3 to print out this machine's total winnings
+Press 4 to view your current credits
+Press 5 to exit
+3
+Total winnings paid out by this machine tonight is: 4
+
+Welcome to Java Casino Slot Machine
+Press 1 to play the slots once
+Press 2 to play the slots X amount of times
+Press 3 to print out this machine's total winnings
+Press 4 to view your current credits
+Press 5 to exit
+4
+Credits available: 11
+
+Welcome to Java Casino Slot Machine
+Press 1 to play the slots once
+Press 2 to play the slots X amount of times
+Press 3 to print out this machine's total winnings
+Press 4 to view your current credits
+Press 5 to exit

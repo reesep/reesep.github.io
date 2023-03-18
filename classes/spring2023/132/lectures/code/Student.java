@@ -2,19 +2,24 @@ package jan25;
 
 public class Student {
 
+	// Instance Field / Attributes
 	private String name;
 	private String major;
 	private int num_of_credits;
 	private double gpa;
 	private String year;
+	private double[] exam_scores;
 	
-	public Student(String name, String major, int num_of_credits, double gpa){
+	// Constructor
+	public Student(String name, String major, int num_of_credits, double gpa, double[] exam_scores){
 	
 		this.name = name;
 		this.major = major;
 		this.num_of_credits = num_of_credits;
 		this.gpa = gpa;
 		this.year = "Unknown";
+		this.exam_scores = exam_scores;
+
 	}
 		
 	public String getName() {
@@ -68,5 +73,56 @@ public class Student {
 			this.year = "Super Senior";
 		}
 	}
+	
+	public void checkForRegistration() {
+		
+		if(this.gpa >= 2.0) {
+			if(this.year.equals("Junior") || this.year.equals("Senior")) {
+				
+				System.out.println("Student is allowed to register for CSCI 476");
+				
+			}
+			else {
+				System.out.println("Denied");
+			}
+		}
+		else {
+			System.out.println("Denied");
+		}
+		
+	}
+	
+	public double calculateAverageScore() {
+		double sumOfScore = 0.0;
+		for(double i: this.exam_scores) {
+			sumOfScore += i;
+		}
+		double answer = sumOfScore / this.exam_scores.length;
+		return answer;
+		
+	}
+	
+	public double findLowestGrade() {
+		//{75.0, 88.0, 91.0,1.0}
+		double current_min = 100;
+		for(double i: this.exam_scores) {
+			if(i < current_min) {
+				current_min = i;
+			}
+		}
+		return current_min;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	
 }

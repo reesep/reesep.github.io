@@ -1,0 +1,92 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 4 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 4: Java Interfaces and Shapes</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Tuesday, February 14th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solutions (.java file), entitled <b>RegularPolygon.java</b>, <b>Square.java</b>, <b>EquilateralTriangle.java</b>,<b>RegularPentagon.java</b>, and <b>RegularHexagon.java</b>  to the BrightSpace(D2L) Lab 1 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience using Java interfaces </li>
+</ul>
+
+<hr />
+
+
+<h3>Directions </h3>
+
+
+Create an interface called <tt>RegularPolygon</tt> with method signatures for <tt>area()</tt> (returns a double) and <tt>perimeter() </tt>(also returns a double). 
+
+Create the following classes. These four classes MUST implement the RegularPolygon interface:
+<ul>
+<li>EquilateralTriangle</li>
+<li>Square</li>
+<li>RegularPentagon</li>
+<li>RegularHexagon</li>
+</ul>
+All of those classes will have different ways to calculate the area and perimeter given the length on one side. Google “area of an equilateral triangle” to see a nice formula – all of the other polygons have similar Google entries. Note: In Java, you can use <tt>Math.sqrt(3)</tt> to compute the square root of 3, for example.
+
+<br><br>
+Each class should have a <tt>side_length</tt> instance field. You will also need to define the constructor for each of those 4 classes. Each constructor will just accept one double as an argument (the side length). 
+
+Use <a href="Lab4Demo.java">Lab4Demo.Java</a> to test your code. The user inputs a side length (ie 5) when the program starts, and then the Lab4Demo class uses the classes that you define to compute the perimeter and area of a Triangle, Square, pentagon, and hexagon given the side length (remember that these are all regular polygons). The RegularPolygon interface gives us a consistent way to treat all the different types of regular polygons there could be, even though they’re all a bit different under the hood. A RegularPolygon can take many forms; that’s polymorphism!
+
+    </ul>
+
+    <h3> Rules </h3>
+    <p> <b> You are NOT allowed to modify Lab4Demo..java.</b> If you modify Lab4Demo.Java in any way (other than changing the <tt>package</tt> statement line), the you will lose significant points!</p>
+
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab4Demo.java">Lab4Demo.Java</a> </li>
+    </ul>
+</p>	
+
+<h3> Required Output </h3>
+<p> When your program is run, your output should look <b>exactly</b >the same as seen <a href="lab4_output.PNG"> in this screenshot </a>. 
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>8 points - EquilateralTriangle.java, Square.java, RegularPentagon.java, and RegularHexagon.java are correctly defined</li> 
+  <li>1 points - RegularPolygon interface is correctly defined </li> 
+  <li>1 point- Your program matches the output exactly</li>
+</ul>
+
+
+<br><br>
+Deductions
+<li>-5 points if interface is not used </li>
+
+<br><br><br>
+
+
+<p><a href="https://www.youtube.com/watch?v=Fv8fVA3sIj4&ab_channel=Rock%27NLearn">bonus video if you need to review your shapes and polygons (nightmare fuel warning)</a></p>
+</body>
+</html>

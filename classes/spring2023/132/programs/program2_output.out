@@ -1,0 +1,237 @@
+Challengers Remaining:
+---------------------------
+Darth Vader
+Power Level: 11000
+
+Shaquille O'Neal
+Power Level: 6500
+
+Abraham Lincoln
+Power Level: 1863
+
+Doctor Octopus
+Power Level: 9000
+
+Chuck Norris
+Power Level: 7500
+
+Optimus Prime
+Power Level: 16000
+
+Batman
+Power Level: 9000
+
+Godzilla
+Power Level: 21000
+
+Would you like to continue (y/n) ?
+y
+
+j: 2
+k: 4
++---------------------+
+Nodes selected:
+Shaquille O'Neal
+Power Level: 6500
+vs.
+Optimus Prime
+Power Level: 16000
++---------------------+
+Optimus Prime wins
+Shaquille O'Neal has been eliminated
+
+Challengers Remaining:
+---------------------------
+Darth Vader
+Power Level: 11000
+
+Abraham Lincoln
+Power Level: 1863
+
+Doctor Octopus
+Power Level: 9000
+
+Chuck Norris
+Power Level: 7500
+
+Optimus Prime
+Power Level: 16000
+
+Batman
+Power Level: 9000
+
+Godzilla
+Power Level: 21000
+
+Would you like to continue (y/n) ?
+y
+
+j: 6
+k: 2
++---------------------+
+Nodes selected:
+Batman
+Power Level: 9000
+vs.
+Godzilla
+Power Level: 21000
++---------------------+
+Godzilla wins
+Batman has been eliminated
+
+Challengers Remaining:
+---------------------------
+Darth Vader
+Power Level: 11000
+
+Abraham Lincoln
+Power Level: 1863
+
+Doctor Octopus
+Power Level: 9000
+
+Chuck Norris
+Power Level: 7500
+
+Optimus Prime
+Power Level: 16000
+
+Godzilla
+Power Level: 21000
+
+Would you like to continue (y/n) ?
+y
+
+j: 2
+k: 3
++---------------------+
+Nodes selected:
+Abraham Lincoln
+Power Level: 1863
+vs.
+Optimus Prime
+Power Level: 16000
++---------------------+
+Optimus Prime wins
+Abraham Lincoln has been eliminated
+
+Challengers Remaining:
+---------------------------
+Darth Vader
+Power Level: 11000
+
+Doctor Octopus
+Power Level: 9000
+
+Chuck Norris
+Power Level: 7500
+
+Optimus Prime
+Power Level: 16000
+
+Godzilla
+Power Level: 21000
+
+Would you like to continue (y/n) ?
+y
+
+j: 3
+k: 4
++---------------------+
+Nodes selected:
+Chuck Norris
+Power Level: 7500
+vs.
+Optimus Prime
+Power Level: 16000
++---------------------+
+Optimus Prime wins
+Chuck Norris has been eliminated
+
+Challengers Remaining:
+---------------------------
+Darth Vader
+Power Level: 11000
+
+Doctor Octopus
+Power Level: 9000
+
+Optimus Prime
+Power Level: 16000
+
+Godzilla
+Power Level: 21000
+
+Would you like to continue (y/n) ?
+y
+
+j: 4
+k: 1
++---------------------+
+Nodes selected:
+Godzilla
+Power Level: 21000
+vs.
+Darth Vader
+Power Level: 11000
++---------------------+
+Godzilla wins
+Darth Vader has been eliminated
+
+Challengers Remaining:
+---------------------------
+Doctor Octopus
+Power Level: 9000
+
+Optimus Prime
+Power Level: 16000
+
+Godzilla
+Power Level: 21000
+
+Would you like to continue (y/n) ?
+y
+
+j: 2
+k: 2
++---------------------+
+Nodes selected:
+Optimus Prime
+Power Level: 16000
+vs.
+Godzilla
+Power Level: 21000
++---------------------+
+Godzilla wins
+Optimus Prime has been eliminated
+
+Challengers Remaining:
+---------------------------
+Doctor Octopus
+Power Level: 9000
+
+Godzilla
+Power Level: 21000
+
+Would you like to continue (y/n) ?
+y
+
+j: 1
+k: 2
++---------------------+
+Nodes selected:
+Doctor Octopus
+Power Level: 9000
+vs.
+Godzilla
+Power Level: 21000
++---------------------+
+Godzilla wins
+Doctor Octopus has been eliminated
+
+Challengers Remaining:
+---------------------------
+Godzilla
+Power Level: 21000
+
+The winner is: Godzilla

@@ -1,0 +1,32 @@
+List of Countries to visit
+--------------------------
+1: Paris
+2: USA
+3: Japan
+4: Greece
+5: Mexico
+6: Egypt
+
+List of Countries to visit (In reverse order)
+--------------------------
+1: Egypt
+2: Mexico
+3: Greece
+4: Japan
+5: USA
+6: Paris
+
+Selecting a random country from the list (normal order)
+Random value generated: 2
+Country Selected: Japan
+
+Selecting a random country from the list (reverse order)
+Random value generated: 6
+Country Selected: Egypt
+
+List of Countries to visit (After Removal)
+--------------------------
+1: Paris
+2: USA
+3: Greece
+4: Mexico
