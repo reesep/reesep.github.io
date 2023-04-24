@@ -1,0 +1,144 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Program 3
+</title>
+</head>
+
+<body>
+
+<h1>Program 3: Gianforte Hall Stack Builder</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Sunday, April 2nd at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your .java files to the Program 3 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Write a complex Java Program (Instance Fields, Methods, Constructor) </li>
+  <li> Gain experience using a stack data structure</li>
+</ul>
+
+<hr />
+
+
+<h3>Background and Directions </h3>
+
+Gianforte Hall is the <a href="https://www.montana.edu/news/21876/msu-announces-a-50-million-gift-from-the-gianforte-family-foundation-to-further-computer-science-electrical-and-computer-engineering-cybersecurity-optics-and-photonics-and-creative-industries">brand new computer science building</a> that is slated to begin construction next year. <br><br>
+
+In this assignment, you will write a program that allows a user to "build" the different floors of Gianforte Hall, however the administration of MSU has placed some restrictions on the building plans. Each floor of the building can only fit one room, and the building can not be taller than 10 floors high. <br><br>
+
+There are three types of rooms/floors in Gianforte Hall. A <b>classroom</b>, which hosts a class offered by school of computing (CSCI 132, CSCI 246, etc), A <b>faculty office</b>, which houses one faculty member, and a <b>research lab</b>, which is used for a type of research program (Cyberscutiy, Artificial Intelligence, Computational Biology, etc). <br><br>
+
+You will use a stack data structure to represent the building. Your stack <b> MUST </b> be implemented using an array. New floors are added to the top of the building, and to remove a floor, you must always remove the very top floor. Your stack must store <b>Floor objects</b> (you will need to write the Floor class). Each Floor has a floor number, floor type (classroom, office, lab), and some information about that floor (class offered, professor, or research type). <br><br>
+
+Your program will have a menu where a user can select different types of functions to perform. <br><br>
+
+
+<b>1. View Current Building plan</b>- Your program needs to have a function that will print each floor of the building. Each floor should include the floor number, and what type of room is on that floor (classroom, office, or lab). <a href="program3_buildingplan.PNG">Sample output</a><br>
+<b>2. Add a new floor</b>- This method will allow a user to add a new floor to the building. It will prompt the user what type of room they want to add, and the information for that room (class name, professor name, or research type). When a new floor is made, it must always be added to the top of the building. If the building currently has 10 floors, your program should not allow the user to add another floor. <a href="program3_addfloor.png">Sample output</a><br>
+<b>3. Demolish top floor </b>- This method will demolish whatever the top floor currently is, and remove that floor from the stack. <a href="program3_removefloor.png">Sample output</a><br>
+<b>4. Search for a classroom</b>- Given the name of some class (ie CSCI 132), this method will tell the user what floor that class is offered on. If the class is not offered in Gianforte hall, then the program should print out "(class_name) is not offered in Gianforte Hall". <a href="program3_searchclass.PNG">Sample output</a><br>
+<b>5. View Building Information</b>- This method prints out the current number of classrooms, offices, and research labs in Gianforte Hall. <a href="program3_buildinginfo.PNG">Sample output</a><br>
+<b>6. Exit Program</b> - If the user selects menu option 6, the program should end.<br>
+
+<h3> Starting Code and Requirements</h3>
+
+You are welcome to develop your solution from scratch, but you must have a Demo class, a Stack class, and a Floor class. You must implement your own Stack data structure, and your stack must use an Array. You are now allowed to use any arraylists or linked lists. Here is a demo class that might help you get started: <a href="Program3Demo.java">Program3Demo.java </a>. You are welcome to modify or change this class.
+
+<h3> Restrictions </h3>
+
+<ul>
+	<li>You are <b>not </b> allowed to import java.util.LinkedList, or create your own linked list class </li>
+	<li>You are <b>not </b> allowed to import java.util.ArrayList, or create your own ArrayList class</li>
+</ul>
+
+
+
+<h3> Sample Output </h3>
+
+Your program does not need to match this output exactly, but it should be pretty close.<br>
+<a href="program3_output.out">Sample output</a>
+
+
+
+<h3>Optional Hints</h3>
+
+Look back at our code from March 22 for how to implement a stack data structure with an array.
+<br><br>
+If you get stuck or have a bug in your code, remember that you a rubber duck that can help 😉
+
+<h3>Grading (100 points) </h3>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky">Requirement</th>
+    <th class="tg-0pky">Points</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">Your program uses a stack (Array) to hold Floor objects. </td>
+    <td class="tg-0pky">30</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program can print out the current floors of the building (Menu option #1)</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program can add a new floor to the top of the building (Menu option #2). If the building is already 10 floors high, the program does not allow the user to add another floor</td>
+    <td class="tg-0pky">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program can demolish the top floor of the building (Menu option #3)</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program can search for a class, and the program returns the floor number of the classroom the course is offered in. If the class is not offered in the building, your program should print that out (Menu option #4)</td>
+    <td class="tg-0pky">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program prints out the number of classrooms, labs, and offices in the building (Menu option #4)</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">The Floor class is correctly defined</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+</tbody>
+</table>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<a href="https://www.youtube.com/watch?v=b3sOOBicyDY&ab_channel=ThriftyVideoNetwork"> program 3 solution</a>
+
+</body>
+</html>

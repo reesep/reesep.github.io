@@ -1,0 +1,44 @@
+Adding Jeep Wrangler (Suzie) to the queue
+Adding Ford F150 (Scott) to the queue
+Adding Tesla Model Y (Dinesh) to the queue
+Adding Toyota Highlander (Reese) to the queue
+Adding Nissan Rogue (Marcus) to the queue
+Adding GMC Sierra (Karen) to the queue
+Error: Queue is full- Cannot add GMC Sierra (Karen)
+
+Current Car Wash Queue
+----------------------
+1. Jeep Wrangler (Suzie)
+2. Ford F150 (Scott)
+3. Tesla Model Y (Dinesh)
+4. Toyota Highlander (Reese)
+5. Nissan Rogue (Marcus)
+Next car up is: Jeep Wrangler (Suzie)
+
+Car has been washed. Removing Jeep Wrangler (Suzie) from the queue
+Car has been washed. Removing Ford F150 (Scott) from the queue
+Car has been washed. Removing Tesla Model Y (Dinesh) from the queue
+
+Car Wash Statistics
+-------------------
+Number of cars serviced: 3
+Today's earnings: $26.0
+
+Adding GMC Sierra (Karen) to the queue
+
+Next car up is: Toyota Highlander (Reese)
+Current Car Wash Queue
+----------------------
+1. Toyota Highlander (Reese)
+2. Nissan Rogue (Marcus)
+3. GMC Sierra (Karen)
+
+Car has been washed. Removing Toyota Highlander (Reese) from the queue
+Car has been washed. Removing Nissan Rogue (Marcus) from the queue
+Car has been washed. Removing GMC Sierra (Karen) from the queue
+
+No more cars!! Time to close...
+Car Wash Statistics
+-------------------
+Number of cars serviced: 6
+Today's earnings: $48.0

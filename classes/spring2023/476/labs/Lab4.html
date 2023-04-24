@@ -393,8 +393,12 @@ In this task, you do need to handle HTTP encoding while sending requests using <
     <p>There are lots of great resources on the Internet to learn more about encoding characters
 (e.g., <a href="http://www.cheat-sheets.org/sites/html.su/urlencoding.html">URL Encoded Characters cheatsheet</a>, <a href="https://www.url-encode-decode.com/">Online URL Encode/Decode tool</a>).</p>
 
+
+
   </div>
 </div>
+Hint: If you attack is not working (you are getting an error message in the HTML), then try to add a semicolon (;) before the hashtag (#) in your username payload. When we do this attack via curl request, it turns out that we have make sure we inlcude a semicolon in our payload to "end" the SQL query. 
+
 <!-- END Special Section -->
 
 <h4 id="task-23-try-to-append-a-new-sql-statement">Task 2.3: (Try to…) Append a New SQL Statement (3 pts)</h4>

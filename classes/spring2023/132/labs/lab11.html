@@ -1,0 +1,124 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 11
+</title>
+</head>
+
+<body>
+
+<h1>Lab 11:  Recursion</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Tuesday, April 18th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Submit your Lab11Demo.java file to the appropriate D2L dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Write basic recursive methods</li>
+</ul>
+
+<hr />
+
+<h3> Background Information</h3>
+
+    Human DNA is made up of four building blocks called nucleotides: adenine (A), thymine (T), guanine (G), and cytosine (C). Nucleotides attach to each other in a certain way. All A's and paired with T's, and all G'c are paired with C's. 
+<br>
+
+    <img src="dna.jpg">
+
+
+    <br> <br>
+
+    A random DNA sequence of length 10 could look something like this:
+
+    <br>
+
+    ggctataaca
+
+    <br> <br>
+
+    An intern mistakingly entered DNA sequences into a Stack data structure thinking that they will be analyzed LIFO. However, his Boss told him that the DNA sequences should be analyzed FIFO. As a solution, the intern decides that he will just print out the stack in reverse order (that will give the correct FIFO order).
+
+    <br> <br>
+
+    The intern also made another mistake when entering the DNA sequences. He accidentally mixed up the nucleotides of the base pairs. All A's need to be replaced by T's (and vice versa), and all G's need to be replaced by C's (and vice versa).  
+
+    <br>
+
+    For example, the intern entered "ctgtcctt", but the correct DNA sequence is "gacaggaa"
+
+    <br>
+
+    The intern decides that while he prints the stack in reverse order, he will also fix the DNA Sequences
+
+
+<h3>Directions </h3>
+
+    Using <a href="Lab11Demo.java">Lab11Demo.java</a> as a starting point, you will fill in the body of the <tt>print_stack_reverse_recursive</tt> and the <tt>fix_string</tt> method. You cannot modify anything in the main() method.<br>
+
+    the <tt>print_stack_reverse_recursive</tt> method takes in a Stack data structure that holds DNA sequences (Strings). This method should print out its contents in <b>reverse</b> order (ie, the bottom of the stack is printed out first, and the last thing printed out is the top of the stack). This method <b>MUST use recursion</b>.
+
+    <br><br>
+
+    as you are printing out stack data in reverse order, you will need to also fix the strings. The <tt>fix_string</tt> method takes in the incorrect string (s) as an argument, and this method should return the fixed string where all T's and replaced by A's, all A's replaced by T's, all C's replaced by G's, and all G's replaced by C's. This method <b>MUST use recursion</b>.
+
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab11Demo.java">Lab11Demo.java</a> </li>
+        
+    </ul>
+
+    <h3> Output</h3>
+    When you run your program, your output should look exactly like this: <a href="lab11_output.PNG">sample output</a>. 
+
+</p>	
+
+<h3> Hints </h3>
+<ul>
+  <li> As you recursively call the <tt>print_stack_reverse_recursive</tt> method, you will need to pass it a smaller stack. You should use the .pop() method (however, remember that you will also need to print out what get's popped off</li>
+
+  <li> For fixing the DNA sequence strings, you can use <tt>s.charAt(0)</tt> to return at the first character of some string</li>
+  <li> To make the string smaller, you can use <tt>s.substring(1)</tt> which will return the substring that starts at index 1 </li>
+  <ul>
+      <li> for example, if s = "csci132", then <tt>s.substring(1)</tt> will return "sci132"</li>
+  </ul>
+</ul>
+
+
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>5 points- the print_stack_reverse_recursive method correctly prints out the stack in reverse order, and uses recursion</li>
+  <li>5 points- the fix_string method correctly fixes the DNA sequence strings, and uses recursion</li>
+
+</ul>
+
+
+<br><br>
+
+
+<br><br><br>
+
+
+
+</body>
+</html>

@@ -45,7 +45,7 @@
 
 
 <h1 class="pb-4" id="lab-06-secret-key-encryption-lab">Lab 08: Secret-Key Encryption Lab</h1>
-<h1 class="pb-4" id="lab-06-secret-key-encryption-lab-due"> Due Sunday November 20th @11:59PM</h1>
+<h1 class="pb-4" id="lab-06-secret-key-encryption-lab-due"> Due Wednesday April 19th @11:59PM</h1>
 
 <h2 class="titletext" id="secret-key-encryption-lab">Secret-Key Encryption Lab</h2>
 <p class="subtitletext">Adapted from SEED Labs: A Hands-on Lab for Security Education.</p>
@@ -72,7 +72,7 @@ and gives students the opportunity to work through the process of exploiting wea
 <h3 id="resources">Resources</h3>
 
 <ul>
-  <li>Code related to this lab can be found in <code class="language-plaintext highlighter-rouge">06_ske/</code> of our <a href="https://github.com/reesep/csci476-code">class’s GitHub repository</a>.</li>
+  <li>Code related to this lab can be found in <code class="language-plaintext highlighter-rouge">08_ske/</code> of our <a href="https://github.com/reesep/csci476-code">class’s GitHub repository</a>.</li>
   <li><a href="https://www.openssl.org/docs/manmaster/">OpenSSL Cryptography and SSL/TLS Toolkit - Manuals</a>
 <!-- - [Sample Code --- Encryption w/ the OpenSSL Cryptography and SSL/TLS Toolkit](https://www.openssl.org/docs/man1.0.2/man3/EVP_EncryptInit.html) -->
 <!-- - [ciphertext.txt (Task 1)](https://seedsecuritylabs.org/Labs_16.04/Crypto/Crypto_Encryption/files/ciphertext.txt) -->
@@ -89,7 +89,7 @@ and gives students the opportunity to work through the process of exploiting wea
 
 <h3 id="task-1-encryption-ciphers-and-modes">Task 1: Breaking a Substitution cipher</h3>
 
-<b> Be sure to pull changes for our course repo (git pull). You will find files for this lab inside the <tt>/06-ske</tt> folder.</b>In this task, you are given a cipher-text (ciphertext.txt) that is encrypted using a monoalphabetic cipher; namely, each letter in the original text is replaced by another letter, where the replacement does not vary (i.e., a letter is always replaced by the same letter during the encryption). Your task is to find out the original text using frequency analysis. You may assume that the original text is an article written in the English language.
+<b> Be sure to pull changes for our course repo (git pull). You will find files for this lab inside the <tt>/08-ske</tt> folder.</b>In this task, you are given a cipher-text (ciphertext.txt) that is encrypted using a monoalphabetic cipher; namely, each letter in the original text is replaced by another letter, where the replacement does not vary (i.e., a letter is always replaced by the same letter during the encryption). Your task is to find out the original text using frequency analysis. You may assume that the original text is an article written in the English language.
 
 <br><br>
 
@@ -203,7 +203,7 @@ $ xxd p1.txt
 <p>Please repeat the previous task for each of the following modes of operation using the <code class="language-plaintext highlighter-rouge">aes</code> cipher with 128-bit keys: ECB, CFB OFB.</p>
 
 <p>Please report which modes have padding and which ones do not.
-For those that do not need padding, please explain why.</p>
+</p>
 
 <h3 id="task-4-error-propagation--corrupted-ciphertext">Task 5: Error Propagation &amp; Corrupted Ciphertext</h3>
 
@@ -225,7 +225,7 @@ intentionally corrupt a bit in the ciphertext, decrypt the corrupted ciphertext,
 <ol>
   <li>Create a text file that is at least 1000 bytes long.</li>
   <li>Encrypt the file using the AES-128 cipher.</li>
-  <li>Intentionally corrupt the file: change a single bit in the 55th byte in the encrypted file. (You can achieve this corruption using any hex editor. <tt>ghex ciphertext.txt</tt> will open it up in a hex editor</li>
+  <li>Intentionally corrupt the file: change a single bit in some byte in the encrypted file. (You can achieve this corruption using any hex editor. <tt>ghex ciphertext.txt</tt> will open it up in a hex editor</li>
   <li>Decrypt the corrupted ciphertext file using the correct key and IV.</li>
 </ol>
 
@@ -234,11 +234,11 @@ Please provide justification.</p>
 
 <h4 id="task-43-cbc--data-corruption">Task 5.3: CBC &amp; Data Corruption</h4>
 
-<p>Please repeat Task 4.2, but this time use the CBC mode when encrypting/decrypting data.</p>
+<p>Please repeat Task 5.2, but this time use the CBC mode when encrypting/decrypting data.</p>
 
 <h4 id="task-44-cfb--data-corruption">Task 5.4: CFB &amp; Data Corruption</h4>
 
-<p>Please repeat Task 4.2, but this time use the CFB mode when encrypting/decrypting data.</p>
+<p>Please repeat Task 5.2, but this time use the CFB mode when encrypting/decrypting data.</p>
 
 
 

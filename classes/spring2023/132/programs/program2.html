@@ -75,7 +75,7 @@ I recommend having a method, <tt>simulateOneRound()</tt>, that simulates one rou
 <br><br>
 You will need to generate two random values: <b>j</b> and <b>k</b>. These are two random numbers you will generate from a range of [1, N] where N is the size of the current linked list. 
 
-The first challenger is selected by starting from the head node, moving <b>j</b> spots counter clockwise and selects whatever challenger it lands on. The second challenger is selected by starting from the head node, moving <b>k</b> spots counter-clockwise and selects whatever challenger it lands on. 
+The first challenger is selected by starting from the head node, moving <b>j</b> spots clockwise and selects whatever challenger it lands on. The second challenger is selected by starting from the head node, moving <b>k</b> spots counter-clockwise and selects whatever challenger it lands on. 
 
 <br><br>
 The winner is determined by the challengers' power level. Whoever has the higher power level wins, and the loser must be removed from the linked list. You should have a <tt>removeFromCircle()</tt> method that removes a node/challenger from the linked list. If both challengers have the same power level, then it is a tie and nothing should happen. The battle is over when one challenger remains, and the program should then end. Between each round, you should ask the user if they would like to continue the simulation. If the user does not want to continue, the program should terminate. 

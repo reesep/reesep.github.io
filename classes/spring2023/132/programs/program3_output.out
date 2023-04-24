@@ -1,0 +1,219 @@
+Welcome to the Gianforte Hall Builder
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+2
+1. New Classroom 
+2. New Office 
+3. New Reseach lab
+1
+What course will be offered in this classroom?
+CSCI 132
+Added: Classroom(CSCI 132)
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+2
+1. New Classroom 
+2. New Office 
+3. New Reseach lab
+2
+What professor will be inhabiting this office?
+Reese Pearsall
+Added: Office(Reese Pearsall)
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+1
++-----------------------------
+|       Floor 2
+|       Office(Reese Pearsall)
++-----------------------------
+|       Floor 1
+|       Classroom(CSCI 132)
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+2
+1. New Classroom 
+2. New Office 
+3. New Reseach lab
+3
+What type of lab will this be?
+Cybersecurity
+Added: Research Lab(Cybersecurity)
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+2
+1. New Classroom 
+2. New Office 
+3. New Reseach lab
+1
+What course will be offered in this classroom?
+CSCI 127
+Added: Classroom(CSCI 127)
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+1
++-----------------------------
+|       Floor 4
+|       Classroom(CSCI 127)
++-----------------------------
+|       Floor 3
+|       Research Lab(Cybersecurity)
++-----------------------------
+|       Floor 2
+|       Office(Reese Pearsall)
++-----------------------------
+|       Floor 1
+|       Classroom(CSCI 132)
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+4
+What class are you looking for?
+CSCI 127
+CSCI 127 is offered on floor #4
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+3
+Removed: Classroom(CSCI 127)
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+1
++-----------------------------
+|       Floor 3
+|       Research Lab(Cybersecurity)
++-----------------------------
+|       Floor 2
+|       Office(Reese Pearsall)
++-----------------------------
+|       Floor 1
+|       Classroom(CSCI 132)
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+4
+What class are you looking for?
+CSCI 127
+CSCI 127 is not offered in Gianforte Hall.
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+5
+Building Information
+--------------------
+Number of Classrooms: 1
+Number of Offices: 1
+Number of Research Labs: 1
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+2
+1. New Classroom 
+2. New Office 
+3. New Reseach lab
+2
+What professor will be inhabiting this office?
+John Paxton
+Added: Office(John Paxton)
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
+5
+Building Information
+--------------------
+Number of Classrooms: 1
+Number of Offices: 2
+Number of Research Labs: 1
+
+1. View Current Building Plan
+2. Add a new floor
+3. Demolish top floor
+4. Search for a classroom
+5. View Building Information
+6. Exit
+
+Your choice?
