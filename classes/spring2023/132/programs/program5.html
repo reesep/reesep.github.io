@@ -1,0 +1,100 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Program 5
+</title>
+</head>
+
+<body>
+
+<h1>Program 5: Recursion Festival</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Sunday, May 7th at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your .java files to the Program 5 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience writing recursive methods</li>
+</ul>
+
+<hr />
+
+
+<h3>Background and Directions </h3>
+
+In this assignment, you will solve a variety of problems using recursion. This assignment is divided up into four problems. You will use <a href="Program5Demo.java">Program5Demo.java</a> as a starting point, and fill in the method for each task.
+
+<br>
+
+<h4> Part I: Detecting Palindromes in Strings</h4>
+
+A palindrome is a word, phrase, or sequence that reads the same backward as forward, such as "racecar", or "kayak". The first method, <tt>is_palindrome</tt>takes a string as an argument. This method needs to return true if the given string is palindrome, and return false if the string is not a palindrome. This method <b>must use recursion</b>.
+
+<br>
+<h4> Part II: Binary Search using recursion</h4>
+Binary Search (as discussed in Monday 4/24's lecture) is an algorithm that searches through a <b>sorted</b>dataset for a target value. You will need to implement the recursive solution for binary search by filling in the body of the <tt>binary_search</tt> method. This method takes in an array, a target value, a low bound, and a high bound as an argument. This method must search through the given array and return the index of the target value. If the target value is not in the array, then the method should return -1.  
+
+<h4> Part III: Minimum number of coins to make change</h4>
+In the lecture for Wednesday, April 26th, we discussed an algorithm for determing the minimum number of coins needed to make K change using a set of D denominations. You will implement this algorithm by filling in the body of the <tt>min_coins</tt> method. This method takes in an array of denominations (such as [1,5,10,25] and a target value K). This method needs to return the minimum number of coins (using the given denominations) to make the value K. For example, if K=28, and D = [1,5,10,25], the method should return 4 (25, 1, 1 ,1). This method MUST use recursion and should not use the greedy approach, because greedy does not guarantee you an optimal solution.
+
+<br>
+<h4> Part IV: Finding the solution coins used from part III</h4>
+At this point, you should have the minimum number of coins needed to make some value K from part III, lets call it n. In this task, you will now find what coins were used to make K. We can calculate this by finding all combinations of length n using the denominations from the set D. Then, we only print out the combinations that add up to be K.  
+<br>
+For example, if D = [1,5,10], n = 3, and K = 12, we calculate the following combinations:
+<ul>
+    <li>[1,1,1],[1,1,5],[1,1,10],[1,5,5],[1,5,10],[1,10,10],[5,5,5],[5,10,10],[10,10,10]</li>
+</ul>
+However, the only combination that adds up to K is [1,1,10], so that is the only combination that gets printed out.
+<br>
+We wrote the code for this during the lecture for Wednesday, April 26th. You should be able to reuse that code here.
+
+<h3> Starting Code </h3>
+
+You need to use <a href="Program5Demo.java">Program5Demo.java</a> as a starting point. You are not allowed to change anything in the main() method. You <b>are</b> allowed to define more methods if you'd like.
+
+<h3> Restrictions </h3>
+
+<ul>
+	<li> All four of the methods you write MUST use recursion, or call a method that uses recursion</li>
+</ul>
+
+
+
+<h3> Sample Output </h3>
+
+When your program is run, it should look exactly like this: <a href="program5_output.PNG">sample output</a>
+
+
+
+
+<h3>Grading (100 points) </h3>
+
+coming soon
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<a href="https://www.youtube.com/watch?v=V8dd1A30ifM"> program 5 solution</a>
+
+</body>
+</html>
