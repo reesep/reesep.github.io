@@ -66,7 +66,7 @@ public class Program5Demo {
 		System.out.println("Coins used:");
 		find_coins(D,k,n);
 		
-		k = 81; //find minimum number of coins from D to make value K 
+		k = 19; //find minimum number of coins from D to make value K 
 		n = min_coins(D, k);
 		System.out.println("Minimum coins needed to create " + k + ": " + n);
 		System.out.println("Coins used:");
