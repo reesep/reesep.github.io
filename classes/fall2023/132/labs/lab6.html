@@ -1,0 +1,102 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 6 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 6:  Circular Linked Lists</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Thursday, October 5th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solutions (.java file), entitled <b>Node.java</b>, and <b>CircularLinkedList.java</b>  to the BrightSpace(D2L) Lab 5 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience using Circular Linked Lists </li>
+  <li> Write methods that manipulate data inside a Circular LinkedList</li>
+</ul>
+
+<hr />
+
+
+<h3>Directions </h3>
+
+
+You will be writing a Circular Linked List where each Node represents a country.
+
+First, define the <tt>Node</tt> class. Each Node (country) will have a name. Remember that each Node must also keep track of the node that comes next, <b>and</b> the node that comes before it. 
+
+Then, download Lab6Demo.java, and supply the missing functions inside the CircularLinkedList class. 
+
+In the CircularLinkedList class, you must write the following methods
+<ul>
+<li> <b>addAfterTail(Node newNode)</b>- this method adds a new node after the tail node. Because this is a circular linked list, this node will also need to be linked to the head node.</li>
+<li><b>printCircularLinkedList(boolean isReversed)</b>- This method prints out all the nodes in the circular linked list. This method takes in a boolean (true or false) as an argument. If the boolean is false, it prints out the node in "normal" order (head --> tail). If the boolean is true, it prints out the node in reverse order (tail --> head).</li>
+<li><b>selectRandomCountry(boolean isReversed)</b>- This method generates a random integer N between 0 and 10 (inclusive), and then travels N spots and returns the node it lands on. This method takes in a boolean (true or false) as an argument. If this boolean is false, the linked list will travel the list in "normal" order (start from the head, and keep going to <tt>next</tt> nodes). If this boolean is true, the linked list will travel N spots in "reverse" order (start from the head, and keep going to <tt>previous</tt> nodes). This method should return the node that it selected. You are not required to handle the case of the same node being selected twice.</li>
+<li><b>remove(Node removeNode)</b>- This method takes in a node to be removed as an argument, and removes it from the circular linked list. If this node so happens to be either the head or tail, you need to remember to adjust and assign a new head/tail node.</li>
+</ul>
+
+    
+    
+
+
+    <h3> Rules </h3>
+    <p> You are <b>NOT</b> allowed to import java.util.LinkedList; </p>
+
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab6Demo.java">Lab6Demo.Java</a> </li>
+    </ul>
+</p>	
+
+<h3> Required Output </h3>
+<p> When your program is run, your output should look <b>exactly</b >the same as seen <a href="lab6_output.out"> in this screenshot </a>. 
+
+<br><br>
+You might be confused regarding why Egypt or Japan was selected to remove. Here is a visualization of the linked list, and how it was determined which node was removed:
+
+
+<img src="lab6_ll1.jpg" width="800" height="450">
+<img src="lab6_ll2.jpg" width="800" height="450">
+
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>3 pts- addAfterTail() correctly adds a new node after the tail</li>
+  <li>2 pts- printCircularLinkedList() prints out the nodes of a linked list in normal order and and reverse order</li> 
+  <li>2 pts- selectRandomCountry() correctly selects and returns a random node from the linked list in normal order and reverse order</li>
+  <li>3 pts- remove() correctly removes a node from the linked list</li>
+</ul>
+
+
+<br><br>
+Deductions
+<li>-10 points if you dont use a Linked List </li>
+
+<br><br><br>
+
+
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+Welcome to Java Casino Slot Machine
+Press 1 to play the slots once
+Press 2 to play the slots X amount of times
+Press 3 to print out this machine's total winnings
+Press 4 to view your current credits
+Press 5 to exit
+4
+Credits available: 10
+
+Welcome to Java Casino Slot Machine
+Press 1 to play the slots once
+Press 2 to play the slots X amount of times
+Press 3 to print out this machine's total winnings
+Press 4 to view your current credits
+Press 5 to exit
+1
+
+----------
+2   3   1   
+----------
+1   2   3   
+----------
+1   1   2   
+----------
+
+Total Winnings
+--------------
+--> Matching Diagonals (+2 credit)
+You won a total of: 2 credits.
+
+Welcome to Java Casino Slot Machine
+Press 1 to play the slots once
+Press 2 to play the slots X amount of times
+Press 3 to print out this machine's total winnings
+Press 4 to view your current credits
+Press 5 to exit
+4
+Credits available: 11
+
+Welcome to Java Casino Slot Machine
+Press 1 to play the slots once
+Press 2 to play the slots X amount of times
+Press 3 to print out this machine's total winnings
+Press 4 to view your current credits
+Press 5 to exit
+1
+
+----------
+1   2   2   
+----------
+1   2   3   
+----------
+1   1   2   
+----------
+
+Total Winnings
+--------------
+--> Matching Column (+2 credit)
+You won a total of: 2 credits.
+
+Welcome to Java Casino Slot Machine
+Press 1 to play the slots once
+Press 2 to play the slots X amount of times
+Press 3 to print out this machine's total winnings
+Press 4 to view your current credits
+Press 5 to exit
+4
+Credits available: 12
+
+Welcome to Java Casino Slot Machine
+Press 1 to play the slots once
+Press 2 to play the slots X amount of times
+Press 3 to print out this machine's total winnings
+Press 4 to view your current credits
+Press 5 to exit
+3
+Total winnings paid out by this machine tonight is: 4
+
+Welcome to Java Casino Slot Machine
+Press 1 to play the slots once
+Press 2 to play the slots X amount of times
+Press 3 to print out this machine's total winnings
+Press 4 to view your current credits
+Press 5 to exit

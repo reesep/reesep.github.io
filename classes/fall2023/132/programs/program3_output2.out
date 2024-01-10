@@ -1,0 +1,26 @@
+The top of stack is: (Y 1)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 1), (Y 5), (Y 6), (Y 1), (Y Wild)]
+5
+The top of stack is: (Y Wild)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 1), (Y 5), (Y 6), (Y 1)]
+4
+The top of stack is: (Y 1)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 1), (Y 5), (Y 6)]
+3
+The top of stack is: (Y 6)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 1), (Y 5)]
+2
+The top of stack is: (Y 5)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 1)]
+1
+Game Over

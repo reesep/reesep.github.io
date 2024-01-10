@@ -1,0 +1,191 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Program 2 
+</title>
+</head>
+
+<body>
+
+<h1>Program 2: Linked List Battle</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, October 13th at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your .java files to the Program 2 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Write a complex Java Program (Instance Fields, Methods, Constructor) </li>
+  <li> Gain experience using Java (Circular) Linked Lists</li>
+  <li> Gain experience writing methods that manipulate data in a circular linked list </li>
+  <li> Gain experience reading from files in Java </li>
+  <li> Learn about an important artifact in the history of the internet</li>
+
+</ul>
+
+<hr />
+
+
+<h3>Background and Directions </h3>
+
+<a href="https://en.wikipedia.org/wiki/The_Ultimate_Showdown_of_Ultimate_Destiny">The Ultimate Showdown of Ultimate Destiny</a> is a viral music video that depicts a massive battle between various fictional and non-fictional characters from pop culture. In this assignment, you will write a Java program that simulates a very similar battle between various character from this music video. We will keep this PG, so nobody technically dies in our java program-- they are "eliminated".
+
+<br><br>You will use a <b>circular doubly linked list </b>to hold information about all the challengers. Each challenger has a name, and a power level. The simulation will consists of multiple rounds, where two random challengers are selected from the linked list. The challenger with the higher power level will win, and the loser is eliminated and removed from the linked list. The battle is over when only one challenger remains (it will always be Godzilla).
+
+
+<h4> Part 1: Loading the Linked List</h4>
+
+You will read in information about the challengers from a file. This file only contains 8 challengers, but your program should allow for any amount of challengers. You can assume the input file will always follow the same format. You can use the BufferedReader, Scanner, or any other method to read in from the file. You should use the comma (,) as a delimiter as you are reading from the file.
+
+<ul>
+    <li> <a href="participants.txt">participants.txt</a></li>
+</ul>
+
+Each line in the file represents a Node in the circular linked list. As you are reading in from the file, you will need to add nodes to the linked list. Remember that this is a circular doubly linked list, so the head node and tail node should be connected, and you need to keep track of the <tt>next</tt> node and the <tt>previous</tt>node. You can either add nodes to the front, or the back of the linked list-- it is your decision.
+<br>
+<img src="program2_start.PNG" width="800" height="450">
+<br>
+
+<h4> Part 2: Printing the Linked List</h4>
+
+You will need a method (<tt>printLinkedList</tt>) that will print out the linked list starting from the head to the tail (clockwise). You will need to call this method after each round
+
+
+
+<h4> Part 3: Simulating one round</h4>
+
+I recommend having a method, <tt>simulateOneRound()</tt>, that simulates one round of the battle. Each round, two random challengers are selected from the linked list to battle each other. 
+
+<br><br>
+You will need to generate two random values: <b>j</b> and <b>k</b>. These are two random numbers you will generate from a range of [1, N] where N is the size of the current linked list. 
+
+The first challenger is selected by starting from the head node, moving <b>j</b> spots clockwise and selects whatever challenger it lands on. The second challenger is selected by starting from the head node, moving <b>k</b> spots counter-clockwise and selects whatever challenger it lands on. 
+
+<br><br>
+The winner is determined by the challengers' power level. Whoever has the higher power level wins, and the loser must be removed from the linked list. You should have a <tt>removeFromCircle()</tt> method that removes a node/challenger from the linked list. If both challengers have the same power level, then it is a tie and nothing should happen. The battle is over when one challenger remains, and the program should then end. Between each round, you should ask the user if they would like to continue the simulation. If the user does not want to continue, the program should terminate. 
+
+<img src="program2_selection.PNG" width="800" height="450">
+
+<br>
+
+The loser must now be removed from the linked list, and pointers must be updated.
+<br>
+
+<img src="program2_removal.PNG" width="800" height="450">
+
+
+
+
+
+
+<p>
+
+
+</p>
+
+
+<h3> Starting Code and Requirements</h3>
+
+<p> You are welcome to develop your solution from scratch, however you should have at least a <tt>Node.java</tt>,  <tt>LinkedListBattle.java</tt>, and a <tt>Program2Demo.java</tt> class.</p>
+
+<br>
+<br>
+I have provide a <tt>Node.java</tt>class below that should have everything you need. You are welcome to use it in your solution. I have also provided a sample input file for your program. I recommend using the provided input file, and then start testing with your own input file when you get it working.
+
+ <ul>
+    <li><a href="Node.java">Node.java</a> </li>
+    <li><a href="participants.txt">participants.txt</a> </li>
+ </ul>
+
+<h3> Sample Output </h3>
+
+When your program is run, it should look <a href="program2_output.out">something like this.</a> Obviously, the output will look slightly different each time due to the random values for j and k. Your program does not need to look exactly like this, but your program should clearly print out the initial list of challengers, then for each round it should clearly print out which characters were selected, and who won and who lost. After each round, you should print out all remaining challengers in the linked list.
+
+
+<h3>Optional Hints</h3>
+
+Do not try to tackle the entire program in one go. First get information loaded into the linked list from the file, then print to linked list to confirm you did part 1 correctly.
+
+<br><br>
+
+I recommend having a method in your linked list class the simulates just one round. It generates j and k, selects the correct nodes, determines the winner, and removes the loser from the linked list. From your demo class, you can call this method until there is one node left in the linked list.
+
+<br><br>
+If you get stuck or have a bug in your code, remember that you a rubber duck that can help 😉
+
+<h3>Grading (100 points) </h3>
+
+
+
+    <style type="text/css">
+      .tg  {border-collapse:collapse;border-spacing:0;}
+      .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+        overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+        font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+      </style>
+      <table class="tg">
+      <thead>
+        <tr>
+          <th class="tg-0pky">Requirement</th>
+          <th class="tg-0pky">Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tg-0pky">Your program reads in the list of challengers from an external file (participants.txt)</td>
+          <td class="tg-0pky">10</td>
+        </tr>
+        <tr>
+          <td class="tg-0pky">Challengers are loaded in and added into a <span style="font-weight:bold">circular linked list</span></td>
+          <td class="tg-0pky">20</td>
+        </tr>
+        <tr>
+          <td class="tg-0pky">The circular linked list is correctly printed out after each round</td>
+          <td class="tg-0pky">10</td>
+        </tr>
+        <tr>
+          <td class="tg-0pky">Your program correctly simulates one round. j and k are generated, and correctly select two challengers from the circular linked list </td>
+          <td class="tg-0pky">20</td>
+        </tr>
+        <tr>
+          <td class="tg-0pky">Eliminated challengers are removed from the circular linked list</td>
+          <td class="tg-0pky">20</td>
+        </tr>
+        <tr>
+          <td class="tg-0pky">Program continues to run until 1 challenger remains, or if the user wants to exit the program</td>
+          <td class="tg-0pky">10</td>
+        </tr>
+        <tr>
+          <td class="tg-0pky">Your output clearly shows which challengers were picked, who won, and who gets eliminated</td>
+          <td class="tg-0pky">10</td>
+        </tr>
+      </tbody>
+      </table>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<a href="https://youtu.be/l1heD4T8Yco"> program 2 solution</a>
+
+</body>
+</html>

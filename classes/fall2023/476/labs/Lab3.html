@@ -1,0 +1,657 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Computer Security</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" type="image/x-icon" href="/cs476-2021-spring/favicon.ico">
+
+  <!-- Fonts & TextFormatting -->
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:500&display=swap" rel="stylesheet" />
+  <link href="../assets/all.css" rel="stylesheet"> <!--load all fontawesome styles -->
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/prism.css" /> <!-- Prism JS & CSS downloaded from: https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript+bash+c+csharp+cpp+cmake+docker+git+http+hpkp+hsts+java+javadoc+javadoclike+json+latex+liquid+makefile+markdown+markup-templating+mongodb+nasm+nginx+perl+php+phpdoc+php-extras+plsql+python+regex+ruby+rust+sql+vim+yaml&plugins=line-numbers+command-line+unescaped-markup+normalize-whitespace+toolbar -->
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <!-- Misc. -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"/>
+</head>
+
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid col-sm-12 p-4 mb-4">
+<div class="row flex-xl-nowrap m-0">
+
+<div class="d-none d-xl-block col-xl-2">
+</div>
+
+<div class="col-12 col-md-12 col-xl-8 bg-white rounded shadow-lg pb-4">
+<div>
+  <!--Thanks, Tim Holman! http://tholman.com/github-corners/ -->
+
+
+
+
+</div>
+
+
+<!-- ACTIVE Announcements -->
+
+<!-- OLD Announcements (hidden in comment environment) -->
+
+
+
+<h1 class="pb-4" id="lab-03-buffer-overflow-attack-lab">Lab 03: Buffer Overflow Attack Lab</h1>
+
+<h1 data-toc-skip> Due Sunday October 15th @ 11:59 PM</h1>
+
+<h2 class="titletext" id="buffer-overflow-attack-lab">Buffer Overflow Attack Lab</h2>
+<p class="subtitletext">Adapted from SEED Labs: A Hands-on Lab for Security Education.</p>
+
+<p>A buffer overflow is defined as the act of writing data beyond the boundary of allocated memory space (e.g., a buffer).
+This vulnerability can be used by a malicious user to alter the flow control of the program, leading to the execution of malicious code.
+The objective of this lab is for students to gain practical insights into this type of vulnerability, and to learn how to exploit the vulnerability.</p>
+
+<p>In this lab, students will be given a program with a buffer-overflow vulnerability;
+their task is to develop a scheme to exploit the vulnerability, and ultimately gain root privileges on the system.
+In addition to the attacks we study, students will be guided through several protection schemes that have been implemented in the operating system as countermeasures to buffer-overflow attacks.
+Students will evaluate how the  schemes work as well as their potential limitations.</p>
+
+<p>This lab covers the following topics:</p>
+
+<ul>
+  <li>Buffer overflow vulnerability and attack</li>
+  <li>Stack layout</li>
+  <li>Address randomization, non-executable stack, and StackGuard</li>
+  <li>Shellcode (32-bit and 64-bit)</li>
+  <li>The return-to-libc attack, which aims at defeating the
+non-executable stack countermeasure, is covered in a separate lab.</li>
+</ul>
+
+<blockquote>
+  <p>This lab is an adaptation of the SEED Labs “Buffer Overflow Attack Lab”. (Specifically, the Set-UID version.)</p>
+</blockquote>
+
+<h3 id="resources">Resources</h3>
+
+<ul>
+  <li>Code related to this lab can be found in <code class="language-plaintext highlighter-rouge">03_buffer_overflow/</code> of our <a href="https://github.com/reesep/csci476-code">class’s GitHub repository</a>.</li>
+  <li><a href="https://blog.packagecloud.io/eng/2016/04/05/the-definitive-guide-to-linux-system-calls/">The Definitive Guide to Linux System Calls</a>
+<!-- - [x86 Assembly/X86 Architecture](https://en.wikibooks.org/wiki/X86_Assembly/X86_Architecture#Segment_Registers) --></li>
+  <li><a href="https://www.codeproject.com/articles/1388/calling-conventions-demystified">Calling Conventions Demystified</a>
+<!-- - [Calling Conventions (slides)](http://www.cs.cornell.edu/courses/cs3410/2019sp/schedule/slides/10-calling-notes-bw.pdf) -->
+<!-- - [Calling Conventions (x86 cheatsheet)](https://wiki.osdev.org/Calling_Conventions) --></li>
+  <li>A handy <a href="https://gist.github.com/rkubik/b96c23bd8ed58333de37f2b8cd052c30">gdb cheatsheet</a></li>
+  <li>Chapter 4 in the <a href="https://www.handsonsecurity.net">SEED Textbook</a>.</li>
+  <li>A related <a href="https://www.handsonsecurity.net/video.html">video lecture</a> (Udemy course) recorded by Kevin Du.</li>
+</ul>
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary">
+  <div class="card-body">
+
+    <!--
+## Note for Instructors
+
+Instructors can customize this lab by choosing values for `L1`, \...,`L4`.
+See Section [4](#sec:vulnerable_program){reference-type="ref" reference="sec:vulnerable_program"} for details.
+Depending on the background of students and the time allocated for this lab,
+instructors can also make the Level-2, Level-3, and Level-4 tasks (or some of them) optional.
+The Level-1 task is sufficient to cover the basics of the buffer-overflow attacks.
+Levels 2 to 4 increase the attack difficulties.
+All the countermeasure tasks are based on the Level-1 task, so skipping the other levels does not affect those tasks.
+-->
+
+    <h2 id="environment-setup">Environment Setup</h2>
+
+    <p>Modern operating systems have implemented several security mechanisms to
+make the buffer-overflow attack difficult. To simplify our attacks, we
+need to disable them first. Later on, we will enable them and see
+whether our attack can still be successful or not.</p>
+
+    <h3 id="disable-aslr">Disable ASLR</h3>
+
+    <p>Ubuntu and several other Linux-based systems uses ASLR (address space layout randomization)
+to randomize the starting address of heap and stack.
+This makes guessing the exact addresses difficult;
+guessing addresses is one of the critical steps of buffer-overflow attacks.
+This feature can be disabled using the following command:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>sysctl <span class="nt">-w</span> kernel.randomize_va_space<span class="o">=</span>0
+</code></pre></div>    </div>
+
+    <h3 id="configuring-binsh">Configuring <code class="language-plaintext highlighter-rouge">/bin/sh</code></h3>
+
+    <p>In the recent versions of Ubuntu OS, the <code class="language-plaintext highlighter-rouge">/bin/sh</code> symbolic link points
+to the <code class="language-plaintext highlighter-rouge">/bin/dash</code> shell.
+The dash and bash shells have implemented a security countermeasure that prevents itself from being executed in a set-uid process.
+Basically, if they detect that they are executed in a set-uid process,
+they will immediately change the effective user ID to the process’s real user ID,
+effectively dropping any elevated privileges.</p>
+
+    <p>The victim of many of our attacks in this lab is a set-uid program, and our attack relies on running <code class="language-plaintext highlighter-rouge">/bin/sh</code>;
+the countermeasure in <code class="language-plaintext highlighter-rouge">/bin/dash</code> makes our attack more difficult.
+Therefore, we will link <code class="language-plaintext highlighter-rouge">/bin/sh</code> to another shell that does not have this countermeasure.
+(In later tasks, we will show that with a little more effort, the countermeasure in <code class="language-plaintext highlighter-rouge">/bin/dash</code> can be easily defeated!)
+We have installed a shell program called <code class="language-plaintext highlighter-rouge">zsh</code> in our Ubuntu 20.04 VM.
+The following command can be used to link <code class="language-plaintext highlighter-rouge">/bin/sh</code> to <code class="language-plaintext highlighter-rouge">/bin/zsh</code>:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo ln</span> <span class="nt">-sf</span> /bin/zsh /bin/sh
+</code></pre></div>    </div>
+
+    <p>You can verify how <code class="language-plaintext highlighter-rouge">/bin/sh</code> is configured at any time:</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-l</span> /bin/sh /bin/zsh /bin/dash
+</code></pre></div>    </div>
+
+    <!--
+### StackGuard and Non-Executable Stack.
+
+These are two additional countermeasures implemented in the system. They
+can be turned off during the compilation. We will discuss them later
+when we compile the vulnerable program.
+-->
+
+    <h3 id="a-vulnerable-program">A Vulnerable Program</h3>
+
+    <p>The following program has a buffer-overflow vulnerability.</p>
+
+    <p>Your <strong>main objective</strong> throughout parts of this lab will be to exploit this vulnerability and get a shell with root privileges.</p>
+
+    <h5 id="a-brief-summary-of-how-the-program-works">A Brief Summary of How the Program Works</h5>
+
+    <p>The program first reads in input from a file called <code class="language-plaintext highlighter-rouge">badfile</code>, and ultimately passes this input to another buffer in the function <code class="language-plaintext highlighter-rouge">bof()</code>.
+The original input can have a maximum length of <code class="language-plaintext highlighter-rouge">517</code> bytes, but the buffer in <code class="language-plaintext highlighter-rouge">bof()</code> is only <code class="language-plaintext highlighter-rouge">BUF_SIZE</code> bytes long,  which is less than <code class="language-plaintext highlighter-rouge">517</code>.
+Because <code class="language-plaintext highlighter-rouge">strcpy()</code> does not check boundaries, a buffer overflow can occur.
+In this lab, this program is will be compiled and run as a root-owned set-uid program;
+if a normal user can exploit this buffer overflow vulnerability, the user might be able to get a root shell.</p>
+
+    <p>It should be noted that the program gets its input from a file called <code class="language-plaintext highlighter-rouge">badfile</code>.
+The contents of this file are specified by an untrusted user (you!).
+Thus, your objective is to create the <code class="language-plaintext highlighter-rouge">badfile</code> with the necessary contents such that,
+when the vulnerable program copies the contents into its buffer, a root shell gets spawned.</p>
+
+    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2Freesep%2Fcsci476-code%2Fblob%2Fmaster%2F03_buffer_overflow%2Fcode%2Fstack.c&amp;style=github&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on"></script>
+
+    <h5 id="a-note-about-compilation">A Note About Compilation</h5>
+
+    <p>When compiling the above program for this task,
+we must not forget to turn off the StackGuard (<code class="language-plaintext highlighter-rouge">-fno-stack-protector</code>) and the non-executable stack (<code class="language-plaintext highlighter-rouge">-z execstack</code>) countermeasures.
+After the compilation, we need to make the program a root-owned set-uid program.
+We can achieve this by first changing the ownership of the program to <code class="language-plaintext highlighter-rouge">root</code>, and then changing the permissions for the executable to <code class="language-plaintext highlighter-rouge">4755</code>, which enables the set-uid bit.
+It should be noted that changing ownership must
+be done <em><strong>before</strong></em> enabling the set-uid bit; changing ownership will cause the set-uid bit to be turned off.</p>
+
+    <p>In summary, a command sequence such as this will yield the desired setup:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gcc <span class="nt">-DBUF_SIZE</span><span class="o">=</span>100 <span class="nt">-m32</span> <span class="nt">-o</span> stack <span class="nt">-z</span> execstack <span class="nt">-fno-stack-protector</span> stack.c
+<span class="nv">$ </span><span class="nb">sudo chown </span>root stack  <span class="c"># change owner to root</span>
+<span class="nv">$ </span><span class="nb">sudo chmod </span>4755 stack  <span class="c"># flip the set-uid bit</span>
+</code></pre></div>    </div>
+
+    <p>The compilation and setup commands are already included in the <a href="https://github.com/reesep/csci476-code/blob/master/03_buffer_overflow/code/Makefile">Makefile</a>,
+so your just need to type <code class="language-plaintext highlighter-rouge">make</code> in this directory to execute the needed commands.</p>
+
+    <blockquote>
+      <p>Note that the example here, where we set the <code class="language-plaintext highlighter-rouge">BUF_SIZE=100</code> is just an example.
+In the Makefile there are variables <code class="language-plaintext highlighter-rouge">L1</code>, ..., <code class="language-plaintext highlighter-rouge">L4</code>, which are used during the compilation.
+This program and Makefile can actually be configured in different ways, mostly aimed at varying the buffer size used in the program.
+I have configured these values for you to ensure that you compile the program for various tasks with the correct buffer size.
+<strong>DO NOT CHANGE THESE VALUES!</strong></p>
+    </blockquote>
+
+    
+
+  </div>
+</div>
+<!-- END Special Section -->
+
+<h2 class="titletext" id="lab-tasks">Lab Tasks</h2>
+
+
+<blockquote> <p> When you compile with Makefile, it will generate 3 different executables, stack-L1, stack-L2, and stack-L3. You will ONLY use stack-L1 in this lab. When I was creating this lab, I removed the task that used level 2 and level 3. </p></blockquote>
+
+
+<p class="subtitletext">This lab has been tested on the pre-built SEED VM (Ubuntu 20.04 VM).</p>
+
+<h3 id="task-1-getting-familiar-with-shellcode">Task 1: Getting Familiar with Shellcode</h3>
+
+<p>The ultimate goal of the buffer-overflow attacks we’ll study in this lab is to inject malicious code into the target program,
+so the code can be executed using the target program’s privileges (yes, we’ll target root-owned set-uid programs as in labs past!).
+Shellcode is widely used in most code-injection attacks.
+In this task we will spend some time getting familiar with shellcode.</p>
+
+<blockquote>
+  <p>In class, we walked through how the 32-bit shellcode works.
+64-bit shellcode is quite similar to the 32-bit shellcode,
+except that the names of the registers are different and the registers used by the <code class="language-plaintext highlighter-rouge">execve()</code> system call are also different.</p>
+</blockquote>
+
+ing the Shellcode -->
+
+<!-- We have generated the binary shellcode and put this code in a C program called `call_shellcode.c` inside the `shellcode` folder. -->
+<!-- If you would like to learn how to generate the binary code yourself, you should work on the Shellcode lab.  -->
+
+<script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2Freesep%2Fcsci476-code%2Fblob%2Fmaster%2F03_buffer_overflow%2Fshellcode%2Fcall_shellcode.c&amp;style=github&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on"></script>
+
+<p>In this task, you will examine different versions of shellcode.
+Specifically, the code above includes two copies of shellcode:
+one is the 32-bit shellcode and the other is 64-bit shellcode.
+When we compile the program using the <code class="language-plaintext highlighter-rouge">-m32</code> flag, the 32-bit version will be used; without this flag, the 64-bit version will be used.
+Using the provided <a href="https://github.com/reesep/csci476-code/blob/master/03_buffer_overflow/shellcode/Makefile">Makefile</a>,
+you can compile the code by typing <code class="language-plaintext highlighter-rouge">make</code> in that directory.
+The Makefile will produce two binaries: <code class="language-plaintext highlighter-rouge">a32.out</code> (32-bit shellcode) and <code class="language-plaintext highlighter-rouge">a64.out</code> (64-bit shellcode).</p>
+
+<h4 id="task-11">Task 1.1</h4>
+
+<p>Please compile and run both executables, and describe your observations.</p>
+
+<h4 id="task-12">Task 1.2</h4>
+
+<p>Please briefly describe what this program is doing; i.e., what does the code in <code class="language-plaintext highlighter-rouge">main()</code> actually do?</p>
+
+<blockquote>
+  <p><strong>NOTE:</strong> If you look at the Makefile you can see that we use the <code class="language-plaintext highlighter-rouge">execstack</code> option when compiling the programs,
+which allows code to be executed from the stack; without this option, the program will fail.</p>
+</blockquote>
+
+<h3 id="task-2-attacking-a-vulnerable-32-bit-program-level-1">Task 2: Attacking a Vulnerable 32-bit Program</h3>
+
+<p>In this task, you need to compile the vulnerable program into a 32-bit binary called <code class="language-plaintext highlighter-rouge">stack-L1</code>.</p>
+
+<blockquote>
+  <p>The compilation and setup commands are already included in <code class="language-plaintext highlighter-rouge">Makefile</code>.</p>
+</blockquote>
+
+<blockquote>
+  <p>For each “level” we explore, our Makefile will also compile a version of the executable suitable for debugging (e.g., <code class="language-plaintext highlighter-rouge">stack-L1-dbg</code>)</p>
+</blockquote>
+
+<p>To exploit the buffer-overflow vulnerability in the target program, the
+most important thing to know is the distance between the buffer’s
+starting position and the place where the return-address is stored.
+We will use a debugging method to determine this value.
+Since we have the source code of the target program, we can compile it with the debugging flag (<code class="language-plaintext highlighter-rouge">-g</code>) turned on, which makes debugging a lot more convenient.
+(You should be using our provided Makefile. If you are, when you run <code class="language-plaintext highlighter-rouge">make</code>, the debugging version should be created automatically.)</p>
+
+<h4 id="task-21-finding-the-return-address">Task 2.1: Finding the Return Address</h4>
+
+<p>We will use <code class="language-plaintext highlighter-rouge">gdb</code> (<strong><a href="https://gist.github.com/rkubik/b96c23bd8ed58333de37f2b8cd052c30">gdb cheatsheet!</a></strong>) to debug <code class="language-plaintext highlighter-rouge">stack-L1-dbg</code>.</p>
+
+<p>Before running the program under <code class="language-plaintext highlighter-rouge">gdb</code>, we need to create a file called <code class="language-plaintext highlighter-rouge">badfile</code>.</p>
+
+<p>Now, use <code class="language-plaintext highlighter-rouge">gdb</code> as follows to determine the buffer/ebp offset,
+which you can use to determine where the return address should be in memory.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ touch badfile            # &lt;= Create an empty badfile
+$ gdb stack-L1-dbg
+gdb-peda$ b bof            # &lt;= Set a break point at function bof()
+Breakpoint 1 at 0x124d: file stack.c, line 18.
+gdb-peda$ run              # &lt;= Start executing the program
+...
+Breakpoint 1, bof (str=0xffffcf57 ...) at stack.c:18
+18  {
+gdb-peda$ next             # &lt;= See the note below
+...
+22      strcpy(buffer, str);
+gdb-peda$ p $ebp           # &lt;= Get the ebp value
+$1 = (void *) ADDR1   
+gdb-peda$ p &amp;buffer        # &lt;= Get the buffer's address
+$2 = (char (*)[100]) ADDR2
+gdb-peda$ p/d ADDR1 - ADDR2
+$3 = ???
+gdb-peda$ quit             # &lt;= exit
+</code></pre></div></div>
+
+<blockquote>
+  <h5 id="note-getting-bofs-ebp">Note: Getting <code class="language-plaintext highlighter-rouge">bof()</code>’s <code class="language-plaintext highlighter-rouge">ebp</code></h5>
+  <p>When <code class="language-plaintext highlighter-rouge">gdb</code> stops inside the <code class="language-plaintext highlighter-rouge">bof()</code> function, it stops before the <code class="language-plaintext highlighter-rouge">ebp</code> register is set to point to the current stack frame,
+so if we print out the value of <code class="language-plaintext highlighter-rouge">ebp</code> here, we will get the caller’s <code class="language-plaintext highlighter-rouge">ebp</code> value.
+Thus, we need to use <code class="language-plaintext highlighter-rouge">next</code> to execute a few instructions
+and stop after the <code class="language-plaintext highlighter-rouge">ebp</code> register is modified to point to the stack frame of the <code class="language-plaintext highlighter-rouge">bof()</code> function;
+i.e., we need to get past the <a href="https://stackoverflow.com/questions/3699283/what-is-stack-frame-in-assembly/3700219#3700219">function prologue</a>
+to ensure that <code class="language-plaintext highlighter-rouge">ebp</code> is set to the callee’s frame pointer, not the caller’s frame pointer.</p>
+</blockquote>
+
+<blockquote>
+  <h5 id="note-the-woes-of-using-a-debugger">Note: The Woes of Using A Debugger</h5>
+  <p>It should be noted that the frame pointer value obtained when using <code class="language-plaintext highlighter-rouge">gdb</code> is different from that during the actual execution (without using <code class="language-plaintext highlighter-rouge">gdb</code>).
+This is because <code class="language-plaintext highlighter-rouge">gdb</code> has pushed some environment data into the stack before running the debugged program.
+When the program runs directly without using <code class="language-plaintext highlighter-rouge">gdb</code>, the stack does not have that data, so the actual frame pointer value will be “larger” (aka higher in memory).
+You should keep this in mind when constructing your payload.</p>
+</blockquote>
+
+<h4 id="task-22-launching-your-attack">Task 2.2 Launching Your Attack</h4>
+
+<p>To exploit the buffer-overflow vulnerability in the target program, you need to prepare a payload, and save it inside <code class="language-plaintext highlighter-rouge">badfile</code>.
+One could do this manually <em>(sounds tedious…)</em> or use another program, such as a Python script to help us make our <code class="language-plaintext highlighter-rouge">badfile</code> <em>(yay, Python!)</em>.
+For this lab, we provide a skeleton program called <code class="language-plaintext highlighter-rouge">exploit.py</code>.
+Note that the code is incomplete, however, and students need to replace some of the essential values in the code to generate a suitable <code class="language-plaintext highlighter-rouge">badfile</code>. You will need to set the value of <code>start</code>, <code>ret</code>, and <code>offset</code></p>
+
+<script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2Freesep%2Fcsci476-code%2Fblob%2Fmaster%2F03_buffer_overflow%2Fcode%2Fexploit.py&amp;style=github&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on"></script>
+
+<p>After you finish the above program, run it.
+This will generate the contents for your <code class="language-plaintext highlighter-rouge">badfile</code>.
+Then run the vulnerable program for this task.
+If your exploit is implemented correctly, you should be able to get a root shell!</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$.</span>/exploit.py     <span class="c"># create the badfile</span>
+<span class="nv">$.</span>/stack-L1       <span class="c"># launch the attack by running the vulnerable program</span>
+<span class="c"># &lt;---------------- Bingo! Root shell! (You can also verify with commands like `id`)</span>
+</code></pre></div></div>
+
+<p>In your lab report, in addition to providing screenshots and/or code/command snippets to demonstrate your investigation (Task 2.1) and attack (Task 2.2),
+you also need to explain how the values used in your <code class="language-plaintext highlighter-rouge">exploit.py</code> were decided.
+Since we provide the skeleton code (<code class="language-plaintext highlighter-rouge">exploit.py</code>),
+these values really are the most important part of the attack;
+a detailed explanation verifies that you understand what is going on here.
+To be clear, only demonstrating a successful attack <em>without explaining why/how the attack works</em> will not receive full credit.</p>
+
+<h3 id="tasks-4-defeating-dashs-countermeasure">Tasks 3: Defeating <code class="language-plaintext highlighter-rouge">dash</code>’s Countermeasure</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">dash</code> shell in the Ubuntu OS drops privileges when it detects that the effective UID is not equal to the real UID (i.e., EUID != RUID),
+which is the case in a set-uid program.
+This is achieved by changing the effective UID back to the real UID, essentially, dropping any elevated privilege.</p>
+
+<p>In previous tasks, we let <code class="language-plaintext highlighter-rouge">/bin/sh</code> points to another shell called <code class="language-plaintext highlighter-rouge">zsh</code>, which does not implement this countermeasure.
+In this task, we will change our shell back to <code class="language-plaintext highlighter-rouge">dash</code>, and see how we can defeat this countermeasure.</p>
+
+<p>First, set your shell back to <code class="language-plaintext highlighter-rouge">dash</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo ln</span> <span class="nt">-sf</span> /bin/dash /bin/sh
+</code></pre></div></div>
+
+<p>To defeat the countermeasure in our buffer-overflow attacks, all we need to do is to change the real UID, so it equals the effective UID.
+When a root-owned set-uid program runs, the effective UID is zero, so <em>before we invoke the shell program</em>, we just need to change the real UID to zero
+(which we can do… because at the time that we do this we are effectively running as root!).
+We can achieve this by invoking <code class="language-plaintext highlighter-rouge">setuid(0)</code> before executing <code class="language-plaintext highlighter-rouge">execve()</code> in the shellcode.
+The assembly code to do this is already inside the <code class="language-plaintext highlighter-rouge">call_shellcode.c</code> code
+(it is commented out at the top of the file.)
+You just need to add it to the beginning of the shellcode.</p>
+
+<!-- The following assembly code shows how to invoke `setuid(0)`. -->
+<!-- The binary code is already put inside `call_shellcode.c`. -->
+<!-- You just need to add it to the beginning of the shellcode. -->
+<!-- Below is a summary of how new assembly code works: -->
+
+<!--
+```asm
+; Invoke setuid(0): 32-bit
+xor ebx, ebx      ; ebx = 0: setuid()'s argument
+xor eax, eax
+mov  al, 0xd5     ; setuid()'s system call number
+int 0x80
+
+; Invoke setuid(0): 64-bit
+xor rdi, rdi      ; rdi = 0: setuid()'s argument
+xor rax, rax       
+mov  al, 0x69     ; setuid()'s system call number
+syscall
+```
+-->
+
+
+
+<h4 id="task-41-experimenting-with-set-uid-assembly-code">Task 3.1: Experimenting with Set-UID Assembly Code</h4>
+
+<p>Compile <code class="language-plaintext highlighter-rouge">call_shellcode.c</code> into root-owned binary.</p>
+
+<blockquote>
+  <p>The Makefile in the <code class="language-plaintext highlighter-rouge">shellcode/</code> folder on GitHub has a target that you can use by running: <code class="language-plaintext highlighter-rouge">make setuid</code></p>
+</blockquote>
+
+<p>Run both the <code class="language-plaintext highlighter-rouge">a32.out</code> and <code class="language-plaintext highlighter-rouge">a64.out</code> shellcode programs <em>with</em> and <em>without</em> the assembly that makes the <code class="language-plaintext highlighter-rouge">setuid(0)</code> system call.</p>
+
+<p>Please describe your observations and provide supporting evidence.</p>
+
+<h4 id="task-42-launching-the-attack-again">Task 3.2: Launching the Attack (Again)</h4>
+
+<p>Now, using the updated shellcode from the previous task, we can attempt the attack again on the vulnerable program, and this time, with the shell’s countermeasure turned on.
+Repeat your attack on the Level 1 executable (Task 2), and see whether you can get a root shell.
+<em>(<strong>Hint:</strong> you should be able to!)</em></p>
+
+<p>After getting a root shell, please run the following commands to prove that
+(1) you are using a shell with countermeasure, and
+(2) you are running in a shell as root.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ls -l /bin/sh /bin/zsh /bin/dash
+# id
+</code></pre></div></div>
+
+<blockquote>
+  <p>Repeating the attacks on Level 2 and beyond is not required, but please do feel free to do that and see whether those attacks work!</p>
+</blockquote>
+
+<h3 id="task-5-defeating-aslr">Task 4: Defeating ASLR</h3>
+
+<p>On 32-bit Linux machines, stacks only have 19 bits of entropy, which means the base address for the stack can have \(2^{19} = 524,288\) possibilities.
+This number is not that high and can be exhausted easily with a brute-force approach.
+In this task, we use such an approach to defeat the ASLR countermeasure on our 32-bit VM.</p>
+
+<h4 id="task-51-attacking-a-system-with-aslr-enabled">Task 4.1: Attacking a System with ASLR Enabled</h4>
+
+<p>First, turn on ASLR using the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo</span> /sbin/sysctl <span class="nt">-w</span> kernel.randomize_va_space<span class="o">=</span>2
+</code></pre></div></div>
+
+<p>Then, run the same kind of attack as before against <code class="language-plaintext highlighter-rouge">stack-L1</code>.</p>
+
+<p>Please describe your observations and provide supporting evidence.</p>
+
+<h4 id="task-52-a-brute-force-attack-on-a-system-with-aslr-enabled">Task 4.2: A Brute Force Attack on a System with ASLR Enabled</h4>
+
+<p>Now, we can use a brute-force approach to attack the vulnerable program repeatedly, hoping that the address we put in the <code class="language-plaintext highlighter-rouge">badfile</code> will <em>eventually</em> be correct…
+For this task, you can use the following shell script to invoke the vulnerable program repeatedly (i.e., in an infinite loop!).
+If your attack succeeds, the script will stop; otherwise, it will keep running.</p>
+
+<p>Please describe your observations and provide supporting evidence.</p>
+
+<script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2Freesep%2Fcsci476-code%2Fblob%2Fmaster%2F03_buffer_overflow%2Fcode%2Fbrute-force.sh&amp;style=github&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on"></script>
+
+<blockquote>
+  <p>Please be patient, as this may take a few minutes… but if it turns out that you are very unlucky, it may take longer… If this is the case, please don’t invite me out to the casinos with you… :-)</p>
+</blockquote>
+
+<blockquote>
+  <p>You only need to try this on <code class="language-plaintext highlighter-rouge">stack-L1</code>, which is a 32-bit program.
+A Brute-force attack on 64-bit programs is much harder, because the entropy is much larger.
+Although this is not required, free free to try it just for fun.
+Maybe let it run overnight? Who knows, you may get lucky!</p>
+</blockquote>
+
+<h3 id="tasks-6-experimenting-with-other-countermeasures">Tasks 5: Experimenting with Other Countermeasures</h3>
+
+<p>In this task we will explore some of the other countermeasures that exist to defend against buffer overflow attacks.</p>
+
+<h4 id="task-61-turn-on-the-stackguard-protection">Task 5.1: Turn on the StackGuard Protection</h4>
+
+<p>Many compilers, such as <code class="language-plaintext highlighter-rouge">gcc</code>, implement a security mechanism called <em>StackGuard</em> to prevent buffer overflows.
+In the presence of this protection, the buffer overflow attacks we’ve studied in this lab will not work.
+In our previous tasks, we disabled the StackGuard protection mechanism when compiling the programs.
+In this task, we will turn it back on and see what happens.</p>
+
+<blockquote>
+  <p>Before diving into this task, remember to turn off the address randomization if it is still enabled!</p>
+</blockquote>
+
+<p>First, repeat the Level-1 attack (Task 2) with StackGuard off, and make sure that the attack is still successful.
+Then, turn on the StackGuard protection by recompiling the vulnerable <code class="language-plaintext highlighter-rouge">stack.c</code> program without the <code class="language-plaintext highlighter-rouge">-fno-stack-protector</code> flag.
+(In <code class="language-plaintext highlighter-rouge">gcc</code> version 4.3.3 and above, StackGuard is enabled by default.)
+Now, conduct your attack again.</p>
+
+<p>Please describe your observations and provide supporting evidence.</p>
+
+<h4 id="task-62-turn-on-the-non-executable-stack-protection">Task 5.2: Turn on the Non-Executable Stack Protection</h4>
+
+<p>In the past, Operating systems did allow executable stacks, but this is not common today:
+In the Ubuntu OS,
+the binary images of programs (and shared libraries) must declare whether they require executable stacks or not,
+i.e., they need to mark a field in the program header of the ELF binary.
+The kernel and dynamic linker can use this information to decide whether to make the stack of this  running program executable or non-executable.
+Specifying this information is done automatically by our compiler, <code class="language-plaintext highlighter-rouge">gcc</code>, which by default makes stack non-executable.
+While non-executable stacks is the default setting these days, we can specifically make it non-executable using the <code class="language-plaintext highlighter-rouge">-z noexecstack</code> flag when we compile the program.
+In our previous tasks, we have used <code class="language-plaintext highlighter-rouge">-z execstack</code> to make stacks executable.</p>
+
+<p>In this task, we will make the stack non-executable.
+If you recall from Task 1, the <code class="language-plaintext highlighter-rouge">call_shellcode</code> program puts a copy of shellcode on the stack, and then executes the code from the stack.
+Please recompile <code class="language-plaintext highlighter-rouge">call_shellcode.c</code> into <code class="language-plaintext highlighter-rouge">a32.out</code> and <code class="language-plaintext highlighter-rouge">a64.out</code> <strong>without the <code class="language-plaintext highlighter-rouge">-z execstack</code> option</strong>.</p>
+
+<p>Please run them both and describe your observations. Also provide supporting evidence.</p>
+
+<p><strong>Defeating the non-executable stack countermeasure.</strong>
+While we will not study this idea in this lab, it should be noted that non-executable stack only makes it impossible to run shellcode on the stack, it does not prevent buffer-overflow attacks.
+Tthere are in fact other ways to run malicious code after exploiting a buffer-overflow vulnerability.
+<em>(Think about it! How could this work?!)</em>
+The <em>return-to-libc</em> attack is one such example.
+If you are interested, there is another SEED Lab (<a href="https://seedsecuritylabs.org/Labs_20.04/Software/Return_to_Libc/">Return-to-libc Attack Lab</a>) covering this topic.
+I encourage you to check it out if you are interested!</p>
+
+
+
+<h2 id="submission">Submission</h2>
+
+<p>Submit your assignment as a single PDF to the appropriate D2L dropbox</p>
+
+<br><br>
+
+The lab report is to help me see that you did the lab and followed the instructions. For each task, you should include a screenshot to show you completed the task. If the task asks you to write down observations, you should also include those in your lab report. For the tasks that requires you to do some thinking and find ways to exploit a program, you should write a brief description about your approach and the steps you took to get your output.
+
+This is a lab report taken from a previous offering of this course. This is a good example of how you should format your lab report: <a href="https://www.cs.montana.edu/pearsall/classes/spring2023/476/labs/SampleLabReport.pdf">https://www.cs.montana.edu/pearsall/classes/fall2022/476/labs/SampleLabReportFormat.pdf</a>
+
+
+
+
+
+
+</div>
+
+<div class="d-none d-xl-block col-xl-2">
+    
+    <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+    
+</div>
+
+</div>
+</div>
+
+<!-- Optional JavaScript for Bootstrap - jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="/cs476-2021-spring/assets/js/prism.js"></script>
+
+<script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    /*
+     * class hacking: add bootstrap/bootswatch class labels to my custom classes (notes, slides, etc.)
+     */
+
+    // admin styles
+    $('.new').addClass('badge badge-pill badge-primary');
+    $('.announcement').addClass('alert alert-primary').prepend('<h4 class="alert-heading">Class Announcement!</h4>');
+    $('.timestamp').prepend('&mdash;Posted ');
+    // $('.score').prepend(' &mdash; ');
+
+    // add icons / style class elements...
+    $( ".activity" ).each(function(index) {
+        $(this).html('<i class="fas fa-lightbulb pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".code" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-code pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".slides" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-pdf pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".pdf" ).each(function(index) {
+        $(this).html('<i class="fas fa-file pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".reading" ).each(function(index) {
+        $(this).html('<i class="fas fa-book pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".video" ).each(function(index) {
+        $(this).html('<i class="fas fa-play-circle pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+
+    // add links to all section headers...
+    $( ":header" ).each(function(index) {
+      var attr = $(this).attr('id');
+      if (typeof attr !== typeof undefined && attr !== false) {
+        $(this).html( '<a href="#' + attr + '">' +$(this).html()+ ' </a>' );
+      }
+    });
+
+    // add links to weeks on schedule
+    $('td[id^="week"]').filter(function () {
+        $(this).html(function(index, text){
+            return '<a href="#' + text.toLowerCase().replace(' ', '') + '"><strong>' + text + '</strong></a>';
+        });
+    });
+
+    // use javascript to detect all external links and add the target='_blank' attribute to them.
+    // -> thanks, https://code.luasoftware.com/tutorials/hugo/how-to-create-link-with-target-blanks-in-hugo-markdown/
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+        if (links[i].hostname != window.location.hostname) {
+            links[i].target = '_blank';
+        }
+    }
+
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    var TEX = MathJax.InputJax.TeX;
+    var COLS = function (W) {
+      var WW = [];
+      for (var i = 0, m = W.length; i < m; i++)
+        {WW[i] = TEX.Parse.prototype.Em(W[i])}
+      return WW.join(" ");
+    };
+    TEX.Definitions.Add({
+      environment: {
+        psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+      }
+    });
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js">
+</script>
+
+</body>
+
+</html>

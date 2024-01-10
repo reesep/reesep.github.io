@@ -1,0 +1,8 @@
+Godzilla,21000
+Batman,9000
+Optimus Prime,16000
+Chuck Norris,7500
+Doctor Octopus,9000
+Abraham Lincoln,1863
+Shaquille O'Neal,6500
+Darth Vader,11000

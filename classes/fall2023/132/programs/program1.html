@@ -1,0 +1,189 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Program 1 
+</title>
+</head>
+
+<body>
+
+<h1>Program 1: Slot Machine</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Monday, September 18th at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your solutions <b>SlotMachine.java</b> and <b>SlotMachineDemo.java</b> to the BrightSpace(D2L) Program 1 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Write a complex Java class (Instance Fields, Methods, Constructor) </li>
+  <li> Gain practice using OOP and multiple classes </li>
+  <li> Gain practice writing different kinds of methods  </li>
+  <li> Use if statements to check conditions </li>
+  <li> Use loops to iterate through a block of code or array </li> 
+</ul>
+
+<hr />
+
+
+<h3>Background and Directions </h3>
+
+<p>
+	A slot machine is a coin-operated gaming machine that generates a random combination of symbols. Players insert a coin into the machine, and pull the lever. The player wins varying amount of amount depending certain combinations of symbols. <a href="example_slot_machine.png">Here is example slot machine where there are 3 rows of symbols, and 3 columns of symbols</a> 
+
+    <br><br>
+
+    In this assignment, you will be developing a Java program that will emulate a slot machine game. A user starts off with a certain number of credits (you will define this value in your program), and each time they want to play the slot machine, they must use 1 credit. Your program will randomly generate symbols (which will be just be a random number 1, 2, or 3) and display the results to the screen
+    
+    Your slot machine will be 3x3 grid, with 3 rows, and 3 columns. <a href="program1_samplesymbols.PNG">Here is an example roll of the slot machine.</a> These numbers will be randomly generated each time the slot machine is played.
+
+	<br><br>
+
+    Once your program prints out the symbols/numbers of the machine. You program needs to determine the winnings of that play. There are <b>five</b> ways that a player can win credits by playing the slot machine.
+
+    <ul>
+        <li>1. If the sum of all the numbers on the slot machine is greater than 20, then they will win 2 credits. <a href="program1_sum_of_symbols.PNG">Example payout</a></li>
+        <li>2. If one of the diagonals in the slot machine has matching symbols, then they will win 2 credits. Both diagonals need to be checked. It is possible they could win 4 credits in total from both diagonals (if they are lucky). <a href="program1_diagonal.PNG">Example payout</a></li>
+        <li>3. If one of the rows all have matching symbols, then they will win 2 credits. They can only receive a maximum of 2 credits here, so if two different rows have matching symbols, they still will only win 2 credits. <a href="program1_matchingrow.PNG">Example payout</a></li>
+        <li>4. If one of the columns all have matching symbols, then they will win 2 credits. They can only receive a maximum of 2 credits here, so if two different columns have matching symbols, they still will only win 2 credits. <a href="program1_matchingcolumn.PNG">Example payout</a></li>
+        <li>5. If all 4 corners of the slot machine have matching symbols, then they will win 3 credits. <a href="program1_matchingcorners.PNG">Example payout</a></li>
+    </ul>
+
+    <br>
+    It's very possible that a player could win multiple credits from a combination of the winnings above. For example, <a href="program1_allcases.PNG">here is a very lucky roll where the player satisfied all five of the possible winning conditions</a>
+
+    <br>
+    <br>
+    Your program also needs to keep track of how many credits the player has, and the total winnings/credits that the machine has paid out.
+
+    <br><br>
+    There are many possible solutions to this assignment, so I am giving you the freedom to develop your solution in a way that makes sense to you. Your solution should have <i>at least</i> two classes, SlotMachineDemo.java and SlotMachine.java.
+
+    <h4>SlotMachineDemo.java</h4>
+    Your first Java class should be named SlotMachineDemo.java. This program should provide a menu-like functionality where the user has 4 choices:
+    <ul>
+        1. Play the slot machine once (this costs one credit) <br>
+        2. Play the slot machine N times (this costs N credits) <br>
+        3. Print out the slot machine's total winnings <br>
+        4. Print out the player's current number of credits <br>
+        5. Exit program <br>
+    </ul>
+
+    It will keep printing out this menu until they gave a valid option, or until they exit the program. If the user does not have enough credits to play, then they should not be allowed to play the slots.
+
+
+    <h4> SlotMachine.java</h4>
+    This class should hold the instance fields and methods for playing one round of the slots. You will need to find a way to represent the symbols on the slot machine. I would recommend using three seperate integer arrays.
+    <ul>
+        <li><tt>private int[] top_row;</tt></li>
+        <li><tt>private int[] middle_row;</tt></li>
+        <li><tt>private int[] bottom_row;</tt></li>
+    </ul>
+
+    (Alternatively, you could use a 2D array, but that makes things a little bit more complicated)<br>
+
+    <br>
+    Additionally, you will need an instance field that will keep track of that machine's total winnings that have been paid out.
+
+    <ul>
+        <li><tt>private int total_winnings;</tt></li>
+    </ul>
+
+
+</p>
+
+<p>
+	
+    
+    <h3> Assumptions </h3>
+     <p> Your slot machine will only have 3 rows, 3 columns, and can only use 1, 2, or 3 for the symbols.</p>
+
+
+   
+</p>	
+
+<h3> Required Output </h3>
+<p> Your program does not need to look <i>exactly</i>  like this, but it should look very similar.
+<br>
+<br>
+<a href="program1_output1.out">Here is a example output of the user playing one round at a time </a>
+<br><br>
+<a href="program1_output2.out">Here is a example output of the user playing 3 rounds back-to-back </a>
+
+<h3>Optional Hints</h3>
+I would recommend adding a method in the SlotMachine class called <tt>playOneRound()</tt> that will charge the user 1 credit, randomly generate the symbols, print out the symbols to the screen, and then determine the total number of winning and return the total winnings. Once you have this, you can invoke this method inside of a for loop for menu option #2 <br>
+<br>
+For each of the five winnings conditions, I would recommend having a method that checks each condition, and increases the player's total winnings if the method returns true. To check all the winning conditions, the easiest way would be to use the values of <tt>this.top_row, this.middle_row, and this.bottom_row</tt>. For example, to check for a matching row, this.top_row[0] == this.top_row[1] == this.top_row[2] would be one case you need to check for.
+
+<br><br>
+Here is some pseudocode that might help how to structure all the condition you need to check (you should not copy/paste this code... because it won't compile).
+
+<tt><br>
+    // I intentionally excluded some code that is needed for this to work. This is just pseudocode...<br>
+    if(sumOfRows()) {<br>
+        &nbsp;&nbsp;System.out.println("--> Sum of all numbers is greater than 20 (+2 credit)");<br>
+        &nbsp;&nbsp;total_winnings +=2;<br>
+    }<br>
+    if(diagonals_left_to_right()) {<br>
+        &nbsp;&nbsp;System.out.println("--> Matching Diagonals (+2 credit)");<br>
+        &nbsp;&nbsp;total_winnings +=2;<br>
+    }<br>
+    if(diagonals_right_to_left()) {<br>
+        &nbsp;&nbsp;System.out.println("--> Matching Diagonals (+2 credit)");<br>
+        &nbsp;&nbsp;total_winnings +=2;<br>
+    }<br>
+    if(check_matching_rows()) {<br>
+        &nbsp;&nbsp;System.out.println("--> Matching Row (+2 credit)");<br>
+        &nbsp;&nbsp;total_winnings +=2;<br>
+    }<br>
+    if(check_matching_columns()) {<br>
+        &nbsp;&nbsp;System.out.println("--> Matching Column (+2 credit)");<br>
+        &nbsp;&nbsp;total_winnings +=2;<br>
+    }<br>
+    if(check_corners()) {<br>
+        &nbsp;&nbsp;System.out.println("--> Matching Corners (+2 credit)");<br>
+        &nbsp;&nbsp;total_winnings +=3;<br>
+    }<br>
+
+
+
+</tt>
+
+
+
+
+</pre>
+<h3>Grading (100 points) </h3>
+<ul>
+    <li>10 points- Your program allows the user to play one round of the slot machine (menu option #1)</li>
+    <li>10 points- Your program allows the user to play N roundS of the slot machine (menu option #2</li>
+    <li>5 points- Your program keeps track of the user's current credits (menu option #4)</li>
+    <li>5 points- Your program keeps track of the slot machine's total winnings that have been paid out(menu option #3)</li>
+    <li>10 points- Your program provides a menu, and keeps asking the user for a choice until they exit the program</li>
+    <li>10 points - Your program detects when the sum of all numbers is greater than 20, and awards the player 2 credits</li>
+    <li>10 points - Your program detects when there is matching diagonal(s), and awards the player 2 credits</li>
+    <li>10 points - Your program detects when there is a matching row, and awards the player 2 credits</li>
+    <li>10 points - Your program detects when there is a matching column, and awards the player 2 credits</li>
+    <li>10 points - Your program detects when all four corners match, and awards the player 3 credits</li>
+    <li>10 points- You have at least two Java classes. SlotMachineDemo.java and SlotMachine.Java</li>
+    
+
+</ul>
+
+</body>
+</html>

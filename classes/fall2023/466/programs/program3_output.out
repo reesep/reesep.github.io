@@ -1,0 +1,19 @@
+              Forwarding Table              
+----------------------------------------
+         Prefix               Interface
+----------------------------------------
+1111111100000000011010**********     1
+11111111000000000110101*********     2
+1111111100000000011*************     3
+111111110000000001101100********     4
+1111111100000000101010100*******     5
+1111111100000000101010101*******     6
+1111111100000000010101010*******     7
+---------------------------------------
+Packet: 255.0.105.51  is forwarded to interface 1 
+Packet: 255.0.107.53  is forwarded to interface 2 
+Packet: 255.0.127.255 is forwarded to interface 3 
+Packet: 255.0.108.170 is forwarded to interface 4 
+Packet: 255.0.170.15  is forwarded to interface 5 
+Packet: 255.0.170.144 is forwarded to interface 6 
+Packet: 255.0.85.7    is forwarded to interface 7 

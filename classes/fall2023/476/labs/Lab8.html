@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Computer Security</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" type="image/x-icon" href="/cs476-2021-spring/favicon.ico">
+
+  <!-- Fonts & TextFormatting -->
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:500&display=swap" rel="stylesheet" />
+  <link href="../assets/all.css" rel="stylesheet"> <!--load all fontawesome styles -->
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/prism.css" /> <!-- Prism JS & CSS downloaded from: https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript+bash+c+csharp+cpp+cmake+docker+git+http+hpkp+hsts+java+javadoc+javadoclike+json+latex+liquid+makefile+markdown+markup-templating+mongodb+nasm+nginx+perl+php+phpdoc+php-extras+plsql+python+regex+ruby+rust+sql+vim+yaml&plugins=line-numbers+command-line+unescaped-markup+normalize-whitespace+toolbar -->
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <!-- Misc. -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"/>
+</head>
+
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid col-sm-12 p-4 mb-4">
+<div class="row flex-xl-nowrap m-0">
+
+<div class="d-none d-xl-block col-xl-2">
+</div>
+
+<div class="col-12 col-md-12 col-xl-8 bg-white rounded shadow-lg pb-4">
+<div>
+  <!--Thanks, Tim Holman! http://tholman.com/github-corners/ -->
+
+
+
+
+</div>
+
+<!-- ACTIVE Announcements -->
+
+<!-- OLD Announcements (hidden in comment environment) -->
+
+
+
+<h1 class="pb-4" id="lab-06-secret-key-encryption-lab">Lab 08: Secret-Key Encryption Lab</h1>
+<h1 class="pb-4" id="lab-06-secret-key-encryption-lab-due"> Due Sunday December 3rd @11:59PM</h1>
+
+<h2 class="titletext" id="secret-key-encryption-lab">Secret-Key Encryption Lab</h2>
+<p class="subtitletext">Adapted from SEED Labs: A Hands-on Lab for Security Education.</p>
+
+<p>The learning objective of this lab is for students to get familiar with key concepts behind secret-key encryption and some common attacks on encryption.
+From this lab, students will gain first-hand experience in encryption algorithms, encryption modes, padding, and initialization vectors (IV).
+Moreover, students will learn how to use tools, and write programs, to encrypt and decrypt messages.</p>
+
+<p>There are many common mistakes made by developers when using various encryption algorithms and modes.
+These mistakes weaken the strength of the encryption, which can make data vulnerable.
+This lab exposes students to some of these mistakes,
+and gives students the opportunity to work through the process of exploiting weak encryption.</p>
+
+<p>This lab covers the following topics:</p>
+
+<ul>
+  <li>Secret-key encryption
+ <li>Substitution cipher and frequency analysis</li>
+  <li>Encryption modes, IV, and padding</li>
+  <li>Common mistakes when using encryption algorithms
+<!-- - Programming using the crypto library --></li>
+</ul>
+
+<h3 id="resources">Resources</h3>
+
+<ul>
+  <li>Code related to this lab can be found in <code class="language-plaintext highlighter-rouge">08_ske/</code> of our <a href="https://github.com/reesep/csci476-code">class’s GitHub repository</a>.</li>
+  <li><a href="https://www.openssl.org/docs/manmaster/">OpenSSL Cryptography and SSL/TLS Toolkit - Manuals</a>
+<!-- - [Sample Code --- Encryption w/ the OpenSSL Cryptography and SSL/TLS Toolkit](https://www.openssl.org/docs/man1.0.2/man3/EVP_EncryptInit.html) -->
+<!-- - [ciphertext.txt (Task 1)](https://seedsecuritylabs.org/Labs_16.04/Crypto/Crypto_Encryption/files/ciphertext.txt) -->
+<!-- - [pic_original.bmp (Task 3)](https://seedsecuritylabs.org/Labs_16.04/Crypto/Crypto_Encryption/files/pic_original.bmp) -->
+<!-- - [English Word List (Task 7)](https://seedsecuritylabs.org/Labs_16.04/Crypto/Crypto_Encryption/files/words.txt) --></li>
+  <li>Chapter 21 in the <a href="https://www.handsonsecurity.net">SEED Textbook</a>.</li>
+</ul>
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+
+
+<h2 class="titletext" id="lab-tasks">Lab Tasks</h2>
+<p class="subtitletext">This lab has been tested on the pre-built SEED VM (Ubuntu 20.04 VM).</p>
+
+<h3 id="task-1-encryption-ciphers-and-modes">Task 1: Breaking a Substitution cipher</h3>
+
+<b> You will find files for this lab inside the <tt>/08-ske</tt> folder.</b>In this task, you are given a cipher-text (ciphertext.txt) that is encrypted using a monoalphabetic cipher; namely, each letter in the original text is replaced by another letter, where the replacement does not vary (i.e., a letter is always replaced by the same letter during the encryption). Your task is to find out the original text using frequency analysis. You may assume that the original text is an article written in the English language.
+
+<br><br>
+
+You should use frequency analysis, just like we did in class. There is a <tt>freq.py</tt> in the course repo that will print out the most frequent 1-grams, 2-grams, and 3-grams. You should use the <tt> tr</tt> command to decode the cipher. For example, in the following, we replace letters a, e, and t in in.txt with letters X, G, E, respectively; the results are saved in out.txt.
+<br><br>
+<tt>tr 'aet' 'XGE' < ciphertext.txt > out.txt</tt>
+
+<h3 id="task-2-encryption-ciphers-and-modes">Task 2: Encryption Ciphers and Modes</h3>
+
+<p>In this task, you will experiment with various encryption algorithms and modes.</p>
+
+<p>You can use the following <code class="language-plaintext highlighter-rouge">openssl enc</code> command to encrypt/decrypt a file.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>openssl enc <span class="nt">-CIPHERTYPE</span> <span class="nt">-e</span> <span class="nt">-in</span> plain.txt <span class="nt">-out</span> cipher.bin <span class="nt">-K</span> KEY <span class="nt">-iv</span> IV <span class="nt">-p</span>
+
+<span class="c"># Summary of common `openssl enc` options:</span>
+<span class="c"># -in &lt;file&gt;     input file</span>
+<span class="c"># -out &lt;file&gt;    output file</span>
+<span class="c"># -e             encrypt</span>
+<span class="c"># -d             decrypt</span>
+<span class="c"># -K             the key (in hex format) must follow this option</span>
+<span class="c"># -iv            the IV (in hex format) must follow this option</span>
+<span class="c"># -[pP]          print the iv/key (then exit if -P)</span>
+</code></pre></div></div>
+
+<p>To view the manual pages, type <code class="language-plaintext highlighter-rouge">man openssl</code> and <code class="language-plaintext highlighter-rouge">man enc</code>.</p>
+
+<p>You need to replace <code class="language-plaintext highlighter-rouge">-CIPHERTYPE</code> with a specific cipher type, such as <code class="language-plaintext highlighter-rouge">-aes-128-cbc</code>, <code class="language-plaintext highlighter-rouge">-aes-128-cfb</code>, <code class="language-plaintext highlighter-rouge">-aes-128-ofb</code>, etc.</p>
+
+<p>You also need to replace <code class="language-plaintext highlighter-rouge">KEY</code> and <code class="language-plaintext highlighter-rouge">IV</code> with the encryption/decryption key and initialization vector, respectively.</p>
+
+<p><em><strong>Your task</strong></em> is to use the above <code class="language-plaintext highlighter-rouge">openssl enc</code> command to encrypt data using at least 3 different ciphers.</p>
+
+<h3 id="task-2-comparing-encryption-modes">Task 3: Comparing Encryption Modes</h3>
+
+<p>In the supplied files, <a href="https://github.com/reesep/csci476-code/blob/master/06_ske/pic_original.bmp"><code class="language-plaintext highlighter-rouge">pic_original.bmp</code></a> is a simple picture
+in the <a href="https://en.wikipedia.org/wiki/BMP_file_format">BMP - or bitmap - file format</a>.</p>
+
+<p>We would like to encrypt this picture so that anyone without the encryption key is unable to know what the file contains.</p>
+
+<h4 id="task-21">Task 3.1</h4>
+
+<p>In this task, you must encrypt the file using the ECB (Electronic Code Book) and CBC (Cipher Block Chaining) modes, and then do the following:</p>
+
+<ol>
+  <li>
+    <p>Since this encrypted picture is in fact a picture, please start by trying to view the encrypted picture as any other picture.
+Feel free to use your favorite picture viewing software.
+Note, however, that for a properly-formatted <code class="language-plaintext highlighter-rouge">.bmp</code> file, the first 54 bytes must contain the header information about the picture;
+because the image is in fact encrypted, we have to set the file header correctly so that the encrypted file will be recognized as a legitimate <code class="language-plaintext highlighter-rouge">.bmp</code> file.
+To achieve this, we must replace the header of the encrypted picture with that of the original picture.</p>
+
+    <p>To make this change we can you could, for example, use the <code class="language-plaintext highlighter-rouge">bless</code> hex editor tool (already installed on our VM) to directly modify binary files.
+(In general you are free to use <a href="https://www.tecmint.com/best-hex-editors-for-linux/">any hex editor you like</a>.)
+Alternatively, we can also use the following commands to extract the <strong>header</strong> from <code class="language-plaintext highlighter-rouge">p1.bmp</code>, the <strong>body</strong> (data) from <code class="language-plaintext highlighter-rouge">p2.bmp</code> (starting from offset 55 to the end of the file),
+and then combine the header and body together into a new file (<code class="language-plaintext highlighter-rouge">new.bmp</code>).</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nv">$ </span><span class="nb">head</span> <span class="nt">-c</span> 54 p1.bmp  <span class="o">&gt;</span> header
+ <span class="nv">$ </span><span class="nb">tail</span> <span class="nt">-c</span> +55 p2.bmp <span class="o">&gt;</span> body
+ <span class="nv">$ </span><span class="nb">cat </span>header body <span class="o">&gt;</span> new.bmp
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Display the encrypted picture using a picture viewing program (we have installed an image viewer program called <code class="language-plaintext highlighter-rouge">eog</code> on the VM).
+Can you derive any useful information about the original picture from simply viewing the encrypted picture?
+Please explain your observations.</p>
+  </li>
+</ol>
+
+<h4 id="task-22">Task 3.2</h4>
+
+<p>Now, select a picture of your choice, repeat the experiment above, and report your process and observations. You should use another BMP file for this task. </p>
+
+<h3 id="task-3-padding">Task 4: Padding</h3>
+
+<p>For block ciphers, when the size of a plaintext is not a multiple of the block size, padding may be required.
+The <a href="https://www.cryptosys.net/pki/manpki/pki_paddingschemes.html">PKCS#5 padding scheme</a> is widely used by many block ciphers.
+We will conduct the following experiments to understand how this type of padding works.</p>
+
+<h4 id="task-31">Task 4.1</h4>
+
+<p>Create three files, which contain 5 bytes, 10 bytes, and 16 bytes, respectively.
+We can use the following command to create such files.
+The following example creates a file <code class="language-plaintext highlighter-rouge">f1.txt</code> with length 5 (note that, without the <code class="language-plaintext highlighter-rouge">-n</code> option, the length will be 6, because a newline character will be added by <code class="language-plaintext highlighter-rouge">echo</code>):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"12345"</span> <span class="o">&gt;</span> f1.txt
+</code></pre></div></div>
+
+<p>Then use <code class="language-plaintext highlighter-rouge">openssl enc -aes-128-cbc -e</code> to encrypt these three files using 128-bit AES with CBC mode.</p>
+
+<p><em>Please describe the size of the encrypted files.</em></p>
+
+<p>It is interested to examine what is added as padding during encryption.
+To achieve this goal, we will decrypt these files you created above using <code class="language-plaintext highlighter-rouge">openssl enc -aes-128-cbc -d</code>.
+Unfortunately, decryption will automatically remove any padding by default, making it impossible for us to examine the padding.
+However, the command does have an option called <code class="language-plaintext highlighter-rouge">-nopad</code>, which disables the step that attempts to remove padding.
+By looking at the resulting decrypted data, we can then see what data are used in the padding.
+Please use this technique to figure out what padding values are added to the three files.</p>
+
+<p>It should be noted that padding data may not be printable, so you need to use a hex tool to display the content.
+The following example shows how to display a file in the hex format:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ hexdump -C p1.txt
+00000000  31 32 33 34 35 36 37 38  39 49 4a 4b 4c 0a   |123456789IJKL.|
+$ xxd p1.txt
+00000000: 3132 3334 3536 3738 3949 4a4b 4c0a            123456789IJKL.
+</code></pre></div></div>
+
+<h4 id="task-32">Task 4.2</h4>
+
+<p>Please repeat the previous task for each of the following modes of operation using the <code class="language-plaintext highlighter-rouge">aes</code> cipher with 128-bit keys: ECB, CFB OFB.</p>
+
+<p>Please report which modes have padding and which ones do not.
+</p>
+
+
+<h3 id="task-5-common-mistakes-with-ivs">Task 5: Common Mistakes with IVs</h3>
+
+<p>Most of the encryption modes require an Initialization Vector (IV).
+Properties of an IV depend on the cryptographic scheme used.
+If we are not careful in selecting IVs,
+<em>the encrypted data may not be secure, even though we are using a secure encryption algorithm and mode!</em>
+The objective of this task is to help students understand some of the problems that arise if an IV is not chosen properly.
+<!-- The detailed guidelines for this task is provided in Chapter 21.5 of the SEED book. --></p>
+
+<h4 id="task-51-uniqueness-of-the-iv">Task 5.1: Uniqueness of the IV</h4>
+
+<p>A basic requirement for the IV is <strong><em>uniqueness</em></strong>, which means that no IV may be reused under the same key.
+To understand why, please encrypt the same plaintext using (1) two different IVs, and (2) the same IV.
+Please describe your observations and explain why the IV needs to be unique.</p>
+
+<h4 id="task-61-known-plaintext-attack">Task 5.2: Known Plaintext Attack</h4>
+<!-- was Task 5.2 -->
+
+<p>One may argue that if the <em>plaintext</em> does not repeat, using the same IV (and key) is safe.
+In this task we will investigate this matter.</p>
+
+<blockquote>
+  <p>The attack used in this experiment is known as the <em><strong>known-plaintext attack</strong></em>,
+which is an attack model for cryptanalysis where the attacker has access to both the plaintext and its encrypted version (ciphertext).
+If this situation can lead to the revealing of further secret information, the encryption scheme is not considered to be secure.</p>
+</blockquote>
+
+<p>In this task we will specifically look at the <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Output_feedback_(OFB)">Output Feedback (OFB) mode</a>.</p>
+
+<p>Assume that the attacker gets hold of a plaintext (\(P1\)) and a ciphertext (\(C1\)).</p>
+
+<p><strong>Question:</strong> <em>Can they decrypt other (different) encrypted messages if the same IV is always used?</em></p>
+
+<p>To examine whether this is possible,
+assume you are given the following information.
+Please try to figure out the actual content of \(P2\) based on \(C2\), \(P1\), and \(C1\).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Plaintext  (P1): This is a known message!
+Ciphertext (C1): a469b1c502c1cab966965e50425438e1bb1b5f9037a4c159
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Plaintext  (P2): (unknown to you)
+Ciphertext (C2): bf73bcd3509299d566c35b5d450337e1bb175f903fafc159
+</code></pre></div></div>
+
+<p><em><strong>Hint:</strong></em>
+You may find it useful to have a tool that can help you XOR some values in this task.
+You are free to use whatever XOR tool you want. The easiest option would be to use an online <a href="https://xor.pw">XOR calculator</a>.
+
+
+</div>
+
+</div>
+
+<div class="d-none d-xl-block col-xl-2">
+    
+    <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+    
+</div>
+
+</div>
+</div>
+
+<!-- Optional JavaScript for Bootstrap - jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="/cs476-2021-spring/assets/js/prism.js"></script>
+
+<script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    /*
+     * class hacking: add bootstrap/bootswatch class labels to my custom classes (notes, slides, etc.)
+     */
+
+    // admin styles
+    $('.new').addClass('badge badge-pill badge-primary');
+    $('.announcement').addClass('alert alert-primary').prepend('<h4 class="alert-heading">Class Announcement!</h4>');
+    $('.timestamp').prepend('&mdash;Posted ');
+    // $('.score').prepend(' &mdash; ');
+
+    // add icons / style class elements...
+    $( ".activity" ).each(function(index) {
+        $(this).html('<i class="fas fa-lightbulb pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".code" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-code pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".slides" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-pdf pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".pdf" ).each(function(index) {
+        $(this).html('<i class="fas fa-file pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".reading" ).each(function(index) {
+        $(this).html('<i class="fas fa-book pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".video" ).each(function(index) {
+        $(this).html('<i class="fas fa-play-circle pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+
+    // add links to all section headers...
+    $( ":header" ).each(function(index) {
+      var attr = $(this).attr('id');
+      if (typeof attr !== typeof undefined && attr !== false) {
+        $(this).html( '<a href="#' + attr + '">' +$(this).html()+ ' </a>' );
+      }
+    });
+
+    // add links to weeks on schedule
+    $('td[id^="week"]').filter(function () {
+        $(this).html(function(index, text){
+            return '<a href="#' + text.toLowerCase().replace(' ', '') + '"><strong>' + text + '</strong></a>';
+        });
+    });
+
+    // use javascript to detect all external links and add the target='_blank' attribute to them.
+    // -> thanks, https://code.luasoftware.com/tutorials/hugo/how-to-create-link-with-target-blanks-in-hugo-markdown/
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+        if (links[i].hostname != window.location.hostname) {
+            links[i].target = '_blank';
+        }
+    }
+
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    var TEX = MathJax.InputJax.TeX;
+    var COLS = function (W) {
+      var WW = [];
+      for (var i = 0, m = W.length; i < m; i++)
+        {WW[i] = TEX.Parse.prototype.Em(W[i])}
+      return WW.join(" ");
+    };
+    TEX.Definitions.Add({
+      environment: {
+        psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+      }
+    });
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js">
+</script>
+
+</body>
+
+</html>

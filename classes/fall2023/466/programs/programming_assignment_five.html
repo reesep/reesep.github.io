@@ -1,0 +1,268 @@
+
+
+
+<html>
+
+    <head>
+    
+        <title> CSCI 466 PA 5</title>
+    
+    
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    
+        <style>
+            h1 {text-align: center;}
+            h2 {text-align: center;}
+           
+            </style>
+    
+    </head>
+    
+    
+    
+    
+    <body>
+    
+        <div class="container">
+
+            <h1 text-align:center> Programming Assignment 5: Message Authentication Codes (MAC)</h1>
+  
+            <h2> Assigned Wednesday November 29th (just pretend) </h2>
+            <h2> Due Wednesday December 13th @11:59 PM</h2>
+            <h2> (but I strongly recommend knocking it out before finals week)</h2>
+      
+
+          <h3> GitHub Repo </h3>
+        <p> You will use the same GitHub repo from PA1, PA2, PA3, and PA4. All of your files for this assignment should go inside a <tt> /PA5</tt> folder </p>
+    
+    
+        <h3> Overview</h3>
+        Message Authentication Codes (MAC) are security mechanisms used to achieve authentication and/or message integrity between two communicating hosts. In this assignment, you will be implementing a basic MAC system, as well as get your hands dirty with some cryptography and hashing libraries.
+
+        <br><br>
+        Two parties have some shared secret <tt>(s)</tt>. The sender will send two different messages. The first is the message m, the second is the MAC packet, which (m + s) ran through a hashing function. That is, <tt>H(m+s)</tt>.
+        <br><br>
+        The receiver gets these two messages, and then compute <tt>H(m+s)</tt> themselves, and then compare hashes. If the hashes do not match, that is a sign that the message may have been corrupted, tampered with, or possibly spoofed.
+        <br><br>
+        Here is a diagram of a simple MAC system:
+        <br>
+        <center>
+        <img src="mac_pa5.PNG" width=800" height="400"">
+        </center>
+        <br><br>
+        There will be one important difference for this assignment. The message that gets transmitted (<tt>m</tt>) must be <b> encrypted </b>. The receiver gets <tt>E(m)</tt>, and then must decrypt the message using the decryption key. Both parties have an identical, shared key for encrypting and decrypting (Symmetric key cryptography!).
+	<br><br>
+	<b> WARNING: You should not use this assignment to handle authentication/integrity out in real world software. Never roll out your own crypto/hashing schemes :-)</b>
+
+
+        <h3> Directions </h3>
+
+        You are going to develop two programs: <tt>client.py</tt> and <tt>server.py</tt>
+
+        <h3><tt>client.py</tt></h3>
+        This program will have <tt>s</tt> and the <tt>key</tt> hardcoded into the program. For the sake of simplicity, the shared secret (<tt>s</tt>) will be <tt>"csci466"</tt>, and the key will be <tt>"0123456789ABCDEF"</tt> (it's important that this key is 16 bytes in size).
+        <br><br>
+        This program will ask the user for some message they would like to send to the server. The client program will encrypt this message, and then send the encrypted message to the server program through a socket (the socket can be running on any port that you'd like). <b>You should use TCP sockets</b>.
+        <br><br>    
+        Then, the client program will need to compute <tt>H(m+s)</tt>. You should use the SHA-256 hashing algorithm. The client then sends <tt>H(m+s)</tt> to the server program through the same socket.
+        <br><br>
+        There is a 50% chance that the message being send can be corrupted/tampered. Before sending the messages, you should flip a coin (<tt>random.random()</tt>). If it's > .50, the message is not corrupted, and nothing needs to happen. If it's <= .50, then this means the message has been corrupted/tampered with. You will either have to modify <tt>m</tt> or  <tt>s</tt> so the <tt>H(m+s)</tt> results in an entirely different digest.
+        <br><br>
+        <h3><tt>server.py</tt></h3>
+
+        The server will have the same <tt>s</tt> and <tt>key</tt> value hardcoded into the program (we will assume these secrets have been shared through something like RSA/DHKE).
+        <br><br>
+        The server first receives <tt>E(m)</tt> from the client, which they will now decrypt using their <tt>key</tt>. Now that they have <tt>m</tt>, they can compute <tt>H(m+s)</tt> on their end.
+        <br><br>
+        Once the server computes <tt>H(m+s)</tt>, it will then compare it to the <tt>H(m+s)</tt> value that it received from <tt>client.py</tt>. 
+        <br><br>
+        If the hashes match, then the message has not been corrupted or tampered with, so it should "Accept" this packet. If the hashes do not match, then the message has been corrupted or tampered with, so it should "Reject" this packet.
+        <br><br>
+        <b>The client and server program should loop, so the user can continually enter new message to send to the server without needing to restart the program.</b>
+        <br><br>
+
+        <center>
+        <img src="pa5setup.PNG" width=950" height="600"">
+    </center>
+
+        <h3>Encrypting and Decrypting Data</h3>
+        Because there is not a built-in encryption library in Python, you will need to quickly install one. I would strongly recommend using the <tt>pycryptodome</tt> module (<a href="https://www.pycryptodome.org/">https://www.pycryptodome.org/</a>).
+        <br><br>
+        You should be able to install this library by running the command <tt>pip install pycryptodome</tt>. If you struggle with the installation step, you will have to do some googling/debugging yourself (make sure that python is on $PATH).
+        <br><br>
+        There is a lot of great stuff in this library, but we are focused on using an AES block cipher to encrypt our message (<tt>m</tt>). You should use the ECB mode of encryption (remember that ECB sucks in the real world, but this assignment will get more challenging if you decide to something that is not ECB).
+        <br><br>
+        You will likely need to read some documentation to get a better understanding of how this library works. Here is a very basic example of encrypting and decrypting a message with <tt>pycryptodome</tt>.
+        <br>
+        <script src="https://gist.github.com/reesep/22be57e68c8d862efc481e63bd06d6f6.js"></script>
+        <br>
+        First, an <tt>AES</tt> block cipher object must be created by providing a key, and the mode of encryption (<tt>AES.MODE_ECB</tt>). Then, the <tt>encrypt()</tt> function can be used to encrypt a piece of data. The data must be padded using <tt>the pad()</tt> function for scenarios when the data is not a good multiple of the block size.
+        <br><br>
+        To decrypt using an <TT>AES</TT> block cipher object, you can pass a ciphertext to the <tt>decrypt</tt> function, which should return the plaintext message.
+        <br><br>
+        A tricky part of this assignment is going back and forth between the <tt>str</tt> datatype, and the <tt>bytes</tt> datatype. Remember that if you see <tt>b`...`</tt>, that is an indicator that the value is bytes. To go from bytes to a string, you need to use the <tt>.decode()</tt>. To go from a string to bytes, you need to use the <tt>.encode()</tt> method.
+
+        <br><br>
+        <h3>Computing a SHA-256 hash of a message</h3>
+        In python, there is a built-in hashing library called <tt>hashlib</tt>. Within this library, there is a <tt>sha256</tt> function. You can read more about <tt>hashlib</tt> and <tt>sha256</tt> here: <a href="https://docs.python.org/3/library/hashlib.html#usage">https://docs.python.org/3/library/hashlib.html#usage</a>
+        <br><br>
+        Here is a basic example of computing the SHA256 hash of the string <tt>"csci466"</tt>:
+        <script src="https://gist.github.com/reesep/c4bc307c722f2692b494edef8718dfe7.js"></script>
+        <br><br>
+        The SHA256 hash function expects bytes, so we first convert our message (a string) to bytes using <tt>.encode()</tt>. The most common way to represent a hash digest is hexadecimal, so after running it through the <tt>sha256</tt> function, we convert to hexadecimal using the <tt>hexdigest()</tt> function.
+    
+        <<br>
+        
+
+
+        <h3> Programming Language </h3>
+        You are allowed to use a programming language of your choice. Although, you must use a language that supports:
+        <ul>
+            <li> Socket communication </li>
+        </ul>
+
+        Python is the support language for this class, so Reese will not be able to help with technical issues or syntax issues if you select a language other than Python. Java, Rust, Go, C/C++ are all valid languages to use.
+
+    
+        <h3> Input Files </h3>
+        There are no input files for this assignment. There is no required command line arguments, but you are welcome to add command line arguments (port #, secret, key, etc) if you would like (just make sure you document it in your <tt>README</tt>)
+        
+        <h3> Sample output </h3>    
+        On the client side, it should ask for user input. The client program should also print the computed value of <tt>H(m+s)</tt>, as well as if it is sending a corrupted/tampered message.
+        <br><br>
+        On the server side, it should print out the encrypted message <tt>E(m)</tt>, the decrypted message <tt>m</tt>, and the <tt>H(m+s)</tt> value that was received from the client.
+        <br><br>
+        The server should then print out the <tt>H(m+s)</tt> value that <b>they</b> computed. Lastly, the server program should print out if the <tt>H(m+s)</tt> value it received, and the <tt>H(m+x)</tt> it computed match or do not match. Then print "accept" or "reject"
+        
+        <br><br>
+        <a href="https://youtu.be/2f_6HKaoyt8"> Click here to see an a sample demo of the program. </a>It's much easier to understand by watching a video instead of looking at a picture. There is no required output to match exactly, but it should be very similar to what you see in the video.
+
+
+
+
+        <h3> Hints </h3>
+        Take baby steps. First get a message to be encrypted, then send the message to the server, then get the server to decrypt the message and print it out properly.
+        <br><br>
+        Once you have that working, compute <tt>H(m+s)</tt> on the client side, and then send it to the server. Then compute <tt>H(m+s)</tt> on the server side, then compare hashes.
+        <br><br>
+        After that, that try to get the random probability of sending a corrupted packet.
+        <br><br>
+        Lastly, then throw everything inside a while loop so that the programs repeat and ask for new user input.
+        
+    
+        <ul>
+
+        </ul>
+
+        <h3> Video Demo </h3>
+        You will record a video demo that highlights the functionality of your program. You can do this with Panopto, or you can record with another recording software (such as OBS) and post it to youtube as private or unlisted.
+
+        <br><br>
+        Your video demo should include scenarios were the hashes match (Accept) and when the hashes do not match due to corruption/tampering (Reject).
+        
+        
+
+
+        <h3> Partners </h3>
+    
+        You are allowed to work with up to two partners. All members need to have their own repository (yes they will all have the same code). 
+    
+
+        <h3> Submission Info </h3>
+
+        BOTH MEMBERS MUST SUBMIT A REPO LINK TO D2L. All files should be pushed to your repository. You still need a README that contains the video link and information about your program.
+
+    
+        <h3> Grading Rubric (100 Points)</h3>
+       <style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-baqh{text-align:center;vertical-align:top}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky">Criteria</th>
+    <th class="tg-c3ow">Points</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">Message M is encrypted, and the encrypted message is sent to the receiver via a socket</td>
+    <td class="tg-c3ow">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Message M is decrypted by the receiver</td>
+    <td class="tg-c3ow">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">H(m+s) is computed by the sender, and send to the receiver via a socket</td>
+    <td class="tg-c3ow">20</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">There is 50/50 chance the packet get corrupted</td>
+    <td class="tg-baqh">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">The receiver computes H(m+s)</td>
+    <td class="tg-c3ow">20</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program can detect when a packet has been tampered with/corrupted (reject)</td>
+    <td class="tg-c3ow">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">Your program can detect a clean packet (accept)</td>
+    <td class="tg-baqh">10</td>
+  </tr>
+</tbody>
+</table>
+
+
+
+    
+
+            <br><br>
+            <b>Penalties</b>
+            <ul>
+                <li> Running code results in errors before runtime: -30 points </li>
+                <li> Running code results in errors during runtime: -15 points</li>
+                <li> No video demo: -50 points </li>
+                <li> Your repository is public: -100 points </li>
+                   </ul>
+    
+    
+    
+        <h3> Helpful Examples </h3>
+    
+        <ul>
+
+            <li><a href="../lectures/code/guess_client.py">guess_client.py </a></li>
+            <li><a href="../lectures/code/guess_server.py">guess_server.py </a></li>
+            <br>
+    
+            <br>
+            <li> <a href="https://pycryptodome.readthedocs.io/en/latest/index.html">PyCryptodome Documentation</a></li>
+            <li> <a href="https://docs.python.org/3/library/socket.html">Sockets documentation</a></li>
+    
+        </ul>
+    
+    
+    
+        <br><br><br><br><br><br><br><br><br><br>
+
+        <a href="https://www.youtube.com/watch?v=N_LhEz5T5O4"> Solution</a>
+        <br><br><br><br><br><br><br><br>
+    </div>
+    </body>
+    
+    
+
+    </html>
+

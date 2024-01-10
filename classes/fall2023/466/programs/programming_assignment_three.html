@@ -1,0 +1,162 @@
+
+
+
+<html>
+
+<head>
+
+    <title> CSCI 466 PA 3</title>
+
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+    <style>
+        h1 {text-align: center;}
+        h2 {text-align: center;}
+       
+        </style>
+
+</head>
+
+
+
+
+<body>
+
+	<div class="container">
+
+    <h1 text-align:center> Programming Assignment 3: Longest Prefix Matching Forwarding</h1>
+
+    <h2> Assigned Wednesday October 25th</h2>
+    <h2> Due Wednesday November 8th @11:59 PM</h2>
+
+
+    <h3> GitHub Repo </h3>
+    <p> You will use the same GitHub repo from PA1 and PA2. All of your files for this assignment should go inside a <tt> /PA3</tt> folder </p>
+
+    <h3> Overview</h3>
+	In this assignment, you will implement the logic for forwarding packets of information based on Longest Prefix Matching (LPM). If you are not familiar with LPM, you should rewatch Monday October 9th's lecture around minute 16:45. You will also gain experience with using an HTTP request module/library, and gain experience with string parsing :-). There is <b> NO SOCKET PROGRAMMING </b> for this assignment (yippee).
+
+    <h3> Instructions </h3>
+    The information for the forwarding table, and the packets that being tested will come from an external file. You <b> must retrieve these files via an HTTP request </b> (you cannot read in these files locally using <tt>open()</tt>).
+
+    <h3> Part 1: Loading the forwarding table </h3>
+    The prefixes and information for the routing table are located at the following endpoint: <tt> https://www.cs.montana.edu/pearsall/classes/fall2023/466/programs/prefix_matching.csv </tt>.  You must issue an HTTP request using the <tt>requests</tt> module, and the HTTP response will contain a massive string of this csv file.
+    You will need to parse this string, and load it into a data structure of some kind (I would recommend a dictionary).
+    
+    <br><br>
+    
+    <b>Extra information:</b> Typically routing tables utilize <a href="https://www.geeksforgeeks.org/longest-prefix-matching-in-routers/">CIDR notation and subnet masks</a> for prefix matching, but we will not be using that notation here. Additionally, most routing tables have an "Otherwise" or "Default" option in cases where an IP address does not match any of the prefix. We also will not be implementing that here (Reese got stuck on it for like an hour and decided the trash that idea).
+
+    <h3> Part 2: Getting list of packets to test </h3>
+    The packets being tested in this program are located at the following endpoint: <tt> https://www.cs.montana.edu/pearsall/classes/fall2023/466/programs/packets.csv </tt>. You must issue an HTTP request using the <tt>requests</tt> module, and the HTTP response will contain a massive string of this csv file.
+    You will need to parse this string, and load it into a data structure of some kind (I would recommend a list or dictionary).
+    <br>
+    NOTE: The packets in <tt>packets.csv</tt> are IPv4 addresses, but the prefixes are in binary. You will need to convert the IPv4 addresses to their binary representations. You can write this functionality yourself, or you can use the following code:
+
+    <script src="https://gist.github.com/reesep/fee5d507c141890566b0d7efe1afb86b.js"></script>
+
+    where <tt>ipv4_addresses</tt> is a python list of addresses from packets.csv in dotted decimal IPv4 notation. The output after the for loop will be a list (<tt>packets</tt>) of binary IP addresses, which you can then use in your forwarding table.
+
+
+    <h3> Part 3: Testing the packets in your forwarding table</h3>
+    At this point, you should have your data structure that represents your forwarding table, and  list of IP addresses (in binary) to test on your forwarding table.
+
+    You need to run each IP address through each rule in the forwarding table to see which interface the packet should be forwarded on. There are many ways you can do this. If you need a hint, consider checking each character between the IP address and the prefix rule. Keep a counter for each rule for number of characters matched, and then select the rule that gave the highest counter.
+
+    The interface with the highest digits matched should be selected. If two interfaces have the same number of digits matched, you will need to select the interface with the more wildcards digits matched.
+    Here is a breakdown for the first packet in packets.csv.
+    <img src="forwardingtable.PNG", width=1000>
+
+    <br>
+    Rule 1 and Rule 2 have the same number of digits matched, however we were able to reach the wildcard digits of rule 1, so we select interface 1.
+
+    Rule 3 was able to also match the entire IP address, however we were able to match more digits in rule 1 (22 > 19), so we select interface 1.
+
+
+	<br>
+
+    <h3> Expected Output</h3>
+
+    When you run your program, it should <a href="program3_output.out">similar to this output</a>. Your program should clearly print the forwarding table, and your program should clearly print out which packet gets forwarded to which interface.
+
+	
+	<h3> Video Demo </h3>
+	You will record a video demo that highlights the functionality of your program. You can do this with Panopto , or you can record with another recording software (such as OBS) and post it to youtube as public or unlisted.
+	The video should show you running program, <b>and briefly explaining how your code works.</b> If you do not record a video demo, then you will lose <b> a very large amount </b> of points. Please double check and make sure your video is either unlisted, or public.
+	
+    <h3> Submission Instructions</h3>
+
+	All your files need to be pushed to a  <tt> /PA3 </tt> folder in your <tt> <b>[last_name]-[first_name]-csci466</b></tt> repository. You need to include a <tt> README.md  </tt> in your <tt> /PA1 </tt> folder. The link to your video demo should appear at the very top of your README. Additionally, your README should have the names of each group member, a section that describes how to run your program(s), and a link to your video demo. When you are ready to submit, you will submit <b> just the link </b> to your private <tt> <b>[last_name]-[first_name]-csci466</b></tt> repository to D2L.
+	
+
+	<h3> Partners </h3>
+
+	You are allowed to work with two partners (groups of three). If you work with a partner, each member needs to create their own private github repository. When you are ready to submit to D2L, each group member needs to submit the link to the repo. Make sure you clearly mention in your README/Video/Submission who the group members are.
+
+
+	<h3> Grading Rubric (100 Points)</h3>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky">Criteria</th>
+    <th class="tg-0pky">Points</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">Rules were retrived using an HTTP request</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Packets were retrieved using an HTTP request</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">IP addresses are checked properly and forwarded to the correct interface (incorrect interface: -10 points)</td>
+    <td class="tg-0pky">70</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your code is submmited to a private Github repo that has a README descibing how to run your program(s) and contains a link to your video demo</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+</tbody>
+</table>
+
+		<br><br>
+		<b>Penalties</b>
+		<ul>
+			<li> Running code results in errors before runtime: -30 points </li>
+			<li> Running code results in errors during runtime: -15 points</li>
+			<li> No video demo: -50 points </li>
+			<li> Your repository is public: -100 points </li>
+		</ul>
+
+
+
+	<h3> Helpful Examples </h3>
+
+	<ul>
+		<li><a href="https://github.com/reesep/csci466-code/blob/master/get_request.py">get_request.py </a></li>
+		<br>
+		<li> <a href="https://www.w3schools.com/python/ref_requests_response.asp">Working with HTTP Response objects</a></li>
+
+	</ul>
+
+
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<a href="https://www.youtube.com/shorts/NjlGDiZ7zpA"> Solution</a>
+</div>
+</body>
+
+
+</html>
