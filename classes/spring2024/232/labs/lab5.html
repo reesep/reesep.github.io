@@ -1,0 +1,138 @@
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 5 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 5: Java Hash Maps</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, February 23rd at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solutions (.java file), entitled <b>EmojiTranslator.java</b> to the BrightSpace(D2L) Lab 5 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience using Java HashMaps </li>
+</ul>
+
+<hr />
+
+<h1> WARNING: You may have issues with this lab if you are using an IDE that is not Eclipse.</h1>
+<p> This lab involces printing out Emojis. Some IDE have troubles displaying emojis. You may have to use a different IDE, or do some googling to get emojis to work for you.</p>
+
+
+<h3>Directions </h3>
+
+In this lab, you will use Java’s HashMap library to build a program that will convert Emoji Codes
+(<tt>:GrinningFace:</tt>) to Emojis 😀. A user will be able to supply a sentence to your program
+with one-to-many Emoji Codes, and the program will display the same sentence, but
+with the Emojis substituted properly.
+
+<br><br>
+You will use Lab5Demo.java as a starting point, which can be found in the “Starting
+Code” section.
+
+<br><br>
+
+You will need to define the <tt>EmojiTranslator</tt> class, which must use a <tt>HashMap</tt> to hold
+mappings of emoji codes (Strings) to emojis (Strings). Then you must define the
+following methods:
+
+<br><br>
+1. <tt><b>public HashMap &lt; String,String &gt; loadHashTable()</tt></b>. This method reads in from a
+text file (<tt>emojis.txt</tt>), and fills the HashMap with the proper Key Value pairs. The keys of your
+HashMap will be the Emoji Codes (<tt>:GrinningFace:</tt>), and the value linked to the key will be the
+actual Emoji (😀). This method needs to return the filled HashMap. You can call this
+method from the constructor of the EmojiConverterClass.
+
+<br><br>
+
+2. <tt><b>public String convert(String sentence).</b></tt> This method takes in a sentence and will
+convert any word that is an emoji code to the actual emoji using the HashMap you built earlier.
+You can assume an emoji code will always be a word that begins and ends with a colon. This
+method needs to return the new sentence with the proper emojis. For example,
+  
+<br>
+"Go Cats Go! :CatFaceWithWrySmile: Go Cats Go! :CatFaceWithWrySmile: :FlexedBiceps: :GrinningFace:"
+<br>
+<br>
+Should be translate to
+<br>
+<br>
+Go Cats Go! 😼 Go Cats Go! 😼 💪 😀
+
+<br><br>
+
+3. <tt><b>public String getEmoji(String code)</b></tt>. This method takes in a String and will
+attempt to pull the Emoji who’s Emoji Code matches the argument. When
+<tt>getEmoji(“Taco”)</tt>, is called, it will attempt to find the :Taco: emoji and then return the Taco
+Emoji (if it exists) 🌮. If the Emoji does not exist, then a “Emoji not found” error should
+be printed out (see sample output)
+
+
+    <h3> Rules </h3>
+    <p>  You are <b>not</b> allowed to use any data structure that is not a HashMap. The one exception is that
+        you are allowed to use an Array when using the
+        <tt>.split()</tt> method. </p>
+
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="emojis.txt">emojis.txt</a> </li>
+        <li> <a href="Lab5Demo.java">Lab5Demo.Java</a> </li>
+    </ul>
+
+    <h3> Hints </h3> 
+    <ul>
+        <li>You can use the .charAt() method to check the character at the begining or end of a word</li>
+        <li>You may find the official HashMap documentation to be helpful:<a href=
+            "https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html</a> </li>
+    </ul>
+   
+
+	
+
+<h3> Required Output </h3>
+<p> When your program is run, your output should look <b>exactly</b >the same as seen <a href="lab5_output.PNG"> in this screenshot </a>. 
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>  loadHashTable() is correct - 3 points </li>
+  <li>  convert() method is correct - 4 points </li>
+  <li>  getEmoji() method is correct - 3 points</li>
+
+</ul>
+
+
+
+<br><br>
+Deductions
+<li>-10 points if you dont use a Hash Map </li>
+
+<br><br><br>
+
+
+
+</body>
+</html>

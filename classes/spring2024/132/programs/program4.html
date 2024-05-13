@@ -1,0 +1,155 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Program 4
+</title>
+</head>
+
+<body>
+
+<h1>Program 4: Deli Line Simulator</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, April 19th at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your .java files to the Program 4 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Write a complex Java Program (Instance Fields, Methods, Constructor) </li>
+  <li> Gain experience using a queue data structure</li>
+</ul>
+
+<hr />
+
+
+<h3>Background and Directions </h3>
+
+Route 406 is a Subway-style sandwich stand in Miller Dining Hall. In this assignment, you will write a java program that simulates the waiting line for Route 406. Each person waiting in line is represented by a Customer object. You will use a queue data structure that will hold Customer objects. <br>
+<br>
+Each customer has a name, their order (a single String), and the time that they entered the queue (a Long). Your Queue data structure can use a Linked List, or an Array (but I <b>highly</b> recommend using a Linked List). <br>
+<br>
+Students and Professors can enter the queue. Students have to be added to the back of the queue, but when professors are added to the queue, they get to cut in front of all the students and go to the front of the queue. <br>
+<br>
+When a Customer leaves the queue, you will need to calculate how long (in seconds) they were in the queue. You also will need to keep track of the average waiting time for the queue, and the number of customers served.
+<br><br>
+Your program will have a menu that prints out different options (just like program 3), that allows the user to view, add, and remove customers from the queue.
+<br><br>
+<b>1. View Current Queue</b>- Shows all the current customers waiting in line. The front of the queue gets printed first, and the back of the queue gets printed last. <a href="program4_menu1.PNG">Sample output</a><br>
+<b>2. Add a student to queue</b>- Adds a new student to the back of the queue. The program should ask for the name of the student, their order, and then insert the Customer object into the queue.<a href="program4_menu2.PNG">Sample output</a><br>
+<b>3. Add a professor to the queue </b>- Adds a new professor to the front of the queue. The professor can cut in front of other students, but not other professors. The program should ask for the name of the professor, their order, and then insert the customer object into the queue. <a href="program4_menu3.PNG">Sample output</a> <br>
+<b>4. Serve next customer</b>- Removes the customer at the front of the queue. Once the customer is removed from the queue, the program should print out how long (in seconds) that customer waited in line for (if this number is rounded up/down to the nearest integer, that is fine). <a href="program4_menu4.PNG">Sample output</a><br>
+<b>5. Remove Customer from queue</b>- A customer may grow inpatient, and exit the queue. The program will ask for the name of the customer that needs to be removed, and then remove them from the queue. It should print out how long they waited in line for, but this does <b> not</b> contribute towards the average wait time. <a href="program4_menu5.PNG">Sample output</a><br>
+<b>6. Print Queue Statistics</b> - This methods prints out the number of customers served so far (ie the number of Customers that have been dequeued), and the average wait time of the queue. For example, suppose four customers have been served so far. Customer 1 waited 32 seconds, customer 2 waited 40 seconds, and customer 3 waited 21 seconds and customer 4 waited 16, the average wait time of the queue is (32 + 40 + 21 + 16) / 4 = 27.25 seconds. <a href="program4_menu6.PNG">Sample output</a> (note: in this example, 4 customers were served, and they had wait times of 54, 15, 38 and 17 seconds.<br>
+<b>7. Exit</b> - this method exits the program
+
+
+<h3> Restrictions </h3>
+
+<ul>
+	<li> If you use an array, you can assume there will never be more than 20 customers in line </li>
+	<li>You are <b>not </b> allowed to import java.util.Queue or java.util.PriorityQueue</li>
+</ul>
+
+
+
+<h3> Sample Output </h3>
+
+Your output does not need to match this exactly, but it should look pretty similar. Here is sample output after using several of the menu functions: <a href="program4.out">sample output</a>
+
+<h3>Optional Hints</h3>
+
+You should use a linked list to hold the Customer objects. Using an Array will be difficult since Customers in the middle of the queue can leave at any point.
+<br><br>
+I would recommend having <i>two</i> queues. One for professors, and one for students. Adding a professor will add the professor queue (FIFO), and adding a student will add the student queue (FIFO). When you dequeue something, you should prioritize removing the professor queue. If the professor queue is empty, then you can remove something from the student queue.
+<br><br>
+Tracking the time spent in the queue and calculating the average wait time will likely be the most tricky part. We will cover how to measure and calculate time in Java in class, but here is a general way of how to do so:
+<br><br>
+We get the current time (in nano seconds) when they enter the queue. When they exit the queue, we will get the current time again (in nanoseconds). To find how long they were in the queue for, we simply find the difference between these two values. You will need to convert nanoseconds to seconds ( / 1000000000) <br>
+<tt>
+    long start = System.nanoTime(); <br>
+    // some time passes<br>
+    long end = System.nanoTime(); <br>
+    long elapsedTime = end - start; <br>
+</tt>
+
+
+
+<h3>Grading (100 points) </h3>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky">Requirement</th>
+    <th class="tg-0pky">Points</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">Your program uses a queue (Linked List or Array) to hold Customer objects. </td>
+    <td class="tg-0pky">30</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program can print out the current customers in the queue (Menu option #1)</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program can add a new student customer to the queue correctly (Menu option #2)</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your Program can add a new professor customer to the queue correctly (Menu option #3)</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program dequeues the next customer correctly (Menu option #4)</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program can allow a use to search for a customer in the queue by name, and remove that customer (Menu option #5)&nbsp;&nbsp;</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program prints out the number of customers served, and the average wait time correctly (Menu option #6)</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">The Customer class is correctly defined</td>
+    <td class="tg-0lax">10</td>
+  </tr>
+</tbody>
+</table>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<a href="https://youtu.be/O0mX84VibIA"> program 4 solution</a>
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+Welcome to the documunt spell check program. The spell check code needs to output the identical text, except for mispeled words. You shoould test your program on a varietyi of input. Your spell check needz to use a Hash Map and Hash Set. Is yours werking? A a a a is is the the test hi hello hi
+Thiss is another liine. Your program should be able to handle any input.
+You have to worry about commas, periods, question markz, and exclamation points.

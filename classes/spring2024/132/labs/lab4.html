@@ -1,0 +1,136 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 4 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 4: Inheritance at the Zoo!</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Tuesday, February 13th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solutions (.java file), entitled <b>Animal.java</b>, <b>Bear.java</b>, <b>Wolf.java</b>, and <b>Bird.java</b>  to the BrightSpace(D2L) Lab 4 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience using Java inheritance </li>
+</ul>
+
+<hr />
+
+
+<h3>Background and Directions </h3>
+
+<p>
+	You've been tasked with writing Java classes that keep track of animal information at the new Bozeman Zoo (coming soon... hopefully).
+	
+</p>
+
+<p>
+	
+    Using <a href="ZooDemo.java">ZooDemo.Java</a>, you will fill in the missing classes/methods to get the desired output seen below. You <b> are NOT </b> allowed to modify ZooDemo.java. There are three types of animals you need to keep track of</tt>
+    <br>
+
+    A Bear.java class. A bear has the following information:
+    <ul>
+        <li> The species </li>
+        <li> Weight</li>
+        <li> The continent where the species is most commonly found </li>
+        <li> Population (how many of that species are still alive)</li>
+        <li> The diet of the bear </li>
+    </ul>
+
+    A Bird.java class. A bird has the following information:
+    <ul>
+        <li> The species </li>
+        <li> Weight</li>
+        <li> The continent where the species is most commonly found </li>
+        <li> Population (how many of that species are still alive)</li>
+        <li> The wingspan of the bird </li>
+    </ul>
+
+    A Wolf.java class. A wolf has the following information:
+    <ul>
+        <li> The species </li>
+        <li> Weight</li>
+        <li> The continent where the species is most commonly found </li>
+        <li> Population (how many of that species are still alive)</li>
+        <li> The pack size (ie how many wolves are part of a typical pack) </li>
+    </ul>
+    <br>
+
+    <b>All three of these classes must inherit from an Animal class,</b> which holds information about a basic animal. You must determine which instance fields/methods go inside of the Animal class (if you get stuck here, look back on our Employee example from class ). 
+
+    You must define the following methods: getSpecies(), getWeight(), getContinent(), getDiet(), getWingSpan(), and getPackSize(). You must figure out which class these methods go in (remember you are using inheritance)!!.
+
+    <br><br>
+
+    You must also define the checkPopulation() method. Before returning <tt> this.population</tt>, this method should check to see if that animal species is endangered or not. An animal species is considered endangered of the remaining population of that animal is less than or equal to 2500. If the population is less than or equal to 2500, then this method should print out "This animal is endangered!".
+
+    <br><br>
+
+    Lastly, each type of animal has a makeSound() method. While the method name is the exact same, the output of this function changes from class to class. For the bear, this method should print out "The [species-name] goes Grrrrrrrr!". For the bird, it should print out "The [species-name] goes chirp chirp chirp!". For the wolf, if should print out "The [species-name] goes Arh-wooooo!"
+ 
+	<br><br>
+	You do not need to use interfaces for this assignment.
+
+    
+
+    </ul>
+
+    <h3> Rules </h3>
+    <p> <b> You are NOT allowed to modify ZooDemo.java.</b> If you modify ZooDemo.java in any way (other than changing the <tt>package</tt> statement line), the you will lose significant points!</p>
+
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="ZooDemo.java">ZooDemo.Java</a> </li>
+    </ul>
+</p>	
+
+<h3> Required Output </h3>
+<p> When your program is run, your output should look <b>exactly</b >the same as seen <a href="lab4_output.PNG"> in this screenshot </a>. 
+
+
+
+</pre>
+<h3>Grading (10 points) </h3>
+
+
+<ul>
+  <li>3 points - Bear.java, Bird.java, and Wolf.java are correctly defined</li> 
+  <li>1 points - Animal.java is correctly defined </li> 
+  <li>2 point - Inheritance is used correctly </li>
+  <li>1 points- getSpecies(), getWeight(), getContinent(), getDiet(), getWingSpan(), and getPackSize() are correct </li>
+  <li>1 points-makeSound() is correct defined</li>
+  <li>1 point- checkPopulation() is correct defined</li>
+  <li>1 point- Your program matches the output exactly</li>
+</ul>
+
+
+<br><br>
+Deductions
+<li>-5 points if inheritance is not used </li>
+
+<br><br><br>
+
+</body>
+</html>

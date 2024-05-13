@@ -1,0 +1,169 @@
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Program 1 
+</title>
+</head>
+
+<body>
+
+<h1>Program 1: Wordle</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, February 16th at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Both group members need to submit to D2L. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your solutions (.java files) to the BrightSpace(D2L) Program 1 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Write a complex Java class (Instance Fields, Methods, Constructor) </li>
+  <li> Gain practice using OOP and multiple classes </li>
+  <li> Gain practice writing different kinds of methods  </li>
+  <li> Use if statements to check conditions </li>
+  <li> Use loops to iterate through a block of code or array </li> 
+</ul>
+
+<hr />
+
+
+<h3>Background and Directions </h3>
+
+You will be writing a java program that simulates the game <a href="https://wordlegame.org/">Wordle</a>. If you are not familiar with Wordle, you should first spend some time trying it out, and familiarizing yourself with how the game is played.
+
+I will not be providing you with any starting code. You will need to build this solution from scratch.
+
+<br><br>
+The user has 6 tries to guess the word. After each guess, the program will tell them if they are correct or incorrect. If they are incorrect, it should print out which letters are correct (green), incorrect (gray/red), and correct but in an incorrect spot (yellow).
+
+We cant really use colors in Java, so instead they will be represented by symbols/emojis. 
+<br>
+✔️ is used to indicate the letter is in the correct spot. <br>
+❌ is used to indicate the letter is not in the word at all. <br>
+🟨 is used to indicate the letter is in the word, but in the wrong spot. <br>
+
+<br>
+For example, if the word is "TRAIN" and the user guesses "TRIPS", the output should be ✔️✔️🟨❌❌.
+
+<br><br>
+
+The words must be randomly selected from <a href="words.txt">words.txt</a> which will be in input file your program needs to read. 
+This file has 60 words that have been used in Wordle puzzles in the past. Note: every single one of these words are of length 5, and do not contain duplicate letters (this makes the program a bit easier).
+<br><br>
+If the user correctly guesses the word, the program should print out how many guesses it took, and the program ends. After 6 guesses, the program should end, and the answer should be printed out. The user MUST enter a five length word as their guess. If they enter an invalid guess (eg. "AA" or "AAAAAAAAA"), then it should prompt the user to enter another guess until they give a valid word.
+Their guess does not need to be a valid english word, so "AAAAA" is a valid guess.
+
+
+
+    
+<h3> Assumptions </h3>
+
+The input file will always have 60 words, of length five, with no duplicate letters in the word
+
+<br><br>
+The user will enter their guess in all uppercase, and will not have any duplicate letters.
+
+   
+<h3> Input file </h3>
+<a href="words.txt">words.txt </a> (make sure you drag and drop it into your program1 Java project folder)
+
+<h3> Required Output </h3>
+
+When you run your program, it should follow a similar output <a href="program1_output1.PNG"> as seen here  </a> (obviously your word will probably be different).
+<br>
+Here is <a href="program1_output2.out"> another sample output </a>, where the user loses the game.
+<br>
+Here is <a href="program1_output3.PNG"> another sample output </a>, where the user tries to provide invalid inputs.
+
+
+<h3>Optional Hints</h3>
+
+You should at least have a <tt>Wordle</tt> and a <tt>WordleDemo</tt> class.
+<br><br>
+<tt>.charAt(x)</tt> is a method you call on a String that returns the character (a char) at index <tt>x</tt>
+<br><br>
+<tt>.indexOf(c)</tt> is a method you call on a String that returns the first occurance index of some char <tt>c</tt> (if it exists). If it does not exist, this method returns -1.
+<br><br>
+<tt>.equals()</tt> returns <tt>true</tt> if two Strings are the same.
+
+</pre>
+<h3>Grading (100 points) </h3>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-baqh{text-align:center;vertical-align:top}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky">Criteria</th>
+    <th class="tg-c3ow">Points</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">words.txt is read in by the program</td>
+    <td class="tg-c3ow">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">A random word from the file is selected each time the game is played</td>
+    <td class="tg-c3ow">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">After six incorrect guesses, the program ends and the answer is printed out</td>
+    <td class="tg-c3ow">20</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">The program ends if the user guesses correctly, and prints out number of guesses made</td>
+    <td class="tg-c3ow">20</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">The program correctly identifies green (checkmark) characters</td>
+    <td class="tg-c3ow">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">The program correctly identifies yellow (box) characters</td>
+    <td class="tg-c3ow">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">The program correctly identifies red (X) characters</td>
+    <td class="tg-c3ow">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">If the user enters a guess&nbsp;&nbsp;&gt; or &lt; 5 characters, it prompts the user to re-enter their guess</td>
+    <td class="tg-baqh">10</td>
+  </tr>
+</tbody>
+</table>
+<ul>
+    
+    
+
+</ul>
+<br><br><br><br><br><br>
+
+<a href="https://www.youtube.com/watch?v=upM-c5T99yw">Program 1 solution</a>
+</body>
+</html>

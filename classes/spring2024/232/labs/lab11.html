@@ -1,0 +1,91 @@
+
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Lab 11 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 11: Dynamic Programming</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Sunday, April 21st at 11:59 p.m.</li>
+  <li>Partner Information:  This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solutions (.java file) to the BrightSpace(D2L) Lab 11 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain practice using Top-Down Dynamic Programming</li> </li>
+</ul>
+
+
+<h3>Directions </h3>
+
+You will be using Dynamic Programming to calculate the Nth digit in the Fibonacci sequence. <b>You must use top-down dynamic programming, which means you will be doing recursion and maintaining a memoization table</b>.
+If you are unfamiliar with the Fibonacci sequence, you should spend 5 minutes looking it up on Google. The recursion for the Fibonacci sequence can be stated using the following notation:
+
+<br><br>
+<img src="lab11_recursion.PNG" height=100, width=300>
+<br><br>
+
+Due to an exponential amoung of branching, this recursive algorithm really struggles with computing Fibonacci digits past n=20. Because the Fibonacci sequence has <a href="lab11_tree.PNG">optimal substructure and overlapping subproblems </a>, it makes a great candidate for dynamic programming.
+You will need to implement dynamic programming and a memoization table, so the program is able to calculate large Fibonacci digits such as n = 50, n = 80. 
+
+<br><br>
+
+You will download <a href="Lab11Demo.java">Lab11Demo.java</a> as a starting point, and write the <tt>fib</tt> method, which recursively computes the Nth in the digit fibonacci sequence using top-bottom dynamic programming. You are welcome to change whatever you'd like in the starting code, but it still needs to compute the 10th, 60th, and 80th fibonacci digit.
+Fibonacci digits are very large. In fact, they are so large that they cannot fit inside of an <tt>int</tt> datatype, so instead you will need to use a <tt>long</tt> datatype. Your memoization table should be an array of <tt>long</tt>s, or a HashMap that maps Integers (n values) to Longs (their fibonacci digit).
+
+
+
+<h3> Required Output </h3>
+
+When you run your program, <a href="lab11_output.PNG">it should look exactly like this.</a>
+
+
+
+<h3>Starting Code</h3>
+<ul>
+    <li><a href="Lab11Demo.java">Lab11Demo.java</a>.  </li>
+
+</ul>
+
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>  Your program computes the 10th fibonacci digit correct- 2 points</li>
+  <li>  Your program computes the 60th fibonacci digit- 3 points</li>
+  <li>  Your program computes the 80th fibonacci digit- 5 points</li>
+</ul>
+
+NOTE: If your code does not compile, correctness cannot be verified, and you won’t receive any points
+for your code. Turn in code that compiles! 
+
+
+<br><br><br>
+
+
+
+</body>
+</html>

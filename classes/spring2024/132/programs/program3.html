@@ -1,0 +1,183 @@
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Program 3
+</title>
+</head>
+
+<body>
+
+<h1>Program 3: Uno Stack Game</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, April 5th at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your .java files to the Program 3 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Write a complex Java Program </li>
+  <li> Gain experience using a stack data structure</li>
+</ul>
+
+<hr />
+
+
+<h3>Background </h3>
+
+Uno is a card game that involves players taking turns and placing cards onto a stack on cards. Each card has a color, and a value. 
+
+In order to place a card onto the stack, the card being played must either <br>
+
+1. Match the value of the card on the top of the stack <br>
+2. Match the color of the card on the top of the stack <br>
+3. The card being played is a wildcard (W) <br>
+
+If a player does not have any valid cards to play, they must draw a new card from the deck. The game is over when a player has zero cards left in their hand.
+
+In this assignment, you will be playing a simplified, single player version of Uno. Below are the changes for our version of Uno.
+
+<ul>
+    <li>The only card colors are Red, Blue, and Yellow (no green)</li>
+    <li>There is a <b>R</b>emove card, which removes the top card on the stack, and the card 2nd from the top becomes the new top of stack</li>
+    <li>There is a <b>B</b>ottom card, which removes all cards from the stack except for the card on the bottom of the stack, and the bottom card now becomes the top of the stack</li>
+    <li><b>W</b>ildcards come with a color, but they can still be used to match any color or value.</li>
+    <li>The only card values are [1, 2, 3, 4, 5, 6, B, R, W]</li>
+    <li>The player starts with five cards</li>
+</ul>
+
+If the player does not have any cards to play, then they must select an option to add another card to their hand from their deck.
+If a player tries to make an illegal move, then the move should be denied.
+
+<h3> Directions </h3>
+
+<h4>Card Class</h4>
+
+You will need to define a Card class, which holds information about a single Uno Card. Each Uno card has a value, and a color.
+
+<h4> Stack Class </h4>
+
+Next, you should define your Stack data structure class. The Stack will hold Card objects as the game is being played. The stack should use a linked list to hold Card objects. You should import java.util.LinkedList for this.
+
+You will need the following stack methods: push(Card newCard), pop(), peek(), isEmpty(), and getSize();
+
+<h4> Demo/Game Class</h4>
+
+You may want to define another class, UnoGame, that has all of the logic for playing the Uno game, or you can put all of this inside the Demo class. This class will need to keep track of the Card stack, and the hand of the player.
+You can use a LinkedList<Card> or an ArrayList<Card> to represent the hand of the user. You will likely need to define a method, getNewCard(), that will retrieve a random Uno card. 
+You should also define a checkMove() method, which checks to see is a proposed move is legal. You should also define a makeMove() move, which will update the stack. 
+
+<br>
+The player can select a card from their hand to play, or they can press 0 to get a new card from the deck. The program should end when the player has no cards left. If the user tries to make an illegal move, your program should not let them make the move, and print out "Invalid move". If a user tries to play a "Remove" card on a stack with only 1 card, that is an illegal move and should be denied.
+
+<h3> Starting Code and Requirements</h3>
+
+You are encouraged to develop your solution from scratch, but you must have a Demo class, a Stack class, and a Card/UnoCard class. You must implement your own Stack data structure, and your stack *should* use a linked list. 
+
+
+<h3> Restrictions </h3>
+
+<ul>
+	<li>You are <b>not </b> allowed to import java.util.Stack. </li>
+	
+</ul>
+
+
+
+<h3> Sample Output </h3>
+
+Your program does not need to match this output exactly, but the functionality of your program should be similar.<br>
+<ul>
+    <li><a href="program3_output1.out">Sample output 1 (Playing the game and not winning)</a></li>
+    <li><a href="program3_output2.out">Sample output 2 (Playing the game and winning)</a></li>
+    <li><a href="program3_output3.out">Sample output 3 (Winning, making an invalid move, using the Bottom card)</a></li>
+</ul>
+
+
+
+
+<h3>Optional Hints</h3>
+
+Look back at our code from class for how to implement a stack data structure with a Linked List.
+<br><br>
+If you get stuck or have a bug in your code, remember that you a rubber duck that can help 😉
+
+<h3>Grading (100 points) </h3>
+
+ <style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky">Criteria</th>
+    <th class="tg-0pky">Points</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">Card class is defined correctly</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Stack class is defined correctly</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">User is able to get new card by pressing option 0</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Valid moves are detected, and stack is updated</td>
+    <td class="tg-0pky">20</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Invalid moves are detected and denied</td>
+    <td class="tg-0pky">20</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Remove card removes top card from stack</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Bottom card removes all cards except for the bottom card</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">The game is ended when user has no cards left</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+</tbody>
+</table>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<a href="https://www.youtube.com/watch?v=b3sOOBicyDY&ab_channel=ThriftyVideoNetwork"> program 3 solution</a>
+
+</body>
+</html>

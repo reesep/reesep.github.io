@@ -1,0 +1,69 @@
+The top of stack is: (R 2)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5), (R 2), (B Wild), (B 4), (R Wild)]
+2
+The top of stack is: (R 2)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5), (B Wild), (B 4), (R Wild)]
+4
+The top of stack is: (R Wild)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5), (B Wild), (B 4)]
+2
+The top of stack is: (B Wild)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5), (B 4)]
+2
+The top of stack is: (B 4)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5)]
+0
+The top of stack is: (B 4)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5), (R Remove)]
+0
+The top of stack is: (B 4)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5), (R Remove), (R Wild)]
+3
+The top of stack is: (R Wild)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5), (R Remove)]
+2
+The top of stack is: (B 4)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5)]
+0
+The top of stack is: (B 4)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5), (B Wild)]
+2
+The top of stack is: (B Wild)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5)]
+0
+The top of stack is: (B Wild)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5), (R Bottom)]
+0
+The top of stack is: (B Wild)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5), (R Bottom), (Y 6)]
+0
+The top of stack is: (B Wild)
+What card do you want to play?
+Press 0 to draw a new card
+[(Y 5), (R Bottom), (Y 6), (R 4)]

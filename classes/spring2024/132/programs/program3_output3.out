@@ -1,0 +1,32 @@
+The top of stack is: (B 6)
+What card do you want to play?
+Press 0 to draw a new card
+[(B 3), (B 1), (R Bottom), (R 3), (B 6)]
+4
+Invalid move... try again
+The top of stack is: (B 6)
+What card do you want to play?
+Press 0 to draw a new card
+[(B 3), (B 1), (R Bottom), (R 3), (B 6)]
+1
+The top of stack is: (B 3)
+What card do you want to play?
+Press 0 to draw a new card
+[(B 1), (R Bottom), (R 3), (B 6)]
+3
+The top of stack is: (R 3)
+What card do you want to play?
+Press 0 to draw a new card
+[(B 1), (R Bottom), (B 6)]
+2
+The top of stack is: (B 6)
+What card do you want to play?
+Press 0 to draw a new card
+[(B 1), (B 6)]
+1
+The top of stack is: (B 1)
+What card do you want to play?
+Press 0 to draw a new card
+[(B 6)]
+1
+Game Over

@@ -1,0 +1,113 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Lab 3 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 3: Tree Traversal</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, February 9th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solution (FacultyTree.java),  to the BrightSpace(D2L) Lab 2 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience traversing a tree using breadth first and depth first  </li>
+
+</ul>
+
+<hr />
+
+
+<h3>Directions </h3>
+
+Consider a tree data structure that captures the structure of faculty at Montana State University.
+<br>
+<img src="facultytree.PNG", height=450, width=1000>
+<br>
+Internal nodes just have a name value, and leaf nodes contain the name of the professor, their title, and their office location. Each node also contains the depth of the Node.
+
+<br>
+This tree is captured in FacultyTree.java, FacultyTreeDemo.java, and Node.java (linked below). You will download this code, and write the body for the following methods. You should not modify anything else, unless you want to modify the demo class to test your code.
+
+<br><br>
+
+
+<br>
+
+1. Fill in the body for the <tt> <b> public void printTree()</b> </tt> method. This method will traverse the tree using depth-first and print out each Node (just the name) while matching the sample output:
+<br>
+<br>
+
+<tt>
+    root <br>
+    -Depth1Node<br>
+    --Depth2Node<br>
+    ---Depth3Node<br>
+    ---->LeafNode<br>
+    ---->LeafNode<br>
+    ---Depth3Node<br>
+    ---->LeafNode<br>
+    --Depth2Node<br>
+    ... <br>
+</tt>
+
+<br> <br>
+
+2. Fill in the body for the <tt> <b> public int getHeight()</b> </tt> method. This method returns the height of the tree. Your solution for this method should use depth first or breadth first somewhere.
+<br><br>
+
+3. Fill in the body for the <tt><b>public void searchFor(String name)</b></tt>. This method traverses the tree <b>using breadth first</b> and searches for a faculty member by name. 
+<br>
+If the faculty member is found, it should print out their information.  If they are not in the tree, it should print out "[name] was not found in the tree". See sample output
+
+<br> <br>
+
+That is <b>three</b> methods in total. 
+
+
+<h3> Required Output </h3>
+<p> When you run your program, it should look exactly like output seen in <a href="lab3_output.out"> in this screenshot </a> . 
+
+<h3>Starting Code</h3>
+<ul>
+  <li><a href="NodeLab3.java">Node.java</a></li>
+  <li><a href="FacultyTree.java">FacultyTree.java</a></li>
+  <li><a href="FacultyTreeDemo.java">FacultyTreeDemo.java</a></li>
+
+</ul>
+
+<h3>Grading (10 points) </h3>
+
+
+<ul>
+  <li>4 points - printTree() is correct. </li> 
+  <li>3 points - getHeight() is correct. </li> 
+  <li>3 points - searchFor() is correct. </li> 
+</ul>
+NOTE: If your code does not compile, correctness cannot be verified and you won’t receive any
+points for your code. Turn in code that compiles!
+
+
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Program 4 
+</title>
+</head>
+
+<body>
+
+<h1>Program 4: Spelling Corrector using Dynamic Programming</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Sunday, May 5th at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Both group members need to submit to D2L. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your solutions (.java files) to the BrightSpace(D2L) Program 4 Dropbox. </li>
+
+</ul>
+
+
+
+<h3>Background and Directions </h3>
+In this assignment, you will be building a program that identifies a misspelled word, and then suggests a list of similar words (similar to if you mispelled something you were googling). You will use the Edit Distance Dynamic Programming (discussed during 4/18 lecture) to identify similar words to the misspelled word.
+
+<br>
+You will use <a href="words.txt">words.txt</a> (same file from program 2) as a list of words in the English dictionary. The user will enter a word, and then you will need to compute the edit distance between the user input word and all words in the input file. You should be able to copy and paste the code that we wrote in class on 4/18.
+
+<br><br>
+
+You will need to identify if the user input word is mispelled. You can reuse your technique from program 2. If the word is misspelled, you will need to identify the top 10 words that are the most similar to the misspelled word, along with their edit distance. If the word is not misspelled, the program will print out "The word is spelled correctly".
+
+The program should keep on looping and asking for a new word. All the words in the file are lower case, so you will need to convert the input word to be lowercase.
+
+
+<br><br>
+
+
+<h3> Input files </h3>
+<ul>
+    <li><a href="words.txt"><tt>words.txt</tt></a> contains a list of (most) of the words in the english dictionary.</li>
+</ul>
+
+<h3> Coding Style and Readability </h3>
+I want to ensure that you are writing quality, readable code, so 10% of your grade will come from code readability and coding style. These are the things that the TAs and I will be checking for:
+<ul>
+  <li><b>Comments.</b> Each method should have a brief comment explaining what it does or why its there. Getter and Setter methods don't need comments. If you have a long, complex line of code, you should probably leave a comment explaining that line of code as well.</li>
+  <li><b>Indentation.</b> Your indentation should be consistent. Code that belong inside of a class, method, loop, if statement should be indented inside of it. If you are using Eclipse, you can press CTRL + A to highlight all your code, and then CTRL + I to auto format/indent your code. </li>
+  <li><b>Dead code.</b> Large chunks of code that are commented out, or never executed should not be submitted. Delete any dead code before you submit. If you have a few print statements for debugging purposes commented out, that is fine.</li>
+  <li><b>Naming Conventions.</b> Class names need to be capitalized. The first letter of method names and variable names should not be capitalized.</li>
+</ul>
+
+
+<h3> Sample Output </h3>
+<ul>
+<li><a href="program4_output1.PNG">Sample output showing spell corrections</a></li>
+<li><a href="program4_output2.PNG">Sample output showing spell corrections</a></li>
+<li><a href="program4_output3.PNG">Sample output showing a correctly spelled word</a></li>
+<br>
+<li>Your words still need to be an ascending order, and the edit distance caclcuations still need to be correct, but your output might have a slightly different ordering of words, and that is ok! There might be some words you see in your output that were not seen in my sample output, and if the edit distance calcuation is correct, there should be nothing to worry about.</li>
+
+
+</ul>
+<h3>Optional Hints</h3>
+
+I would recommend making a <tt>Word</tt> class that holds the text of the word, and the edit distance between the word and the user input.
+
+<br>
+You can use a PriorityQueue&lt;Word&gt; to hold the words, and then sort it from least to greatest based on the edit distance of the objects.
+
+
+
+
+
+<h3>Restrictions</h3>
+You must use the Edit Distance dynamic programming algorithm we discussed in class. Here is the code we wrote in class that you should be able to copy and paste.
+
+<br><br> 
+Given a memoization table, dp, (initalized with all -1s), two strings, and their lengths, this method computes the edit distance between the two words in polynomial time.
+
+<script src="https://gist.github.com/reesep/08c2378b35f10e221a0576c9066b619e.js"></script>
+
+<h3>Grading (100 points) </h3>
+<style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+    .tg .tg-0lax{text-align:left;vertical-align:top}
+    </style>
+    <table class="tg">
+    <thead>
+      <tr>
+        <th class="tg-0pky">Criteria</th>
+        <th class="tg-0pky">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tg-0pky">Program identifies mispelled words</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Program computes the edit distance between the misspelled word and all words in the text file</td>
+        <td class="tg-0pky">30</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Program prints out top 10 words with the smallest edit distance</td>
+        <td class="tg-0pky">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Dynamic Programming is&nbsp;&nbsp;used to compute edit distance</td>
+        <td class="tg-0pky">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Program continually loops and asks for a new word</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0lax">Your program follows good coding style and readability practices</td>
+        <td class="tg-0lax">10</td>
+      </tr>
+    </tbody>
+    </table>
+<br><br><br><br><br><br>
+
+<a href="https://www.youtube.com/watch?v=15nNY7uofNw">Program 4 solution</a>
+</body>
+</html>

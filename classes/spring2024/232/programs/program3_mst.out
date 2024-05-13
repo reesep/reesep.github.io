@@ -1,0 +1,60 @@
+Enter your choice: 
+1. Print out MST Information
+2. Find Shortest Path from one Actor to another
+3. Your Custom Method [You will describe your method here]
+4. Exit
+1
+Edges in MST:
+---------------------
+1. Jessica Chastain - Anne Hathaway (Interstellar)
+2. Emma Watson - Alan Rickman (Harry Potter)
+3. Natalie Portman - Ewan McGregor (Star Wars: Revenge of the Sith)
+4. Orlando Bloom - John Rhys-Davis (Fellowship of the Ring)
+5. Ryan Gosling - Christian Bale (The Big Short)
+6. Taron Egerton - Scarlett Johansson (Sing)
+7. Brad Pitt - Julia Roberts (Ocean's 11)
+8. Cillian Murphy - Robert Downey Jr. (Oppenheimer)
+9. Brad Pitt - George Clooney (Ocean's 11)
+10. Taron Egerton - Bryce Dallas Howard (Rocketman)
+11. Leonardo DiCaprio - Margot Robbie (Once Upon a Time in Hollywood)
+12. Ryan Gosling - Will Ferrell (Barbie)
+13. Cillian Murphy - Florence Pugh (Oppenheimer)
+14. Ryan Gosling - Margot Robbie (Barbie)
+15. Carrie Fisher - Harrison Ford (Star Wars: A New Hope)
+16. Florence Pugh - Scarlett Johansson (Black Widow)
+17. Cillian Murphy - Christian Bale (The Dark Knight Rises)
+18. John Rhys-Davis - Harrison Ford (Indiana Jones: The Last Crusade)
+19. Natalie Portman - Chris Hemsworth (Thor: Love and Thunder)
+20. Orlando Bloom - Cate Blanchett (Fellowship of the Ring)
+21. Ryan Gosling - Harrison Ford (Blade Runner 2049)
+22. Ryan Gosling - Brad Pitt (The Big Short)
+23. Ryan Gosling - Emma Stone (La La Land)
+24. Chris Hemsworth - Christian Bale (Thor: Love and Thunder)
+25. Cillian Murphy - Anne Hathaway (The Dark Knight Rises)
+26. Cillian Murphy - Matt Damon (Oppenheimer)
+27. Alan Rickman - Johnny Depp (Alice in Wonderland)
+28. Orlando Bloom - Johnny Depp (Pirates of the Caribbean)
+29. Orlando Bloom - Christopher Lee (Fellowship of the Ring)
+
+List of movies to watch that covers all 30 Actors:
+---------------------
+1. Thor: Love and Thunder
+2. Interstellar
+3. Oppenheimer
+4. Barbie
+5. Sing
+6. Pirates of the Caribbean
+7. Star Wars: Revenge of the Sith
+8. La La Land
+9. Star Wars: A New Hope
+10. Indiana Jones: The Last Crusade
+11. Harry Potter
+12. Fellowship of the Ring
+13. Ocean's 11
+14. Rocketman
+15. The Dark Knight Rises
+16. Once Upon a Time in Hollywood
+17. Alice in Wonderland
+18. The Big Short
+19. Black Widow
+20. Blade Runner 2049

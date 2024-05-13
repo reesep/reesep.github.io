@@ -1,0 +1,114 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 9
+</title>
+</head>
+
+<body>
+
+<h1>Lab 9:  Queues</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Tuesday, April 2nd at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: You will submit your CarQueue.java and Car.Java files to the appropriate D2L dropbox </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience using a Queue data structure</li>
+  <li> Implement a Queue in Java using an arry or linked list</li>
+</ul>
+
+<hr />
+
+
+<h3>Directions </h3>
+
+    You will be writing a Java program that simulates cars using a Car Wash station. Using <a href="Lab9Demo.java">Lab9Demo.java</a> as a starting point, you will define the <tt>CarQueue</tt> class and fill in the missing methods for the queue data structure. <br><br>
+    <br>
+        <br>
+<br>
+    Since you are writing a queue that represents a Car wash, Your queue will hold Car objects, and must use an array to hold data. Each car object will have:
+
+    <ul>
+        <li>The make/model of the car which is a String (for example "Nissan Rogue")</li>
+        <li>The owner of the car, which is a String (for example "Scott")</li>
+        <li>Whether or not they are a VIP car wash member, which is a boolean (true/false). Car washes only cost $6.00 for VIP members, and $10.00 for non-VIP members</li>
+    </ul>
+
+    You will need to define the Car class, and add any necessary methods. At the very least, you will need to define a getInfo() method that returns information about the customer/car.
+
+    <br><br>
+
+    Next, you will define the CarQueue class, which will be your queue. You can use either a Linked List or array to represent your Queue. The queue has a finite size, and that size is specified as an argument to the CarQueue constructor. Your queue will need to keep track of the front of the queue, the current size of the queue, and the capacity of the queue. 
+    You will also need to keep track of the number of cars serviced by the car wash, and how much money the car wash has made. 
+
+    <br><br>
+    You are NOT allowed to modify the Lab9Demo class. After creating the CarQueue class, you must define the following methods:
+    <ul>
+        <li><b>enqueue(Car newCar)</b>- The enqueue method adds a new car to the back of the queue. If the queue is full, an "Error" message should be printed out, and the car should not be added to the queue.</li>
+        <li><b>dequeue()</b>- the dequeue removes and prints out the car at the front of this queue. This method doesn't need to return anything. When a car is dequeued, that means that car has been "serviced". This should increase the number of cars serviced variables by 1, and increase the total earning by $6 (if they are a VIP) or by $10 (if they are not a VIP)</li>
+        <li><b>peek()</b>- the peek() method returns the car that is currently at the front of the queue</li>
+        <li><b>isEmpty()</b>- This method returns true if the queue is empty, false if the queue is not empty</li>
+        <li><b>printQueue()</b>- Prints out all the cars that are currently in the queue. You should print the queue out as a numbered list, where the first thing printed out is the car in the front of the queue, and the last thing printed out is the last thing in the queue (see sample output)</li>
+        <li><b>printStats()</b> - This method prints out how many cars the car wash has serviced, and the total earnings (remember these should be instance fields of the CarQueue class.</li>
+    </ul>
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab9Demo.java">Lab9Demo.java</a> </li>
+        
+    </ul>
+
+    <h3> Output</h3>
+    When you run your program, your output should look <b>exactly</b> <a href="lab9_output.out">like this screenshot</a>
+
+</p>	
+
+    <h3> Restrictions</h3>
+    You CANNOT import java.util.Queue;
+
+
+    <h3> Hints</h3>
+    We implemented a queue using an Array on the lectures for April 1st, and by using a linked list on March 25th. You should be able to use some of the code we wrote for either of those lectures.
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>2 points- enqueue() is correct</li>
+  <li>2 points- dequeue() is correct</li>
+  <li>1 point- peek() is correct</li> 
+  <li>1 point- isEmpty() is correct</li>
+  <li>1 point- printQueue() is correct</li>
+  <li>1 point- printStats() is correct </li>
+  <li>1 point- The Car class is correctly defined</li>
+  <li>1 point- The CarQueue class is correctly defined and uses a linked list or array</li>
+
+</ul>
+
+
+<br><br>
+
+
+<br><br><br>
+
+
+
+</body>
+</html>

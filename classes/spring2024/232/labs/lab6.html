@@ -1,0 +1,144 @@
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Lab 6 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 6: Hash Collisions</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, March 1st at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solutions (.java file), entitled <b>HashTable.java</b> to the BrightSpace(D2L) Lab 6 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Implement linear probing hash collision resolution </li>
+</ul>
+
+<hr />
+
+<h4> Before starting this lab, it may be helpful to watch <a href="https://youtu.be/jH6Zrohy5G4">this short introduction video</a> that talks about this lab.</h4>
+
+
+In this lab, you are given some Hash Table code (very similar to what we wrote in class). The Hash Table is storing Integers (not ints). You will need to write code that will implement linear probing when dealing with hash collisions.
+
+That is, when a collision happens, the program will check sequential spots in the array and look for an empty spot. When an empty spot is found, the value is placed at that index.
+
+<h3>Directions </h3>
+
+Download <a href="Lab6Demo.java">Lab6Demo.Java</a> and <a href="HashTable.java">HashTable.Java</a> as a starting point. You cannot modify the demo class, but you are allowed to make additional modifications to the HashTable class. 
+
+You are <b> NOT </b> allowed to use HashMaps or HashSets (we are writing our own hash table just like we did in class).
+
+The Hash Table constructor accepts the length of the array as an argument, and the <tt>hash</tt> method does basic modular hashing by the table size. 
+
+<br><br>
+You will also be keeping track of the amount of collisions happening at each array index. 
+This is represented through a String array called <tt>collisions</tt>. 
+Index 0 of this array represents the amount of collisions that occured at index 0 of the hash table array, index 1 of this array represents the amount of collisions that occured at index 1 of the hash table array, and so on. Every time a collision happens, either during the initial insertion or during the linear probing process, a star (*) needs to get added to the correct indext of <tt>collisions</tt>.
+
+<br><br>
+Your task for this lab is to implement the following methods.
+
+<br><br>
+
+
+1. <b><tt>public void insert(int newValue)</tt></b>- this method will insert a value into the hash table. If a collision occurs, then it must be placed in the next empty sequential array spot (linear probing). 
+
+For example, if there is a collision at index 47, it should check index 48 next, then 49, 0, 1, 2, etc until an open spot is found, or if there are not array spots available. 
+In the given code, you won't have to worry about overfilling the array, so you don't need logic for having a full hash table.
+
+
+<br><br>
+
+2. <b><tt>public void printHashTable()</tt></b>- this methods prints out each spot in the array line by line (see sample output). Because this is an Integer[] array, null values will be at the empty spots. null should not be printed out.
+
+
+<br><br>
+
+3. <b><tt>public void insertRandomValues(int n)</tt></b>- this method inserts n random values (between 0 and 1000) into the hash table. This method should not require a lot of code, because you should be able to call the <tt>insert()</tt> method you did earlier.
+
+
+<br><br>
+
+4. <b><tt>public void printCollisionTable()</tt></b>- This method prints out the collisions table, where the amount of stars represents the number of collisions at that index.
+
+<br><br>
+For example:
+<br><br>
+3: ****
+<br><br>
+means that 4 collisions occured at index 3 during the lifespan of this hash table.
+<br><br>
+
+5. <b><tt>public int get(int value)</tt></b>- this method returns the index of where a particular element (<tt>value</tt>) is located at in the hash table. If a value is not located anywhere in the hash table, -1 should be returned. 
+If the hash function does not take you to a match, then the value you are looking for got placed elsewhere during the linear probing process, so you will need to find it. It's possible (but unlikely) that there are duplicate values in the hash table. 
+This method should just return the first occurance it finds if there are duplicate values.
+
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab6Demo.java">Lab6Demo.Java</a> </li>
+        <li> <a href="HashTable.java">HashTable.Java</a></li>
+    </ul>
+
+
+
+   
+
+	
+
+<h3> Required Output </h3>
+
+The output of your program should look similar <a href="lab6_output.out"> to this output. </a> The first printout of the hash table should exactly match, but after that your output will look slightly different due having random values. The output for the two get() method calls should look the same.
+
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>  insert() is correct, and correctly handles collisions with linear probing - 3 points </li>
+  <li>  printHashTable() is correct - 1 points </li>
+  <li>  insertRandomValues() is correct - 1 points </li>
+  <li>  printCollisionTable() method is correct - 2 points </li>
+  <li>  get() method is correct - 3 points</li>
+
+</ul>
+NOTE: If your code does not compile, correctness cannot be verified, and you won’t receive any points
+for your code. Turn in code that compiles! 
+
+
+<br><br>
+Deductions
+<li>-10 points if you use a Hash Map </li>
+<li>-10 points if you use a Hash Set </li>
+<li>-10 points if you use a Linked List </li>
+<li>-10 points if you use an ArrayList </li>
+<li> yes these deducations can stack </li>
+
+<br><br><br>
+
+
+
+</body>
+</html>

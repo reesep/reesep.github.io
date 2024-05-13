@@ -1,0 +1,119 @@
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Lab 7 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 7: Comparing Data Structures</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, March 8th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solutions (.java file), entitled <b>Lab7Demo.java</b> to the BrightSpace(D2L) Lab 7 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Compare the running time between different data structures we've discussed. </li>
+</ul>
+
+<hr />
+
+This assignment will be slightly different than other assignments we’ve done. In this lab, you will
+conduct an experiment comparing the running time of adding elements to an ArrayList,
+LinkedList, TreeSet, and HashSet. This lab should be pretty easy (do not overthink it).
+
+
+<h3>Directions </h3>
+
+You will create one class for this lab: <tt>Lab7Demo.java</tt>. All your code can go inside this class (it can all go insde the main method if you'd really like). You do not need to define any other classes.
+
+<br><br>
+
+You can calculate the running time (in nanoseconds) for some operation by using the following Java code:
+
+<br><br>
+
+<tt>
+    long start_time = System.nanoTime(); <br>
+    // code for inserting 10000 random values go here... <br>
+    long end_time = System.nanoTime(); <br>
+    long elapsed_time = (end_time - start_time)    <br>
+</tt> 
+
+
+<br><br>
+
+You will be writing code that adds 10,000 random numbers (between 0 and 1000) to four different data structures: ArrayList, LinkedList, TreeSet (a set that is represented by a BST), and HashSet.
+
+<h4>Before you start writing code, you should make a prediction about about which data structure will have the fastest running time, and which data structure will have the slowest running time. You don't need to write this down anywhere... just do it in your head.</h4>
+
+
+First write some code that will add 10,000 random numbers (between 0 and 1000) to an <b>ArrayList</b> using the <tt>.add()</tt> method. After the for loop has finished, you should print out the total elapsed time.
+
+<br><br>
+Next, write some code that will add 10,000 random numbers (between 0 and 1000) to a <b>LinkedList</b> using the <tt>.add()</tt> method. After the for loop has finished, you should print out the total elapsed time.
+
+<br><br>
+Next, write some code that will add 10,000 random numbers (between 0 and 1000) to a <b>TreeSet</b> using the <tt>.add()</tt> method. Creating a TreeSet is just like how you create a linked list or array list. After the for loop has finished, you should print out the total elapsed time.
+
+<br><br>
+Next, write some code that will add 10,000 random numbers (between 0 and 1000) to a <b>HashSet</b> using the <tt>.add()</tt> method. After the for loop has finished, you should print out the total elapsed time.
+
+<br><br>
+
+After doing this, you should have four values printed out: the time (in nanoseconds) it took to add 10000
+numbers into an ArrayList, LinkedList, TreeSet, and HashSet. You should run your program several times to see how your results change.
+   
+<br><br>
+
+Using your knowledge of the running times of these operations, do the results from
+your experiment make sense? If they don't, <b> that is fine </b>. Your code is probably still correct. There are things happening behind the scenes that we will discuss after spring break.
+	
+
+<h3> Required Output </h3>
+
+When you run your program, it should look similar to <a href="lab7_output.PNG">this screenshot</a>. I don't want to spoil the results of the experiement, so I censored out the values in the screenshot.
+
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>  Your program computes the time taken to add 10000 random numbers to an ArrayList - 2 points </li>
+  <li>  Your program computes the time taken to add 10000 random numbers to a LinkedList - 2 points </li>
+  <li>  Your program computes the time taken to add 10000 random numbers to a TreeSet - 2 points </li>
+  <li>  Your program computes the time taken to add 10000 random numbers to a HashSet - 2 points </li>
+  <li>  You submmited a file called Lab7Demo.java to D2L - 2 points </li>
+
+
+</ul>
+
+NOTE: If your code does not compile, correctness cannot be verified, and you won’t receive any points
+for your code. Turn in code that compiles! 
+
+
+<br><br><br>
+
+
+
+</body>
+</html>

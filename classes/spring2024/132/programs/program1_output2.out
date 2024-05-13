@@ -1,0 +1,32 @@
+Enter your guess: 
+MOIST
+❌❌❌❌❌
+Incorrect!
+You have 5 guesses left.
+Enter your guess: 
+YEARN
+🟨🟨🟨🟨❌
+Incorrect!
+You have 4 guesses left.
+Enter your guess: 
+SCRAP
+❌❌🟨🟨❌
+Incorrect!
+You have 3 guesses left.
+Enter your guess: 
+GIANT
+❌❌🟨❌❌
+Incorrect!
+You have 2 guesses left.
+Enter your guess: 
+ALIEN
+🟨🟨❌✔️❌
+Incorrect!
+You have 1 guesses left.
+Enter your guess: 
+SOLAR
+❌❌🟨🟨✔️
+Incorrect!
+You have 0 guesses left.
+Game over
+The word was LAYER

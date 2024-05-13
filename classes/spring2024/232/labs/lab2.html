@@ -1,0 +1,106 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Lab 2 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 2: File System Tree</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, February 2nd at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solution (FileTree.java),  to the BrightSpace(D2L) Lab 2 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience using the Tree data structure  </li>
+
+</ul>
+
+<hr />
+
+
+<h3>Directions </h3>
+In this lab, you will build three more methods for the FileTree class we have been working on in
+class (you should download a fresh set of files below) as a starting
+point. You do not need to change any code beyond what is instructed. Complete the following
+tasks: 
+
+<br>
+ <br> 
+1. Fill in the body for the <tt> <b> public String getPath()</b> </tt> method. This method will return a
+String that shows the path from the root to current directory (e.g., ~/School/CSCI232/Labs)
+
+
+<br> <br> 
+
+2. Modify the existing method <tt> <b>public boolean moveDown(String directory) </tt></b> so that
+instead of reading in a single directory and moving into that directory, it can read in a path (e.g.,
+Pictures/Pets/Tater) and navigate to the final directory in the path, <u> if it exists</u>. If the path is
+not valid, it should return false. If part of the path is correct, but other parts are incorrect (e.g., /Pictures/Christmas/2023), the program should remain in the current directory (dont move to /Pictures). You may assume that the path provided is
+relative to the current directory. Hint: you can use the Java <tt>.split(“/”)</tt> method on the
+String path to create a list of all the directories you need to move down into.
+
+<br><br> 
+
+3. Fill in the body for the <tt><b>public boolean remove(String directory)</b></tt>. This method
+will remove the selected directory, and all of its subdirectories, from the file system. If the
+directory does not exist, the method should return false. If it does, remove it and return true.
+You may assume that the directory provided is a child of the current directory (if it exists).
+
+<br><br> 
+
+4. Now test your methods. The FileTreeManager class has the code to run the methods you are
+writing. <b>getPath()</b> is executed by typing the <tt>pwd</tt> command, and <b>remove()</b> is execute by
+typing the <tt> rm <directory_name> </tt> command. <b>moveDown()</b> is still executed by typing the
+<tt>cd <directory_name></tt> command. There is no code you need to add in this task, but make
+sure you test your methods before you submit this lab.
+
+That is <b>three</b> methods in total. 
+
+
+<h3> Required Output </h3>
+<p> When you run your program with the following commands, it should look exactly like output seen in <a href="lab2_output.PNG"> in this screenshot </a> . 
+
+<h3>Starting Code</h3>
+<ul>
+  <li><a href="Node.java">Node.java</a></li>
+  <li><a href="FileTree.java">FileTree.java</a></li>
+  <li><a href="FileTreeManager.java">FileTreeManager.java</a></li>
+  <li><a href="FileTreeDemo.java">FileTreeDemo.java</a></li>
+
+</ul>
+
+<h3>Grading (10 points) </h3>
+
+
+<ul>
+  <li>3 points - getPath() is correct. </li> 
+  <li>4 points - moveDown() is correct. </li> 
+  <li>3 points - remove() is correct. </li> 
+</ul>
+NOTE: If your code does not compile, correctness cannot be verified and you won’t receive any
+points for your code. Turn in code that compiles!
+
+
+
+</body>
+</html>
