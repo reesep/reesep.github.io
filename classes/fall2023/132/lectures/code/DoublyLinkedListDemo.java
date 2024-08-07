@@ -3,27 +3,20 @@ public class DoublyLinkedListDemo {
 
 	public static void main(String[] args) {
 		
-		DoublyLinkedList ll = new DoublyLinkedList();
+		DoublyLinkedList dll = new DoublyLinkedList();
+		dll.fillLinkedList("airports.txt");
+
+		Node newNode = new Node("BIL","Billings");
+		dll.insert(newNode, 4);
 		
-		ll.fillLinkedList("airports.txt");
-		
-		ll.insert(new Node("BIL","Billings"), 3);
-		
-		//ll.printReverse();
-		
-		
-		
-		ll.printLinkedList();
+		dll.print();
+		//dll.printReverse();
 		
 		System.out.println();
 		
-		ll.removeSpot(4);
+		dll.remove("MSP");
 		
-		//ll.remove("MIN");
-		
-		ll.printLinkedList();
-		
-
+		dll.print();
 	}
 
 }

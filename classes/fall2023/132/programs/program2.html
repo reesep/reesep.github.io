@@ -78,6 +78,9 @@ You will need to generate two random values: <b>j</b> and <b>k</b>. These are tw
 The first challenger is selected by starting from the head node, moving <b>j</b> spots clockwise and selects whatever challenger it lands on. The second challenger is selected by starting from the head node, moving <b>k</b> spots counter-clockwise and selects whatever challenger it lands on. 
 
 <br><br>
+You need to ensure that j and k do not land on the same node. If they do, you can move one of them forward/backwards one spot (this is the easier way), or entirely reroll j and k.
+
+<br><br>
 The winner is determined by the challengers' power level. Whoever has the higher power level wins, and the loser must be removed from the linked list. You should have a <tt>removeFromCircle()</tt> method that removes a node/challenger from the linked list. If both challengers have the same power level, then it is a tie and nothing should happen. The battle is over when one challenger remains, and the program should then end. Between each round, you should ask the user if they would like to continue the simulation. If the user does not want to continue, the program should terminate. 
 
 <img src="program2_selection.PNG" width="800" height="450">
