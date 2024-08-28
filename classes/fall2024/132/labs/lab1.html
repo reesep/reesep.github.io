@@ -1,0 +1,118 @@
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 1 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 1: Best Buy Inventory Program</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Thursday, August 29th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solution (.java file), entitled <b>Item.java</b> and <b>Customer.java</b>to the BrightSpace(D2L) Lab 1 Dropbox. Do not rename your .java files</li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Write a basic Java class (Instance Fields, Methods, Constructor) </li>
+  <li> Gain practice writing different kinds of methods  </li>
+  <li> Use if statements to check conditions </li>
+  <li> Use loops and arrays </li> 
+</ul>
+
+<hr />
+
+
+<h3>Background and Directions </h3>
+
+<p>
+	Earlier this month, it was announced that <a href="https://www.youtube.com/watch?v=fJrx2qUGfNg">Bozeman will be getting a Best Buy later this year.</a> This is great news for people that need to shop for electronics and appliances. In this lab, we've been tasked with writing a program that will keep track of items that may be sold at a Best Buy store.
+	
+</p>
+
+<p>
+	
+    Using <a href="Lab1Demo.java">Lab1Demo.Java</a>, as a starting point, you will supply the necessary classes and methods to get the correct output. You can download this file, or copy and paste it into your own <tt>Lab1Demo.java</tt>.
+
+    <br>
+
+    You first need to define the instance fields and constructor for the <tt><b>Item</b></tt> class. This represents an item that may be sold at a Best Buy. Each item will have:
+    <ul>
+        <li> A name (such as "MacBook Air")</li>
+        <li> A price (such at 10.99)</li>
+        <li> A list of review scores stored in an array (such as [5.0, 4.0, 3.0, 1.0]). This array will have N amount of review scores, where N > 0</li>
+    </ul>
+    Once you have the class defined, you will need to write the necessary methods. From looking at the Demo class, you should be able to see which ones you need.
+    In the Item class, you will need to define the following methods:
+    <ul>
+        <li><b>getName()</b>- returns the name of an item</li>
+        <li><b>getPrice()</b>- returns the price of an item</li>
+        <li><b>getAverageRating()</b>- returns the average review score from the array of review scores</li>
+    </ul>
+
+
+    <br>
+   Next, you will define the <b><tt>Customer</tt></b> class. This represents a customer that may be purchasing items from a Best Buy. Each customer will have:
+   <ul>
+        <li>A name</li>
+        <li>A cart of items that they intend to purhcase. This will be an array of <tt><b>Item</tt></b>s</li>
+   </ul>
+   
+   Once you have the class and constructor defined, you will need to implement the following methods:
+   <ul>
+    <li><b>getName()</b>- returns the name of a customer</li>
+    <li><b>getCartCost()</b>- returns the total cost of the customers cart. You will need to use a loop to total the price of each Item in the array</li>
+    <li><b>applyDiscounts()</b>- Best Buy is running a sale. 20% off will be applied to every item that is $200. This method will need to go through the customer's cart, and apply the discount to the applicable items, which will update the price of an item. Hint: You may need to write a setPrice() method in the Item class </li>
+   </ul>
+
+   The cart total may have three decimal places, which is fine. In Java, there are ways to only allow two decimal places, but that is not a requirement in this assignment.
+
+
+    <h3> Rules </h3>
+    <p> <b> You are NOT allowed to modify Lab1Demo.java.</b> If you modify Lab1Demo.Java in any way, then you will lose significant points!</p>
+
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab1Demo.java">Lab1Demo.Java</a> </li>
+    </ul>
+</p>	
+
+<h3> Required Output </h3>
+<p> When your program is run, your output should look <b>exactly</b >the same as seen <a href="lab1_output.PNG"> in this screenshot </a>. 
+
+
+
+</pre>
+<h3>Grading (10 points) </h3>
+
+
+<ul>
+  <li>2 points - Your Item class is correctly defined, and has a working constructor method</li> 
+  <li>2 points - Methods in Item class are correct </li> 
+  <li>2 point - Your Customer class is correctly defined, and has a working constructor </li>
+  <li>3 points- Methods in the Customer class are correct </li>
+  <li>1 point- your program matches the sample output exactly</li>
+</ul>
+
+
+</body>
+</html>
