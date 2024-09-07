@@ -1,0 +1,190 @@
+
+
+
+<html>
+
+<head>
+
+    <title> CSCI 466 PA 1</title>
+
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+    <style>
+        h1 {text-align: center;}
+        h2 {text-align: center;}
+       
+        </style>
+
+</head>
+
+
+
+
+<body>
+
+	<div class="container">
+
+    <h1 text-align:center> Programming Assignment 1: Battleship with Sockets</h1>
+
+    <h2> Assigned Friday September 7th</h2>
+    <h2> Due Sunday September 22nd @11:59 PM</h2>
+
+
+    <h3> Overview</h3>
+	In this assignment, you will gain experience using sockets to write network applications. You will develop a client-server application that plays a one player version of battleship. If you are not familiar with the game battleship, you should first spend some time <a href="https://en.wikipedia.org/wiki/Battleship_(game)">learning the game </a>. You are allowed to use any programming language you'd like, but it MUST use socket communication. I recommend Python, but if you another language, then Reese or Justin will be unable to help you.
+
+    <h3> GitHub Repo Setup </h3>
+    <p> You will need to setup a private github repository for all your files. You will have one GitHub repository for all assignments in this course, with each assignment getting its own specific folder. </p>
+     
+     Visit <a href = "https://github.com/new"> https://github.com/new</a> to create a new repository. You should name your repository <tt> <b>[last_name]-[first_name]-csci466</b></tt>. Make sure that you set your repository to be private. <b> If we find that your repository is public, you will receive an automatic ZERO.</b>
+    <br> 
+    After creating your repository, go into the "settings" tab, and then click the "collaborators" tab. You will need to add both Reese and Justin as collaborators on the repository.
+
+    <UL>
+        <li> Reese's GitHub username: <b>@reesep</b> </li>
+        <li> Justin's GitHub username: <b>@jdmau72</b> </li>
+    </UL>
+    If we do not have access to your repository, then we will be unable to grade your submission and you will receive a zero. 
+
+
+    <h3> Instructions </h3>
+
+	For this assignment, you will develop two programs: <tt> client.py </tt> and <tt> server.py </tt>.
+	
+	
+
+	<h3>
+		server.py
+		</h3>
+		This file will be your server. The server is provided a port number via command line input, and will begin to listen on that port for a socket connection.
+		The server will randomly generate a 6x6 battleship board, with a 4 length ship, a 3 length ship, and a 2 length ship. It is up to you how you would like to orient your ships, but they should be in random locations. Ships cannot overlap, but they are allowed to touch each other. The server will receive a guess from the client (i.e row 3 column 4) and will look at the board. If the guess lands a hit, then "Hit" should be sent back to the client. If the guess lands a miss, then "Miss" should be sent back to the client.
+		<pre>
+			<b> python server.py [PORT_NUMBER] </b>
+		</pre>
+
+	<h3>
+	client.py
+	</h3>
+	This file will be your client. This program should connect to the server via a TCP socket. Your program should prompt the user a guess (row # and column #), and the guess will be sent via sockets to the server, and the server will send back the result of the guess (hit or miss). Your client should print out the current status of board before each guess. Your client program will also need to keep track of when the game is over, and how many guesses it took to sink every battleship on the server.
+	
+	<pre>
+	
+		<b> python client.py [PORT_NUMBER]  </b>
+		example:  <b>python client.py 5001</b>  //port 5001
+	</pre>
+
+	<br><br>
+	<img src="pa1_output.PNG" width=1000" height="600"">
+
+	<br>
+
+    <h3> Expected Output</h3>
+
+	<ul>
+		<li> Watch <a href="https://youtu.be/l95osDgCAIk"> this video demonstration </a> to see program behavior and output.</li>
+		<li> You don't have to match the sample output exactly, but it should look similar</li>
+	</ul>
+
+	
+	<h3> Video Demo </h3>
+	You will record a video demo that highlights the functionality of your program. You can do this with Panopto, or you can record with another recording software (such as OBS) and post it to youtube as private or unlisted.
+	The video should show you running <tt> server.py</tt> and <tt> client.py </tt>program. Your video should demonstrate you sinking a battleship and missing a battleship, and show the client server interaction. You do not need to explain your code. Your video demo should not be longer than 6 minutes. If you do not record a video demo, then you will lose <b> a very large amount </b> of points.
+	
+    <h3> Submission Instructions</h3>
+
+	All your files need to be pushed to a  <tt> /PA1 </tt> folder in your <tt> <b>[last_name]-[first_name]-csci466</b></tt> repository. You need to include a <tt> README.md  </tt> in your <tt> /PA1 </tt> folder. The link to your video demo should appear at the very top of your README. Additionally, your README should have the names of each group member, a section that describes how to run your program(s), and a link to your video demo. When you are ready to submit, you will submit <b> just the link </b> to your private <tt> <b>[last_name]-[first_name]-csci466</b></tt> repository.
+	
+
+	<h3> Partners </h3>
+
+	You are allowed to work with two partners (groups of three). If you work with a partner, each member needs to create their own private github repository. When you are ready to submit to D2L, each group member needs to submit the link to the repo. Make sure you clearly mention in your README/Video/Submission who the group members are.
+
+
+	<h3> Grading Rubric (100 Points)</h3>
+
+	<style type="text/css">
+		.tg  {border-collapse:collapse;border-spacing:0;}
+		.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+		  overflow:hidden;padding:10px 5px;word-break:normal;}
+		.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+		  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+		.tg .tg-0lax{text-align:left;vertical-align:top}
+		</style>
+		<table class="tg">
+		<thead>
+		  <tr>
+			<th class="tg-0lax">Criteria</th>
+			<th class="tg-0lax">Points</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr>
+			<td class="tg-0lax">client.py exists, and takes a port number via the command line</td>
+			<td class="tg-0lax">5</td>
+		  </tr>
+		  <tr>
+			<td class="tg-0lax">server.py exists, and takes a port number via the command line</td>
+			<td class="tg-0lax">5</td>
+		  </tr>
+		  <tr>
+			<td class="tg-0lax">server.py randomly generates the 6x6 battleship bored properly</td>
+			<td class="tg-0lax">20</td>
+		  </tr>
+		  <tr>
+			<td class="tg-0lax">client.py prompts the user for a guess and sends the guess via a socket</td>
+			<td class="tg-0lax">10</td>
+		  </tr>
+		  <tr>
+			<td class="tg-0lax">client.py keeps track of the current status of the board and prints it out before each new guess</td>
+			<td class="tg-0lax">20</td>
+		  </tr>
+		  <tr>
+			<td class="tg-0lax">server.py identies hits and misses properly and sends them back to the user via a socket</td>
+			<td class="tg-0lax">10</td>
+		  </tr>
+		  <tr>
+			<td class="tg-0lax">client.py is able to identify when the game is over, and how many guesses it took to win</td>
+			<td class="tg-0lax">10</td>
+		  </tr>
+		  <tr>
+			<td class="tg-0lax">Your files are in a /PA1 folder in a private github repository</td>
+			<td class="tg-0lax">10</td>
+		  </tr>
+		  <tr>
+			<td class="tg-0lax">There is a README.md file in your github repository that has your name(s), video demo link, and how to run your program</td>
+			<td class="tg-0lax">10</td>
+		  </tr>
+		</tbody>
+		</table>
+
+
+		<br><br>
+		<b>Penalties</b>
+		<ul>
+			<li> Running code results in errors before runtime: -30 points </li>
+			<li> Running code results in errors during runtime: -15 points</li>
+			<li> No video demo: -50 points </li>
+			<li> Your repository is public: -100 points </li>
+		</ul>
+
+
+
+	<h3> Helpful Examples </h3>
+
+	<ul>
+		<li><a href="../lectures/code/guess_client.py">guess_client.py </a></li>
+		<li><a href="../lectures/code/guess_server.py">guess_server.py </a></li>
+		<br>
+		<li> <a href="https://docs.python.org/3/library/socket.html">Sockets documentation</a></li>
+
+	</ul>
+
+
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<a href="https://www.youtube.com/shorts/NjlGDiZ7zpA"> Solution</a>
+</div>
+</body>
+
+
+</html>
