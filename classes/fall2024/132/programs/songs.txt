@@ -1,0 +1,20 @@
+Pastoral Symphony,Beethoven,music/beethoven1.wav
+Fur Elise,Beethoven,music/beethoven2.wav
+Flute Harp Concerto,Mozart,music/mozart1.wav
+Brandenburg Concerto No. 3,Bach,music/bach1.wav
+Toccata and Fugue in D Minor,Bach,music/bach2.wav
+Air,Bach,music/bach3.wav
+Symphony No. 9,Beethoven,music/beethoven3.wav
+Symphony No. 5,Beethoven,music/beethoven4.wav
+Habanera,Bizet,music/bizet1.wav
+Claire de Lune,Debussy,music/debussy1.wav
+Symphony No. 9,Dvorak,music/dvorak1.wav
+String Serenade,Dvorak,music/dvorak1.wav
+Serenade for Strings,Elgar,music/elgar1.wav
+Rhapsody in Blue,Gershwin,music/gershwin1.wav
+Hebrides Overture,Mendelssohn,music/mendelssohn1.wav
+Concerto No. 17,Mozart,music/mozart2.wav
+William Tell Overture,Rossini,music/rossini1.wav
+Danse Macabre,Saint-Saens,music/saintsaens1.wav
+The Swan,Saint-Saens,music/saintsaens2.wav
+The Four Seasons: Spring,Vivaldi,music/vivaldi1.wav

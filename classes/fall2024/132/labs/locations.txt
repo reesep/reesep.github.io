@@ -1,0 +1,8 @@
+Vatican City,Europe,62
+Black Sea,Asia,0
+Egypt Pyramids,Africa,223
+Easter Island,South America,1633
+Shanghai,Asia,13
+Himalayas,Asia,23600
+India,Asia,525
+Iraq,Asia,1023

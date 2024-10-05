@@ -1,0 +1,558 @@
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Computer Security</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" type="image/x-icon" href="/cs476-2021-spring/favicon.ico">
+
+  <!-- Fonts & TextFormatting -->
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:500&display=swap" rel="stylesheet" />
+  <link href="../assets/all.css" rel="stylesheet"> <!--load all fontawesome styles -->
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/prism.css" /> <!-- Prism JS & CSS downloaded from: https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript+bash+c+csharp+cpp+cmake+docker+git+http+hpkp+hsts+java+javadoc+javadoclike+json+latex+liquid+makefile+markdown+markup-templating+mongodb+nasm+nginx+perl+php+phpdoc+php-extras+plsql+python+regex+ruby+rust+sql+vim+yaml&plugins=line-numbers+command-line+unescaped-markup+normalize-whitespace+toolbar -->
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <!-- Misc. -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"/>
+</head>
+
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid col-sm-12 p-4 mb-4">
+<div class="row flex-xl-nowrap m-0">
+
+<div class="d-none d-xl-block col-xl-2">
+</div>
+
+<div class="col-12 col-md-12 col-xl-8 bg-white rounded shadow-lg pb-4">
+<div>
+  <!--Thanks, Tim Holman! http://tholman.com/github-corners/ -->
+
+
+
+
+</div>
+
+<!-- ACTIVE Announcements -->
+
+<!-- OLD Announcements (hidden in comment environment) -->
+
+
+
+<h1 class="pb-4" id="lab-01-environment-variables--set-uid-programs-lab">Lab 01: Environment Variables &amp; Set-UID Programs Lab</h1>
+
+
+
+<center><h2 class="titletext" id="environment-variables--set-uid-programs-lab">Environment Variables &amp; Set-UID Programs Lab</h2></center>
+<center><h2> Due Sunday September 22nd @ 11:59 PM</h2></center>
+<p class="subtitletext">Adapted from SEED Labs: A Hands-on Lab for Security Education.</p>
+
+<p>The learning objective of this lab is for students to understand how
+environment variables affect program and system behaviors. Environment
+variables are a set of dynamic named values that can affect the way
+running processes will behave on a computer. They are used by most
+operating systems since they were introduced into Unix in 1979. Although
+environment variables affect program behaviors, how they achieve that is
+not well understood by many programmers. As a result, if a program uses
+environment variables, but the programmer does not know that they are
+used, the program may have vulnerabilities.</p>
+
+<p>In this lab, students will understand how environment variables work,
+how they are propagated from parent process to child, and how they
+affect system/program behaviors. We are particularly interested in how
+environment variables affect the behavior of Set-UID programs, which
+are usually privileged programs. This lab covers the following topics:</p>
+
+<ul>
+  <li>Environment variables</li>
+  <li>Set-UID programs</li>
+  <li>How to securely invoke external programs</li>
+  <li>The dynamic linker/loader</li>
+</ul>
+
+<h3 id="resources">Resources</h3>
+
+<ul>
+  <li>Code related to this lab can be found in our <a href="https://github.com/msu/csci476">class’s GitHub repository</a>. Specifically, see <code class="language-plaintext highlighter-rouge">01_envvars_setuid/</code>.</li>
+  <li>Chapters 1 &amp; 2 in the <a href="https://www.handsonsecurity.net">SEED Textbook</a>.</li>
+  <li>A related <a href="https://www.handsonsecurity.net/video.html">video lecture</a> (Udemy course) recorded by Kevin Du.</li>
+  <li><a href="https://seedsecuritylabs.org/Labs_16.04/Software/Environment_Variable_and_SetUID/files/setuid.pdf">Checklist for Security of Setuid Programs</a></li>
+  <li><a href="http://www.cis.syr.edu/%7Ewedu/minix/projects/setuid_paper.pdf">Setuid Demystified</a>, Chen et al.</li>
+  <li><a href="http://nob.cs.ucdavis.edu/%7Ebishop/secprog/1987-sproglogin.pdf">How to write a Setuid program</a>, Matt Bishop</li>
+</ul>
+
+<h2 class="titletext" id="lab-tasks">Lab Tasks</h2>
+<p class="subtitletext">This lab has been tested on the pre-built SEED VM (Ubuntu 20.04 VM).</p>
+
+<h3 id="task-1-manipulating-environment-variables">Task 1: Manipulating Environment Variables</h3>
+
+
+<h4 id="task-11">Task 1.1</h4>
+
+<p>Use the <code class="language-plaintext highlighter-rouge">printenv</code> or <code class="language-plaintext highlighter-rouge">env</code> command to print out the environment
+variables. If you are interested in viewing particular environment
+variables, such as <code class="language-plaintext highlighter-rouge">PWD</code>, you can use <code class="language-plaintext highlighter-rouge">printenv PWD</code> or <code class="language-plaintext highlighter-rouge">env | grep PWD</code>.</p>
+
+<h4 id="task-12">Task 1.2</h4>
+
+<p>Use <code class="language-plaintext highlighter-rouge">export</code> and <code class="language-plaintext highlighter-rouge">unset</code> to set or unset environment variables. Please show that you can set your own environment variables using <code>export</code></p>
+
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+
+
+
+<h3 id="task-2-passing-environment-variables-parent---child">Task 2: Passing Environment Variables (Parent -&gt; Child)</h3>
+
+<p>In this task, we study how a child process gets its environment
+variables from its parent. In Unix, <code class="language-plaintext highlighter-rouge">fork()</code> creates a new process by
+duplicating the calling process. The new process, referred to as the
+<strong>child</strong>, is an exact duplicate of the calling process, referred to as the
+<strong>parent</strong>; however, several things are not inherited by the child (please
+see the manual of <code class="language-plaintext highlighter-rouge">fork()</code> by typing the following command: <code class="language-plaintext highlighter-rouge">man fork</code>).
+In this task, we would like to know whether the parent’s environment
+variables are inherited by the child process or not.</p>
+
+<h4 id="task-21">Task 2.1</h4>
+
+<p>Please compile and run the following program, and describe your observations. You should save the output of this program to a new file ( <code>./myprintenv > out1</code>)(NOTE: This file is also in out GitHub repo that you cloned, <code>myprintenv.c</code></p>
+
+<!-- https://emgithub.com -->
+<script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2Ftraviswpeters%2Fcs476-code%2Fblob%2Fmaster%2F01_envvars_setuid%2Fmyprintenv.c&amp;style=github&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on"></script>
+
+<h4 id="task-22">Task 2.2</h4>
+
+<p>Now comment out the <code class="language-plaintext highlighter-rouge">printenv()</code> statement in the “child process” case,
+and uncomment the <code class="language-plaintext highlighter-rouge">printenv()</code> statement in the “parent process” case.
+Compile and run the code again, and describe your
+observation. Save the output in another file (e.g., <code><code>./myprintenv > out2</code></code>.</p>
+
+<h4 id="task-23">Task 2.3</h4>
+
+<p>Compare the difference of these two files using the <code class="language-plaintext highlighter-rouge">diff</code> command. To compare the two outputs with <code>diff</code>, run the command <code> diff out1 out2</code>
+Please draw your conclusions. HINT: If you see no ouput running the diff command , that is a valid answer (what does that mean?)</p>
+
+
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+
+
+<h3 id="task-5-environment-variables-and-set-uid-programs">Task 3: Environment Variables and Set-UID Programs</h3>
+
+<p>Set-UID is an important security mechanism in Unix operating systems.
+When a Set-UID program runs, it assumes the owner’s privileges. For
+example, if the program’s owner is root, when anyone runs this program,
+the program gains root’s privileges during its execution. Set-UID
+allows us to do many interesting things, but since it escalates the
+user’s privilege, it is quite risky. Although the behavior of Set-UID
+programs is decided by their program logic, not by users,
+<strong>users can indeed affect the behavior via environment variables</strong>.
+To understand how
+Set-UID programs can be affected, let us first figure out whether
+environment variables are inherited by a Set-UID program’s process
+from the user’s process.</p>
+
+<h4 id="task-51">Task 3.1</h4>
+
+<p>Use the following program that can print out all the environment variables in the current process.
+Verify that your implementation correctly prints the environment variables.</p>
+
+<!-- https://emgithub.com -->
+<script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2Ftraviswpeters%2Fcs476-code%2Fblob%2Fmaster%2F01_envvars_setuid%2Fmyenv_environ.c&amp;style=github&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on"></script>
+
+<h4 id="task-52">Task 3.2</h4>
+
+<p>Compile the above program, change its ownership to <code class="language-plaintext highlighter-rouge">root</code>, and make it a Set-UID program.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo chown </span>root myenv_environ   <span class="c"># chown = (ch)ange (own)er</span>
+<span class="nv">$ </span><span class="nb">sudo chmod </span>4755 myenv_environ   <span class="c"># chmod = (ch)ange file (mod)e bits</span>
+</code></pre></div></div>
+
+<h4 id="task-53">Task 3.3</h4>
+
+<p>In your shell (you need to be in a normal user account, not the <code class="language-plaintext highlighter-rouge">root</code> account),
+use the <code class="language-plaintext highlighter-rouge">export</code> command to set the following environment variables <em>(<strong>NOTE:</strong> they may exist already!)</em>:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">PATH</code> <em>— prepend the current directory symbol to <code class="language-plaintext highlighter-rouge">PATH</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">LD_LIBRARY_PATH</code> <em>— prepend the current directory symbol to <code class="language-plaintext highlighter-rouge">LD_LIBRARY_PATH</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">TASK5</code>  <em>— this is a non-standard variable; define this however you want</em></li>
+</ul>
+
+<p><em>To be clear, these environment variables should be set in the user’s shell process.</em></p>
+
+
+
+<p>After you have exported the above environment variables into the user’s shell environment,
+run the Set-UID program from Task 3.2 in your shell. After you type the
+name of the program in your shell, the shell forks a child process, and
+uses the child process to run the program. Please check whether all the
+environment variables you set in the shell process (parent) are inherited in the Set-UID child process.
+Describe your observations.
+If there are any surprises to you, describe them.</p>
+
+
+
+
+
+
+
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+
+
+<div class="card bg-secondary border-primary">
+  <div class="card-body">
+    <h4 class="card-title">Before you proceed... Shell Countermeasures</h4>
+    <h6 class="card-subtitle mb-2 text-muted">An important change is needed to circumvent shell countermeasures</h6>
+
+    <p>The <code class="language-plaintext highlighter-rouge">system(cmd)</code> function executes the <code class="language-plaintext highlighter-rouge">/bin/sh</code> program first, and then asks this shell program to run the <code class="language-plaintext highlighter-rouge">cmd</code> command.
+In Ubuntu 20.04 (and several versions before), <code class="language-plaintext highlighter-rouge">/bin/sh</code> is actually a symbolic link pointing to <code class="language-plaintext highlighter-rouge">/bin/dash</code>.
+This shell program has a countermeasure that prevents itself from being executed in a Set-UID process.
+Basically, if <code class="language-plaintext highlighter-rouge">dash</code> detects that it is executed in a Set-UID process, it immediately changes the effective user ID to the process’s real user ID, essentially dropping its privileges.</p>
+
+    <p>Since our victim program is a Set-UID program, the countermeasure in <code class="language-plaintext highlighter-rouge">/bin/dash</code> can prevent our attack.
+To see how our attack works without such a countermeasure, we will link <code class="language-plaintext highlighter-rouge">/bin/sh</code> to another shell that does not have such a countermeasure.
+There is another shell program called <code class="language-plaintext highlighter-rouge">zsh</code> in our Ubuntu 20.04 VM.
+Use the following commands to link <code class="language-plaintext highlighter-rouge">/bin/sh</code> to <code class="language-plaintext highlighter-rouge">/bin/zsh</code>, and to reset <code class="language-plaintext highlighter-rouge">/bin/sh</code> to <code class="language-plaintext highlighter-rouge">/bin/dash</code>, respectively:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo ln</span> <span class="nt">-sf</span> /bin/zsh /bin/sh   <span class="c"># set shell to zsh - zsh has no set-uid countermeasure</span>
+<span class="nv">$ </span><span class="nb">sudo ln</span> <span class="nt">-sf</span> /bin/dash /bin/sh  <span class="c"># set shell to dash - dash has a set-uid countermeasure</span>
+</code></pre></div>    </div>
+
+  </div>
+</div>
+
+
+
+<h3 id="task-4-audit-program">Task 4: Exploiting a SET-UID Program with the <code>system()</code>function</h3>
+
+Although <code>system()</code> and <code>execve()</code> can both be used to run new programs, <code>system()</code> is quite dangerous if used in a privileged program, such as Set-UID programs. We have seen how the PATH environment
+variable affect the behavior of system(), because the variable affects how the shell works. <code>execve()</code>
+does not have the problem, because it does not invoke shell. Invoking shell has another dangerous consequence, and this time, it has nothing to do with environment variables. Let us look at the following scenario.
+Bob works for an auditing agency, and he needs to investigate a company for a suspected fraud. For
+the investigation purpose, Bob needs to be able to read all the files in the company’s Unix system; on the
+other hand, to protect the integrity of the system, Bob should not be able to modify any file. To achieve this
+goal, Vince, the superuser of the system, wrote a special set-root-uid program (see below), and then gave the
+executable permission to Bob. This program requires Bob to type a file name at the command line, and then
+it will run <code>/bin/cat</code> to display the specified file. Since the program is running as a root, it can display any
+file Bob specifies. However, since the program has no write operations, Vince is very sure that Bob cannot
+use this special program to modify any file
+
+<script src="https://gist.github.com/reesep/621b24ca9da3fc7cb4a729103d1bce1d.js"></script>
+
+<h4>Task 4.1</h4>
+Compile the above program, make it a root-owned Set-UID program. The program will use
+<code>system()</code> to invoke the command. You have this file already from the GitHub repo (catall.c), but make sure that the program is using the <code>sytem()</code> function call and not the <code>exec()</code> function call. If you were Bob, can you compromise the integrity of the system? For
+example, can you remove a file that is not writable to you? (Hint: Look at lecture from September 7th)
+
+<h4>Task 4.2</h4>
+Comment out the <code>system(command)</code> statement, and uncomment the <code>execve()</code> statement;
+the program will use <code>execve()</code> to invoke the command. Compile the program, and make it a root-owned
+Set-UID. Do your attacks in Step 1 still work? Please describe and explain your observations.
+
+
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+
+<h3 id="task-5-path-and-set-uid-programs">Task 5: <code class="language-plaintext highlighter-rouge">PATH</code> and Set-UID Programs</h3>
+
+<p>In this task, we study how Set-UID programs deal with environment variables.
+Specifically, we examine the <code class="language-plaintext highlighter-rouge">PATH</code> environment variable and its potential impact on Set-UID programs.
+Because <code class="language-plaintext highlighter-rouge">system()</code> runs commands by invoking a shell, calling <code class="language-plaintext highlighter-rouge">system()</code> within a Set-UID program is quite dangerous.
+One concern is that the actual behavior of the shell program can be affected by environment variables, such as <code class="language-plaintext highlighter-rouge">PATH</code>;
+these environment variables are provided by the user, who may be malicious.
+By changing these variables, malicious users can potentially control the behavior of the Set-UID program.</p>
+
+<p>In <code class="language-plaintext highlighter-rouge">Bash</code>, you can change the <code class="language-plaintext highlighter-rouge">PATH</code> environment variable in the following way
+(this example adds the directory <code class="language-plaintext highlighter-rouge">/home/seed</code> to the beginning of the <code class="language-plaintext highlighter-rouge">PATH</code> environment variable):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/home/seed:<span class="nv">$PATH</span>
+</code></pre></div></div>
+
+<p>The Set-UID program below is supposed to execute the <code class="language-plaintext highlighter-rouge">/bin/ls</code>
+command; however, the programmer only uses the relative path for the
+<code class="language-plaintext highlighter-rouge">ls</code> command, rather than the absolute path:</p>
+
+<!-- https://emgithub.com -->
+<script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2Ftraviswpeters%2Fcs476-code%2Fblob%2Fmaster%2F01_envvars_setuid%2Fls_vuln.c&amp;style=github&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on"></script>
+
+<p>Please compile the above program, change its owner to <code class="language-plaintext highlighter-rouge">root</code>, and make it a Set-UID program.</p>
+
+<p>Can you make this Set-UID program run your code (e.g., code that launches a new shell) instead of <code class="language-plaintext highlighter-rouge">/bin/ls</code>?</p>
+
+<p>If you can, is your code running with root privileges? Describe and explain your observations.</p>
+
+
+
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+<!--------------------------------------------------------> 
+
+<h3 id="task-6-ld_preload-and-set-uid-programs">Task 6: <code class="language-plaintext highlighter-rouge">LD_PRELOAD</code> and Set-UID Programs</h3>
+
+<p>In this task, we study how Set-UID programs deal with environment variables.
+Specifically, we examine the <code class="language-plaintext highlighter-rouge">LD_PRELOAD</code> environment variable and its potential impact on Set-UID programs.
+Several environment variables, including
+<code class="language-plaintext highlighter-rouge">LD_PRELOAD</code>, <code class="language-plaintext highlighter-rouge">LD_LIBRARY_PATH</code>, and others with the <code class="language-plaintext highlighter-rouge">LD_</code> prefix influence the behavior of the dynamic linker/loader.
+A dynamic linker/loader is the part of an operating system (OS) that loads an executable from persistent storage to RAM, and
+links the shared libraries needed by the executable at run time.</p>
+
+<p>In Linux, <code class="language-plaintext highlighter-rouge">ld.so</code> or <code class="language-plaintext highlighter-rouge">ld-linux.so</code>, are the dynamic linker/loader
+(<code class="language-plaintext highlighter-rouge">ld-linux.so</code> supports ELF, which is a common file format for executables today).
+Among the environment variables that affect the behavior of the dynamic linker/loader, <code class="language-plaintext highlighter-rouge">LD_LIBRARY_PATH</code> and <code class="language-plaintext highlighter-rouge">LD_PRELOAD</code> are the two that we are concerned in this lab.
+In Linux,
+<code class="language-plaintext highlighter-rouge">LD_LIBRARY_PATH</code> is a colon-separated set of directories where libraries should be searched for first, before the standard set of directories.
+<code class="language-plaintext highlighter-rouge">LD_PRELOAD</code> specifies a list of additional, user-specified, shared libraries to be loaded before all others.
+In this task, we will only focus on <code class="language-plaintext highlighter-rouge">LD_PRELOAD</code>.</p>
+
+<h4 id="task-61">Task 6.1</h4>
+
+<p>First, we will see how these environment variables influence the behavior of the dynamic linker/loader when running a normal program.
+Please follow these steps:</p>
+
+<ol>
+  <li>
+    <p>Let us build a dynamically linked library.
+Create the following program, and name it <code class="language-plaintext highlighter-rouge">mylib.c</code>.
+This program basically overrides the <code class="language-plaintext highlighter-rouge">sleep()</code> function
+ in <code class="language-plaintext highlighter-rouge">libc</code>:</p>
+
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="cp">#include &lt;stdio.h&gt;
+</span> <span class="kt">void</span> <span class="nf">sleep</span> <span class="p">(</span><span class="kt">int</span> <span class="n">s</span><span class="p">)</span>
+ <span class="p">{</span>
+   <span class="cm">/* If this is invoked by a privileged program, you can do damages here! */</span>
+   <span class="n">printf</span><span class="p">(</span><span class="s">"I am not sleeping!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>We can compile the above program using the following commands
+   (in the <code class="language-plaintext highlighter-rouge">-lc</code> argument, the second character is the lowercase letter “L”):</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gcc <span class="nt">-fPIC</span> <span class="nt">-g</span> <span class="nt">-c</span> mylib.c
+<span class="nv">$ </span>gcc <span class="nt">-shared</span> <span class="nt">-o</span> libmylib.so.1.0.1 mylib.o <span class="nt">-lc</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Now, set the <code class="language-plaintext highlighter-rouge">LD_PRELOAD</code> environment variable:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">export </span><span class="nv">LD_PRELOAD</span><span class="o">=</span>./libmylib.so.1.0.1
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Finally, compile the following program <code class="language-plaintext highlighter-rouge">myprog</code> within the same
+directory as the dynamically linked library you created above (<code class="language-plaintext highlighter-rouge">libmylib.so.1.0.1</code>):</p>
+
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* myprog.c */</span>
+<span class="cp">#include &lt;unistd.h&gt;
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h4 id="task-72">Task 6.2</h4>
+
+<p>After you have done Task 6.1, run <code class="language-plaintext highlighter-rouge">myprog</code> under the following conditions, and observe what happens.</p>
+
+<ul>
+  <li>Make <code class="language-plaintext highlighter-rouge">myprog</code> a regular program, and run it as a normal user.</li>
+  <li>Make <code class="language-plaintext highlighter-rouge">myprog</code> a Set-UID root program, and run it as a normal user.</li>
+  <li>Make <code class="language-plaintext highlighter-rouge">myprog</code> a Set-UID root program, export the <code class="language-plaintext highlighter-rouge">LD_PRELOAD</code>
+environment variable again in the root account and run it.
+    <blockquote>
+      <p>You can run <code class="language-plaintext highlighter-rouge">sudo su</code> to login as root. Make sure to <code class="language-plaintext highlighter-rouge">exit</code> when you are done.</p>
+    </blockquote>
+  </li>
+ 
+</ul>
+
+<h4 id="task-73">Task 6.3</h4>
+
+<p>You should be able to observe different behaviors in the scenarios
+described above, even though you are running the same program. You need
+to figure out what causes the difference. Environment variables play a
+role here. Explain why the behaviors you observed in the previous part are different.
+<em>(<strong>HINT:</strong> the child process may not inherit the <code class="language-plaintext highlighter-rouge">LD_</code> environment variables!).</em></p>
+
+
+<h4> Submission Instructions </h4>
+<p> The lab report is to help me see that you did the lab and followed the instructions. For each task, you should include a screenshot to show you completed the task. If the task asks you to write down observations, you should also include those in your lab report. For the tasks that requires you to do some thinking and find ways to exploit a program, you should write a brief description about your approach and the steps you took to get your output. This is a lab report taken from a previous offering of this course. This is a good example of how you should format your lab report: <a href="SampleLabReport.pdf">https://www.cs.montana.edu/pearsall/classes/fall2024/476/labs/SampleLabReport.pdf</a>
+
+    <br>
+
+    Once you are ready, submit your lab report <b> AS A PDF</b> to the appropriate D2L submission box.
+
+</p>
+
+<h4> Grading Criteria </h4>
+Generally, If you  attempted a task, but could not get the correct output, you will get half credit. For smaller mistakes, you will lose a point.
+<br>
+<ul>
+
+	<li> You got the correct output and clearly explained it with a screenshot or description: -0 </li>
+	<li> If you attemped the task, but were unsuccessful in getting the correct output: -50% of the task's points. For example, if the task was worth 6 points and you attempted it, but were not able to get the correct output or conduct the attack successfully, you would get 3 points. </li>
+	<li> If you almost got the correct output, or didn't answer the question fully: -1 point</li>
+	<li> No screenshots for a task that clearly required a screenshot: -50% of the task's points</li>
+	<li> You  did not attempt the task at all: -100% of the task's points </li>
+</ul>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="d-none d-xl-block col-xl-2">
+    
+    <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+    
+</div>
+
+</div>
+</div>
+
+<!-- Optional JavaScript for Bootstrap - jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="/cs476-2021-spring/assets/js/prism.js"></script>
+
+<script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    /*
+     * class hacking: add bootstrap/bootswatch class labels to my custom classes (notes, slides, etc.)
+     */
+
+    // admin styles
+    $('.new').addClass('badge badge-pill badge-primary');
+    $('.announcement').addClass('alert alert-primary').prepend('<h4 class="alert-heading">Class Announcement!</h4>');
+    $('.timestamp').prepend('&mdash;Posted ');
+    // $('.score').prepend(' &mdash; ');
+
+    // add icons / style class elements...
+    $( ".activity" ).each(function(index) {
+        $(this).html('<i class="fas fa-lightbulb pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".code" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-code pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".slides" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-pdf pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".pdf" ).each(function(index) {
+        $(this).html('<i class="fas fa-file pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".reading" ).each(function(index) {
+        $(this).html('<i class="fas fa-book pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".video" ).each(function(index) {
+        $(this).html('<i class="fas fa-play-circle pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+
+    // add links to all section headers...
+    $( ":header" ).each(function(index) {
+      var attr = $(this).attr('id');
+      if (typeof attr !== typeof undefined && attr !== false) {
+        $(this).html( '<a href="#' + attr + '">' +$(this).html()+ ' </a>' );
+      }
+    });
+
+    // add links to weeks on schedule
+    $('td[id^="week"]').filter(function () {
+        $(this).html(function(index, text){
+            return '<a href="#' + text.toLowerCase().replace(' ', '') + '"><strong>' + text + '</strong></a>';
+        });
+    });
+
+    // use javascript to detect all external links and add the target='_blank' attribute to them.
+    // -> thanks, https://code.luasoftware.com/tutorials/hugo/how-to-create-link-with-target-blanks-in-hugo-markdown/
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+        if (links[i].hostname != window.location.hostname) {
+            links[i].target = '_blank';
+        }
+    }
+
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    var TEX = MathJax.InputJax.TeX;
+    var COLS = function (W) {
+      var WW = [];
+      for (var i = 0, m = W.length; i < m; i++)
+        {WW[i] = TEX.Parse.prototype.Em(W[i])}
+      return WW.join(" ");
+    };
+    TEX.Definitions.Add({
+      environment: {
+        psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+      }
+    });
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js">
+</script>
+
+</body>
+
+</html>

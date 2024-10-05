@@ -1,0 +1,123 @@
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 5 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 5: Linked Lists</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Thursday, September 26th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solutions (.java file), entitled <b>Node.java</b>, and <b>SinglyLinkedList.java</b>  to the BrightSpace(D2L) Lab 5 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience using Linked Lists </li>
+  <li> Write methods that manipulate data inside a LinkedList</li>
+</ul>
+
+<hr />
+
+
+<h3>Directions </h3>
+
+
+<br><br><br>
+
+You will be writing a LinkedList that holds information about movies and their release date. 
+
+First, define the <tt>Node</tt> class. Each Node (movie) will have a title, and a release date. Remember that each Node must also keep track of the node that comes next. 
+
+Then, download Lab5Demo.java, and supply the missing functions inside the SinglyLinkedList class. 
+
+<br>
+In class, we wrote a singly linked list that kept track of the head node (the first node in the linked list). In this assignment, your linked list will need to keep track of the head node, <b> and the tail node (the last node in the linked list)</b>
+
+<br><br>
+Here is an image of how the linked list looks. 
+<br>
+<img src="linkedlist.PNG">
+
+<br><br>
+
+In the SinglyLinkedList class, you must write the following methods
+<ul>
+<li> <tt> addToFront(Node newMovie) </tt>- This method adds a new node to the beginning of the LinkedList. Remember that you have to keep track of the tail too.</li>    
+<li> <tt>addToBack(Node newMovie)</tt>- This method adds a new node to the end of the LinkedList. Remember that you have to keep track of the tail too.</li>
+<li><tt>removeFirst()</tt>- This method removes the first element in a LinkedList. </li>
+<li><tt>insert(Node newMovie, int N)</tt>- This method inserts a new node at the Nth spot of the LinkedList. For example, if insert(newnode, 2) is called, the newnode should become the 2nd element in the Linked List. You can assume the user will provide a valid and existing insertion spot. This method will only insert something in the middle of the Linked List (ie. this method will never be called to insert at the end, or the very start of the linked list).</li>
+<li><tt>searchForMovie(String m)</tt>- This method searches through the Linked List for a certain movie title (m). If found, the method will print out the location in the Linked List (spot 1, spot 2, etc) of the movie. If the movie is not found, your program should print out "Movie: [movie_name] was not found"</li>
+<li><tt>getSize()</tt>- This method returns how many elements are currently in the Linked List</li>
+<li><tt>printList()</tt>- This method prints all the movies from the Linked List. (see sample output)</li>
+</ul>
+
+    </ul>
+    
+
+
+    <h3> Rules </h3>
+    <p> <b> You are NOT allowed to import java.util.LinkedList; </b></p>
+
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab5Demo.java">Lab5Demo.Java</a> </li>
+    </ul>
+
+    <h3> Hints </h3>
+    <ul>
+        <li> You should be able to use some of the code from Friday's (9/20) lecture </li>
+        <li> The insert() method is probably the trickiest. Try to do a loop so that <tt>current</tt> lands on the node before the insertion spot. That is, if the user is trying to insert at spot 3, try to get current to point to the 2nd node.</li>
+    </ul>
+
+
+</p>	
+
+<h3> Required Output </h3>
+<p> When your program is run, your output should look <b>exactly</b >the same as seen <a href="lab5_output.PNG"> in this screenshot </a>. 
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li> The head and tail pointers are correctly maintained in your SinglyLinkedList class </li>
+  <li>1 points - addToBack() method correctly adds a node to back of linked list</li>
+  <li>1 points - addToFront() method correctly adds a node to back of linked list</li>
+  <li>1 point - removeFirst() method correctly removes the first node of linked list</li> 
+  <li>2 points - insert() method correctly inserts something at spot N in the linked list</li>
+  <li>2 points - searchForMovie() method can find an existing movie, and prints out the correct message when a movie is not found</li>
+  <li>1 point - getSize() correctly returns the number of nodes in the linked list </li>
+  <li>1 point - printList() correctly prints the nodes and their information</li>
+</ul>
+
+
+
+<br><br>
+Deductions
+<li>-10 points if you dont use a Linked List </li>
+
+<br><br><br>
+
+
+
+</body>
+</html>

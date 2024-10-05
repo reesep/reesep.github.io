@@ -1,0 +1,180 @@
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Program 2 
+</title>
+</head>
+
+<body>
+
+<h1>Program 2: Java Music Playlist</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, October 11th at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Both group members need to submit to D2L. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your solutions (.java files) to the BrightSpace(D2L) Program 2 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+
+</ul>
+
+<hr />
+
+
+<h3>Background and Directions </h3>
+
+In this program, you will use a circular doubly linked list to represent a music playlist. Your program will create a random playlist and allow a user to play songs, skip songs, and remove songs from the playlist. Because I dont wan't to deal with copyright issues with modern music, our playlist will only use CLASSICAL MUSIC (public domain!!)
+<br>
+<br>
+There are twenty music files (.wav files) located in the <a href="music.zip">music.zip</a>. You will need to extract this folder, and then drag and drop the folder into your Java project (just like an input file). When the program starts, you will prompt
+the user for how big the playlist should be. A playlist will have N songs, where N is greater than or equal to 3 songs, but no more than 20 songs. You will then randomly select N songs from the folder of songs (no duplicates), and load each N songs into a circular doubly linked list as Node objects. You <b>MUST</b> use a circular linked list to represent the playlist, and you will need to keep track of the head and tail node.
+The zip file only has the audio files. The information for these files (titles and composers) are located in <a href="songs.txt">songs.txt</a>, which you will also use in your program when creating Nodes.
+
+
+<br><br>
+
+Each song (Node) will have at least three values
+<ul>
+    <li>The title of the song (ie Symphony No. 9)</li>
+    <li>The composer (ie Beethoven)</li>
+    <li>The file path for the .wav file (ie <tt>music/beethoven2.wav</tt>)</li>
+    <br>
+    <li>A pointer to the next song</li>
+    <li>A pointer to the previous song</li>
+</ul>
+<br>
+Here is a diagram of how the circular linked list looks, where N = 6.
+<br>
+
+<img src="playlist.png" width="1300" height="800">
+
+<br><br>
+When the playlist is created, the program should print out the playlist from head to tail, and then display what the current song is (always start at the head). Then, the menu should appear. You need to implement the following menu funtionality:
+
+<ul>
+
+    <li> <b>Play song</b>- When the user selects this option, it should play the currently selected song. This is where you will open the file using the filepath and play the song with the AudioInputStream and Clip libraries</li>
+    <li> <b>Next Song</b>- This will stop any music currently playing, and then proceed to the next song in the linked list </li>
+    <li> <b>Previous Song</b>- This will stop any music currently playing, and then proceed to the previous song in the linked list </li>
+    <li> <b>Remove Current Song</b>- When the user selects this option, it should stop playing any music, and then remove the current song from the linked list. The playlist should proceed to the next song in the linked list. If the user removes all songs from the playlist, the program should end. </li>
+</ul>
+
+The menu should loop, and should be printed out each time it asks the user for the next action.
+
+<h3>Getting your Java program to play music</h3>
+
+Getting a java program to play sound is pretty easy-- we can just use some existing libraries. The <tt>AudioInputStream</tt> and <tt>Clip</tt> library can be used to play sounds. You will need to import both of these libraries in your code.
+Essentially, you will open up a sound file (.wav file) located in the music folder of your Java project with <tt>AudioInputStream</tt>, and then treat it as a <tt>Clip</tt> object. <tt>.start()</tt> will start playing the sound, and <tt>.stop()</tt> will stop the sound.
+
+<br><br>
+<script src="https://gist.github.com/reesep/1230d1f24e7f265640156e8e1aa2c812.js" ></script>
+
+
+<h3> Assumptions </h3>
+Playlist will be between 3 and 20 songs.
+   
+<h3> Hints </h3>
+You are allowed to use an ArrayList. Your playlist must be a linked list still, but you may find an ArrayList to be helpful when you are creating the playlist with no duplicates.
+
+<h3> Input file </h3>
+<ul>
+    <li><a href="songs.txt">songs.txt</a> - Contains all Node/song information</li>
+    <li><a href="music.zip">music.zip</a> - Contains the actual music files (.wav files)</li>
+</ul>
+
+<h3> Required Output </h3>
+
+Your output and menu should look similar to the output seen in this video: <a href="https://youtu.be/oy6Z1L6GqIU"> https://youtu.be/oy6Z1L6GqIU</a>. 
+
+<h3>Optional Hints</h3>
+
+You might need to load all 20 nodes into a seperate data structure, then randomly pick N of those elements and place them into a linked list. <br>
+In your linked list, you may need to keep track of the current Clip object that is being played. <br>
+I'd recommend having our standard three class setup: a Node class, a LinkedList class, and a Demo class.
+
+</pre>
+<h3>Grading (100 points) </h3>
+
+<style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg .tg-0lax{text-align:left;vertical-align:top}
+    </style>
+    <table class="tg" style="undefined;table-layout: fixed; width: 800px"><colgroup>
+    <col style="width: 680px">
+    <col style="width: 120px">
+    </colgroup>
+    <thead>
+      <tr>
+        <th class="tg-0lax">Requirement</th>
+        <th class="tg-0lax">Points</th>
+      </tr></thead>
+    <tbody>
+      <tr>
+        <td class="tg-0lax">A random playlist of length N is created correctly</td>
+        <td class="tg-0lax">15</td>
+      </tr>
+      <tr>
+        <td class="tg-0lax">All N songs are loaded into a circular doubly linked list</td>
+        <td class="tg-0lax">15</td>
+      </tr>
+      <tr>
+        <td class="tg-0lax">The playlist is printed out, and the current song is printed out</td>
+        <td class="tg-0lax">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0lax">A user can move to the next song, which will also stop playing any current sound</td>
+        <td class="tg-0lax">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0lax">A user can move to the previous song, which will also stop playing any current sound</td>
+        <td class="tg-0lax">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0lax">A user can remove the current song properly, and the linked list doesnt break</td>
+        <td class="tg-0lax">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0lax">Node clas is correct</td>
+        <td class="tg-0lax">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0lax">Program ends when all songs are removed from the playlist</td>
+        <td class="tg-0lax">5</td>
+      </tr>W
+      <tr>
+        <td class="tg-0lax">Your program containts an adequate amount of comments</td>
+        <td class="tg-0lax">10</td>
+      </tr>
+    </tbody></table>
+    
+<h3> Acknowledgement </h3>
+All music in this assignment fall under public domain. These audio files were gathered from <a href="https://commons.wikimedia.org/wiki/Commons:Welcome">Wikimedia Commons</a>    
+
+</ul>
+<br><br><br><br><br><br>
+
+<a href="https://www.youtube.com/watch?v=BPMoXJ0ex4w">Program 2 solution</a>
+</body>
+</html>
