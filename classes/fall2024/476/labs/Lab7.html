@@ -1,0 +1,459 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Computer Security</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" type="image/x-icon" href="/cs476-2021-spring/favicon.ico">
+
+  <!-- Fonts & TextFormatting -->
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:500&display=swap" rel="stylesheet" />
+  <link href="../assets/all.css" rel="stylesheet"> <!--load all fontawesome styles -->
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/prism.css" /> <!-- Prism JS & CSS downloaded from: https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript+bash+c+csharp+cpp+cmake+docker+git+http+hpkp+hsts+java+javadoc+javadoclike+json+latex+liquid+makefile+markdown+markup-templating+mongodb+nasm+nginx+perl+php+phpdoc+php-extras+plsql+python+regex+ruby+rust+sql+vim+yaml&plugins=line-numbers+command-line+unescaped-markup+normalize-whitespace+toolbar -->
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <!-- Misc. -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"/>
+</head>
+
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid col-sm-12 p-4 mb-4">
+<div class="row flex-xl-nowrap m-0">
+
+<div class="d-none d-xl-block col-xl-2">
+</div>
+
+<div class="col-12 col-md-12 col-xl-8 bg-white rounded shadow-lg pb-4">
+<div>
+  <!--Thanks, Tim Holman! http://tholman.com/github-corners/ -->
+
+
+
+
+</div>
+
+
+<!-- ACTIVE Announcements -->
+
+<!-- OLD Announcements (hidden in comment environment) -->
+
+
+
+<h1 class="pb-4" id="lab-07-dns-attack-lab">Lab 07: Local DNS Cache Poisoning</h1>
+
+<h1 data-toc-skip> Due <b>Sunday</b> November 10th @ 11:59 PM</h1>
+
+<h2 class="titletext" id="dns-attack-lab">Local DNS Attack Lab</h2>
+<p class="subtitletext">Adapted from SEED Labs: A Hands-on Lab for Security Education.</p>
+
+<p>DNS (Domain Name System) is the Internet’s phone book; it translates hostnames to IP addresses (and vice
+  versa). This translation is through DNS resolution, which happens behind the scene. DNS attacks manipulate this resolution process in various ways, with an intent to misdirect users to alternative destinations,
+  which are often malicious. The objective of this lab is to understand how such attacks work. Students will
+  first set up and configure a DNS server, and then they will try various DNS attacks on the target that is also
+  within the lab environment</p>
+
+<p>The difficulties of attacking local victims versus remote DNS servers are quite different. Therefore, we
+  have developed two labs, one focusing on local DNS attacks, and the other on remote DNS attack. This lab
+  focuses on local attacks. </p>
+
+<p>This lab covers the following topics:</p>
+
+<ul>
+  <li>BDNS and how it works</li>
+  <li>DNS server setup</li>
+  <li>DNS cache poisoning attack</li>
+  <li>Spoofing DNS responses</li>
+  <li>Packet sniffing and spoofing</li>
+  <li>The Scapy tool</li>
+</ul>
+
+
+
+<h3 id="resources">Resources</h3>
+
+<ul>
+  <li>Code related to this lab can be found in <code class="language-plaintext highlighter-rouge">07_dns_attacks/</code> of our <a href="https://github.com/msu/csci-476">class’s GitHub repository</a>.</li>
+  <li>Chapter 18 in the <a href="https://www.handsonsecurity.net">SEED Textbook</a>.</li>
+  <li>A related <a href="https://www.handsonsecurity.net/video.html">video lecture</a> (Udemy course) recorded by Kevin Du.</li>
+</ul>
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary">
+  <div class="card-body">
+
+
+
+    <h2 id="environment-setup">Environment Setup</h2>
+
+    <p>The main target for DNS cache poisoning attacks is local DNS server. Obviously, it is illegal to attack a real
+      server, so we need to set up our own DNS server to conduct the attack experiments. The lab environment
+      needs four separate machines: one for the victim, one for the local DNS server, and two for the attacker.
+      The lab environment setup is illustrated in Figure 1. This lab focuses on the local attack, so we put all these
+      machines on the same LAN.</p>
+
+      <img src="lab7setup.PNG"></img>
+
+      <h3 id="container-setup-and-commands">Container Setup and Commands</h3>
+
+      <p>Please ensure that you have the class repo cloned locally.
+  Once this is done, navigate to the <code class="language-plaintext highlighter-rouge">07_dns_attacks/</code> directory.
+  For example:</p>
+  
+  
+      <p>We will make use of <a href="https://www.docker.com/resources/what-container"><strong>Docker</strong></a> and <a href="https://docs.docker.com/compose/"><strong>Compose</strong></a> to make working with containers easy.</p>
+  
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># First, build the container</span>
+  <span class="nv">$ </span>docker-compose build    <span class="c"># Build the container image</span>
+  
+  <span class="c"># Next, start/stop the container(s) as needed</span>
+  <span class="nv">$ </span>docker-compose up <span class="nt">-d</span>    <span class="c"># Start the container (-d runs container in the background; i.e., detached)</span>
+  <span class="nv">$ </span>docker-compose down     <span class="c"># Shut down the container</span>
+  </code></pre></div>    </div>
+  
+    
+  
+      <p>In general for our labs, we will create and start containers that will run in the background
+  (i.e., use the <code class="language-plaintext highlighter-rouge">-d</code> flag when bringing your container up).</p>
+  
+      <p>At times we may need to run commands on a container — docker makes it pretty easy to attach to a container running in the background and get a shell on that container.
+  To run commands on a specific container, we first need to use the <code class="language-plaintext highlighter-rouge">docker ps</code> command to find out the ID of the container,
+  and then we can use <code class="language-plaintext highlighter-rouge">docker exec</code> to start a shell on that container.
+  <em>(I told you this would be easy!)</em></p>
+  
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker ps <span class="nt">-a</span>   <span class="c"># Show all containers (default shows just running)</span>
+  <span class="nv">$ </span>dockps         <span class="c"># Show active containers using custom formatting for docker ps</span>
+  <span class="nv">$ </span>docksh &lt;<span class="nb">id</span><span class="o">&gt;</span>    <span class="c"># Connect to container with &lt;id&gt;</span>
+  
+  <span class="c">### Examples ###</span>
+  
+  <span class="c"># The following example shows how to get a shell inside hostC</span>
+  <span class="nv">$ </span>dockps
+  b1004832e275  hostA-10.9.0.5
+  0af4ea7a3e2e  hostB-10.9.0.6
+  9652715c8e0a  hostC-10.9.0.7
+  
+  <span class="c"># Attach to the container with an ID that starts with "96"</span>
+  <span class="nv">$ </span>docksh 96
+  root@9652715c8e0a:/#
+  
+  <span class="c"># NOTE: If a docker command requires a container ID, you do not need to type the entire ID string.</span>
+  <span class="c"># Typing the first few characters will be sufficient so long as it can uniquely identify a container.</span>
+  </code></pre></div>    </div>
+  
+      
+     
+    <h3 id="a-vulnerable-program">Verifying your Docker setup is correct</h3>
+
+    <p> Before starting to lab, you should make sure your containers are setup correctly. After starting the docker containers, you will need to log into the user container for 10.9.0.5 using <tt>docks</tt>, and run a series of commands</p>
+
+      First, let’s run the following command to get an IP address of www.example.com. We should get the actual IP address, and the response should come from our own local DNS server 10.9.0.53. Please verify these.
+     <br>
+      <code>
+
+        root@5cfe7ee8a09f:/# dig www.example.com <br>
+        ...<br>
+        ;; ANSWER SECTION:<br>
+        www.example.com.    86400   IN  A   <b>93.184.216.34</b><br>
+
+        ;; SERVER: 10.9.0.53#53(10.9.0.53)<br>
+      </code>
+      <br>
+      Second, let’s get the IP address for www.attacker32.com. The result should be 10.9.0.180, which is the IP address of another container in our setup. If you get something different, the environment is not set up correctly.
+      <br>
+      <code>
+      root@5cfe7ee8a09f:/# dig www.attacker32.com<br>
+      
+      ;; ANSWER SECTION: <br>
+      www.attacker32.com. 259200  IN  A   <b>10.9.0.180</b><br>
+
+    </code>
+    <br>
+      Finally, let’s get the IP address for www.example.com, but this time, we will ask the attacker’s nameserver. This is a fake server for the example.com domain, and it will be used in the attack. The result should look like the following: 1.2.3.5 is a fake IP that we put in the zone file. The reply should come directly from 10.9.0.153.
+      <br>
+      <code>
+      root@5cfe7ee8a09f:/# dig @ns.attacker32.com www.example.com<br>
+      ;; ANSWER SECTION:<br>
+      www.example.com.    259200  IN  A   <b>1.2.3.5</b><br>
+      
+      ;; SERVER: 10.9.0.153#53(10.9.0.153)<br>
+    </code>
+
+
+  </div>
+</div>
+<!-- END Special Section -->
+
+<h2 class="titletext" id="lab-tasks">Lab Tasks</h2>
+
+
+<h3 id="task-1-getting-familiar-with-shellcode">Task 1: Spoofing DNS Responses to the user (10.9.0.5)</h3>
+<p>
+When a user types the name of a web site (a host name, such as www.example.com) in a web browser,
+the user’s computer will send a DNS request to the local DNS server to resolve the IP address of the host
+name. Attackers can sniff the DNS request message, they can then immediately create a fake DNS response,
+and send back to the user machine. If the fake reply arrives earlier than the real reply, it will be accepted by
+the user machine. See Figure 2 below).
+<br><br>
+<b>Figure 2: Attack Surface for DNS Cache Poisoning Attacks</b>
+<img src="lab7_surface.PNG"></img>
+
+<br>
+
+Using the Python script below (also can be found in our course repo), conduct a attack so that the client (10.9.0.5) will accept a spoofed DNS response and use our malicious IP address (1.2.3.4)
+
+<script src="https://gist.github.com/reesep/1e6793bb1f7698003de2b24fc45ef071.js"></script>
+
+It should be noted that in the code above, the value for the iface argument should be
+replaced with the actual interface name for the 10.9.0.0/24 network. When you run the Python program via the command line, you also need to provide the IP address of the device you are trying to attack (ie <code>sudo python3 spoof_answer.py 10.9.0.5)</code><br>
+<br>
+Before launching the attack, make sure that the cache in the local DNS server is cleaned. If the cache
+has the answer, the reply from the local DNS server will be faster than the one you spoofed, and your attack
+will not be able to succeed. To clear the cache, you can log into the local DNS server container (10.9.0.53) and run the following command: <br>
+<br>
+<code># rndc flush</code>
+<br><br>
+
+While the attack program is running, on the user machine (10.9.0.5), you can run dig command on behalf of the
+user. This command triggers the user machine to send out a DNS query to the local DNS server, which
+will eventually send out a DNS query to the authoritative nameserver of the example.com domain (if the
+cache does not contain the answer). If your attack is successful, you should be able to see your spoofed
+information (1.2.3.4) in the reply. Be sure to take a screenshot that shows the response of the dig command having the spoofed IP<br>
+
+<h4>Troubleshooting</h4>
+If you were not able to get task 1 working, then read this section to help troubleshoot your issue.
+<img src="lab7_trouble.PNG"></img>
+</p>
+
+<!-- ######################################################################## -->
+<!-- ######################################################################## -->
+<!-- ######################################################################## -->
+
+<h3 id="task-2-attacking-a-vulnerable-32-bit-program-level-1">Task 2: Spoofing DNS Responses to the Local DNS Server (10.9.0.53)</h3>
+
+The above attack targets the user’s machine. In order to achieve long-lasting effect, every time the user’s
+machine sends out a DNS query for www.example.com the attacker’s machine must send out a spoofed
+DNS response. This might not be so efficient; there is a much better way to conduct attacks by targeting the
+DNS server, instead of the user’s machine.<br><br>
+When a local DNS server receives a query, it first looks for the answer from its own cache; if the answer
+is there, the DNS server will simply reply with the information from its cache. If the answer is not in the
+cache, the DNS server will try to get the answer from other DNS servers. When it gets the answer, it will
+store the answer in the cache, so next time, there is no need to ask other DNS servers. See Figure 2. <br><br>
+Therefore, if attackers can spoof the response from other DNS servers, the local DNS server will keep
+the spoofed response in its cache for certain period of time. Next time, when a user’s machine wants to
+resolve the same host name, it will get the spoofed response from the cache. This way, attackers only need
+to spoof once, and the impact will last until the cached information expires. This attack is called DNS cache
+poisoning.<br><br>
+Conduct the same attack as task 1, but instead of targeting the user machine (10.9.0.5), you will ned to target  the local DNS server (10.9.0.53) Before attacking, make sure that the
+DNS Server’s cache is empty. You can flush the cache using the following command: 
+<br>
+<code># rndc flush</code>
+<br><br>
+If your attack is successful, you should be able to see your spoofed
+information (1.2.3.4) in the reply. Be sure to take a screenshot that shows the response of the dig command having the spoofed IP<br>
+<br>
+You can inspect the cache on the local DNS server to see whether it is poisoned or not. The following
+commands first dump the cache into a file, and then display the content of the cache file. Be sure to take a screenshot that shows that the spoofed DNS response got stored in the cache of the local DNS server.
+<br>
+<code># rndc dumpdb -cache</code><br>
+<code> cat /var/cache/bind/dump.db | grep example.com</code>
+<br><br>
+
+<!-- ######################################################################## -->
+<!-- ######################################################################## -->
+<!-- ######################################################################## -->
+
+<h3 id="tasks-4-defeating-dashs-countermeasure">Task 3: Spoofing NS Records</h3>
+
+In the previous task, our DNS cache poisoning attack only affects one hostname, i.e., www.example.com.
+If users try to get the IP address of another hostname, such as mail.example.com, we need to launch
+the attack again. It will be more efficient if we launch one attack that can affect the entire example.com
+domain. <br><br>
+The idea is to use the Authority section in DNS replies. Basically, when we spoofed a reply, in addition
+to spoofing the answer (in the Answer section), we add the following in the Authority section. When this
+entry is cached by the local DNS server, ns.attacker32.com will be used as the nameserver for future
+queries of any hostname in the example.com domain. Since ns.attacker32.com is controlled by
+attackers, it can provide a forged answer for any query. The IP address of this machine is 10.9.0.153 in
+our setup. <br>
+
+Our goal for this task is to insert a spoofed NS record into the cache of the local DNS server <br>
+
+<br>
+<code>;; AUTHORITY SECTION: </code><br>
+<code>example.com. 259200 IN NS ns.attacker32.com.</code>
+<br><br>
+
+Using the Scapy Python script below, conduct the attack and verify that you were able to inject a spoofed NS record into the cache of the Local DNS server.
+
+<script src="https://gist.github.com/reesep/054d8f85c6235263cb5c186a2d2b81ff.js"></script>
+
+<!-- ######################################################################## -->
+<!-- ######################################################################## -->
+<!-- ######################################################################## -->
+
+<h3 id="task-5-defeating-aslr">Task 4: Experimenting with /etc/hosts </h3>
+
+<tt>/etc/hosts </tt>is a file on the Linux OS that holds static IP mapping for domain names. If the user needs to find an IP address for a domain name, it will first check for a match in /etc/hosts. If the domain name cannot be found in this file, then it will issue a DNS query to the internet.</tt>
+
+<br>
+This file is only writeable by root (hopefully it makes sense <i>why</i>), so we need to run the command <tt>sudo su root</tt> to log into the root account on our VM.
+<br><br>
+After logging into the root account, open up <tt>/etc/hosts</tt> in a text editor and add the following line:
+<br><br>
+<code>9.9.9.9     www.csci476.com</code>
+<br><br>
+That will add a static IP mapping for the domain www.csci476.com, so that whenever someone wants to visit www.csci476.com, it will use the IP address listed in /etc/hosts.
+
+<br>
+Make sure you save your edit. Now, issue a dig command for www.csci476.com and verify that the IP address from /etc/hosts was used. You should issue this dig request on the VM (NOT while inside the container)
+<br>
+Once you complete this task, you should remove that line from your <tt>/etc/hosts</tt> file :-)
+
+<h2 id="submission">Submission</h2>
+
+<p>Submit your assignment as a single PDF to the appropriate D2L dropbox</p>
+
+<br><br>
+
+The lab report is to help me see that you did the lab and followed the instructions. For each task, you should include a screenshot to show you completed the task. If the task asks you to write down observations, you should also include those in your lab report. For the tasks that requires you to do some thinking and find ways to exploit a program, you should write a brief description about your approach and the steps you took to get your output.
+
+This is a lab report taken from a previous offering of this course. This is a good example of how you should format your lab report: <a href="https://www.cs.montana.edu/pearsall/classes/spring2023/476/labs/SampleLabReport.pdf">https://www.cs.montana.edu/pearsall/classes/spring2023/476/labs/SampleLabReport.pdf</a>
+
+
+
+
+
+
+</div>
+
+<div class="d-none d-xl-block col-xl-2">
+    
+    <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+    
+</div>
+
+</div>
+</div>
+
+<!-- Optional JavaScript for Bootstrap - jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="/cs476-2021-spring/assets/js/prism.js"></script>
+
+<script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    /*
+     * class hacking: add bootstrap/bootswatch class labels to my custom classes (notes, slides, etc.)
+     */
+
+    // admin styles
+    $('.new').addClass('badge badge-pill badge-primary');
+    $('.announcement').addClass('alert alert-primary').prepend('<h4 class="alert-heading">Class Announcement!</h4>');
+    $('.timestamp').prepend('&mdash;Posted ');
+    // $('.score').prepend(' &mdash; ');
+
+    // add icons / style class elements...
+    $( ".activity" ).each(function(index) {
+        $(this).html('<i class="fas fa-lightbulb pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".code" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-code pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".slides" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-pdf pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".pdf" ).each(function(index) {
+        $(this).html('<i class="fas fa-file pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".reading" ).each(function(index) {
+        $(this).html('<i class="fas fa-book pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".video" ).each(function(index) {
+        $(this).html('<i class="fas fa-play-circle pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+
+    // add links to all section headers...
+    $( ":header" ).each(function(index) {
+      var attr = $(this).attr('id');
+      if (typeof attr !== typeof undefined && attr !== false) {
+        $(this).html( '<a href="#' + attr + '">' +$(this).html()+ ' </a>' );
+      }
+    });
+
+    // add links to weeks on schedule
+    $('td[id^="week"]').filter(function () {
+        $(this).html(function(index, text){
+            return '<a href="#' + text.toLowerCase().replace(' ', '') + '"><strong>' + text + '</strong></a>';
+        });
+    });
+
+    // use javascript to detect all external links and add the target='_blank' attribute to them.
+    // -> thanks, https://code.luasoftware.com/tutorials/hugo/how-to-create-link-with-target-blanks-in-hugo-markdown/
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+        if (links[i].hostname != window.location.hostname) {
+            links[i].target = '_blank';
+        }
+    }
+
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    var TEX = MathJax.InputJax.TeX;
+    var COLS = function (W) {
+      var WW = [];
+      for (var i = 0, m = W.length; i < m; i++)
+        {WW[i] = TEX.Parse.prototype.Em(W[i])}
+      return WW.join(" ");
+    };
+    TEX.Definitions.Add({
+      environment: {
+        psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+      }
+    });
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js">
+</script>
+
+</body>
+
+</html>

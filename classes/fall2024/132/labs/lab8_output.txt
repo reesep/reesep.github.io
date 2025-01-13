@@ -1,0 +1,42 @@
+Adding Jeep Wrangler (Sasha) to the queue
+Adding Subaru Outback (Iliana) to the queue
+Adding Honda CRV (Asa) to the queue
+Adding Toyota Highlander (Reese) to the queue
+Adding Nissan Rogue (Nico) to the queue
+Error: Queue is full - Cannot add GMC Sierra (Carmen)
+
+Current Car Wash Queue
+----------------------
+1. Jeep Wrangler (Sasha)
+2. Subaru Outback (Iliana)
+3. Honda CRV (Asa)
+4. Toyota Highlander (Reese)
+5. Nissan Rogue (Nico)
+Next car up is: Jeep Wrangler (Sasha)
+
+Car has been washed - Removing Jeep Wrangler (Sasha) from the queue
+Car has been washed - Removing Subaru Outback (Iliana) from the queue
+Car has been washed - Removing Honda CRV (Asa) from the queue
+
+Car Wash Statistics
+-------------------
+Number of cars serviced: 3
+Today's earnings: $26.0
+Adding GMC Sierra (Carmen) to the queue
+
+Next car up is: Toyota Highlander (Reese)
+Current Car Wash Queue
+----------------------
+1. Toyota Highlander (Reese)
+2. Nissan Rogue (Nico)
+3. GMC Sierra (Carmen)
+
+Car has been washed - Removing Toyota Highlander (Reese) from the queue
+Car has been washed - Removing Nissan Rogue (Nico) from the queue
+Car has been washed - Removing GMC Sierra (Carmen) from the queue
+
+No more cars!! Time to close...
+Car Wash Statistics
+-------------------
+Number of cars serviced: 6
+Today's earnings: $48.0

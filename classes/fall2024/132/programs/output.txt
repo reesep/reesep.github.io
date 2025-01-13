@@ -1,0 +1,252 @@
+Welcome to the Pizzaria Queue!
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+2
+What is the customer's name?
+Iliana
+What would you like to order?
+Margarita Pizza
+Added Iliana to the queue
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+2
+What is the customer's name?
+Reese
+What would you like to order?
+Pepperoni Pizza
+Added Reese to the queue
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+3
+What is the customer's name?
+Sasha
+What would you like to order?
+Cheese Pizza
+Added Sasha (VIP) to the queue
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+3
+What is the customer's name?
+John
+What would you like to order?
+Hawaiian Pizza
+Added John (VIP) to the queue
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+1
+Current queue
+-------------
+Sasha(Cheese Pizza)
+John(Hawaiian Pizza)
+Iliana(Margarita Pizza)
+Reese(Pepperoni Pizza)
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+4
+Sasha has been served their Cheese Pizza
+Time spent in queue: 90 seconds
+Sasha's review: ⭐
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+4
+John has been served their Hawaiian Pizza
+Time spent in queue: 56 seconds
+John's review: ⭐
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+1
+Current queue
+-------------
+Iliana(Margarita Pizza)
+Reese(Pepperoni Pizza)
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+3
+What is the customer's name?
+Megan
+What would you like to order?
+Veggie Pizza
+Added Megan (VIP) to the queue
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+4
+Megan has been served their Veggie Pizza
+Time spent in queue: 4 seconds
+Megan's review: ⭐⭐⭐
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+4
+Iliana has been served their Margarita Pizza
+Time spent in queue: 168 seconds
+Iliana's review: ⭐
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+4
+Reese has been served their Pepperoni Pizza
+Time spent in queue: 160 seconds
+Reese's review: ⭐
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+2
+What is the customer's name?
+Eileen
+What would you like to order?
+Neapolitan Pizza
+Added Eileen to the queue
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+1
+Current queue
+-------------
+Eileen(Neapolitan Pizza)
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+4
+Eileen has been served their Neapolitan Pizza
+Time spent in queue: 23 seconds
+Eileen's review: ⭐⭐
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+6
+Average wait time: 83.5 seconds
+Customers served: 6
+
+1. View current queue
+2. Add regular customer to queue
+3. Add VIP customer to queue
+4. Serve next customer
+5. Remove customer from queue
+6. Print queue statistics
+7. Exit
+
+Please enter an option
+7
+Closing the pizzeria...

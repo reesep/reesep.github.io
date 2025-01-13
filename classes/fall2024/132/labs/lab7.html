@@ -1,0 +1,105 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 7 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 7:  Stacks</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Thursday, October 17th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Submit your solution, BookStack.java and Book.java to the appropriate D2L dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience using a Stack data structure</li>
+  <li> Implement a stack in Java using an array</li>
+</ul>
+
+<hr />
+
+
+<h3>Directions </h3>
+
+    Using <a href="Lab7Demo.java">Lab7Demo.java</a> as a starting point, you will fill in the missing methods for the <tt>BookStack</tt> class, which are defines in the interace <tt>StackMethods</tt>. The stack class implements this interface, so you must ride all methods from the interface. <br><br>
+
+    Your Stack will hold Book objects, and <b>must use an array to hold its data </b>. This array must be able to dynamically grow if the array is at capacity. You are not allowed to use an ArrayList.
+
+<br>	
+
+	You must define the Book class and write the methods you think you will need. Each Book object has a title (String) and an author (String).
+
+    <br><br>
+
+    You are NOT allowed to modify the Lab7Demo class. After creating the BookStack class, you must define the following methods (which are also defined in the interface):
+    <ul>
+        <li>push(Book newElement)- This push() method adds a new Book object (newBook) to the top of the stack. If the Stack/Array is full, your code should dynamically grow the array by one spot. You can use the code we discussed in class, but I would recommend looking at the documentation for the <tt>Arrays.copyOf()</tt> method.</li>
+        <li>pop()- the pop() method removes and returns the top element of the stack</li>
+        <li>peek()- the peek() method returns the current top element of the stack</li>
+        <li>getSize()- returns the current size of the stack</li>
+        <li>isEmpty()- returns true of the stack is empty, returns false if the stack is not empty</li>
+        <li>printStack() - prints out each element in the stack. The top of the stack is the first thing printed out, the bottom of the stack is the last thing printed out.</li>
+    </ul>
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab7Demo.java">Lab7Demo.java</a> </li>
+	<li> <a href="BookStack.java">BookStack.java</a> </li>
+	<li> <a href="StackMethods.java">StackMethods.java (Interface)</a> </li>
+        
+    </ul>
+
+    <h3> Output</h3>
+    When you run your program, your output should look <b>exactly</b> <a href="lab7_output.PNG">like this screenshot</a>
+
+
+
+	<h3> Rules</h3>
+	<ul>
+		<li> You are not allowed to import Stack </li>
+		<li> You are not allowed to use ArrayLists </li>
+	</ul>
+	
+</p>	
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>2 points- push() is correct</li>
+  <li>2 points- pop() is correct</li>
+  <li>1 point- peek() is correct</li> 
+  <li>1 point- getSize() is correct</li>
+  <li>1 point- isEmpty() is correct</li>
+  <li>1 point- printStack() is correct</li>
+  <li>2 points- The BookStack class is correctly defined, and is correct</li>
+</ul>
+
+
+<br><br>
+
+
+<br><br><br>
+
+
+
+</body>
+</html>

@@ -1,0 +1,781 @@
+
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <title>Computer Security</title>
+      
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="shortcut icon" type="image/x-icon" href="/cs476-2021-spring/favicon.ico">
+      
+        <!-- Fonts & TextFormatting -->
+        <link href="https://fonts.googleapis.com/css?family=Proza+Libre:500&display=swap" rel="stylesheet" />
+        <link href="../assets/all.css" rel="stylesheet"> <!--load all fontawesome styles -->
+      
+        <!-- Styles -->
+        <link rel="stylesheet" href="../assets/bootstrap.min.css" />
+        <link rel="stylesheet" href="../assets/prism.css" /> <!-- Prism JS & CSS downloaded from: https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript+bash+c+csharp+cpp+cmake+docker+git+http+hpkp+hsts+java+javadoc+javadoclike+json+latex+liquid+makefile+markdown+markup-templating+mongodb+nasm+nginx+perl+php+phpdoc+php-extras+plsql+python+regex+ruby+rust+sql+vim+yaml&plugins=line-numbers+command-line+unescaped-markup+normalize-whitespace+toolbar -->
+        <link rel="stylesheet" href="../assets/style.css" />
+      
+        <!-- Misc. -->
+        <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"/>
+      </head>
+
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid col-sm-12 p-4 mb-4">
+<div class="row flex-xl-nowrap m-0">
+
+<div class="d-none d-xl-block col-xl-2">
+</div>
+
+<div class="col-12 col-md-12 col-xl-8 bg-white rounded shadow-lg pb-4">
+
+
+
+
+
+<!-- ACTIVE Announcements -->
+
+<!-- OLD Announcements (hidden in comment environment) -->
+
+
+
+<h1 class="pb-4" id="lab-04-sql-injection-attack-lab">Lab 04: SQL Injection Attack Lab</h1>
+<h1 class="pb-4" id="due-date">Due Sunday October 20th at 11:59 PM</h1>
+
+<h2 class="titletext" id="sql-injection-attack-lab">SQL Injection Attack Lab</h2>
+<p class="subtitletext">Adapted from SEED Labs: A Hands-on Lab for Security Education.</p>
+
+<p>SQL injection is a code injection technique that exploits vulnerabilities in the interface between web applications (web apps) and databases.
+The vulnerability is present when user inputs are not properly handled within the web app before being sent to a back-end database.</p>
+
+<p>Many web apps take inputs from users, and then use these inputs to construct SQL queries, which retrieve information from a database.
+Web apps also use SQL queries to store information in the database.
+These are common practices in the development of web apps.
+When SQL queries are not carefully constructed, SQL injection vulnerabilities can occur.
+SQL injection is one of the most common attacks on web apps.</p>
+
+<p>In this lab, we have created a web app that is vulnerable to SQL injection attacks.
+Our web app includes examples of common mistakes made by many web developers.
+Your goal is to find ways to exploit these SQL injection vulnerabilities,
+demonstrate the damage that can be done by these attacks,
+and master the techniques that can help defend against these types of attacks.</p>
+
+<p>This lab covers the following topics:</p>
+
+<ul>
+  <li>Various SQL statements: <code class="language-plaintext highlighter-rouge">SELECT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, etc.</li>
+  <li>SQL Injection strategies</li>
+  <li>An effective SQL Injection countermeasure: prepared statements</li>
+</ul>
+
+<h3 id="resources">Resources</h3>
+
+<ul>
+  <li>Code related to this lab can be found in <code class="language-plaintext highlighter-rouge">04_sqli/</code> of our <a href="https://github.com/reesep/csci476-code">class’s GitHub repository</a>.</li>
+ 
+  <li>A website dedicated to <a href="https://www.sqlinjection.net">SQL injection attacks</a>.
+<!-- - [How the Internet Works in 5 Minutes (YouTube)](https://www.youtube.com/watch?v=7_LPdttKXPc) --></li>
+  <li><a href="https://www.youtube.com/watch?v=x3c1ih2NJEg">How Does the Internet Work? (YouTube)</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Learn/Common_questions/How_does_the_Internet_work">How the Internet works (MDN Web Docs)</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/How_the_Web_works">How the Web works (MDN Web Docs)</a>
+<!-- - [HTTP — An Application-Level Protocol](https://dev.opera.com/articles/http-basic-introduction/) --></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">HTTP Tutorials (MDN Web Docs)</a></li>
+  <li><a href="https://www.php.net/manual/en/index.php">PHP Manual (php.net)</a></li>
+  <li><a href="https://www.php.net/manual/en/book.mysql.php">MySQL API (php.net)</a></li>
+  <li>Chapter 12 in the <a href="https://www.handsonsecurity.net">SEED Textbook</a>.</li>
+</ul>
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary">
+  <div class="card-body">
+
+    <h2 id="environment-setup">Environment Setup</h2>
+
+    <p>We have developed a web app for this lab, which runs inside docker containers. Please use the correct folder between amd/ and arm/ depending on your architecture.
+There are two containers in the lab setup, one for hosting the web app, and the other for hosting the database. You will need to do a git pull or reclone the repository to get the most up to date dockerfiles.</p>
+
+    <h3 id="dns-settings">DNS Settings</h3>
+
+    <p>The IP address for the web app container is <code class="language-plaintext highlighter-rouge">10.9.0.5</code>,
+and the URL for the web app is: <code class="language-plaintext highlighter-rouge">http://www.seedlabsqlinjection.com</code>
+Your VM should already be configured to have this hostname/IP address mapping in the <code class="language-plaintext highlighter-rouge">/etc/hosts</code> file:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"> <tt><code>10.9.0.5        www.seedlabsqlinjection.com </tt>
+</code></pre></div>    </div>
+
+    <p> <b>IMPORTANT NOTE FOR ARM USERS: </b> Your URL will be <tt><code>seed-server.com</code><tt>. Make sure you have a mapping for <tt><code>10.9.0.5        www.seed-server.com </tt></code>If you experience issues trying to address the web app by its human-readable hostname, please verify your settings.
+If you need to update this information, add the above entry to the <code class="language-plaintext highlighter-rouge">/etc/hosts</code> file.
+(You need root privileges to modify this file.)</p>
+
+    <h3 id="container-setup-and-commands">Container Setup and Commands</h3>
+
+    <p>Please ensure that you have the class repo cloned locally.
+Once this is done, navigate to the <code class="language-plaintext highlighter-rouge">04_sqli/</code> directory.
+For example:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> ~
+<span class="nv">$ </span>git clone https://github.com/msu/csci476 </span>
+</code></pre></div>    </div>
+
+    <p>We will make use of <a href="https://www.docker.com/resources/what-container"><strong>Docker</strong></a> and <a href="https://docs.docker.com/compose/"><strong>Compose</strong></a> to make working with containers easy.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># First, build the container</span>
+<span class="nv">$ </span>docker-compose build    <span class="c"># Build the container image</span>
+
+<span class="c"># Next, start/stop the container(s) as needed</span>
+<span class="nv">$ </span>docker-compose up <span class="nt">-d</span>    <span class="c"># Start the container (-d runs container in the background; i.e., detached)</span>
+<span class="nv">$ </span>docker-compose down     <span class="c"># Shut down the container</span>
+</code></pre></div>    </div>
+
+    <!-- Please download the `Labsetup.zip` file to your VM from the lab's website, unzip it, enter the `Labsetup` folder, and use the `docker-compose.yml` file to set up the lab environment. -->
+    <!-- Detailed explanation of the content in this file and all the involved `Dockerfile` can be found from the user manual, which is linked to the website of this lab.  -->
+    <!-- If this is the first time you set up a SEED lab environment using containers, it is very important that you read the user manual. -->
+
+    <!-- In the following, we list some of the commonly used commands related to Docker and Compose. -->
+    <!-- Since we are going to use these commands frequently, we have created aliases for them in the `.bashrc` file within the official SEEDUbuntu 20.04 VM. -->
+    <!--
+```
+$ docker-compose build  # Build the container image
+$ docker-compose up     # Start the container
+$ docker-compose down   # Shut down the container
+
+// Aliases for the Compose commands above
+$ dcbuild       # Alias for: docker-compose build
+$ dcup          # Alias for: docker-compose up
+$ dcdown        # Alias for: docker-compose down
+```
+ -->
+    <!--
+All the containers will be running in the background.
+To run commands on a container, we often need to get a shell on that container.
+We first need to use the `docker ps` command to find out the ID of the container,
+and then use `docker exec` to start a shell on that container.
+We have created aliases for them in the `.bashrc` file.
+-->
+
+    <p>In general for our labs, we will create and start containers that will run in the background
+(i.e., use the <code class="language-plaintext highlighter-rouge">-d</code> flag when bringing your container up).</p>
+
+    <p>At times we may need to run commands on a container — docker makes it pretty easy to attach to a container running in the background and get a shell on that container.
+To run commands on a specific container, we first need to use the <code class="language-plaintext highlighter-rouge">docker ps</code> command to find out the ID of the container,
+and then we can use <code class="language-plaintext highlighter-rouge">docker exec</code> to start a shell on that container.
+<em>(I told you this would be easy!)</em></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker ps <span class="nt">-a</span>   <span class="c"># Show all containers (default shows just running)</span>
+<span class="nv">$ </span>dockps         <span class="c"># Show active containers using custom formatting for docker ps</span>
+<span class="nv">$ </span>docksh &lt;<span class="nb">id</span><span class="o">&gt;</span>    <span class="c"># Connect to container with &lt;id&gt;</span>
+
+<span class="c">### Examples ###</span>
+
+<span class="c"># The following example shows how to get a shell inside hostC</span>
+<span class="nv">$ </span>dockps
+b1004832e275  hostA-10.9.0.5
+0af4ea7a3e2e  hostB-10.9.0.6
+9652715c8e0a  hostC-10.9.0.7
+
+<span class="c"># Attach to the container with an ID that starts with "96"</span>
+<span class="nv">$ </span>docksh 96
+root@9652715c8e0a:/#
+
+<span class="c"># NOTE: If a docker command requires a container ID, you do not need to type the entire ID string.</span>
+<span class="c"># Typing the first few characters will be sufficient so long as it can uniquely identify a container.</span>
+</code></pre></div>    </div>
+
+    <p><strong>Docker/Compose Aliases.</strong>
+For convenience we provide a number of aliases for the commands above.
+Feel free to use them (or don’t).</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">### see docker aliases ###</span>
+<span class="nv">$ </span><span class="nb">grep </span>docker ~/.bashrc
+</code></pre></div>    </div>
+    <p><strong>Troubleshooting.</strong>
+If you encounter problems when setting up the lab environment,
+please read the <strong>“Common Problems”</strong> section of the <a href="https://github.com/seed-labs/seed-labs/blob/master/manuals/docker/SEEDManual-Container.md">SEED Manual for Containers</a> for potential solutions.
+If you still can’t get things figured out, please connect a member of the course staff.</p>
+
+    <h3 id="mysql-database">MySQL Database</h3>
+
+    <p>Containers are usually meant to be disposable, so once they are destroyed, all the data inside the containers is lost.
+For this lab, we want to keep the data in the MySQL database (i.e., so that we do not lose our work when we shutdown our container).
+To achieve this, we have mounted the <code class="language-plaintext highlighter-rouge">mysql_data</code> folder on the host machine to the <code class="language-plaintext highlighter-rouge">/var/lib/mysql</code> folder inside the MySQL container.</p>
+    <blockquote>
+      <p>The folder is created inside of <code class="language-plaintext highlighter-rouge">04_sqli/</code> automatically once the MySQL container runs once.</p>
+    </blockquote>
+
+    <p>This folder is where MySQL stores its database.
+Thus, even if the container is destroyed, data in the database will persist since it actually resides on the host.
+If you do want to start from a clean database, you can remove this folder:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo rm</span> <span class="nt">-rf</span> mysql_data
+</code></pre></div>    </div>
+
+    <h3 id="the-web-application">The Web Application</h3>
+
+    <p>We have created a web app, which is a simple employee management application.
+Employees can view and update their personal information in the database through this web app.
+There are two main roles in this web app:
+<code class="language-plaintext highlighter-rouge">Administrator</code> is a privileged role and can manage each individual employees’ profile information;
+<code class="language-plaintext highlighter-rouge">Employee</code> is a normal role and can view or update only their own profile information.
+All employee information is described in a single table stored within the database.
+(You will get a chance to explore the format of this table in Task 1.)</p>
+
+    <h3 id="employee-credentials">Employee Credentials</h3>
+
+    <p>At various times throughout this lab it may be helpful to know the credentials (username / password) of certain employees:</p>
+
+    <ul>
+      <li>Admin / seedadmin</li>
+      <li>Alice / seedalice</li>
+      <li>Boby / seedboby</li>
+      <li>Ryan / seedryan</li>
+      <li>Samy / seedsamy</li>
+      <li>Ted / seedted</li>
+    </ul>
+
+    <h3 id="validating-your-sql-injection-string-payload">Validating Your SQL Injection String (“Payload”)</h3>
+
+    <p>In real-world applications, it may be hard to check whether your SQL injection attack contains syntax errors
+(servers typically will not return any meaningful error messages if your injected payload raises errors).
+To validate your payload, you can copy SQL statements from PHP source code to the MySQL console and test them there.</p>
+
+    <p>Assume you have the following SQL statement, and the injection string is <code class="language-plaintext highlighter-rouge">' or 1=1;#</code>.</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">from</span> <span class="n">credential</span>
+<span class="k">WHERE</span> <span class="n">name</span><span class="o">=</span><span class="s1">'$name'</span> <span class="k">and</span> <span class="n">password</span><span class="o">=</span><span class="s1">'$pwd'</span><span class="p">;</span>
+</code></pre></div>    </div>
+
+    <p>You can replace the value of <code class="language-plaintext highlighter-rouge">$name</code> with your payload and test it using the MySQL console.
+This approach can help you construct a valid payload before launching the real attack.</p>
+
+  </div>
+</div>
+<!-- END Special Section -->
+
+<h2 class="titletext" id="lab-tasks">Lab Tasks</h2>
+<p class="subtitletext">This lab has been tested on the pre-built SEED VM (Ubuntu 20.04 VM).</p>
+
+<h3 id="task-1-get-familiar-with-sql-statements">Task 1: Get Familiar with SQL Statements (3 pts)</h3>
+
+<p>The objective of this task is to get familiar with SQL commands by experimenting within the provided database.
+The data used by our web app is stored in a MySQL database, which is hosted on our MySQL container.
+We have created a database called <code class="language-plaintext highlighter-rouge">sqllab_users</code>, which contains a table called <code class="language-plaintext highlighter-rouge">credential</code>.
+The table stores the personal information (e.g., eid, password, salary, ssn, etc.) of every employee.
+In this task, you will interact with this database from the <code class="language-plaintext highlighter-rouge">mysql</code> command line interface (CLI) to get familiar with SQL queries.</p>
+
+<p>First, make sure your containers are running (see the “Environment Setup” section above).</p>
+
+<p>Next, get a shell on the MySQL container:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>dockps
+<span class="c"># ...ids of containers...</span>
+<span class="nv">$ </span>docksh &lt;id-of-mysql-container&gt;
+</code></pre></div></div>
+
+<p>Then start the <code class="language-plaintext highlighter-rouge">mysql</code> client program to interact with the database.
+The username is <code class="language-plaintext highlighter-rouge">root</code> and password is <code class="language-plaintext highlighter-rouge">dees</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Inside the MySQL container</span>
+<span class="nv">$ </span>mysql <span class="nt">--user</span><span class="o">=</span>root <span class="nt">--password</span><span class="o">=</span>dees
+</code></pre></div></div>
+
+<p>After you log in, you can create a new database or use an existing one.
+You can see which databases currently exist using the <code class="language-plaintext highlighter-rouge">show databases</code> command.
+We have already created the <code class="language-plaintext highlighter-rouge">sqllab_users</code> database for you, so for this task you just need to load this existing database using the <code class="language-plaintext highlighter-rouge">use</code> command.
+To show what tables exist within the <code class="language-plaintext highlighter-rouge">sqllab_users</code> database,
+you can use the <code class="language-plaintext highlighter-rouge">show tables</code> command to print out all the tables of the currently selected database.</p>
+
+<p>After running the commands above, you need to use a SQL command to print all the information for the employee Alice.</p>
+
+<p>Please provide proof of your results (e.g., command line output, screenshot).</p>
+
+<h3 id="task-2-a-sql-injection-attack-on-a-select-statement">Task 2: A SQL Injection Attack on a SELECT Statement</h3>
+
+<p>A SQL injection is basically a technique through which attackers can execute their own (malicious) SQL statements;
+the input, which is specially crafted to inject attacker-chosen SQL statements, is generally referred to as the <em>payload</em>.
+Through the injected SQL statements, attackers can steal information from the victim database,
+or even worse, they may be able to make changes to the database (e.g., update or delete information).
+Our employee management web application has SQL injection vulnerabilities that mimic the mistakes frequently made by web app developers.</p>
+
+<p>To explore SQL injection vulnerabilities in this task, we will use the login page found at <a href="http://www.seedlabsqlinjection.com/">http://www.seedlabsqlinjection.com/</a>.
+The login page is shown in the figure below.
+As is typical in authentication, the web app prompts users to provide a username and a password.
+The web app then authenticates users based on these two pieces of information.
+Presumably, only employees who know their own username and password should be able to log in.
+<em><strong>Your objective</strong></em> throughout this task is to exploit a SQL injection vulnerability in the login page
+to successfully log into the web app without knowing any valid employee credentials.</p>
+
+<p class="text-center m-3"><img src="login.png" alt="login" width="40%" /></p>
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary p-0 m-3">
+  <div class="card-body pb-0 pt-0 m-0">
+
+    <h4 class="pt-3" id="code-review-how-does-user-authentication-work">Code Review: How Does User Authentication Work?</h4>
+
+    <p>To help you get started with this task, we explain at a high level how authentication is implemented in the web app.
+Snippets and pseudocode from the the actual PHP source code that is used to conduct user authentication are shown below.
+You will likely want to review the complete source code more carefully:
+<a href="https://github.com/reesep/csci476-code/blob/master/04_sqli/image_www/code/unsafe_home.php"><code class="language-plaintext highlighter-rouge">image_www/code/unsafe_home.php</code></a>.</p>
+
+    <p>The user’s credentials are sent via an HTTP GET request when the form is submitted.
+Upon receiving the request, the server code extracts the provided username and password.</p>
+
+    <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$input_uname</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">'username'</span><span class="p">];</span>
+<span class="nv">$input_pwd</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">'password'</span><span class="p">];</span>
+<span class="nv">$hashed_pwd</span> <span class="o">=</span> <span class="nb">sha1</span><span class="p">(</span><span class="nv">$input_pwd</span><span class="p">);</span>
+</code></pre></div>    </div>
+
+    <p>The SQL statement (middle section) selects personal employee information such as id, name, salary, ssn, etc. from the <code class="language-plaintext highlighter-rouge">credential</code> table.
+Notice that the SQL statement is partially constructed from two variables in the source code, <code class="language-plaintext highlighter-rouge">input_uname</code> and <code class="language-plaintext highlighter-rouge">hashed_pwd</code>,
+where <code class="language-plaintext highlighter-rouge">input_uname</code> holds the string typed by users in the <strong>username</strong> field of the login page,
+and <code class="language-plaintext highlighter-rouge">hashed_pwd</code> holds <strong>the SHA1 hash of the password</strong> typed by the user.</p>
+
+    <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$sql</span> <span class="o">=</span> <span class="s2">"SELECT id, name, eid, salary, birth, ssn, address, email, nickname, password
+        FROM credential
+        WHERE name= '</span><span class="nv">$input_uname</span><span class="s2">' and password='</span><span class="nv">$hashed_pwd</span><span class="s2">'"</span><span class="p">;</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$conn</span> <span class="o">-&gt;</span> <span class="nf">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+</code></pre></div>    </div>
+
+    <p>The program then checks whether any record matches the provided username and (hashed) password;
+if there is a match, the user is successfully authenticated, and is given the corresponding employee information.
+If there is no match, the authentication fails.</p>
+
+    <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// The following is primarily pseudocode. You won't find most of these exact lines in the</span>
+<span class="c1">// actual source code linked above, but the idea is what is important.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">!=</span> <span class="kc">NULL</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="s1">'admin'</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="nc">All</span> <span class="n">employees</span> <span class="n">information</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">!=</span> <span class="kc">NULL</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">employee</span> <span class="n">information</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="nc">Authentication</span> <span class="n">fails</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </div>
+</div>
+<!-- END Special Section -->
+
+<h4 id="task-21-sql-injection-attack-from-the-login-webpage">Task 2.1: SQL Injection Attack from the Login Webpage (4 pts)</h4>
+
+<p>In this task you need to log into the web app as the administrator from the login page, which will enable you to see the information of all employees.
+We assume that <em><strong>you do know</strong></em> the administrator’s account name, which is <code class="language-plaintext highlighter-rouge">admin</code>,  but <em><strong>you do not know</strong></em> the password.
+You need to decide what payload to enter into the “Username” and/or “Password” fields to succeed in your attack. Your lab report should include the payload you used for the username and password, as well as a screenshot that show you were able to login successfully. </p>
+
+<h4 id="task-22-sql-injection-attack-from-the-command-line">Task 2.2: SQL Injection Attack from the Command Line (4 pts)</h4>
+
+<p>In this task you need to repeat Task 2.1, but you need to do it without using the login webpage.
+You can use command line tools, such as <code class="language-plaintext highlighter-rouge">curl</code>, which can be used to send HTTP requests.
+Using <code class="language-plaintext highlighter-rouge">curl</code> is probably the quickest and easiest way to go, but there are also other great libraries that are fun to learn; e.g., <code class="language-plaintext highlighter-rouge">requests</code> in Python, <code class="language-plaintext highlighter-rouge">httpparty</code> in Ruby.</p>
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary p-0 m-3">
+  <div class="card-body pb-0 pt-0 m-0">
+
+    <h4 class="pt-3" id="hacking-tip-passing-parameters-via-urls">Hacking Tip: Passing Parameters via URLs</h4>
+
+    <p>One thing that is worth mentioning is that if you want to include multiple parameters in HTTP requests,
+you need to put the URL and the parameters between a pair of single quotes;
+otherwise, the special characters used to separate parameters (such as <code class="language-plaintext highlighter-rouge">&amp;</code>) will be interpreted by the shell program, changing the meaning of the command.
+The following example shows how to send an HTTP GET request to our web app via <code class="language-plaintext highlighter-rouge">curl</code>, with two parameters (<code class="language-plaintext highlighter-rouge">username</code> and <code class="language-plaintext highlighter-rouge">password</code>):</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>curl <span class="s1">'www.seedlabsqlinjection.com/unsafe_home.php?username=alice&amp;password=mypass123'</span>
+</code></pre></div>    </div>
+
+    <p>If you need to include special characters in the <code class="language-plaintext highlighter-rouge">username</code> or <code class="language-plaintext highlighter-rouge">password</code> fields, you need to encode them properly, otherwise the unencoded characters can change the meaning of your requests.
+If you want to include a single quote in any of those fields, you should use <code class="language-plaintext highlighter-rouge">%27</code>;
+if you want to include a space, you should use <code class="language-plaintext highlighter-rouge">%20</code>.
+In this task, you do need to handle HTTP encoding while sending requests using <code class="language-plaintext highlighter-rouge">curl</code>.</p>
+
+    <p>There are lots of great resources on the Internet to learn more about encoding characters
+(e.g., <a href="http://www.cheat-sheets.org/sites/html.su/urlencoding.html">URL Encoded Characters cheatsheet</a>, <a href="https://www.url-encode-decode.com/">Online URL Encode/Decode tool</a>).</p>
+
+
+
+  </div>
+</div>
+Hint: If you attack is not working (you are getting an error message in the HTML), then try to add a semicolon (;) before the hashtag (#) in your username payload. When we do this attack via curl request, it turns out that we have make sure we inlcude a semicolon in our payload to "end" the SQL query. 
+
+<!-- END Special Section -->
+
+<h4 id="task-23-try-to-append-a-new-sql-statement">Task 2.3: (Try to…) Append a New SQL Statement (3 pts)</h4>
+
+<p>In the above two attacks, we only view arbitrary information from the database;
+it could be interesting to explore whether it is possible modify the database using the same vulnerability in the login page.
+One idea is to use the SQL injection attack to turn one SQL statement into two, with the second one being an update or delete statement.
+In SQL, a semicolon (<code class="language-plaintext highlighter-rouge">;</code>) is used to separate two SQL statements.
+With this idea in mind, now try to craft your input so that you can run two SQL statements via the login page.</p>
+
+<p><em>(Spoiler alert!)</em>
+It turns out that there is a countermeasure to prevent this specific issue known as a <a href="https://en.wikipedia.org/wiki/Prepared_statement">prepared statement</a>.
+Feel free to do some independent research on this topic and describe your discovery in the lab report.</p>
+
+<h3 id="task-3-sql-injection-attack-on-update-statement">Task 3: SQL Injection Attack on UPDATE Statement </h3>
+
+<p>If a SQL injection vulnerability happens to an UPDATE statement, the damage could be quite severe,
+because attackers can use such SQL injection vulnerabilities to modify databases.
+In our employee management web app, there is an “edit profile” page (see figure below) that allows employees to update their profile information,
+including nickname, email, address, phone number, and password.
+To access this page, employees need to log in first.</p>
+
+<p class="text-center m-3"><img src="./editprofile.png" alt="edit-profile" width="50%" /></p>
+
+<p>When employees update their information through the edit profile page, the following SQL UPDATE query will be executed.
+The PHP code implemented in <a href="https://github.com/reesep/csci476-code/blob/master/04_sqli/image_www/code/unsafe_edit_backend.php"><code class="language-plaintext highlighter-rouge">/var/www/SQLInjection/unsafe_edit_backend.php</code></a>
+file is used to update employee’s profile information.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$hashed_pwd</span> <span class="o">=</span> <span class="nb">sha1</span><span class="p">(</span><span class="nv">$input_pwd</span><span class="p">);</span>
+<span class="nv">$sql</span> <span class="o">=</span> <span class="s2">"UPDATE credential SET
+    nickname='</span><span class="nv">$input_nickname</span><span class="s2">',
+    email='</span><span class="nv">$input_email</span><span class="s2">',
+    address='</span><span class="nv">$input_address</span><span class="s2">',
+    password='</span><span class="nv">$hashed_pwd</span><span class="s2">',
+    PhoneNumber='</span><span class="nv">$input_phonenumber</span><span class="s2">'
+    WHERE ID=</span><span class="nv">$id</span><span class="s2">;"</span><span class="p">;</span>
+<span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="task-31-modify-your-salary">Task 3.1: Modify Your Salary (4 pts)</h4>
+
+<p>As you can see in the edit profile page, employees can only update their nicknames, emails, addresses, phone numbers, and passwords;
+they are not authorized to change their salaries.</p>
+
+<p>Assume that you (Alice) are a disgruntled employee, and your boss did not increase your salary this year.
+You want to increase your own salary by exploiting the SQL injection vulnerability in the “edit profile” page.
+Please demonstrate how you can achieve this kind of update.
+We assume that <em><strong>you do know</strong></em> Alice’s credentials and that salary information is stored in a column named <code class="language-plaintext highlighter-rouge">salary</code>. Your lab report should include the payload you used for the nickname field, as well as a screenshot that show you were able to edit your information successfully. </p>
+
+<h4 id="task-32-modify-the-salary-of-others">Task 3.2: Modify the Salary of Others (4 pts)</h4>
+
+<p>After increasing your own salary, you decide to punish your boss Samy.
+You want to reduce their salary to 1 dollar. <em>(Dont worry, Samy is a total jerk and they deserve this!)</em></p>
+
+<p>Please demonstrate how you can achieve this update. Your lab report should include the payload you used for the nickname field, as well as a screenshot that show you were able to edit Samy's information successfully. </p>
+
+<h4 id="task-33-modify-the-password-of-others">Task 3.3: Modify the Password of Others (4 pts)</h4>
+
+<p>After changing Samy’s salary, you are still disgruntled, so you want to change Samy’s password to something that you know,
+and then you can log into their account and do further damage.
+Please demonstrate how you can achieve this. Your lab report should include the payload you used for the nickname field, as well as a screenshot that show you were able to change Samy's password successfully. </p>
+
+<p>You need to demonstrate that you can successfully log into Samy’s account using the new password.
+One thing worth mentioning here is that the database stores the SHA1 hash value of passwords instead of the plaintext password string.
+You can look at the <code class="language-plaintext highlighter-rouge">unsafe_edit_backend.php</code> code to see exactly how the password is being stored.</p>
+
+<blockquote>
+  <p>You are welcome to generate a sha1 hash of the new password however is most convenient for you.
+For example, you can do this directly in an SQL statement in MySQL or at the MySQL CLI,
+using a normal command line tool such as <code class="language-plaintext highlighter-rouge">openssl</code>,
+or using an <a href="https://xorbin.com/tools/sha1-hash-calculator">online sha1 calculator</a>.</p>
+</blockquote>
+
+<h3 id="task-4-sqli-countermeasure-prepared-statements">Task 4: SQLi Countermeasure: Prepared Statements (4 pts)</h3>
+
+<p>The fundamental problem of the SQL injection vulnerability is the failure to clearly separate code from data.
+When constructing a SQL statement, the program (e.g., PHP program) knows which part is data and which part is code.
+Unfortunately, when the SQL statement is sent to the database, the distinction is lost;
+the boundaries that the SQL interpreter sees may be different from the original boundaries that were intended by the developers.
+To solve this problem, it is important to ensure that the view of the boundaries between code and data are consistent in the server-side code and in the database.</p>
+
+<p>The folks at PortSwigger (the makers of Burp Suite) do a nice job of summarizing why parameterized queries are an effective countermeasure:</p>
+
+<blockquote>
+  <p>The most effective way to prevent SQL injection attacks is to use parameterized queries (also known as <em><strong>prepared statements</strong></em>) for all database access.
+This method uses two steps to incorporate potentially tainted data into SQL queries:
+first, the application specifies the structure of the query, leaving placeholders for each item of user input;
+second, the application specifies the contents of each placeholder.
+Because the structure of the query has already been defined in the first step,
+it is not possible for malformed data in the second step to interfere with the query structure.
+You should review the documentation for your database and application platform to determine the appropriate APIs which you can use to perform parameterized queries.
+It is strongly recommended that you parameterize every variable data item that is incorporated into database queries, even if it is not obviously tainted,
+to prevent oversights occurring and avoid vulnerabilities being introduced by changes elsewhere within the code base of the application.</p>
+</blockquote>
+
+<!--
+<img src="./figs/PreparedStatement.pdf" alt="prepared-statement-workflow" width="50%"/>
+{:.text-center .m-3}
+![Prepared Statement Workflow](/cs476-2021-spring/labs/figs/PreparedStatement.pdf){#sql:fig:preparedstatement width="80%"}
+-->
+
+<!--
+To understand how prepared statement prevents SQL injection, we need to
+understand what happens when SQL server receives a query. The high-level
+workflow of how queries are executed is shown in
+Figure [3](#sql:fig:preparedstatement){reference-type="ref"
+reference="sql:fig:preparedstatement"}.
+
+In the compilation step, queries first go through the parsing and normalization phase, where a query is checked against the syntax and semantics.
+The next phase is the compilation phase where keywords (e.g. SELECT, FROM, UPDATE, etc.) are converted into a format understandable to machines.
+Basically, in this phase, the query is interpreted.
+In the query optimization phase, the number of different plans are considered to execute the query, out of which the best optimized plan is chosen.
+The chosen plan is stored in the cache, so whenever the next query comes in, it will be checked against the content in the cache;
+if it's already present in the cache, the parsing, compilation and query optimization phases will be skipped.
+The compiled query is then passed to the execution phase where it is actually executed.
+
+Prepared statement comes into the picture after the compilation but
+before the execution step. A prepared statement will go through the
+compilation step, and be turned into a pre-compiled query with empty
+placeholders for data. To run this pre-compiled query, data need to be
+provided, but these data will not go through the compilation step;
+instead, they are plugged directly into the pre-compiled query, and are
+sent to the execution engine. Therefore, even if there is SQL code
+inside the data, without going through the compilation step, the code
+will be simply treated as part of data, without any special meaning.
+This is how prepared statement prevents SQL injection attacks.
+-->
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary p-0 m-3">
+  <div class="card-body pb-0 pt-0 m-0">
+
+    <h4 class="pt-3" id="example-re-writing-code-to-use-prepared-statements">Example: Re-writing Code to Use Prepared Statements</h4>
+
+    <p>Below, we provide an example of how to write a prepared statement in PHP.</p>
+
+    <p>The first code snippet shows code that is vulnerable to SQL injection attacks:</p>
+
+    <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$sql</span> <span class="o">=</span> <span class="s2">"SELECT name, local, gender  
+        FROM USER_TABLE
+        WHERE id = </span><span class="nv">$id</span><span class="s2"> AND password ='</span><span class="nv">$pwd</span><span class="s2">' "</span><span class="p">;</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">))</span>
+</code></pre></div>    </div>
+
+    <p>This code can be rewritten as follows:</p>
+
+    <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Prepare the query</span>
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"SELECT name, local, gender
+                        FROM USER_TABLE
+                        WHERE id = ? and password = ? "</span><span class="p">);</span>
+
+<span class="c1">// Bind parameters to the query</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">bind_param</span><span class="p">(</span><span class="s2">"is"</span><span class="p">,</span> <span class="nv">$id</span><span class="p">,</span> <span class="nv">$pwd</span><span class="p">);</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">();</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">bind_result</span><span class="p">(</span><span class="nv">$bind_name</span><span class="p">,</span> <span class="nv">$bind_local</span><span class="p">,</span> <span class="nv">$bind_gender</span><span class="p">);</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">();</span>
+</code></pre></div>    </div>
+
+    <p>Using the prepared statement mechanism, we divide the process of sending a SQL statement to the database into two steps.
+The first step is to only send the code part,
+i.e., a SQL statement without the actual the data.
+This is the prepare step.
+As we can see from the above code snippet, the actual data are replaced by question marks (<code class="language-plaintext highlighter-rouge">?</code>).
+After this step, we then send the data to the database using <code class="language-plaintext highlighter-rouge">bind_param()</code>.
+The database will treat everything sent in this step only as data, not as code anymore.
+It binds the data to the corresponding question marks of the prepared statement.
+In the <code class="language-plaintext highlighter-rouge">bind_param()</code> method, the first argument <code class="language-plaintext highlighter-rouge">"is"</code> indicates the types of the parameters:
+<code class="language-plaintext highlighter-rouge">"i"</code> means that the data in <code class="language-plaintext highlighter-rouge">$id</code> has type <code class="language-plaintext highlighter-rouge">integer</code>, and <code class="language-plaintext highlighter-rouge">"s" </code> means that the data in <code class="language-plaintext highlighter-rouge">$pwd</code> has type <code class="language-plaintext highlighter-rouge">string</code>.</p>
+
+  </div>
+</div>
+<!-- END Special Section -->
+
+<h4 id="task-41-patching-code-to-use-prepared-statements">Task 4.1: Patching Code to Use Prepared Statements</h4>
+
+<p>In this task, we will use the prepared statement mechanism to fix SQL injection vulnerabilities.
+For the sake of simplicity, we have the patched version that uses prepare statements:
+<script src="https://gist.github.com/reesep/65ffc605a803e961d3ad330d52950a22.js"></script>
+You will need to take this code, and paste it into the <tt>  04_sqli/image_www/code/defense/unsafe.php </tt> file. 
+
+
+If you point your browser to the following URL — <a href="http://www.seedlabsqlinjection.com/defense/">http://www.seedlabsqlinjection.com/defense/</a> —
+you will see a page similar to the original login page for the web app.
+This page allows you to query an employee’s information, but you need to provide the correct user name and password.</p>
+
+<p>The data submitted via this page will be sent to the server program <code class="language-plaintext highlighter-rouge">getinfo.php</code>, which invokes a program called <code class="language-plaintext highlighter-rouge">unsafe.php</code>.
+The SQL query inside this PHP program is vulnerable to SQL injection attacks.
+
+Your objective for this task is to update unsafe.php with the correct code that uses prepare statements (given above), and verify that your SQL injection attack no longer works.
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary p-0 m-3">
+  <div class="card-body pb-0 pt-0 m-0">
+
+    <h4 class="pt-3" id="hacking-tip-updating-code-that-runs-in-containers">Hacking Tip: Updating Code that Runs in Containers</h4>
+
+    <p>There are two ways that you can make your changes and validate that your fixes work.</p>
+
+    <ol>
+      <li>
+        <p>You can modify the program source code on the host (i.e., within your SEED VM).
+After you are done making changes to the code on the host, <em>you need to rebuild and restart the container, or the changes will not take effect.</em></p>
+      </li>
+      <li>
+        <p>You can modify the file within the container while the container is running.
+On the running container, the <code class="language-plaintext highlighter-rouge">unsafe.php</code> program is inside <code class="language-plaintext highlighter-rouge">/var/www/sql_injection/defense/</code>.</p>
+      </li>
+    </ol>
+
+    <p>Both approaches have advantages and disadvantages.
+In the first approach, you potentially need to rebuild/restart your container multiple times as you write and validate your code.
+In the second approach, the container environment is quite minimal;
+we have installed a very simple text editor called <code class="language-plaintext highlighter-rouge">nano</code>,
+but you’ll have to use <code class="language-plaintext highlighter-rouge">apt install ...</code> to install other programs if you want them (e.g., vim).
+Another drawback of the second approach is that any changes you make within the running container will be discarded after the container is shutdown and destroyed.
+Thus, you need to ensure that you copy any work that you want to save from the container to your host before the container is shutdown and destroyed.
+<!-- If you want to make your permanent, add the installation command to the `Dockerfile` inside the folder. --></p>
+
+  </div>
+</div>
+<!-- END Special Section -->
+
+<!-- NOTE: This "stub" assumes that page.duedate and page.id variables are defined; the latter should be consistent with our directory naming scheme. -->
+
+<h2 id="submission">Submission</h2>
+
+<p>Submit your assignment as a single PDF to the appropriate D2L dropbox</p>
+
+<br><br>
+
+The lab report is to help me see that you did the lab and followed the instructions. For each task, you should include a screenshot to show you completed the task. If the task asks you to write down observations, you should also include those in your lab report. For the tasks that requires you to do some thinking and find ways to exploit a program, you should write a brief description about your approach and the steps you took to get your output.
+
+This is a lab report taken from a previous offering of this course. This is a good example of how you should format your lab report: <a href="https://www.cs.montana.edu/pearsall/classes/spring2023/476/labs/SampleLabReport.pdf">https://www.cs.montana.edu/pearsall/classes/spring2023/476/labs/SampleLabReportFormat.pdf</a>
+
+
+<h4> Grading Criteria </h4>
+Generally, If you  attempted a task, but could not get the correct output, you will get half credit. For smaller mistakes, you will lose a point.
+<br>
+<ul>
+
+	<li> You got the correct output and clearly explained it with a screenshot or description: -0 </li>
+	<li> If you attemped the task, but were unsuccessful in getting the correct output: -50% of the task's points. For example, if the task was worth 6 points and you attempted it, but were not able to get the correct output or conduct the attack successfully, you would get 3 points. </li>
+	<li> If you almost got the correct output, or didn't answer the question fully: -1 point</li>
+	<li> No screenshots for a task that clearly required a screenshot: -50% of the task's points</li>
+	<li> You  did not attempt the task at all: -100% of the task's points </li>
+</ul>
+
+
+<div class="footer">
+
+
+
+</div>
+
+</div>
+
+<div class="d-none d-xl-block col-xl-2">
+    
+    <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+    
+</div>
+
+</div>
+</div>
+
+<!-- Optional JavaScript for Bootstrap - jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="/cs476-2021-spring/assets/js/prism.js"></script>
+
+<script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    /*
+     * class hacking: add bootstrap/bootswatch class labels to my custom classes (notes, slides, etc.)
+     */
+
+    // admin styles
+    $('.new').addClass('badge badge-pill badge-primary');
+    $('.announcement').addClass('alert alert-primary').prepend('<h4 class="alert-heading">Class Announcement!</h4>');
+    $('.timestamp').prepend('&mdash;Posted ');
+    // $('.score').prepend(' &mdash; ');
+
+    // add icons / style class elements...
+    $( ".activity" ).each(function(index) {
+        $(this).html('<i class="fas fa-lightbulb pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".code" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-code pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".slides" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-pdf pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".pdf" ).each(function(index) {
+        $(this).html('<i class="fas fa-file pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".reading" ).each(function(index) {
+        $(this).html('<i class="fas fa-book pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".video" ).each(function(index) {
+        $(this).html('<i class="fas fa-play-circle pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+
+    // add links to all section headers...
+    $( ":header" ).each(function(index) {
+      var attr = $(this).attr('id');
+      if (typeof attr !== typeof undefined && attr !== false) {
+        $(this).html( '<a href="#' + attr + '">' +$(this).html()+ ' </a>' );
+      }
+    });
+
+    // add links to weeks on schedule
+    $('td[id^="week"]').filter(function () {
+        $(this).html(function(index, text){
+            return '<a href="#' + text.toLowerCase().replace(' ', '') + '"><strong>' + text + '</strong></a>';
+        });
+    });
+
+    // use javascript to detect all external links and add the target='_blank' attribute to them.
+    // -> thanks, https://code.luasoftware.com/tutorials/hugo/how-to-create-link-with-target-blanks-in-hugo-markdown/
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+        if (links[i].hostname != window.location.hostname) {
+            links[i].target = '_blank';
+        }
+    }
+
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    var TEX = MathJax.InputJax.TeX;
+    var COLS = function (W) {
+      var WW = [];
+      for (var i = 0, m = W.length; i < m; i++)
+        {WW[i] = TEX.Parse.prototype.Em(W[i])}
+      return WW.join(" ");
+    };
+    TEX.Definitions.Add({
+      environment: {
+        psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+      }
+    });
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js">
+</script>
+
+</body>
+
+</html>

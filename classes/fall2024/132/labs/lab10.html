@@ -1,0 +1,119 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 10
+</title>
+</head>
+
+<body>
+
+<h1>Lab 10: Recursion 🔐</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Thursday, November 7th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Submit your Lab10Demo.java file to the appropriate D2L dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Write basic recursive methods</li>
+</ul>
+
+<hr />
+
+<h3> Background Information</h3>
+  In computer science, generating permutations is a common task that involves arranging a set of items in every possible order. 
+  This technique can be especially relevant in password cracking, where the goal is to try every possible combination of characters until the correct password is found.
+  This lab will focus on using recursion to generate all permutations of a given set of characters (like those in a password) to simulate this process. <br>
+
+    <br> 
+
+    For example, for the characters "abc", the permutations include:
+
+    <br>
+    <ul>
+      <li> abc </li>
+      <li> acb </li>
+      <li> bac </li>
+      <li> bca </li>
+      <li> cab </li>
+      <li> cba </li>
+    </ul>
+
+    In this lab, we will be attempting to crack the password of an individual who adores his two dogs, Max and Andy. <br>
+    We are pretty sure that his password is some permutation of one of the two names, so we must generate all possible permutations of their names in order to gain access to his computer.
+
+    
+
+<h3>Directions </h3>
+
+    Using <a href="Lab10Demo.java">Lab10Demo.java</a> as a starting point, you will fill in the body of the <tt>generate_permutations</tt> and the <tt>print_permutations_recursive</tt> method. You cannot modify anything in the main() method.<br><br>
+
+    The <tt>generate_permutations</tt> method recursively generates all permutations. This method <b>MUST use recursion</b>. <br>
+    <tt>generate_permutations</tt> takes the following parameters:
+    <ul>
+      <li><tt>String[] characters</tt>: An array of characters from which to generate permutations</li>
+      <li><tt>String perm</tt>: A string that accumulates the current permutation being constructed</li>
+      <li><tt>List&lt;String&gt; list</tt>: A list that stores all generated permutations</li>
+    </ul>
+
+    <br>
+
+    The <tt>print_permutations_recursive</tt> prints each permutation in the order it was generated. This method <b>MUST use recursion</b>.<br>
+    <tt>print_permutations_recursive</tt> takes the following parameters:
+    <ul>
+      <li><tt>List&lt;String&gt; list</tt>: A list of permutations to be printed</li>
+    </ul>
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab10Demo.java">Lab10Demo.java</a> </li>
+        
+    </ul>
+
+    <h3> Output</h3>
+    When you run your program, your output should look exactly like this: <a href="lab10_output.txt">sample output</a>. 
+
+</p>	
+
+<h3> Hints </h3>
+<ul>
+  <li> In the <tt>generate_permutations</tt> method, you can use <tt>perm.contains(characters[i])</tt> to check if the character has already been included in the current permutation</li>
+  <li> In the <tt>print_permutations_recursive</tt> method, use <tt>list.remove(0)</tt> to get the first permutation and ensure it is printed in the correct order</li>
+</ul>
+
+
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>5 points - the <tt>generate_permutations</tt> method correctly generates all permutations of the input array and uses recursion</li>
+  <li>5 points - The <tt>print_permutations_recursive</tt> method correctly prints the permutations in the order they are generated and uses recursion</li>
+
+</ul>
+
+
+<br><br>
+
+
+<br><br><br>
+
+
+
+</body>
+</html>

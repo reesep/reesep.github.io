@@ -1,0 +1,411 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0081)https://www.cs.montana.edu/pearsall/classes/spring2024/132/programs/program3.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="./CSCI 132, Program 3_files/style.css" type="text/css">
+<title>
+CSCI 132, Program 3
+</title>
+<style>
+  img {
+    width: 90%
+  }
+  .img_card {
+    width:30%; 
+    background-color:whitesmoke; 
+    border-radius: 10px; 
+    padding: 16px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+  .tg  {
+    border-collapse:collapse;
+    border-spacing:0;
+  }
+  .tg td {
+    border-color:black;
+    border-style:solid;
+    border-width:1px;
+    font-family:Arial, sans-serif;
+    font-size:14px;
+    overflow:hidden;
+    padding:10px 5px;
+    word-break:normal;
+  }
+  .tg th {
+    border-color:black;
+    border-style:solid;
+    border-width:1px;
+    font-family:Arial, sans-serif;
+    font-size:14px;
+    font-weight:normal;
+    overflow:hidden;
+    padding:10px 5px;
+    word-break:normal;
+  }
+  .tg .tg-0pky {
+    border-color:inherit;
+    text-align:left;
+    vertical-align:top
+  }
+</style>
+
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1200.0" data-gr-ext-installed="" style="width: 90%; margin: auto">
+  <h1>Program 3: Single Player UNO with Stacks</h1>
+
+  <br>
+  <h2>Due Date and Submission Requirements</h2>
+
+  <ul>
+    <li> Due Date: <b>Friday, November 1st at 11:59 p.m.</b></li>
+    <li> Partner Information: You are allowed to work with one partner. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+    <li> Submission Instructions: Upload your .java files to the Program 3 Dropbox. </li>
+  </ul>
+
+  <br>
+  <hr>
+  <h2>The goals of this lab are to:</h2>
+
+  <ul>
+    <li> Write a complex Java program </li>
+    <li> Gain experience using stack data structures </li>
+    <li> Practice working with standard Java libraries </li>
+    <li> Master a sophisticated game of strategy and wits </li>
+  </ul>
+
+  <br>
+  <hr>
+  <h2>Background and Single Player UNO rules</h2>
+
+  <p>
+    UNO is a card game in which players take turns playing cards from their hand onto to the top of a stack called the discard pile, 
+    and sometimes drawing cards from the top of a different stack called the draw pile. In this assignment, you will be building a 
+    simplified version of UNO that can be played by a single player. 
+  </p>
+
+  <p>Here's a visual representation of the three elements of Single Player UNO - the discard pile, the draw pile, and the hand:</p>
+
+  <img src="p3__sample_output_0.png" style="width: 450px"/> 
+
+  <br>
+  <h4>UNO Cards</h4>
+  <p>
+    Each card in single player UNO has a color (<b>R</b>ed, <b>B</b>lue, or <b>G</b>reen) and a value (1, 2, 3, 4, <b>D</b>raw, or <b>W</b>ild).
+    The color and value of a card are represented by a single character. In the visual above, we can see the card at the top of the discard pile 
+    is a <b>G</b>reen <b>D</b>raw, the first card in the players hand is a <b>G</b>reen 3, the second card in the players hand is also a <b>G</b>reen 3, 
+    and the third card in the players hand is a <b>R</b>ed 3.
+    The significance of the card colors and values is explained in the <b>Playing Cards</b> and <b>Drawing Cards</b> sections.
+  </p>
+
+  <br>
+  <h4>Winning and Losing</h4>
+  <p>
+    In Single Player UNO, the player wins by playing all the cards in the game onto the discard pile, or in other words, by playing the last card
+    in their hand after drawing all the cards from the draw pile. The player loses if they cannot play any of the cards in their hand, or if they 
+    forget to type the word "UNO" before playing the last card in their hand. Note that even if cards remain in the draw pile, and 
+    therefore the player would not win by playing the last card in their hand, they still must type UNO before playing this card.
+  </p>
+
+  <br>
+  <h4>Playing cards</h4>
+  <p>
+    Each turn, the player selects a single card from their hand to play onto the discard pile by
+    entering a number corresponding to the card they wish to play. 
+    A card can be legally played if either the color or value of the card match the card on the
+    top of the discard pile, or if it is a <b>W</b>ild card.
+  </p>
+
+  <p>When a card is played, it is removed from the players hand and placed on the top of the discard pile.</p>
+
+  <br>
+  <h4>Drawing cards</h4>
+  <p>There are two ways to draw additional cards in single player UNO:</p>
+  <ul>
+    <li>
+      <b>Playing a Draw card</b> - After the player plays any <b>D</b>raw card, <b>2</b> cards are drawn from the draw pile into the hand.
+    </li>
+    <li>
+      <b>Playing all the cards in the hand</b> - After the player plays the last card in their hand, <b>6</b> cards are drawn from the draw pile into the hand. Remember to say UNO!
+    </li>
+  </ul>
+  <p>
+    Cards are always drawn from the top of the draw pile, and if there are not enough cards left in the draw pile, the remainder are drawn. 
+    Notice that in Single Player UNO, the top card of the draw pile is face up. This card will always be drawn first into the player's hand when drawing any number of cards
+  </p>
+
+
+  <br>
+  <h4>Setting up the game</h4>
+  <p>
+
+    The draw pile starts with these cards <b>in random order</b>:
+
+    <div style="display: flex;">
+      <ul>
+        <li>
+          RD
+        </li>
+        <li>
+          RD
+        </li>
+        <li>
+          RW
+        </li>
+        <li>
+          R1
+        </li>
+        <li>
+          R1
+        </li>
+        <li>
+          R2
+        </li>
+        <li>
+          R3
+        </li>
+        <li>
+          R4
+        </li>
+      </ul>
+
+      <ul>
+        <li>
+          BD
+        </li>
+        <li>
+          BD
+        </li>
+        <li>
+          BW
+        </li>
+        <li>
+          B1
+        </li>
+        <li>
+          B2
+        </li>
+        <li>
+          B2
+        </li>
+        <li>
+          B3
+        </li>
+        <li>
+          B4
+        </li>
+      </ul>
+
+      <ul>
+        <li>
+          GD
+        </li>
+        <li>
+          GD
+        </li>
+        <li>
+          GW
+        </li>
+        <li>
+          G1
+        </li>
+        <li>
+          G2
+        </li>
+        <li>
+          G3
+        </li>
+        <li>
+          G3
+        </li>
+        <li>
+          G4
+        </li>
+      </ul>
+    </div>
+  </p>
+
+  <p>
+    The first 6 random cards from the draw pile go to the starting hand.
+  </p>
+
+  <p>
+    Before starting the game, move the top card in the draw pile to the discard pile.
+  </p>
+
+  <br>
+  <hr>
+  <h2>Directions</h2>
+
+  <p>
+    Your program will contain a class called UnoDemo with a main method to start the game. First, your program will initialize a new
+    single player UNO game by setting up the discard and draw piles, using a stack data structure that you must implement, and the 
+    hand, using a list of cards. Next, your program will begin processing turns in which the game is printed using UnoPrinter and a 
+    command from the user is processed until the game is either won or lost. Note that the structure of this program will be similar
+    to your playlist assignment, in that there is a main loop that processes commands until some exit criteria is reached.
+  </p>
+
+  <br>
+  <h4>Starting Code</h4>
+  <p>
+    The following files are provided for you:
+    <ul>
+	<li> <a href="program3_files.zip"> <b>program3_files.zip</b></a>- Please download and extract this zip file. Inside the folder, you will find two .java files you will need to drag and drop into your project.</li>
+      <li><b>Card.java</b> - This is a simple data class with two member variables of type char: color and value. 
+        You need to use this for UnoPrinter to work.</li>
+
+      <li><b>UnoPrinter.java</b> - This class has a single public static method that you should use to print the three elements
+        of your UNO game every turn. It allows the player to see their hand, the top of the discard and draw piles, and how many draw cards remain.
+      </li>
+    </ul>
+    You should use these classes to build your game and you should not change them.
+  </p>
+
+  <br>
+  <h4>Requirements</h4>
+  <ul>
+    <li>
+      Your game must adhere to the rules of Single Player UNO written above.
+    </li>
+    <li>
+      You must implement a stack data structure containing a collection of the Card class provided for you.
+      <b>You must use java.util.LinkedList to implement your Card stack.</b>
+    </li>
+    <li>
+      You must use your stack class to represent the draw and discard piles.
+    </li>
+    <li>
+      You must use either java.util.LinkedList or java.util.ArrayList to represent the hand.
+    </li>
+    <li>
+      You must inform the player when they win or lose, and the program must exit.
+    </li>
+    <li>
+      You must inform the player when they attempt to play a card that cannot be legally played, and prompt them to choose a different card.
+    </li>
+    <li>
+      You may <b>not</b> import java.util.Stack.
+    </li>
+  </ul>
+
+  <br>
+  <h4>Assumptions</h4>
+  <ul>
+    <li>
+      If the player has only one card in their hand, they might enter a string value (hopefully "UNO") when 
+      prompted to play a card, or they might forget and enter the number 1 in an attempt to illegally play
+      their last card, breaching the most sacred rule of this game.
+    </li>
+  </ul>
+
+  <br>
+  <h4>Hints and Getting Started</h4>
+  <p>
+    A good way to get started might be by attempting to call the UnoPrinter's printGame() method from within the main method of your 
+    UnoDemo class. Note that this method accepts a "java.util.List" parameter representing the hand. As previously mentioned,
+    you are free to choose between java.util.LinkedList and java.util.ArrayList to represent the hand. Since both of these classes
+    implement the java.util.List interface, UnoPrinter.printGame() will accept either one.
+  </p>
+
+  <p>
+    After you get the UnoPrinter working, you will want to start setting up the three elements that comprise a game of Single Player UNO:
+    the hand, the discard pile, and the draw pile. You will first have to implement your stack data structure, and then you can set up some
+    variables to represent these three elements.
+  </p>
+
+  <p>
+    Once you're able to call the UnoPrinter class with the relevant parameters based on the variables that make up a game of Single Player UNO,
+    you can begin implementing the game itself: collecting input, processing moves, and checking for exit conditions. 
+  </p>
+
+  <br>
+  <hr>
+  <h2>Sample Output</h2>
+
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px">
+    <div class="img_card">
+      The start of the game, attempting to play an illegal card, and then playing a draw 2 card
+      <img src="p3___sample_output_1.png" />
+    </div>
+
+    <div class="img_card">
+      <p>Losing the game because no cards can be played</p>
+      <img src="p3___sample_output_2.png" />
+    </div>
+
+    <div class="img_card">
+      <p>Losing the game by forgetting to say UNO</p>
+      <img src="p3___sample_output_3.png" />
+    </div>
+
+    <div class="img_card">
+      <p>Playing the last card in the hand and drawing up to 6 cards</p>
+      <img src="p3___sample_output_4.png" />
+    </div>
+
+    <div class="img_card">
+      <p>Winning</p>
+      <img src="p3___sample_output_5.png" />
+    </div>
+  </div>
+
+
+
+  <br>
+  <h2>Grading</h2>
+  <table class="tg">
+    <thead>
+      <tr>
+        <th class="tg-0pky">Criteria</th>
+        <th class="tg-0pky">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tg-0pky">UnoPrinter.printGame() is successfully called</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Stack class is defined correctly</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Game is initialized correctly</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">User is able to play a card onto the discard pile by entering the corresponding number</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Only legal moves are allowed</td>
+        <td class="tg-0pky">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Cards are drawn as defined in the rules</td>
+        <td class="tg-0pky">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">The game can be won as defined in the rules</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">The game can be lost as defined in the rules</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky"><b>Total</b></td>
+        <td class="tg-0pky"><b>100</b></td>
+      </tr>
+    </tbody>
+  </table>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<a href="https://www.youtube.com/watch?v=-apnyFd0zZg"><small>program 3 solution 🎃 (don't forget to remove before publishing)</small></a>

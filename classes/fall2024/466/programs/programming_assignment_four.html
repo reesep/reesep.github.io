@@ -1,5 +1,6 @@
 
 
+
 <html>
 
     <head>
@@ -24,10 +25,10 @@
     
         <div class="container">
 
-            <h1 text-align:center> Programming Assignment 4: Link Layer Token Passing Protocol</h1>
+            <h1 text-align:center> Programming Assignment 4: Message Authentication Codes (MAC)</h1>
   
-            <h2> Assigned Wednesday November 8th </h2>
-            <h2> Due Monday November 27th @11:59 PM</h2>
+            <h2> Assigned Monday November 4th  </h2>
+            <h2> Due Sunday November 24th @11:59 PM</h2>
       
 
           <h3> GitHub Repo </h3>
@@ -35,102 +36,130 @@
     
     
         <h3> Overview</h3>
+        Message Authentication Codes (MAC) are security mechanisms used to achieve authentication and/or message integrity between two communicating hosts. In this assignment, you will be implementing a basic MAC system, as well as get your hands dirty with some cryptography and hashing libraries.
 
-        At a LAN-level, if two devices transmit messages to each other at the same time, collisions can occur. To prevent this from happening, we discussed several media access control (MAC) protocols. One type of MAC protocol is "taking turns", where each endpoint gets to take turns transmitting messages.
-        <br><br> In this assignment, you will implement the <a href="https://www.tutorialspoint.com/token-passing-in-bit-map-protocol">token passing</a> protocol.
-        In this protocol, hosts are set up a ring-like topology, and a special packet (a "token"), is transmitted amongst the ring. The token can only be at one host, and hosts can only transmit messages when they have the token. Your program will use several instances of the same python program (node.py) that are connected via sockets to simulate a LAN that is using the token passing protocol. The token will always begin at the <b>head node</b>.
-
-        Each host will have:  
+        <br><br>
+        Two parties have some shared secret <tt>(s)</tt>. The sender will send two different messages. The first is the message m, the second is the MAC packet, which (m + s) ran through a hashing function. That is, <tt>H(m+s)</tt>.
+        <br><br>
+        The receiver gets these two messages, and then compute <tt>H(m+s)</tt> themselves, and then compare hashes. If the hashes do not match, that is a sign that the message may have been corrupted, tampered with, or possibly spoofed.
+        <br><br>
+        Here is a diagram of a simple MAC system:
         <br>
-        <ul>
-          <li> A sender port, which is the port that the host sends the token over</li>
-          <li> A receiving port, which is the port that they receive the token on</li>
-          <li> The number of packets that the host needs to send out. This number will be >= 0</li>
-          <li> A flag (true or false), to indicate if the node is the head node.</li>
-          <li> A node number (Node #1, Node #2, etc).</li>
-        </ul>
+        <center>
+        <img src="mac_pa5.PNG" width=800" height="400"">
+        </center>
+        <br><br>
+        There will be one important difference for this assignment. The message that gets transmitted (<tt>m</tt>) must be <b> encrypted </b>. The receiver gets <tt>E(m)</tt>, and then must decrypt the message using the decryption key. Both parties have an identical, shared key for encrypting and decrypting (Symmetric key cryptography!).
+	<br><br>
+	<b> WARNING: You should not use this assignment to handle authentication/integrity out in real world software. Never roll out your own crypto/hashing schemes :-)</b>
+
+
+        <h3> Directions </h3>
+
+        You are going to develop two programs: <tt>client.py</tt> and <tt>server.py</tt>
+
+        <h3><tt>client.py</tt></h3>
+        This program will have <tt>s</tt> and the <tt>key</tt> hardcoded into the program. For the sake of simplicity, the shared secret (<tt>s</tt>) will be <tt>"csci466"</tt>, and the key will be <tt>"0123456789ABCDEF"</tt> (it's important that this key is 16 bytes in size).
+        <br><br>
+        This program will ask the user for some message they would like to send to the server. The client program will encrypt this message, and then send the encrypted message to the server program through a socket (the socket can be running on any port that you'd like). <b>You should use TCP sockets</b>.
+        <br><br>    
+        Then, the client program will need to compute <tt>H(m+s)</tt>. You should use the SHA-256 hashing algorithm. The client then sends <tt>H(m+s)</tt> to the server program through the same socket.
+        <br><br>
+        There is a 50% chance that the message being send can be corrupted/tampered. Before sending the messages, you should flip a coin (<tt>random.random()</tt>). If it's > .50, the message is not corrupted, and nothing needs to happen. If it's <= .50, then this means the message has been corrupted/tampered with. You will either have to modify <tt>m</tt> or  <tt>s</tt> so the <tt>H(m+s)</tt> results in an entirely different digest.
+        <br><br>
+        <h3><tt>server.py</tt></h3>
+
+        The server will have the same <tt>s</tt> and <tt>key</tt> value hardcoded into the program (we will assume these secrets have been shared through something like RSA/DHKE).
+        <br><br>
+        The server first receives <tt>E(m)</tt> from the client, which they will now decrypt using their <tt>key</tt>. Now that they have <tt>m</tt>, they can compute <tt>H(m+s)</tt> on their end.
+        <br><br>
+        Once the server computes <tt>H(m+s)</tt>, it will then compare it to the <tt>H(m+s)</tt> value that it received from <tt>client.py</tt>. 
+        <br><br>
+        If the hashes match, then the message has not been corrupted or tampered with, so it should "Accept" this packet. If the hashes do not match, then the message has been corrupted or tampered with, so it should "Reject" this packet.
+        <br><br>
+        <b>The client and server program should loop, so the user can continually enter new message to send to the server without needing to restart the program.</b>
+        <br><br>
+
+        <center>
+        <img src="pa4setup.png" width=950" height="600"">
+    </center>
+
+        <h3>Encrypting and Decrypting Data</h3>
+        Because there is not a built-in encryption library in Python, you will need to quickly install one. I would strongly recommend using the <tt>pycryptodome</tt> module (<a href="https://www.pycryptodome.org/">https://www.pycryptodome.org/</a>).
+        <br><br>
+        You should be able to install this library by running the command <tt>pip install pycryptodome</tt>. If you struggle with the installation step, you will have to do some googling/debugging yourself (make sure that python is on $PATH).
+        <br><br>
+        There is a lot of great stuff in this library, but we are focused on using an AES block cipher to encrypt our message (<tt>m</tt>). You should use the ECB mode of encryption (remember that ECB sucks in the real world, but this assignment will get more challenging if you decide to something that is not ECB).
+        <br><br>
+        You will likely need to read some documentation to get a better understanding of how this library works. Here is a very basic example of encrypting and decrypting a message with <tt>pycryptodome</tt>.
+        <br>
+        <script src="https://gist.github.com/reesep/22be57e68c8d862efc481e63bd06d6f6.js"></script>
+        <br>
+        First, an <tt>AES</tt> block cipher object must be created by providing a key, and the mode of encryption (<tt>AES.MODE_ECB</tt>). Then, the <tt>encrypt()</tt> function can be used to encrypt a piece of data. The data must be padded using <tt>the pad()</tt> function for scenarios when the data is not a good multiple of the block size.
+        <br><br>
+        To decrypt using an <TT>AES</TT> block cipher object, you can pass a ciphertext to the <tt>decrypt</tt> function, which should return the plaintext message.
+        <br><br>
+        A tricky part of this assignment is going back and forth between the <tt>str</tt> datatype, and the <tt>bytes</tt> datatype. Remember that if you see <tt>b`...`</tt>, that is an indicator that the value is bytes. To go from bytes to a string, you need to use the <tt>.decode()</tt>. To go from a string to bytes, you need to use the <tt>.encode()</tt> method.
+
+        <br><br>
+        <h3>Computing a SHA-256 hash of a message</h3>
+        In python, there is a built-in hashing library called <tt>hashlib</tt>. Within this library, there is a <tt>sha256</tt> function. You can read more about <tt>hashlib</tt> and <tt>sha256</tt> here: <a href="https://docs.python.org/3/library/hashlib.html#usage">https://docs.python.org/3/library/hashlib.html#usage</a>
+        <br><br>
+        Here is a basic example of computing the SHA256 hash of the string <tt>"csci466"</tt>:
+        <script src="https://gist.github.com/reesep/c4bc307c722f2692b494edef8718dfe7.js"></script>
+        <br><br>
+        The SHA256 hash function expects bytes, so we first convert our message (a string) to bytes using <tt>.encode()</tt>. The most common way to represent a hash digest is hexadecimal, so after running it through the <tt>sha256</tt> function, we convert to hexadecimal using the <tt>hexdigest()</tt> function.
+    
+        <<br>
         
-        
-
-        <img src="pa4.PNG" width=800" height="400"">
-        <br>
-        <br>
-        When a node/host receives the tocken on its receving port, it will check its buffer/queue, and if it has packets to send out, it will send out on packet. Sending a packet simply means printing out a message to the screen, and removing a value from the buffer.
-       <br><br>
-        When a packet gets sent, there is a 25% chance that a new packet gets added to the host's buffer. If the host does not have any packets in its buffer to send out, it will simply pass the token to the next host, and then do some RNG to see if a new packet will get added to the buffer.
-        <br>
-        <br>
-        Your program should run indefintely. You do not need to implement a graceful termination for this protocol.
-
-        <h3> Socket instructions </h3>
-        For all previous assignments, we have used TCP sockets, but for this assignment you should use <b> UDP sockets </b>. It will make setting up and transmitting messages in a ring topology much much easier. This means the code for using sockets will be slightly different. Examples for UDP sockets <a href="">can be found here.</a>
 
 
-        <h3> Programs </h3>
-
-        You will develop one file, node.py. This program will handle setting up the sockets, receivng the token, sending the token, and managing the host's buffer.
-        Below is some very basic pseudo code you can use to guide yourself when implementing your solution:
-        <script src="https://gist.github.com/reesep/69a1c4da58065d5f63b2f8550a4bc604.js"></script>
-
-        <br><br>
-        You will likely need an if block that handles the first very sending of the token in the head node.
-
-        <br><br>
-
-        You will run these programs via the command line, and pass in the host information as command line arguments. The format will be
-
-        <br><br>
-        <tt>python node.py  (send_port) (receive_port) (#_of_packets_in_buffer) (is_head) (node_#)</tt>
-
-        <br> <br>For example <tt>node.py 8081 8080 5 1 1</tt> would mean that this host is sending the token on port 8081, receiving the token on port 8080, has 5 packets currently in buffer, is the head node, and is node # 1.
-
-        <br><br>
-        Be sure that you are paying attention to the port numbers and make sure the ports are set up in a ring-like topology (see diagram above).
-        <br><br>
-        
-
-                <h3> Programming Language </h3>
+        <h3> Programming Language </h3>
         You are allowed to use a programming language of your choice. Although, you must use a language that supports:
         <ul>
             <li> Socket communication </li>
-            <li> OOP or Structs </li>
-            <li> Invocation from the command line/terminal</li>
         </ul>
 
         Python is the support language for this class, so Reese will not be able to help with technical issues or syntax issues if you select a language other than Python. Java, Rust, Go, C/C++ are all valid languages to use.
 
     
         <h3> Input Files </h3>
-        <ul>
-
-            None!
-        </ul>
-
-        <h3> Sample output </h3>
+        There are no input files for this assignment. There is no required command line arguments, but you are welcome to add command line arguments (port #, secret, key, etc) if you would like (just make sure you document it in your <tt>README</tt>)
         
+        <h3> Sample output </h3>    
+        On the client side, it should ask for user input. The client program should also print the computed value of <tt>H(m+s)</tt>, as well as if it is sending a corrupted/tampered message.
+        <br><br>
+        On the server side, it should print out the encrypted message <tt>E(m)</tt>, the decrypted message <tt>m</tt>, and the <tt>H(m+s)</tt> value that was received from the client.
+        <br><br>
+        The server should then print out the <tt>H(m+s)</tt> value that <b>they</b> computed. Lastly, the server program should print out if the <tt>H(m+s)</tt> value it received, and the <tt>H(m+x)</tt> it computed match or do not match. Then print "accept" or "reject"
+        
+        <br><br>
+        <a href="https://youtu.be/2f_6HKaoyt8"> Click here to see an a sample demo of the program. </a>It's much easier to understand by watching a video instead of looking at a picture. There is no required output to match exactly, but it should be very similar to what you see in the video.
 
-        <a href="https://www.youtube.com/watch?v=MpLoM8Y_xF0"> Click here to see an a sample demo of the program. </a>It's much easier to understand by watching a video instead of looking at a picture. There is no required output to match exactly, but it should be somewhat similar to what you see in the video. <b> Your video demo should include five hosts/teminals.</b>
 
-
-        <h3> Assumptions</h3>
-        <ul>
-
-            <li> There will only be one head node </li>
-         </ul>
 
 
         <h3> Hints </h3>
+        Take baby steps. First get a message to be encrypted, then send the message to the server, then get the server to decrypt the message and print it out properly.
+        <br><br>
+        Once you have that working, compute <tt>H(m+s)</tt> on the client side, and then send it to the server. Then compute <tt>H(m+s)</tt> on the server side, then compare hashes.
+        <br><br>
+        After that, that try to get the random probability of sending a corrupted packet.
+        <br><br>
+        Lastly, then throw everything inside a while loop so that the programs repeat and ask for new user input.
+        
+    
         <ul>
-            <li> First get it working with two hosts, then three hosts, and then five hosts</li>
-            <li> This is possible with TCP sockets, but requires much more work</li>
-            <li> Dont submit code that errors out. If you can't get buffer management working, try to get everything else working.</li>
-            <li> Keep it simple. This assignment does not require a lot of code</li>
+
         </ul>
 
         <h3> Video Demo </h3>
         You will record a video demo that highlights the functionality of your program. You can do this with Panopto, or you can record with another recording software (such as OBS) and post it to youtube as private or unlisted.
+
+        <br><br>
+        Your video demo should include scenarios were the hashes match (Accept) and when the hashes do not match due to corruption/tampering (Reject).
         
-        Your video demo must also provide us a brief walkthrough of your code. This means your video demo will require commentary. Especially if you are using a language other than Python/Java, it will help us see that you followed the instructions.
+        
 
 
         <h3> Partners </h3>
@@ -144,61 +173,55 @@
 
     
         <h3> Grading Rubric (100 Points)</h3>
-        <style type="text/css">
-            .tg  {border-collapse:collapse;border-spacing:0;}
-            .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-              overflow:hidden;padding:10px 5px;word-break:normal;}
-            .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-              font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-
-
-            .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-            .tg .tg-0lax{text-align:left;vertical-align:top}
-            </style>
-            <table class="tg">
-            <thead>
-              <tr>
-
-                <th class="tg-0lax">Requirement</th>
-                <th class="tg-0lax">Points</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-
-                <td class="tg-0lax">Each host/node has a (1) sending port, (2) receiving port, (3) node #, (4) current amount of packets in buffer, and (5) if node is the head</td>
-                <td class="tg-0lax">15</td>
-              </tr>
-              <tr>
-                <td class="tg-0lax">Nodes/hosts send around token is a circular direction</td>
-                <td class="tg-0lax">20</td>
-              </tr>
-              <tr>
-                <td class="tg-0lax">Node only transmit messages when they have the token</td>
-                <td class="tg-0lax">15</td>
-              </tr>
-              <tr>
-                <td class="tg-0lax">Buffer size decreases by one after transmitting a message, and has a 25% chance to add a new packet to the buffer after transmitting message or token</td>
-                <td class="tg-0lax">20</td>
-              </tr>
-              <tr>
-                <td class="tg-0lax">Token is sent via sockets</td>
-                <td class="tg-0lax">10</td>
-              </tr>
-              <tr>
-                <td class="tg-0lax">The token starts at the head</td>
-                <td class="tg-0lax">5</td>
-              </tr>
-              <tr>
-                <td class="tg-0lax">The token can only be at one host at any given time</td>
-                <td class="tg-0lax">5</td>
-              </tr>
-              <tr>
-                <td class="tg-0lax">Your solution exists in your GitHub repo that has a README.md describing how to run your program.</td>
-                <td class="tg-0lax">10</td>
-              </tr>
-            </tbody>
-            </table>
+       <style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-baqh{text-align:center;vertical-align:top}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky">Criteria</th>
+    <th class="tg-c3ow">Points</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">Message M is encrypted, and the encrypted message is sent to the receiver via a socket</td>
+    <td class="tg-c3ow">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Message M is decrypted by the receiver</td>
+    <td class="tg-c3ow">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">H(m+s) is computed by the sender, and send to the receiver via a socket</td>
+    <td class="tg-c3ow">20</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">There is 50/50 chance the packet get corrupted</td>
+    <td class="tg-baqh">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">The receiver computes H(m+s)</td>
+    <td class="tg-c3ow">20</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program can detect when a packet has been tampered with/corrupted (reject)</td>
+    <td class="tg-c3ow">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">Your program can detect a clean packet (accept)</td>
+    <td class="tg-baqh">10</td>
+  </tr>
+</tbody>
+</table>
 
 
 
@@ -218,30 +241,23 @@
         <h3> Helpful Examples </h3>
     
         <ul>
-	    <li><a href="../lectures/code/udp_server.py">udp_server.py </a></li>
-            <li><a href="../lectures/code/udp_client.py">udp_client.py </a></li>
-	<br>
 
-            <li><a href="../lectures/code/objects_server.py">objects_server.py </a></li>
-            <li><a href="../lectures/code/objects_client.py">objects_client.py </a></li>
-            <br>
             <li><a href="../lectures/code/guess_client.py">guess_client.py </a></li>
             <li><a href="../lectures/code/guess_server.py">guess_server.py </a></li>
             <br>
     
             <br>
-    
+            <li> <a href="https://pycryptodome.readthedocs.io/en/latest/index.html">PyCryptodome Documentation</a></li>
             <li> <a href="https://docs.python.org/3/library/socket.html">Sockets documentation</a></li>
     
         </ul>
     
     
     
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br>
 
-        <a href="https://www.youtube.com/watch?v=jUiIpOS0vx8"> Solution</a>
-
-        <a href="https://youtu.be/b3sOOBicyDY"> Solution</a>
+        <a href="https://www.youtube.com/watch?v=N_LhEz5T5O4"> Solution</a>
+        <br><br><br><br><br><br><br><br>
     </div>
     </body>
     

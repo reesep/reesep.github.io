@@ -1,0 +1,170 @@
+
+
+
+
+<html>
+
+    <head>
+    
+        <title> CSCI 466 PA 5</title>
+    
+    
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    
+        <style>
+            h1 {text-align: center;}
+            h2 {text-align: center;}
+           
+            </style>
+    
+    </head>
+    
+    
+    
+    
+    <body>
+    
+        <div class="container">
+
+            <h1 text-align:center> Programming Assignment Five: Fun Fact Cloud API</h1>
+  
+            <h2> Assigned Wednesday November 20th  </h2>
+            <h2> Due Wednesday December 11th @11:59 PM</h2>
+      
+
+          <h3> GitHub Repo </h3>
+        <p> You will use the same GitHub repo from PA1, PA2, PA3, and PA4. All of your files for this assignment (app.py, your fact file, and your testing script) should go inside a <tt> /PA5</tt> folder </p>
+    
+    
+        <h3> Overview</h3>
+        In this assignment, you will build a simple cloud application that serves as an API for fun facts. Your API should accept requests, and then return a certain number of fun facts of a topic of your choice. The API will also have another endpoint that will return information about the request.
+
+        <h3> Part 1: Creating your Flask App </h3>
+        
+        You will build a Flask application (app.py) that will return fun facts from a txt or csv file. You should fill this file with ~15 fun facts.<br><br>
+        Your Flask application should have two endpoints. <tt>/fact</tt> will be an endpoint that will look at a custom HTTP header field called <tt>Amount</tt>. This field represents the number of fun facts to be returned from the API. This will be a value between 1 and 10. It should select random fun facts from your file with no duplicates.
+            <br><br>
+        
+        The other endpoint will be <tt>/info</tt>. This endpoint will return a few different pieces of information. It should return the (1) current time to the user, (2) the user agent that issued the request, and (3) the HTTP transmission type (GET, POST, etc). You can use the <tt>datetime</tt> module in python to get the current time. For the user agent and transmission type, those pieces of information can be found in the Flask <tt>request</tt> object (<a href="https://tedboy.github.io/flask/generated/generated/flask.Request.html">https://tedboy.github.io/flask/generated/generated/flask.Request.html</a>)
+        
+        <br><br>
+        Before moving to the next part, you should test your API locally, and make sure it functions properly before putting it on the cloud.
+
+        <br><br>
+        <h3> Part 2: Putting your application on the cloud </h3>
+        When you think you are ready, you will need to deploy your app on the cloud. You will use AWS (<a href="https://aws.amazon.com/console/">https://aws.amazon.com/console/</a>). Follow the steps from class to create an EC2 instance, and put your app.py + fact file onto the cloud machine.
+
+	<br><br>
+ <img src="pa5_setup.png">
+
+
+        <br><br>
+        You will need to use gunicorn and nginx to ensure your API can be accessed from the public internet. Assuming that you have a /pa5 folder in the home directory, here will be your gunicorn service file:
+	<script src="https://gist.github.com/reesep/ad1c94491ccb5a6a0bc3cbea5fb7e032.js"></script>
+	<br><br>
+	After installing nginx, you will need to configure nginx to forward requests from port 80 to port 8000
+	<script src="https://gist.github.com/reesep/b42f8e0454deef660d8a299d27e7594b.js"></script>
+
+        <br><br>
+        <h3> Part 3: Test your API </h3>
+
+        You will test your API in two different ways. You will use the <tt>curl</tt> command, and you will write a short python script (that uses the <tt>requests</tt> library) that will issue an HTTP request to your API. You will need to use both of these methods to test your <tt>/fact</tt> and <tt>/info</tt> endpoints for a total of 4 different sample outputs.
+
+        <h3> Programming Language </h3>
+        You need to use Python to write the Flask application, and Python to issue HTTP requests.
+    
+        <h3> Input Files </h3>
+        None! You will create your fact file yourself. You will probably need to use google to come up with 15 fun facts about a certain topic
+
+        <h3> Sample output </h3>    
+        
+        Your output will be the output of the curl command and your testing script. You need to use curl to test <tt>/fact</tt> and <tt>/info</tt>, and a python script that tests <tt>/fact</tt> and <tt>/info</tt> (four outputs in total) Please watch the following video that shows a sample output for your cloud application: <a href="https://youtu.be/zgRotSYNs9k"> https://youtu.be/zgRotSYNs9k</a>
+
+        <h3> Hints </h3>
+        Follow along with the lectures from Nov 18 and Nov 20. They walk you through the hard parts of putting your API on the cloud.
+
+        <h3> Video Demo </h3>
+        You will need to record a video demo that shows your AWS instance running, running the curl command towards your AWS instance, and the output of your testing python script. You will put your video demo in a README in your /PA5 folder.
+
+        <h3> when the semester is over...</h3>
+        When the semester is over, you should delete and take down your EC2 instance to ensure you dont go over your free limit and have to pay money.
+
+        <h3> Partners </h3>
+    
+        You are allowed to work with up to two partners. All members need to have their own repository (yes they will all have the same code). 
+    
+
+        <h3> Submission Info </h3>
+
+        BOTH MEMBERS MUST SUBMIT A REPO LINK TO D2L. All files should be pushed to your repository. You still need a README that contains the video link and information about your program.
+
+    
+        <h3> Grading Rubric (100 Points)</h3>
+
+        <style type="text/css">
+            .tg  {border-collapse:collapse;border-spacing:0;}
+            .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+              overflow:hidden;padding:10px 5px;word-break:normal;}
+            .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+              font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+            .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+            </style>
+            <table class="tg" style="undefined;table-layout: fixed; width: 819px"><colgroup>
+            <col style="width: 696px">
+            <col style="width: 123px">
+            </colgroup>
+            <thead>
+              <tr>
+                <th class="tg-0pky">Requirement</th>
+                <th class="tg-0pky">Points</th>
+              </tr></thead>
+            <tbody>
+              <tr>
+                <td class="tg-0pky">Your Flask app has a /fact endpoint that returns N amount of fun facts specified by the "Amount" header</td>
+                <td class="tg-0pky">30</td>
+              </tr>
+              <tr>
+                <td class="tg-0pky">Your API does not return duplicate fun facts in a single request</td>
+                <td class="tg-0pky">5</td>
+              </tr>
+              <tr>
+                <td class="tg-0pky">Your Flask app has a /info endpoint that returns information about the request</td>
+                <td class="tg-0pky">15</td>
+              </tr>
+              <tr>
+                <td class="tg-0pky">Your app is running on an AWS EC2 instance with GUNICORN and NGINX running</td>
+                <td class="tg-0pky">20</td>
+              </tr>
+              <tr>
+                <td class="tg-0pky">A user can send curl requests to your API</td>
+                <td class="tg-0pky">10</td>
+              </tr>
+              <tr>
+                <td class="tg-0pky">You have a python script that send HTTP requests to your API</td>
+                <td class="tg-0pky">10</td>
+              </tr>
+              <tr>
+                <td class="tg-0pky">You have a PA5 folder on your GitHub with a video demo, your code, and a README</td>
+                <td class="tg-0pky">10</td>
+              </tr>
+            </tbody></table>
+            
+    
+        <h3> Helpful Examples </h3>
+        <ul>
+            <li><a href="../lectures/code/app.py">app.py (Nov 18/20)</a></li>
+        </ul>
+    
+    
+    
+        <br><br><br><br><br><br><br><br><br><br>
+
+        <a href="https://youtu.be/sDj72zqZakE?si=u4QAfm37gBxHtey_"> Solution</a>
+        <br><br><br><br><br><br><br><br>
+    </div>
+    </body>
+    
+    
+
+    </html>
+

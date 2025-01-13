@@ -1,0 +1,251 @@
+
+
+<html>
+
+    <head>
+    
+        <title> CSCI 466 PA 3</title>
+    
+    
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    
+        <style>
+            h1 {text-align: center;}
+            h2 {text-align: center;}
+           
+            </style>
+    
+    </head>
+    
+    
+    
+    
+    <body>
+    
+        <div class="container">
+
+            <h1 text-align:center> Programming Assignment 3: Link Layer Token Passing Protocol</h1>
+  
+            <h2> Assigned Friday October 18th </h2>
+            <h2> Due Sunday November 3rd @11:59 PM</h2>
+      
+
+          <h3> GitHub Repo </h3>
+        <p> You will use the same GitHub repo from PA1, PA2. All of your files for this assignment should go inside a <tt> /PA3</tt> folder </p>
+    
+    
+        <h3> Overview</h3>
+
+        At a LAN-level, if two devices transmit messages to each other at the same time, collisions can occur. To prevent this from happening, we discussed several media access control (MAC) protocols. One type of MAC protocol is "taking turns", where each endpoint gets to take turns transmitting messages.
+        <br><br> In this assignment, you will implement the <a href="https://www.tutorialspoint.com/token-passing-in-bit-map-protocol">token passing</a> protocol.
+        In this protocol, hosts are set up a ring-like topology, and a special packet (a "token"), is transmitted amongst the ring. The token can only be at one host, and hosts can only transmit messages when they have the token. Your program will use several instances of the same python program (node.py) that are connected via sockets to simulate a LAN that is using the token passing protocol. The token will always begin at the <b>head node</b>.
+
+        Each host will have:  
+        <br>
+        <ul>
+          <li> A sender port, which is the port that the host sends the token over</li>
+          <li> A receiving port, which is the port that they receive the token on</li>
+          <li> The number of packets that the host needs to send out. This number will be >= 0</li>
+          <li> A flag (true or false), to indicate if the node is the head node.</li>
+          <li> A node number (Node #1, Node #2, etc).</li>
+        </ul>
+        
+        
+
+        <img src="pa3.PNG" width=800" height="400"">
+        <br>
+        <br>
+        When a node/host receives the tocken on its receving port, it will check its buffer/queue, and if it has packets to send out, it will send out on packet. Sending a packet simply means printing out a message to the screen, and removing a value from the buffer.
+       <br><br>
+        When a packet gets sent, there is a 25% chance that a new packet gets added to the host's buffer. If the host does not have any packets in its buffer to send out, it will simply pass the token to the next host, and then do some RNG to see if a new packet will get added to the buffer.
+        <br>
+        <br>
+        Your program should run indefintely. You do not need to implement a graceful termination for this protocol.
+
+        <h3> Socket instructions </h3>
+        For all previous assignments, we have used TCP sockets, but for this assignment you should use <b> UDP sockets </b>. It will make setting up and transmitting messages in a ring topology much much easier. This means the code for using sockets will be slightly different. Examples for UDP sockets <a href="">can be found here.</a>
+
+
+        <h3> Programs </h3>
+
+        You will develop one file, node.py. This program will handle setting up the sockets, receivng the token, sending the token, and managing the host's buffer.
+        Below is some very basic pseudo code you can use to guide yourself when implementing your solution:
+        <script src="https://gist.github.com/reesep/69a1c4da58065d5f63b2f8550a4bc604.js"></script>
+
+        <br><br>
+        You will likely need an if block that handles the first very sending of the token in the head node.
+
+        <br><br>
+
+        You will run these programs via the command line, and pass in the host information as command line arguments. The format will be
+
+        <br><br>
+        <tt>python node.py  (send_port) (receive_port) (#_of_packets_in_buffer) (is_head) (node_#)</tt>
+
+        <br> <br>For example <tt>node.py 8081 8080 5 1 1</tt> would mean that this host is sending the token on port 8081, receiving the token on port 8080, has 5 packets currently in buffer, is the head node, and is node # 1.
+
+        <br><br>
+        Be sure that you are paying attention to the port numbers and make sure the ports are set up in a ring-like topology (see diagram above).
+        <br><br>
+        
+
+                <h3> Programming Language </h3>
+        You are allowed to use a programming language of your choice. Although, you must use a language that supports:
+        <ul>
+            <li> Socket communication </li>
+            <li> OOP or Structs </li>
+            <li> Invocation from the command line/terminal</li>
+        </ul>
+
+        Python is the support language for this class, so Reese will not be able to help with technical issues or syntax issues if you select a language other than Python. Java, Rust, Go, C/C++ are all valid languages to use.
+
+    
+        <h3> Input Files </h3>
+        <ul>
+
+            None!
+        </ul>
+
+        <h3> Sample output </h3>
+        
+
+        <a href="https://www.youtube.com/watch?v=MpLoM8Y_xF0"> Click here to see an a sample demo of the program. </a>It's much easier to understand by watching a video instead of looking at a picture. There is no required output to match exactly, but it should be somewhat similar to what you see in the video. <b> Your video demo should include five hosts/teminals.</b>
+
+
+        <h3> Assumptions</h3>
+        <ul>
+
+            <li> There will only be one head node </li>
+         </ul>
+
+
+        <h3> Hints </h3>
+        <ul>
+            <li> First get it working with two hosts, then three hosts, and then five hosts</li>
+            <li> This is possible with TCP sockets, but requires much more work</li>
+            <li> Dont submit code that errors out. If you can't get buffer management working, try to get everything else working.</li>
+            <li> Keep it simple. This assignment does not require a lot of code</li>
+        </ul>
+
+        <h3> Video Demo </h3>
+        You will record a video demo that highlights the functionality of your program. You can do this with Panopto, or you can record with another recording software (such as OBS) and post it to youtube as private or unlisted.
+        
+        Your video demo must also provide us a brief walkthrough of your code. This means your video demo will require commentary. Especially if you are using a language other than Python/Java, it will help us see that you followed the instructions.
+
+
+        <h3> Partners </h3>
+    
+        You are allowed to work with up to two partners. All members need to have their own repository (yes they will all have the same code). 
+    
+
+        <h3> Submission Info </h3>
+
+        BOTH MEMBERS MUST SUBMIT A REPO LINK TO D2L. All files should be pushed to your repository. You still need a README that contains the video link and information about your program.
+
+    
+        <h3> Grading Rubric (100 Points)</h3>
+        <style type="text/css">
+            .tg  {border-collapse:collapse;border-spacing:0;}
+            .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+              overflow:hidden;padding:10px 5px;word-break:normal;}
+            .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+              font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+
+
+            .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+            .tg .tg-0lax{text-align:left;vertical-align:top}
+            </style>
+            <table class="tg">
+            <thead>
+              <tr>
+
+                <th class="tg-0lax">Requirement</th>
+                <th class="tg-0lax">Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+
+                <td class="tg-0lax">Each host/node has a (1) sending port, (2) receiving port, (3) node #, (4) current amount of packets in buffer, and (5) if node is the head</td>
+                <td class="tg-0lax">15</td>
+              </tr>
+              <tr>
+                <td class="tg-0lax">Nodes/hosts send around token is a circular direction</td>
+                <td class="tg-0lax">20</td>
+              </tr>
+              <tr>
+                <td class="tg-0lax">Node only transmit messages when they have the token</td>
+                <td class="tg-0lax">15</td>
+              </tr>
+              <tr>
+                <td class="tg-0lax">Buffer size decreases by one after transmitting a message, and has a 25% chance to add a new packet to the buffer after transmitting message or token</td>
+                <td class="tg-0lax">20</td>
+              </tr>
+              <tr>
+                <td class="tg-0lax">Token is sent via sockets</td>
+                <td class="tg-0lax">10</td>
+              </tr>
+              <tr>
+                <td class="tg-0lax">The token starts at the head</td>
+                <td class="tg-0lax">5</td>
+              </tr>
+              <tr>
+                <td class="tg-0lax">The token can only be at one host at any given time</td>
+                <td class="tg-0lax">5</td>
+              </tr>
+              <tr>
+                <td class="tg-0lax">Your solution exists in your GitHub repo that has a README.md describing how to run your program.</td>
+                <td class="tg-0lax">10</td>
+              </tr>
+            </tbody>
+            </table>
+
+
+
+    
+
+            <br><br>
+            <b>Penalties</b>
+            <ul>
+                <li> Running code results in errors before runtime: -30 points </li>
+                <li> Running code results in errors during runtime: -15 points</li>
+                <li> No video demo: -50 points </li>
+                <li> Your repository is public: -100 points </li>
+                   </ul>
+    
+    
+    
+        <h3> Helpful Examples </h3>
+    
+        <ul>
+	    <li><a href="../lectures/code/udp_server.py">udp_server.py </a></li>
+            <li><a href="../lectures/code/udp_client.py">udp_client.py </a></li>
+	<br>
+
+            <li><a href="../lectures/code/objects_server.py">objects_server.py </a></li>
+            <li><a href="../lectures/code/objects_client.py">objects_client.py </a></li>
+            <br>
+            <li><a href="../lectures/code/guess_client.py">guess_client.py </a></li>
+            <li><a href="../lectures/code/guess_server.py">guess_server.py </a></li>
+            <br>
+    
+            <br>
+    
+            <li> <a href="https://docs.python.org/3/library/socket.html">Sockets documentation</a></li>
+    
+        </ul>
+    
+    
+    
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+        <a href="https://www.youtube.com/watch?v=jUiIpOS0vx8"> Solution</a>
+
+        <a href="https://youtu.be/b3sOOBicyDY"> Solution</a>
+    </div>
+    </body>
+    
+    
+
+    </html>
+

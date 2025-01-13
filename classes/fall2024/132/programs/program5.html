@@ -1,0 +1,262 @@
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Program 5
+</title>
+</head>
+
+<body>
+
+<h1>Program 5: Recursive Maze Solver</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: <b>Sunday</b>, December 8th at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your .java files to the Program 5 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Write a complex Java Program </li>
+  <li> Gain experience using recursive algorithms</li>
+</ul>
+
+<hr />
+
+
+<h3>Background </h3>
+
+In this assignment, you will be writing a program that will solve a text-based maze using recursion. This can be a tricky assignment, so make sure you give yourself enough time.
+<br><br>
+The following grid of hashes (#) and dots (.) is a 2D array representation of a Maze. F is the finish, or exit of the maze. Your goal is to solve this maze, by going from the starting point to the finish point, while keeping track of the path taken. <br> <br>
+
+<tt>
+  
+  # # # # # # # # # # # # <br>
+  # . . . # . . . . . . # <br>
+  . . # . # . # # # # . # <br>
+  # # # . # . . . . # . # <br>
+  # . . . . # # # . # . # <br>
+  # # # # . # F # . # . # <br>
+  # . . # . # . # . # . # <br>
+  # # . # . # . # . # . # <br>
+  # . . . . . . . . # . # <br>
+  # # # # # # . # # # . # <br>
+  # . . . . . . # . . . # <br>
+  # # # # # # # # # # # #  <br>
+</tt>
+
+<br><br>
+You will be using  2D array to represent the maze. The hashes represent the walls of the maze, and the dots represent the possible paths through the mze. Moves can only be made to a location in the array the contains a dot.
+
+<h3> The algorithm </h3>
+There is a simple algorithm for walking through a maze that GUARANTEES finding the exit (assuming there is an exit). If there is not an exit, you will arrive at the starting location again. This algorithm does not provide the optimal path (ie the shortest path). There is also some edge cases where this algorithm will not work, but you don't have to worry about those cases.
+<br><br>
+Place your right hand on the wall to your right and begin walking forward. Never remove your hand from the wall. If the maze turns to the right (ie your right hand is on a . character), you follow the wall to the right. If you cannot go right, you should attempt to go forward one spot. If you cannot move forward, then turn left. As long as you do not remove your hand from the wall, eventually you will arrive at the exit of the maze.
+
+<br><br>
+<h3>Assumptions</h3>
+Your maze you will be solving will always be 12x12, and will have a valid exit somewhere. 
+<br>The maze will always have a border of hashes (#) (other than the starting spot), so you dont have to worry about going out of bounds. 
+<br>The input maze will always follow the similar format (hashes, dots, F, etc).
+
+<h3> Directions </h3>
+
+You are welcome to develop your solution from scratch, otherwise you will use <a href="Program5Demo.java"> Program5Demo.java </a> and <a href="MazeSolver.java">MazeSolver.java</a> as a starting point, and you will write the body for the following methods.
+
+
+<h4>Part 1: Reading in the maze via an input file into a 2D character array (<tt>loadMaze(String filename)</tt>)</h4>
+
+You must read in the maze via a text file (<a href="maze.txt">maze.txt</a>) into a <b>2D character array</b>. The <tt>loadMaze()</tt> method takes in a String  (the name of the file), and loads the file into a 2D character array (for example <tt>char[][] maze</tt>). After the array has been filled, the array needs to be returned.
+
+<br>
+<h4>Part 2: Printing out the maze (<tt>printMaze(char[][] maze)</tt>)</h4>
+Now that the maze is filled, you will need to write a method that will print out the maze, because after you make a move in the maze, you will print out the current status of the maze.
+
+The printMaze() method takes in the <tt>maze</tt> array, and prints it out.
+
+<h4>Part 3: Understanding the <tt>solveMaze()</tt> method</h4>
+
+The <tt>solveMaze()</tt> method is called from the demo class, and starts the first recursive call. In this method, the starting location is hard coded into the <tt> start_x, start_y, start_hand_x, start_hand_y</tt> variables. If you use a different maze as input, you will need to change these values to reflect the starting location of <i>your maze</i>.
+
+<br>
+<br>
+Then, this method calls the first iteration of the <tt>make_move()</tt> method with the starting location, which will kick off a long chain of recursive calls.  
+<br><br>
+This method is finished for you. You shouldn't need to change anything in this method with the default input (maze.txt), but you can change stuff here if you'd like.
+
+<h4>Part 3.5: Understanding the Maze</h4>
+
+The maze is represented by a 2D character array called <tt>maze</tt>. Specific spots in the array can be accessed using <tt>maze[y_value][x_value]</tt>. 
+<br><br>
+[0,0] is going to be the top left corner of the maze.This means that the Y values grow going down, and the X values grow going to the right. Consider this portion of the maze that shows the coordinates of the maze. <br>
+
+<img src="grid.PNG" width=700 height = 600>
+
+<br>
+To access the green square, for example, it could be accessed by <tt>maze[4][3]</tt>. To move north one spot, that would be <tt>maze[current_y-1][current_x]</tt>.
+
+<br>
+
+<h4>Part 4: Making a move in the maze (<tt>makeMove(x, y, hand_x, hand_y) </tt></h4>
+
+This is the trickiest part, and will be the bulk of your code. You need to write the body of the <tt>makeMove()</tt> method. This method takes in only four parameters: the characters current x and y coordinates, and the x and y coordinates of their right hand. You are not allowed to change the arguments to this method. This <b>MUST</b> be a <b>recursive method</b>, and makes a single move in the maze. There are two important parts <br>
+
+<h4>Part 4.1: Determining your direction </h4>
+
+The first part is to determine which direction the character is facing. This can be determined by the characters current x,y location, and the x,y location of their right hand. Consider the following scenario: <br>
+
+
+<img src="hand_example.PNG" width=700 height = 600>
+ 
+<br>
+We need to determine which direction the character is facing, because that will dictate how we move forward, turn right, or turn left. <br>
+
+We can determine the character <i>must</i> be facing north, because the Y value of the character (<tt>y</tt>) and the Y value of their right hand (<tt>hand_y</tt>) are the same, and the x value of the right hand (<tt>hand_x)</tt> is <i>greater than</i> the character's x value (<tt>x</tt>)).
+
+<br>
+You will need an if statement(s) to determine if the character is facing north, east, south, or west, which you can determine by comparing the values of the four input parameters.
+
+<h4>Part 4.2 Making a move</h4>
+
+You only have three options for movement:
+<ul>
+  <li> Turn right 90 degrees and move forward one spot (this helps prevent an infinite loop)</li>
+  <li> Move forward one spot </li>
+  <li> Turn left 90 degrees</li>
+</ul>
+
+You can only see one step to the left, right, and one step in front of you for each turn (no looking ahead multiple spot, no looking behind, no teleporting), Every time you make a move, you will need to place an 'X' on the current spot to represent the path being taken. <br>
+
+<br>
+Using the image above, if the player is moving forward one spot (facing north), that can be done by recursivly calling the method, and providing the new x,y coordinates of the character and their right hand:
+
+<br>
+<tt>make_move(x, y-1, hand_x, hand_y -1)</tt>
+<br>
+<br>
+Consider the following logic:
+<ul>
+  <li>1. If the finish/exit ('F') is in front of me, move the exit and <tt>return</tt></li>
+  <li>2. IF my hand is on a dot, I will turn 90 degrees and move to that dot. I will then recursively call my method with new x, y, hand_x, hand_y</li>
+  <li>3. ELSE IF my hand is not on a dot, I will look forward in front of me, IF it is a . in front of me, I will move forward and then recursively call this method with new x, y, hand_x, hand_y </li>
+  <li>4. ELSE IF it's a # in front of me, I can't move forward, so I'll turn 90 degrees to the left and recursively call my method with the same x and y values, but new hand_x and hand_y values</li>
+</ul>
+<br>
+Your code is going to have <i> a lot </i> of <b> if statments</b>. Your code might look a bit ugly, and that is fine!
+<br>
+<br>
+The character might need to backtrack, so they will need to pick up on '.'' as well as the 'X' characters. Your if statements will need to handle that (example:<tt>if(maze[y+1][x] == '.' || maze[y+1][x] == 'X'</tt> )
+<br>
+
+<h3> Starting Code, and input maze</h3>
+Your code should work on <i>any maze</i> of a similar format. First, just get your algorithm working on the given maze (maze.txt), and then try other mazes.
+<ul>
+    <li> <a href="Program5Demo.java">Program5Demo.java</a></li>
+    <li> <a href="MazeSolver.java">MazeSolver.java</a></li>
+    <li> <a href="maze.txt">maze.txt (input maze file)</a></li>
+</ul>
+
+<h3> Sample Output </h3>
+
+When your run your program, it should look <i> very similar </i> to the following output:
+<br>
+<a href="program5.out">Program 5 output</a>
+<br>
+It should print out the maze after each step, and place an X at each spot the character travels too. When the exit is reached there should be a print statement to indicate the maze has been solved.
+
+<h3>Hints</h3>
+Take baby steps, and test your program every time you add a new move option. First, if facing east, try to get the character to move forward one spot, test your program, then try to get turning left facing east working, test your program, then try to get moving north forward one spot, test your program, and so on.
+<br>
+Do not wait until the last few hours to do this assignment otherwise you will be miserable.
+
+<br>
+<h3> Additional Mazes for testing </h3>
+
+<ul>
+	<li><a href="maze2.txt"> maze2.txt</a></li>
+	<li><a href="maze3.txt"> maze3.txt</a></li>
+	<li><a href="maze4.txt"> maze4.txt</a> (your algorithm should <i>not</i> work on this example (why is that?)... which is totally fine-- you wont lose points) </li>
+</ul>
+<br>
+You are welcome to create your own mazes and try them!
+
+<br>
+<br>
+Maze solving is a classic problem in computer science. You may see similar problems like this in your upper-division computer science classes, so it is helpful to hang onto this code. In CSCI 232, we will discuss more ways to solve mazes similar to this.
+
+<h3>Grading (100 points) </h3>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky">Criteria</th>
+    <th class="tg-0pky">Points</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">Maze is read in from a file and loaded into a 2D array</td>
+    <td class="tg-0pky">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">There exists a method that prints out the array</td>
+    <td class="tg-0pky">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your recursive method works and is able to move north properly</td>
+    <td class="tg-0pky">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your recursive method works and is able to move east properly</td>
+    <td class="tg-0pky">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">Your recursive method works and is able to move south properly</td>
+    <td class="tg-0lax">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">Your recursive method works and is able to move west properly</td>
+    <td class="tg-0lax">15</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your algorithm does not result in stack overflows, array index out of bounds error, method arguments are not changed, etc </td>
+    <td class="tg-0pky">15</td>
+  </tr>
+</tbody>
+</table>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<a href="https://www.youtube.com/watch?v=sDj72zqZakE"> program 5 solution</a>
+
+</body>
+</html>

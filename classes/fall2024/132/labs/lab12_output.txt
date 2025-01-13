@@ -1,0 +1,7 @@
+Dictionary Word Search
+[Abstruse, Benevolent, Cacophony, Conundrum, Cynical, Dichotomy, Elucidate, Facetious, Ineffable, Juxtaposition, Mellifluous, Obfuscate, Serendipity, Tenacious, Ubiquitous]
+----------------------------------------------------------------
+"Conundrum" is located at index: 3
+"Ubiquitous" is located at index: 14
+"Juxtaposition" is located at index: 9
+"Paradigm" is located at index: -1

@@ -1,0 +1,565 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Computer Security</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" type="image/x-icon" href="/cs476-2021-spring/favicon.ico">
+
+  <!-- Fonts & TextFormatting -->
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:500&display=swap" rel="stylesheet" />
+  <link href="../assets/all.css" rel="stylesheet"> <!--load all fontawesome styles -->
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/bootstrap.min.css" />
+  <link rel="stylesheet" href="../assets/prism.css" /> <!-- Prism JS & CSS downloaded from: https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript+bash+c+csharp+cpp+cmake+docker+git+http+hpkp+hsts+java+javadoc+javadoclike+json+latex+liquid+makefile+markdown+markup-templating+mongodb+nasm+nginx+perl+php+phpdoc+php-extras+plsql+python+regex+ruby+rust+sql+vim+yaml&plugins=line-numbers+command-line+unescaped-markup+normalize-whitespace+toolbar -->
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <!-- Misc. -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"/>
+</head>
+
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid col-sm-12 p-4 mb-4">
+<div class="row flex-xl-nowrap m-0">
+
+<div class="d-none d-xl-block col-xl-2">
+</div>
+
+<div class="col-12 col-md-12 col-xl-8 bg-white rounded shadow-lg pb-4">
+<div>
+  <!--Thanks, Tim Holman! http://tholman.com/github-corners/ -->
+
+
+
+
+</div>
+
+<!-- ACTIVE Announcements -->
+
+<!-- OLD Announcements (hidden in comment environment) -->
+
+
+
+<h1 class="pb-4" id="lab-07-md5-collision-attack-lab">Lab 09: MD5 Collision Attack Lab</h1>
+<h1 class="pb-4" id="lab-07-md5-collision-attack-lab">Due Sunday December 8th @ 11:59 PM</h1>
+
+<h2 class="titletext" id="md5-collision-attack-lab">MD5 Collision Attack Lab</h2>
+<p class="subtitletext">Adapted from SEED Labs: A Hands-on Lab for Security Education.</p>
+
+<p>A secure one-way hash function needs to satisfy two properties: (1) the one-way property and (2) the collision-resistance property.
+The <em><strong>one-way property</strong></em> ensures that given a hash value \(h\), it is computationally infeasible to find an input \(M\), such that \(hash(M) = h\).
+The <em><strong>collision-resistance property</strong></em> ensures that it is computationally infeasible to find two different inputs \(M_1\) and \(M_2\), such that \(hash(M_1) = hash(M_2)\).</p>
+
+<p>Several widely-used one-way hash functions have trouble maintaining the collision-resistance property.
+At the rump session of CRYPTO 2004, Xiaoyun Wang and co-authors demonstrated a collision attack against MD5 [<a href="https://www.cs.colorado.edu/~jrblack/papers/md5e-full.pdf">1</a>].
+In February 2017, CWI Amsterdam and Google Research announced the <em>SHAttered</em> attack, which breaks the collision-resistance property of SHA-1 [<a href="https://shattered.io">3</a>].
+While many students do not have trouble understanding the importance of the one-way property,
+they cannot easily grasp why the collision-resistance property is necessary, and what impact these attacks can cause.</p>
+
+<p><em><strong>The learning objective</strong></em> of this lab is for students to really understand the impact of collision attacks,
+and to see first hand what damage can be caused if a widely-used one-way hash function’s collision-resistance property is broken.
+To achieve this goal, students need to launch actual collision attacks against the MD5 hash function.
+Using the attacks, students should be able to create two different programs that share the same MD5 hash but have completely different behavior.</p>
+
+<p>This lab covers the following topics:</p>
+
+<ul>
+  <li>The one-way hash function</li>
+  <li>The collision-resistance property</li>
+  <li>The MD5 hash algorithm</li>
+  <li>Collision attacks</li>
+</ul>
+
+<h3 id="resources">Resources</h3>
+
+<ul>
+  <li>Code related to this lab can be found in <code class="language-plaintext highlighter-rouge">09_hashing/</code> of our <a href="https://github.com/msu/csci-476">class’s GitHub repository</a>.</li>
+  <li>A tool for <a href="https://www.win.tue.nl/hashclash/">Fast MD5 Collision Generation</a>: <code class="language-plaintext highlighter-rouge">md5collgen</code> <em>(already installed on the SEED VM)</em></li>
+  <li>Chapter 22 in the <a href="https://www.handsonsecurity.net">SEED Textbook</a>.</li>
+</ul>
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary">
+  <div class="card-body">
+
+    <h2 id="environment-setup">Environment Setup</h2>
+
+    <p>This lab uses a tool called “Fast MD5 Collision Generation”, which was written by Marc Stevens.
+The name of the binary is called <code class="language-plaintext highlighter-rouge">md5collgen</code> in our VM, and it is installed inside the <code class="language-plaintext highlighter-rouge">/usr/bin</code> folder.
+If you are interested in installing the tool to your own machine,
+you can download the source code directly from <a href="https://www.win.tue.nl/hashclash/">https://www.win.tue.nl/hashclash/</a>.</p>
+
+  </div>
+</div>
+<!-- END Special Section -->
+
+<h2 class="titletext" id="lab-tasks">Lab Tasks</h2>
+<p class="subtitletext">This lab has been tested on the pre-built SEED VM (Ubuntu 20.04 VM).</p>
+
+<h3 id="task-1-generating-two-different-files-with-the-same-md5-hash">Task 1: Brute Force Attack against a hashed password</h3>
+<p> In this task, you will perform a brute force dictionary attack to crack a given MD5 hashed password. You will use <code>passwords.txt</code> as a list of passwords to try. This file can be found in our course repo in <code>09_hashing</code>. You will write a program (in any language of your
+choice) that will iterate through this list of plaintext passwords, calculate the MD5 hash, and look for a match. You may have to do some googling for how to calculate the MD5 hash of a string in your programming language of choice.
+
+
+<h5> The password hash you need to crack: <b>437233c74e25fe505293cd2e8ecc2696 </b></h5>
+
+</p>
+
+
+<h3 id="task-1-generating-two-different-files-with-the-same-md5-hash">Task 2: Generating Two Different Files with the Same MD5 Hash</h3>
+
+<p>In this task, we will generate two different files with the same MD5 hash values.
+The beginning parts of these two files need to be the same, i.e., they share the same prefix.
+We can achieve this using the <code class="language-plaintext highlighter-rouge">md5collgen</code> program, which allows us to provide a prefix file with arbitrary content.
+The way the <code class="language-plaintext highlighter-rouge">md5collgen</code> program works is illustrated in the following figure:</p>
+
+<!-- <center class="mt-4 mb-4"><img src="../assets/lab10_md5collgen.png" width="600" alt="Overview of how the md5collgen program works."></center> -->
+<center class="mt-4 mb-4"><img src="hash-fig1.png" width="700" alt="Overview of how the md5collgen program works." /></center>
+
+<p>For example, the following command generates two output files, <code class="language-plaintext highlighter-rouge">out1.bin</code> and <code class="language-plaintext highlighter-rouge">out2.bin</code>, for a given a prefix file <code class="language-plaintext highlighter-rouge">prefix.txt</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>md5collgen <span class="nt">-p</span> prefix.txt <span class="nt">-o</span> out1.bin out2.bin
+</code></pre></div></div>
+
+<p>We can check whether the output files are distinct or not using the <code class="language-plaintext highlighter-rouge">diff</code> command.
+We can also use the <code class="language-plaintext highlighter-rouge">md5sum</code> command to check the MD5 hash of each output file.
+For example:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>diff out1.bin out2.bin
+<span class="nv">$ </span><span class="nb">md5sum </span>out1.bin
+<span class="nv">$ </span><span class="nb">md5sum </span>out2.bin
+</code></pre></div></div>
+
+<p>Since <code class="language-plaintext highlighter-rouge">out1.bin</code> and <code class="language-plaintext highlighter-rouge">out2.bin</code> are binary, we cannot view them using a text-viewer program, such as <code class="language-plaintext highlighter-rouge">cat</code> or<code class="language-plaintext highlighter-rouge"> more</code>;
+you will need to use a hex editor to view (and edit) them.</p>
+
+<h4 id="task-11">Task 2.1</h4>
+
+<p>Please use the <code class="language-plaintext highlighter-rouge">md5collgen</code> program as we have above to generate different files with the same <code class="language-plaintext highlighter-rouge">md5</code> hash.</p>
+
+<p>Next, use a hex editor to view the two output files, and describe your observations.</p>
+
+<p><em><strong>NOTE:</strong> The prefix may be set to whatever content you want.</em></p>
+
+<h4 id="task-12">Task 2.2</h4>
+
+<p>If the length of your prefix file is not multiple of 64, what happens? Explain.</p>
+
+<h4 id="task-13">Task 2.3</h4>
+
+<p>Create a prefix file with exactly 64 bytes, and run the collision tool again. What happens? (Please explain.)</p>
+
+<h4 id="task-14">Task 2.4</h4>
+
+<p>Regarding the resulting collision from Task 2.3, is the data (128 bytes) generated by <code class="language-plaintext highlighter-rouge">md5collgen</code> completely different for the two output files?
+</p>
+
+<h3 id="task-2-understanding-md5s-suffix-extension-property">Task 3: Understanding MD5’s “Suffix Extension” Property</h3>
+
+<p>In this task, we will try to better understand some of the properties of the MD5 algorithm.
+Namely, once we have found a hash collision for two different files,
+we will try to verify that we can append a common suffix and still have two different files that have the same hash.
+These properties are important for us to conduct further tasks in this lab.</p>
+
+<p>MD5 is a complicated algorithm, but for our purposes we only need to understand how the algorithm works at a high level.
+As the figure below shows, the MD5 algorithm divides the input data into blocks of 64 bytes,
+and then computes the hash iteratively on these blocks.
+The core of the MD5 algorithm is a <strong><em>compression function</em></strong>,
+which takes two inputs: a 64-byte data block and the outcome of the previous iteration.
+The compression function produces a 128-bit <strong><em>Intermediate Hash Value</em></strong>, or \(IHV\);
+this output is then fed into the next iteration.
+If the current iteration is the last one, the \(IHV\) will be the final hash value.
+The \(IHV\) input for the first iteration (\(IHV_0\)) is a fixed value.</p>
+
+<!-- <center class="mt-4 mb-4"><img src="../assets/lab10_md5.png" width="600" alt="Overview of how the md5 algorithm works."></center> -->
+<center class="mt-4 mb-4"><img src="hash-fig2.png" width="900" alt="Overview of how the md5 algorithm works." /></center>
+
+<p>Based on how MD5 works, we can derive the following property of the MD5 algorithm:
+Given two inputs \(M\) and \(N\) (\(M \neq N\)), if \(\mathtt{MD5}(M) = \mathtt{MD5}(N)\),
+i.e., the MD5 hashes of \(M\) and \(N\) are the same,
+then for any input \(T\), \(\mathtt{MD5}(M ∥ T) = \mathtt{MD5}(N ∥ T)\), where \(∥\) represents concatenation.
+That is, if inputs \(M\) and \(N\) have the same hash,
+adding the same suffix \(T\) to them will result in two outputs that have the same hash value.
+This property holds not only for the MD5 hash algorithm, but also for many other hash algorithms.</p>
+
+<p><em><strong>Your task</strong></em> is to design an experiment to demonstrates that this property holds for MD5.</p>
+
+<p><strong>NOTE:</strong>
+You can use the <code class="language-plaintext highlighter-rouge">cat</code> command to concatenate two files (binary or text files) into one.
+The following command concatenates the contents of <code class="language-plaintext highlighter-rouge">file2</code> to the contents of <code class="language-plaintext highlighter-rouge">file1</code>,
+and places the result in <code class="language-plaintext highlighter-rouge">file3</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat </span>file1 file2 <span class="o">&gt;</span> file3
+</code></pre></div></div>
+
+<h3 id="task-3-generating-two-executable-files-with-the-same-md5-hash">Task 4: Generating Two Executable Files with the Same MD5 Hash</h3>
+
+<p>In this task, you are given the following C program.
+You need to create two different versions of this program,
+such that the contents of their <code class="language-plaintext highlighter-rouge">xyz</code> arrays are different,
+but the hash values of the executables are the same.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
+</span>
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">xyz</span><span class="p">[</span><span class="mi">200</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="cm">/* The actual contents of this array are up to you */</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">200</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"%x"</span><span class="p">,</span> <span class="n">xyz</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>You may choose to work at the source code level,
+i.e., generating two versions of the above C program,
+such that after compilation, their corresponding executable files have the same MD5 hash value.
+However, it may be easier to directly work on the binary level.
+To do so, you can put some random values in the <code class="language-plaintext highlighter-rouge">xyz</code> array, then compile the above code to binary.
+Then you can use a hex editor to modify the content of the <code class="language-plaintext highlighter-rouge">xyz</code> array directly in the binary file.</p>
+
+<p><strong>NOTE:</strong>
+Finding where the contents of the array are stored in the binary is generally not easy.
+However, if we fill the array with some fixed/known values, it makes it easier to find them in the binary.
+For example, the following code snippet shows how to fill the array with <code class="language-plaintext highlighter-rouge">0x41</code>, which is the ASCII value for the letter A.
+It should not be difficult to locate 200 A’s in the binary.
+(The <a href="https://github.com/reesep/csci476-code/blob/master/09_hashing/print_array.c">print_array.c</a> program
+in the course repo has already taken this approach if you want to use that as your starting point.)</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">xyz</span><span class="p">[</span><span class="mi">200</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span>
+    <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span>
+    <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span>
+    <span class="p">...</span> <span class="p">(</span><span class="n">omitted</span><span class="p">)</span> <span class="p">...</span>
+    <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary">
+  <div class="card-body">
+
+    <h4 id="task-3-guidelines">Task 4 Guidelines</h4>
+
+    <p>From inside the array, we need to find two locations from where we can divide the executable file into three parts:
+(1) a prefix,
+(2) a 128-byte region, and
+(3) a suffix.
+The length of the prefix needs to be a multiple of 64 bytes.
+See the figure below for an illustration of how the file is divided.</p>
+
+    <!-- <center class="mt-4 mb-4"><img src="../assets/lab10_prefix_data_suffix.png" width="600" alt="..."></center> -->
+    <center class="mt-4 mb-4"><img src="./hash-fig3.png" width="800" alt="Break the executable file into 3 pieces." /></center>
+
+    <p>We can run <code class="language-plaintext highlighter-rouge">md5collgen</code> on the prefix to generate two outputs that have the same MD5 hash value.
+Let us use \(P\) and \(Q\) to represent the second part (each having 128 bytes) of these outputs
+(i.e., the part after the prefix).
+Therefore, we have the following:</p>
+
+\[\mathtt{MD5} (\mathtt{prefix} ∥ P) = \mathtt{MD5} (\mathtt{prefix} ∥ Q)\]
+
+    <p>Based on the “suffix extension” property of MD5 that we explored in the previous task,
+we know that if we append the same suffix to the above two outputs,
+the resultant data will also have the same hash value.
+Basically, the following is true for any suffix:</p>
+
+\[\mathtt{MD5} (\mathtt{prefix} ∥ P ∥ \mathtt{suffix}) = \mathtt{MD5} (\mathtt{prefix} ∥ Q ∥ \mathtt{suffix})\]
+
+    <p>Therefore, we just need to use \(P\) and \(Q\) to replace 128 bytes of the array (between the two dividing points),
+and we will be able to create two binary programs that have the same hash value.
+Their outputs, however, are different, because they each print out their own arrays, which have different contents.</p>
+
+  </div>
+</div>
+<!-- END Special Section -->
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary mt-2">
+  <div class="card-body">
+
+    <h4 id="task-3-tools">Task 4 Tools</h4>
+    <p>You can use any hex editor (e.g., <code class="language-plaintext highlighter-rouge">ghex</code>, <code class="language-plaintext highlighter-rouge">bless</code>) to view the binary executable file and find the location of the array.
+For dividing a binary file, there are some tools (e.g., <code class="language-plaintext highlighter-rouge">head</code> and <code class="language-plaintext highlighter-rouge">tail</code>)
+that we can use to divide a file from a particular location.
+You can look at their manuals to learn more about how to use them.
+We provide three examples:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">head</span> <span class="nt">-c</span> 3200 a.out <span class="o">&gt;</span> prefix   <span class="c"># saves the first 3200 bytes of `a.out` to `prefix`</span>
+<span class="nv">$ </span><span class="nb">tail</span> <span class="nt">-c</span> 100 a.out <span class="o">&gt;</span> suffix    <span class="c"># saves the last 100 bytes of `a.out` to `suffix`</span>
+<span class="nv">$ </span><span class="nb">tail</span> <span class="nt">-c</span> +3300 a.out <span class="o">&gt;</span> suffix  <span class="c"># saves the data from the 3300th byte to the end of the file `a.out` to `suffix`</span>
+</code></pre></div>    </div>
+
+    <p>With these commands, we can divide a binary file into pieces from any location.
+If we need to concatenate pieces together, we can use the <code class="language-plaintext highlighter-rouge">cat</code> command.</p>
+
+    <p><strong>NOTE:</strong>
+If you use <code class="language-plaintext highlighter-rouge">bless</code> to copy-and-paste a block of data from one binary file to another file,
+the menu item <em>“Edit → Select Range”</em> is quite handy,
+because you can select a block of data using a starting point and a range
+instead of manually counting how many bytes are selected.</p>
+
+  </div>
+</div>
+<!-- END Special Section -->
+<br><br><br><br><br><br><br><br>
+
+<h3 id="task-4-making-the-two-programs-behave-differently">Task 5: Making the Two Programs Behave Differently</h3>
+
+<p>In the previous task, we successfully created two programs that have the same MD5 hash, but their behavior is only superficially different.
+(Their differences are only in the data they print out; they still execute the same sequence of instructions.)
+In this task, we would like to achieve something more interesting…</p>
+
+<blockquote>
+  <p><em><strong>Motivation:</strong></em>
+Assume that you have created some new software that does good things.
+You send the software to a trusted authority to get certified.
+The authority conducts a comprehensive testing of your software,
+and concludes that your software is indeed doing the good things you claimed it would do.
+At such a time, the authority will present you with a certificate, stating that your program is indeed good.
+To prevent you from changing your program after getting the certificate,
+the MD5 hash value of your program is also included in the certificate;
+the certificate is then signed by the authority,
+so that you cannot change anything on the certificate, or your program, without rendering the signature invalid.</p>
+</blockquote>
+
+<blockquote>
+  <p>Now suppose that you also have some malicious software that you would like to get certified by the authority.
+You have zero chance to achieve this goal if you simply send your malicious software to the authority.
+(They can look at the code and try running it and see that you code is malicious.)
+However, you noticed that the authority uses the MD5 algorithm to generate the hash values that are stored in the certificates.
+<em>(Lightbulb!)</em>
+You devise the plan to prepare two different programs.
+One program will always execute benign instructions and do good things,
+while the other program will execute malicious instructions and cause damage when executed.
+If you can find a way to get these two programs to share the same MD5 hash value,
+you can then send the benign version to the authority for certification.
+Since this version does good things, it will pass the certification,
+and you will get a certificate that contains the hash value of your benign program.
+But because your malicious program has the same hash value,
+this certificate is also valid for your malicious program.
+In this way, you can successfully obtain a valid certificate for your malicious program!
+Since everyone trusts software that is signed by the trusted certificate authority,
+they will have no concerns when downloading and executing your (malicious) program.</p>
+</blockquote>
+
+<p><em><strong>The objective of this task</strong></em> is to launch the attack described in the motivation above.
+Namely, you need to create two programs that share the same MD5 hash.
+However, one program will always execute benign instructions,
+while the other program will execute malicious instructions.
+In your work, what benign/malicious instructions are executed is not important;
+it is sufficient to demonstrate that the instructions executed by these two programs are <em><strong>different</strong></em>.</p>
+
+<!-- BEGIN Special Section (Use Bootstrap "Card" Styles). This is nice for formatting background, setup, special instructions, etc. -->
+<div class="card bg-secondary border-primary">
+  <div class="card-body">
+
+    <h4 id="task-4-guidelines">Task 5 Guidelines</h4>
+
+    <p>Creating two completely different programs that produce the same MD5 hash value is quite hard.
+The two hash-colliding programs produced by <code class="language-plaintext highlighter-rouge">md5collgen</code> need to share the same prefix;
+moreover, as we can see from the previous task,
+if we need to add some meaningful suffix to the outputs produced by <code class="language-plaintext highlighter-rouge">md5collgen</code>,
+the suffix added to both programs also needs to be the same.
+These are the limitations of the MD5 collision generation program that we use.
+Although there are other more complicated and more advanced tools that can eliminate some limitations,
+such as accepting two different prefixes [<a href="https://www.win.tue.nl/hashclash/On%20Collisions%20for%20MD5%20-%20M.M.J.%20Stevens.pdf">2</a>],
+they demand much more computing power, so they are out of scope for this lab.
+We need to find a way to generate two different programs within the limitations noted above.</p>
+
+    <p>There are many ways to achieve the above goal.
+We provide one approach as a reference, but students are encouraged to come up their own ideas.
+(We may consider rewarding students extra credit for their own (successful) ideas.)
+In our approach, we create two arrays <code class="language-plaintext highlighter-rouge">X</code> and <code class="language-plaintext highlighter-rouge">Y</code>.
+We compare the contents of these two arrays;
+if they are the same, the benign code is executed;
+otherwise, the malicious code is executed.
+Consider the following pseudocode:</p>
+
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Array</span> <span class="n">X</span><span class="p">;</span>
+<span class="n">Array</span> <span class="n">Y</span><span class="p">;</span>
+
+<span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">X</span><span class="err">’</span><span class="n">s</span> <span class="n">contents</span> <span class="n">and</span> <span class="n">Y</span><span class="err">’</span><span class="n">s</span> <span class="n">contents</span> <span class="n">are</span> <span class="n">the</span> <span class="n">same</span><span class="p">)</span>
+        <span class="n">run</span> <span class="n">benign</span> <span class="n">code</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="n">run</span> <span class="n">malicious</span> <span class="n">code</span><span class="p">;</span>
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+
+    <p>We can initialize the arrays <code class="language-plaintext highlighter-rouge">X</code> and <code class="language-plaintext highlighter-rouge">Y</code> with some values
+that can help us find their locations within the executable file.
+You need to change the contents of these two arrays,
+so that we can generate two different versions that have the same MD5 hash.
+In one version, the contents of <code class="language-plaintext highlighter-rouge">X</code> and <code class="language-plaintext highlighter-rouge">Y</code> are the same, so the benign code is executed;
+in the other version, the contents of <code class="language-plaintext highlighter-rouge">X</code> and <code class="language-plaintext highlighter-rouge">Y</code> are different, so the malicious code is executed.
+We can achieve this goal using a technique similar to the one used in Task 3.
+The figure below illustrates what the two versions of the program look like.</p>
+
+    <!-- <center class="mt-4 mb-4"><img src="../assets/lab10_collision.png" width="600" alt=""></center> -->
+    <center class="mt-4 mb-4"><img src="hash-fig4.png" width="800" alt="An approach to generate two hash-colliding programs with different behavior." /></center>
+
+    <p>From this figure we know that these two binary files have the same MD5 hash value,
+as long as \(P\) and \(Q\) are generated accordingly.
+In the first version, we make the contents of arrays <code class="language-plaintext highlighter-rouge">X</code> and <code class="language-plaintext highlighter-rouge">Y</code> the same,
+while in the second version, we make their contents different.
+Therefore, the only thing we need to change is the contents of these two arrays;
+there is no need to change the logic of the programs.</p>
+
+    <p>The relevant starter code can be found in
+<a href="https://github.com/reesep/csci476-code/blob/master/09_hashing/benign_evil.c">benign_evil.c</a> in the course repo. Create two versions of this program that behave differently, but have the same MD5 hash.</p>
+
+  </div>
+</div>
+<!-- END Special Section -->
+
+<!-- Submission Instructions -->
+<!-- NOTE: This "stub" assumes that page.duedate and page.id variables are defined; the latter should be consistent with our directory naming scheme. -->
+
+
+
+
+
+<script type="text/javascript">
+var m = "This page was last updated: " + document.lastModified;
+var p = m.length-8;
+document.writeln("<footer>" + m.substring(p, 0) + "</footer>");
+</script>
+
+</div>
+
+</div>
+
+<div class="d-none d-xl-block col-xl-2">
+    
+    <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+    
+</div>
+
+</div>
+</div>
+
+<!-- Optional JavaScript for Bootstrap - jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="/cs476-2021-spring/assets/js/prism.js"></script>
+
+<script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    /*
+     * class hacking: add bootstrap/bootswatch class labels to my custom classes (notes, slides, etc.)
+     */
+
+    // admin styles
+    $('.new').addClass('badge badge-pill badge-primary');
+    $('.announcement').addClass('alert alert-primary').prepend('<h4 class="alert-heading">Class Announcement!</h4>');
+    $('.timestamp').prepend('&mdash;Posted ');
+    // $('.score').prepend(' &mdash; ');
+
+    // add icons / style class elements...
+    $( ".activity" ).each(function(index) {
+        $(this).html('<i class="fas fa-lightbulb pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".code" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-code pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".slides" ).each(function(index) {
+        $(this).html('<i class="fas fa-file-pdf pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".pdf" ).each(function(index) {
+        $(this).html('<i class="fas fa-file pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".reading" ).each(function(index) {
+        $(this).html('<i class="fas fa-book pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+    $( ".video" ).each(function(index) {
+        $(this).html('<i class="fas fa-play-circle pl-1"></i> ' +$(this).html()+ '' );
+        $(this).attr('target', '_blank');
+    });
+
+    // add links to all section headers...
+    $( ":header" ).each(function(index) {
+      var attr = $(this).attr('id');
+      if (typeof attr !== typeof undefined && attr !== false) {
+        $(this).html( '<a href="#' + attr + '">' +$(this).html()+ ' </a>' );
+      }
+    });
+
+    // add links to weeks on schedule
+    $('td[id^="week"]').filter(function () {
+        $(this).html(function(index, text){
+            return '<a href="#' + text.toLowerCase().replace(' ', '') + '"><strong>' + text + '</strong></a>';
+        });
+    });
+
+    // use javascript to detect all external links and add the target='_blank' attribute to them.
+    // -> thanks, https://code.luasoftware.com/tutorials/hugo/how-to-create-link-with-target-blanks-in-hugo-markdown/
+    var links = document.getElementsByTagName("a");
+    for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+        if (links[i].hostname != window.location.hostname) {
+            links[i].target = '_blank';
+        }
+    }
+
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    var TEX = MathJax.InputJax.TeX;
+    var COLS = function (W) {
+      var WW = [];
+      for (var i = 0, m = W.length; i < m; i++)
+        {WW[i] = TEX.Parse.prototype.Em(W[i])}
+      return WW.join(" ");
+    };
+    TEX.Definitions.Add({
+      environment: {
+        psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+      }
+    });
+  });
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js">
+</script>
+
+</body>
+
+</html>

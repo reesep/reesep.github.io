@@ -1,0 +1,35 @@
+Permutations of the password 'max': 
+-----------------------------
+max
+mxa
+amx
+axm
+xma
+xam
+
+Permutations of the password 'andy': 
+-----------------------------
+andy
+anyd
+adny
+adyn
+aynd
+aydn
+nady
+nayd
+nday
+ndya
+nyad
+nyda
+dany
+dayn
+dnay
+dnya
+dyan
+dyna
+yand
+yadn
+ynad
+ynda
+ydan
+ydna
