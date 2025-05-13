@@ -1,0 +1,103 @@
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Lab 6 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 6: Heap Sort</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, March 7th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solutions (.java file), entitled <b>HeapSort.java</b> to the BrightSpace(D2L) Lab 6 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Implement a Heap data structure to sort an array (Heap Sort) </li>
+</ul>
+
+<hr />
+
+
+<h3>Directions </h3>
+
+Download <a href="Lab6Demo.java">Lab6Demo.Java</a> as a starting point. You will write the HeapSort class (provided below), which will contain a method called <tt>heapSort()</tt>. This method must implement the Heap Sort algorithm that was discussed during lecture on 3/4. This method will return a sorted array. This class implements an interface, which makes your write the required methods for this lab.
+
+Given an unsorted array of integers, heap sort first constructs a <b>Max Heap</b> from the array. This will involve doing a for loop backwards through the array, and swapping the node with it's children if a child is larger than it.
+
+<br><br>
+Once the heap is created, the sorting can begin. The root node is swapped with the last element in the heap, and the new root is heapified down to its correct location. This process is repeated N times until the array is sorted (see lecture).
+<br><br>
+You <b>must</b> use a Max Heap like we did in class. Your heap sort algorithm must also be an <b>in-place sorting algorithms</b>, which means you must only modify the orginal array (you are not allowed to create a new array).
+<br><br>
+Your solution must include the following methods, and these methods must be used somewhere in your heap sort algorithm:
+
+<ul>
+    <li><tt>heapifyDown(int bound, int current)</tt>- This method will take an element in the heap (current) and move it down in the heap. This will likely be a recursive method, because the element might need to be moved down several levels in the heap.</li>
+    <li><tt>buildHeap()</tt>- This method will take the unsorted array, and construct the max heap. You cannot create a new array. You must swap elements within this array to create the max heap.</li>
+    <li><tt>swap(int i, int j)</tt>- This method swaps the elements located at index i and index j in the heap.</li>
+</ul>
+
+You will likely have more methods, but those methods are what's required.
+
+<br>
+
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab6Demo.java">Lab6Demo.Java</a> </li>
+        <li> <a href="HeapSort.java">HeapSort.Java</a> </li>
+        <li> <a href="HeapSortMethods.java">HeapSortMethods.Java</a> </li>
+    </ul>
+
+
+
+   
+
+	
+
+<h3> Required Output </h3>
+
+The output of your program should look exactly like <a href="lab6_output.png"> this output. </a> Your program should sort the integer array from least to greatest.
+
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>  HeapSort class is correctly defined - 1 points </li>
+  <li>  heapifyDown() is used and is correct - 3 points </li>
+  <li>  buildHeap() is used and is correct - 3 points </li>
+  <li>  swap() method is used and is correct - 1 points </li>
+  <li>  Array is correctly sorted from least to greatest. In-place sorting is done - 2 points </li>
+
+</ul>
+NOTE: If your code does not compile, correctness cannot be verified, and you won't receive any points
+for your code. Turn in code that compiles! 
+
+
+
+
+
+</body>
+</html>

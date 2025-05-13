@@ -1,0 +1,188 @@
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Program 1 
+</title>
+</head>
+
+<body>
+
+<h1>Program 1: Animal Identification Tree</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Thursday, February 20th at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Both group members need to submit to D2L. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your solutions (.java files) to the BrightSpace(D2L) Program 1 Dropbox. </li>
+
+</ul>
+
+
+
+<h3>Background and Directions </h3>
+In this program, you will build an application that uses a Binary Search Tree (BST) to identify animals. If the program is unable to identify the animal, it will gather information from the user so it can remember that animal in the future. 
+Animals can be classified by their characteristics (it is in the water, it doesn’t have legs, it has gills, it is a fish, etc). The user will answer a series of yes or no questions, until the program is ready to make a guess. If the programs correctly guesses the animal, the program will loop and  ask if they want to identify another animal, and the process is repeated.
+
+If the program makes an incorrect guess, it will remember this animal in future program executions. 
+
+You can imagine representing these characteristics in a tree-like structure where internal nodes are characteristics (furry, bipedal, gilled) and leaf nodes are animals (dog, human, fish). Because each characteristic can be answered with “yes” or “no”, we can represent this classification system as a binary tree (each internal node has two children).
+
+
+
+You will read in this BST from a file, and then add nodes as you discover more animals. Knowledge gained from the user must <b>persist</b> between program executions, so you will need to write out to the file and update the file when new animals are discovered. 
+
+Conceptually, this is what the tree will look like (white nodes are internal, grey nodes are leaf nodes).
+
+<br>
+
+<img src="animaltree.PNG"> 
+
+<h4>Part 1: Loading the BST</h4>
+
+The first step is to write a method that constructs a baseline identification tree, which will be created from an input file that has information. Here is how the initial input file will look:
+
+<pre>
+
+    5,furry <br>
+    3,bipedal <br>
+    9,aquatic <br>
+    1,reclusive <br>
+    4,a dog <br>
+    7,legged <br>
+    13,legs <br>
+    0,a bigfoot <br>
+    2,a human <br>
+    6,a salamander <br>
+    8,a fish <br>
+    11,slimy <br>
+    14,a snake <br>
+    10,a frog <br>
+    12,a Lizard <br>
+
+</pre>
+This is a breadth-first output of nodes from the BST. Each node has a Node number, and the prompt (for internal nodes) or animal (for leaf nodes). <br>
+The Node numbers were derived from an in-order traversal of nodes in the tree. Because our application is a BST, we can use these node numbers to place the nodes in their correct spots. <br>
+Notice that when node numbers are applied, you can see how this is a BST.
+When we build this tree using our BST insert() method, and because we have node numbers that go along with each animal/prompt, our insert() method will always build the tree with the correct structure.
+<br>
+<img src="animaltreelabeled.PNG"> <br>
+
+You will use the BST insert() method that we wrote in class (you may need to make slight modifications) and insert each line from the file into the tree, creating each Node object properly. 
+After you think you have your load method working properly, you can run a breadth-first method and verify that your tree got built properly.
+    
+<h4>Part 2: Using Tree to identify an animal</h4>
+
+Next, you should write a method that will use the BST to identify an animal. The user will then try to identify an animal by answering queries from your application. 
+If your application eventually settles on the correct animal, great, if not, it will inquire as to the differentiating trait between the animal being identified and the leaf it had settled on.
+ NOTE: You must provide the information that I provide in my output in this circumstance (e.g. “I don’t know any furry, not squeaky, bipedal animals that aren’t a human.”). This amounts to your position in the classification tree. 
+It will then create a new internal node and new leaf node to represent that trait as well as the new animal. The program should loop and continue to ask the user if they would like to identify another animal. Sample
+output is provided at the end of this assignment. 
+
+<h4>Part 3: Saving the Tree</h4>
+You must also save your tree to a .txt file
+when the program exits and reload the tree when it begins again. This enables your AI to
+keep learning across sessions. If new node(s) are added to the tree during program execution, you will need to relabel your nodes, and write out each node to <tt>tree.txt</tt>, so it can remember the new nodes during the next program execution. When you relabel your nodes, you want to apply a consecutive counter to each node using inorder traversal, and then write out using breadth-first
+
+   
+<h3> Input file </h3>
+I am not giving you any starting code. You will develop this solution from scratch. However, I will provide you with a baseline input file that builds a basic animal identification tree.
+<ul>
+    <li><a href="tree.txt">tree.txt</a></li>
+</ul>
+
+
+<h3> Sample Output </h3>
+You dont have to exactly match this output, but it should look <i>very</i> similar.
+
+<ul>
+    <a href="program1_output1.PNG">Sample output where the program correctly guesses the animal</a> <br>
+    <a href="program1_output2.PNG">Sample output where the program correctly guesses another animal</a> <br>
+
+    <a href="program1_output3.PNG">Sample output where the program encounters an animal it does not know, and then stores its information.</a> <br>
+    <a href="program1_output4.PNG">Sample output where the program encounters another animal it does not know, and then stores its information.</a> <br>
+	<br><br>
+    In the turtle example above (screenshot #3), the program stores information about the new creature, and the updated identification tree should look like this
+    <br>
+    <img src="animaltree_updated.PNG"> 
+</ul>
+
+
+<h3>Optional Hints</h3>
+
+You are welcome to design your solution in whichever way makes sense to you, but I would recommend having an <tt>AnimalTree</tt>, <tt>Node</tt>, and <tt>Demo</tt> class.
+
+<br> <br>
+
+When a new animal is discovered, the old leaf always becomes the new right child, the new node becomes the new left child, and the new characteristic becomes the internal Node
+
+<br><br>
+
+You will likely need to have some kind of <tt>breadthFirst() </tt> and </tt>inOrder()</tt> method for labeling nodes and writing out to the file.
+
+<br><br>
+
+Do not "remove" any nodes. Simply update the text of the old leaf node with the text of the new internal node  
+
+<h3>Grading (100 points) </h3>
+<style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+    .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+    </style>
+    <table class="tg">
+    <thead>
+      <tr>
+        <th class="tg-0pky">Criteria</th>
+        <th class="tg-c3ow">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tg-0pky">Tree is read in from a file (tree.txt) and constructed properly with the insert() method</td>
+        <td class="tg-c3ow">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">When identifying an animal, the tree is properly traversed, and the correct prompt is asked</td>
+        <td class="tg-c3ow">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">The tree is able to identify animals correctly</td>
+        <td class="tg-c3ow">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">If the tree finds a new animal, it prints out the path, and then prompts the user for the new characteristic</td>
+        <td class="tg-c3ow">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">The tree remembers new animals in different program executions (persistence)</td>
+        <td class="tg-c3ow">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">The tree is written out to the same file (tree.txt), and includes and new animals/traits</td>
+        <td class="tg-c3ow">10</td>
+      </tr>
+    </tbody>
+    </table>
+    
+
+
+<br><br><br><br><br><br>
+
+<a href="https://www.youtube.com/watch?v=wKnfyrGZwA0&ab_channel=kw%C3%ABb">Program 1 solution</a>
+</body>
+</html>

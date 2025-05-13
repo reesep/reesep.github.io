@@ -1,0 +1,30 @@
+Harry Potter,Mage
+Darth Vader,Rogue
+Bowser,Warrior
+Captain America,Warrior
+Elsa,Mage
+Pikachu,Mage
+Aragorn,Warrior
+Garfield the Wizard,Mage
+Dark Magician,Mage
+Eleven,Mage
+Godzilla,Warrior
+Shaquille O'Neal,Warrior
+Baby Yoda,Mage
+Meatball the Cat,Mage
+Chuck Norris,Warrior
+Gandalf,Mage
+Jack Sparrow,Rogue
+Wonder Woman,Warrior
+Optimus Prime,Warrior
+Thor,Warrior
+Legolas,Rogue
+Indiana Jones,Rogue
+Spock,Mage
+Batman,Rogue
+Black Widow,Rogue
+Doctor Octopus,Rogue
+Mario,Rogue
+Jinx,Rogue
+Groot,Warrior
+Catwoman,Rogue

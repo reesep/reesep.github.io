@@ -1,0 +1,110 @@
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Lab 8 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 8: Graphs</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, March 28th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solutions (.java file), entitled <b>UndirectedGraph.java</b> to the BrightSpace(D2L) Lab 8 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Create a graph, and traverse it to find some interesting information </li>
+</ul>
+
+
+<h3>Directions </h3>
+
+Start with the code linked below. The <tt>UndirectedGraph</tt> class is the same one we wrote in class last week, however the <tt>UndirectedGraphDemo</tt> class has been updated to reflect the following undirected graph:
+
+<br><br>
+
+<img src="lab8graph.PNG">
+
+<br><br>
+You will write the body for one method in this lab. Complete the body of the
+<tt><b>printConnectedComponents()</b></tt> method so that it prints out each connected component as a set/list
+of vertices in that connected component. You may add any other methods or data structures you need
+to accomplish this task
+<br><br>
+A correct and valid output for the graph above could look something like this:
+
+<tt>{0, 1, 3, 4, 2}, {8, 5, 6}, {7} </tt>
+
+<br><br>
+Note: the order of the listed connected components does not matter and the order of the vertices in the
+connected components also does not matter.
+
+<br><br>
+
+
+Once you think you have your code working, try to add more edges/vertices to the graph to
+verify the correctness of your method.
+
+
+<h3> Required Output </h3>
+
+When you run your program, it should print out the connected components of the graph. It does not
+need to look exactly like this, but the actual components should be correct (once again, the order does
+not matter).
+<br>
+<img src="lab8output.PNG">
+<br>
+<h3>Starting Code</h3>
+<ul>
+    <li><a href="UndirectedGraph.java">UndirectedGraph.java</a></li>
+    <li><a href="UndirectedGraphDemo.java">UndirectedGraphDemo.java</a></li>
+</ul>
+
+<h3>Hints</h3>
+You might think this seems tricky at first, but finding the connected components can be done by leveraging depth first search, and the <tt>visited[]</tt> ArrayList
+
+<ul>
+    <li>Consider using a HashSet to store the vertices of connected components
+        <tt>(HashSet&lt;LinkedList&lt;Integer&gt;&gt;)</li></tt>
+    <li>Consider using the <tt>depthFirst()</tt> method and <tt>visited[]</tt> array (several different times) to figure out which nodes
+        have been visited</li>
+</ul>
+
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>  Program identifies all connected components – 10 points </li>
+</ul>
+
+NOTE: If your code does not compile, correctness cannot be verified, and you won’t receive any points
+for your code. Turn in code that compiles! 
+
+
+<br><br><br>
+
+
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Program 2 
+</title>
+</head>
+
+<body>
+
+<h1>Program 2: Document Spell Checker</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Sunday, March 9th at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Both group members need to submit to D2L. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your solutions (.java files) to the BrightSpace(D2L) Program 2 Dropbox. </li>
+
+</ul>
+
+
+
+<h3>Background and Directions </h3>
+In this program, You are going to use Java’s built in HashSet and HashMap classes to build a document checking application. Your program will be able to identify misspelled words, and print out some interesting information about the frequency of words that appear in the document.
+
+<h4> Part I: Implementing a menu-like functionality</h4>
+The user will be prompted with a menu of options. When the user enters a choice, the appropriate action will be executed.
+<br>
+<ul>
+    <li>1: Spell Check your document (input.txt)</li>
+    <li>2: Print word frequency alphabetically</li>
+    <li>3: Print word frequency from greatest to least</li>
+    <li>4: Exit program</li>
+</ul>
+If the user enters an invalid choice, the menu should be printed out, and should ask the user for their choice again.
+
+<br><br>
+<h4> Part II: Loading your HashMap and HashSet</h4>
+
+You must use a Java HashMap to calculate the number of occurrences for each unique word in the input file <tt>input.txt</tt>. 
+This input file is the document that the user want to be spellchecked. This input file may be several lines long.
+This method should go through each word in the input file, and calculate the number of occurrence that word appears in the document. 
+The keys of your HashMap will be the word (String), and the value that is linked with the key will be its frequency. 
+For example, this output would mean that the word “a” appears four times in the document. “and” appears once, “check” three times, and so on…
+<br>
+<tt>
+    a: 4 <br>
+    and: 1 <br>
+    check: 3 <br>
+    code: 1 <br>
+</tt>
+ <br>
+Capitalization and punctuation matter here, and you will need to do some String manipulation to handle this. “The”, “the”, “the,” and “tHe?” should all count towards the number of occurrences for the word “the”.
+The only punctuation you have to worry about are periods, commas, question marks, and exclaimation points. You can assume no other symbols or punctuation will appear in the input.
+
+<br><br><br>
+
+You will need a database of all known words in the dictionary. These words will come in from <tt>words.txt</tt>, which is another input file for your program. You <b>must</b> load these words into a Java HashSet. <tt>words.txt</tt> doesn't have <i> every </i>word in the english language, but it has most of the. You should not modify <tt>words.txt</tt>.
+
+<h4>Part III: Spellchecking the document (Menu option #1)</h4>
+
+With your loaded HashSet from part II, you will read in from <tt>input.txt</tt> again, and check each word to see if they appear in the HashSet or not. 
+If they do not appear in the HashSet, then the word is considered to be misspelled, and needs to flagged in the output. 
+Once again, capitalization and punctuation matter here, and you will likely need to do some similar String manipulation to ensure the spellchecking works. 
+The original input should be printed out, but any misspelled words need to wrapped in angle brackets &lt;  &gt;.
+
+<br><br>
+For example:
+<br><br>
+Original Input: Hai there, what is yuor nameee?
+<br><br>
+Output of program: &lt;Hai&gt; there, what is &lt;yuor&gt; &lt;nameee&gt;? 
+
+<h4>Part IV: Printing out word frequency alphabetically  (Menu option #2)</h4>
+
+With your loaded HashMap from part II, you will print out the contents of the HashMap sorted by the key values (alphabetically). 
+
+<h4>Part V: Printing out word frequency alphabetically  (Menu option #3)</h4>
+
+With your loaded HashMap from part II, you will print out the contents of the HashMap sorted by the word frequencies from greatest to least. 
+<br><br>
+For example, in the sample input, "a" appears 6 times. "the" and "to" appear 5 times, and "is" appears 4 times. See the sample output for a better understanding.
+<br><br>
+<tt>
+    6: a <br>
+    5: the, to <br>
+    4: is <br>
+    3: spell, program, your, check <br>
+    2: ... <br>
+    1: ... <br>
+</tt>
+<br><br>
+<b>Hint:</b> This one can be tricky. Consider creating a new HashMap. 
+Instead of having a HashMap that computes the <b>Count per Word</b> (this is what you did in part II), write a HashMap that computes the <b>Words per Count</b>. 
+So, the keys will be an Integer, and the value will be a HashSet of Strings that had that count.
+
+<br><br>
+
+
+<h3> Input files </h3>
+<ul>
+    <li><a href="input.txt"><tt>input.txt</tt></a> contains the text that needs to be spellchecked an analyzed.</li>
+    <li><a href="words.txt"><tt>words.txt</tt></a> contains a list of (most) of the words in the english dictionary.</li>
+</ul>
+
+<h3> Sample Output </h3>
+
+<a href="program2_output.out"> This sample output </a> shows the different menu options being executed. Your program does not need to match this exactly, but it should be similar.
+
+<h3>Optional Hints</h3>
+
+You can use the <tt>.replace()</tt> to remove certain characters from a String.
+<br><br>
+You may need to convert a HashSet or HashMap to something that can be sorted. You can create an ArrayList from an existing Set.
+<br><br>
+You can use the HashMap method <tt>keySet()</tt> to get a Set of just the keys
+<br><br>
+You may find the official HashMap and HashSet documentation to be useful.
+
+
+<h3>Restrictions</h3>
+You must use a HashSet to store the English words, and you must use a HashMap to keep track of word frequencies. 
+
+
+<h3>Grading (100 points) </h3>
+<style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+    .tg .tg-0lax{text-align:left;vertical-align:top}
+    </style>
+    <table class="tg">
+    <thead>
+      <tr>
+        <th class="tg-0pky">Criteria</th>
+        <th class="tg-0pky">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tg-0pky">HashMap and HashSet are loaded correctly</td>
+        <td class="tg-0pky">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky"> (Menu option #1) Your program correctly identifies mispelled words, even in the cases of capitalization, and correctly prints them in the output</td>
+        <td class="tg-0pky">30</td>
+      </tr>
+      <tr>
+        <td class="tg-0lax">Punctuation and Capitalization is maintined correctly during spellchecking</td>
+        <td class="tg-0lax">5</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Menu option #2 correctly prints out the frequency of words, sorted alphabetically, and handles any punctuation and capitalization</td>
+        <td class="tg-0pky">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Menu #3 Correctly prints out the frequency of words, sorted by the number of occurances, and handles any punctuation and capitalization</td>
+        <td class="tg-0pky">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Your program has a menu that repeatedly asks the user for their choice</td>
+        <td class="tg-0pky">5</td>
+      </tr>
+    </tbody>
+    </table>
+    
+NOTE: If your code does not compile, correctness cannot be verified, and you won’t receive any points for your code. Turn in code that compiles!
+
+<br><br><br><br><br><br>
+
+<a href="https://www.youtube.com/watch?v=8UIEb3phWPM">Program 2 solution</a>
+</body>
+</html>

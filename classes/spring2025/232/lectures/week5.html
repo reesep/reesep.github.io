@@ -1,0 +1,42 @@
+
+<html>
+
+    <head>
+        <title>Week 5</title>
+    </head>
+
+    <body>
+
+        <h2> Takeaways </h2>    
+
+        <ul>
+	    <li> A Map / Dictionary / HashTable is an unordered collection of Key-value pairs </li>
+	    <li> Keys should be unique, and should be an immutable data type (string, int, double) </li>
+	    <li> A hash function takes a key value, and maps to a "bucket" in O(1) time </li>
+	    <li> A hash table is just an array, where each spot in the array is a "bucket"</li>
+	    <li> A hash collision may occur if two keys map to the same bucket</li>
+	    <li> The key set/key space is the set of keys in a hash table</li>
+	    <li> Insertions and lookups happen in O(1) time (assuming key value is known and no hash collisions occur)</li>
+	    <li> The Hash table library in java is called HashMap</li>
+	     <li> HashMap documentation: <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html</a> </li>
+            <br>
+		<li> A HashSet<> is a Set data type that uses a HashMap under the hood</li>
+		<li> A set is a unordered collection of data with no duplicates </li>
+		<li> HashSets have O(1) insertions, lookups, and removals</li>
+	</ul>
+
+        <h2> Code </h2>
+	February 11th code is a student database that utilizes a hash table to store information about students. The keys are the student ID numbers, and values are the Student objects.
+	<br>
+	February 13th code is the same student database program, but uses a HashMap and HashSet under the hood. PirateTranslator.java puts english-->pirate word mappings, and translate an english sentence to a pirate sentence. 
+        <ul>
+	    <li><a href="code/feb11.zip">February 11th Code</a></li>
+
+ 		<li><a href="code/feb13.zip">February 13th Code</a></li>
+        </ul>
+
+
+    </body>
+
+
+</html>

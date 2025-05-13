@@ -1,0 +1,110 @@
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Lab 3
+</title>
+</head>
+
+<body>
+
+<h1>Lab 3: BST</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, February 7th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solution (BST.java),  to the BrightSpace(D2L) Lab 3 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience using a Binary Search Tree (BST) </li>
+
+</ul>
+
+<hr />
+
+
+<h3>Directions </h3>
+
+In this lab, you will build some methods for a simple binary search tree that stores integers. You will continue using the code that we have been building in class (Jan 30 + Feb 4), however I'd recommend downloading a fresh set of files below.
+
+<br><br>
+
+This is how the BST looks after a series of inserting nodes:
+<br><br>
+
+<img src="BST.PNG", width = 450, height = 400>
+
+<br><br>
+
+You should not modify the BSTDemo class or the Node class. You <b> are allowed </b> to modify the BST class and add any additional methods or instance fields (you probably will need add some things to the BST class). You will fill in the bodies for the following methods:
+
+<br><br>
+
+1. <tt><b> public void inOrder(Node n) </tt></b>. This method prints out the  BST using inOrder traversal. Make sure that it matches the sample output below. Look at the slides from Tuesday 2/4 if you are stuck.
+
+<br> <br>
+
+
+2. <tt><b> public void breadthFirst() </tt></b>. This method prints out the  BST using breadth-first traversal. We wrote breadth-first traversal for a generic tree in class, but you will now need to modify that code so that it works with a binary search tree.
+
+<br> <br>
+3. <tt><b> public int getMin()</tt></b>. This method will return the minimum value in the BST. If there are
+no values in the BST, return -1. You are NOT allowed to use breadth first, depth first, in order, post order, or pre order traversal
+
+<br> <br>
+
+4. <tt><b> public int getMax()</tt></b>. This method will return the maximum value in the BST. If there are
+no values in the BST, return -1. You are NOT allowed to use breadth first, depth first, in order, post order, or pre order traversal
+
+
+<br> <br>
+5. <tt><b> public Node find(int value)</tt></b>. This method will return the Node whose value equals
+the input parameter value, if in fact that input parameter value exists in the BST. If the BST does
+not contain the input parameter value, return null. You are NOT allowed to exhaustively search
+the whole tree for the input parameter value. It must go from the root to the input parameter
+value via the shortest path, just as our insert() method in class did. You are NOT allowed to use breadth first, depth first, in order, post order, or pre order traversal
+
+
+<h3> Required Output </h3>
+<p> When you run your program, it should look exactly like  <a href="lab3_output.out"> this output </a> . 
+
+<h3>Starting Code</h3>
+<ul>
+  <li><a href="NodeLab3.java">Node.java</a></li>
+  <li><a href="BST.java">BST.java</a> (Make sure your code has the 5 methods for lab 3)</li>
+  <li><a href="BSTDemo.java">BSTDemo.java</a></li>
+
+</ul>
+
+<h3>Grading (10 points) </h3>
+
+
+<ul>
+  <li>2 points - inOrder() is correct. </li>
+  <li>2 points - breadthFirst() is correct. </li>  
+  <li>2 points - getMax() is correct. </li> 
+  <li>2 points - getMin() is correct. </li> 
+  <li>2 points - find() is correct. </li> 
+</ul>
+NOTE: If your code does not compile, correctness cannot be verified and you won’t receive any
+points for your code. Turn in code that compiles!
+
+
+
+</body>
+</html>

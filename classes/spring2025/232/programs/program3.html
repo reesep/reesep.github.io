@@ -1,0 +1,242 @@
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Program 3
+</title>
+</head>
+
+<body>
+
+<h1>Program 3: Movie Actors Graph</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Tuesday, April 22nd at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Both group members need to submit to D2L. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your solutions (.java files) to the BrightSpace(D2L) Program 3 Dropbox. </li>
+
+</ul>
+
+<h3> This assignment will take a good chunk of your time. This assignment will be miserable if you wait until the final day. Get started early and ask for help if you need it. This program is worth slightly more points than the other programs</h3>
+
+<h3>Background and Directions </h3>
+
+In this assignment, you will be creating a graph that captures relationships between actors across many movies. Consider actors Margot Robbie and Ryan Gosling. Both acted together in the Movie "Barbie". 
+We can create a graph were the vertices are actors, and edges between actors represent they have acted together in a movie. So, we could construct a very basic graph using this information.
+
+<br>
+
+<img src="program3_basic_movie_graph.PNG" >
+
+<br>
+
+We could continue this process for many movies and actors, and create a graph that looks something like this.
+
+<br>
+
+<img src="program3_actor_graph.png" width="1128", height="1145">
+
+<br>
+
+Obviously, that graph is missing many actors and many edges. In reality, this graph would consist of millions of vertices and edges, therefore we will be working with a <i>much</i> smaller dataset.
+
+<br>
+
+With a graph like this. We can compute some interesting information about our actors and movies. After the graph is built, you will write some code that will compute interesting information about this graph and achieve similar functionality to <a href="https://oracleofbacon.org/">The Oracle of Bacon</a>
+
+<h4> Part I: Creating the Graph</h4>
+
+The first part is to create a Adjacency List (aka our Graph) from an input file that have movie and actor information. This will be an undirected graph, and the edges will all be weighted the same, but each edge will need to keep track of a Movie name. 
+
+There are a few input files you can use, but I would recommend using <a href="actors.txt">actors.txt</a>, which has information for about 30 actors and a handful of movies. 
+
+<br>
+
+The input file will always  follow the same format:
+<br><br>
+<tt>
+    Actor|MovieName
+</tt>
+<br><br>
+You will parse this file (hint: you will need to use <tt>.split("\\|")</tt> to split on the "|" character) and create a HashMap&lt;String, LinkedList&lt;Edge&gt;&gt; , where the key is an actor, and the value is a linked list of Edge. Each edge object holds the two connecting actors, and the movie they acted together in. 
+
+<br><br>
+
+Here is how one entry in your HashMap should look (see graph above as well). Your order might be different, and that is fine. It is important that for the adjacency list for Vertex1, that for all edges in the linked list, V1 is the first vertex in the edge.
+<br><br>
+<tt> Margot Robbie: [Margot Robbie - Ewan McGregor (Birds of Prey), Margot Robbie - Ryan Gosling (Barbie), Margot Robbie - Will Ferrell (Barbie), Margot Robbie - Brad Pitt (Once Upon a Time in Hollywood), Margot Robbie - Leonardo DiCaprio (Once Upon a Time in Hollywood)] </tt>
+<br><br>
+<tt>Margot Robbie - Ewan McGregor (Birds of Prey)</tt>, <tt> Margot Robbie - Ryan Gosling (Barbie)</tt>, <tt> Margot Robbie - Will Ferrell (Barbie)</tt>, <tt>Margot Robbie - Brad Pitt (Once Upon a Time in Hollywood)</tt>, <tt>Margot Robbie - Leonardo DiCaprio (Once Upon a Time in Hollywood)]</tt> are all Edge objects. Note that for each of those edges, Margot Robbie was the first vertex listed.
+
+<br><br>
+<a href="program3_part1_edgeobjects.txt">This is what my HashMap looked like before I wrote the <tt>toString()</tt> method in my Edge class.</a>
+
+<br><br>
+
+
+This part can be tricky. I would recommend first making a HashMap that maps Strings (Movies) to a LinkedList of Strings (Actors that acted in that movie). This HashMap <a href="program3_movie_ouput.txt">would look something like this (once again, the order might be different, and that is fine).</a> 
+
+Once you have that HashMap, you can traverse it and create Edge objects to add to your adjacency list.
+
+<br><br>
+By the end of part 1, you should have an adjacency list that <a href="program3_part1.out">looks similar to this output</a>. Your program does not need to print this out when you are ready to submit.
+<h4> Part II: Computing the Minimum Spanning Tree</h4>
+
+Once you have you graph created, You will create menu-like functionality like you did for program 2 (see sample output). For menu option #1, you will compute the minimum spanning tree for the graph. You should use Kruskal's Algorithm to compute the MST of your graph. <b> You should use the code from lecture, and apply it your program 3 code.</b> You will need to make a few minor changes to make it work for your graph.
+
+The Connected Component Marker (CCM) array is no longer an array, it will need to be a HashMap. Additionally, our Kruskal's algorithm needed edge weights for the graph. You will need to add edge weights to your graph. You should assign an edge weight of 1 to every edge. Once you have the MST calculated, you should print out the edges of the MST. 
+<br><br>
+Then, you should print all the unique movies from the edges in the MST. This represents the movies one would need to watch if they wanted to see all the actors in the dataset. This list of movies will not be the minimum number of movies to watch. Your list of movies might be slightly longer or shorter than the sample output, and that is fine.
+
+You might need to verify that your MST is correct, so it might be easier to test with the smaller input file first. Here is one example MST using the actors.txt file:
+
+<br><br>
+<img src="program3_MST_Actors.png">
+
+<br><br>
+When you run menu option #1, it should <a href="program3_mst.out">look something like this</a>
+<br><br>
+
+<h4>Part III: Computing a shortest path</h4>
+For menu option #2, you will prompt the user for two actors. Your program should compute the shortest path between the two actors. It is possible this is not a direct connection, and might need to travel through several actors to get to the other actor. Then, you will print out the number of hops (ie number of edges in the path) in the shortest path.<b>You must use Dijkstra's Algorithm to compute the shortest path, and you should be able to copy and paste the code we write in lecture.</b>
+It is possible that there are several shortest paths with the same value, but you only need to print out one of them. You might need to verify your answer by looking at the graph pictured above.This method should function similar to the <a href="https://oracleofbacon.org/">The Oracle of Bacon</a>
+There will be some small changes you need to make to make the algorithm work for your graph. The <tt>distance</tt> and <tt>previous</tt> array will need to be a HashMap. 
+
+<br><br>
+You can assume that the graph will always be connected, but it is possible the user could enter an actor that does not exist in your graph. In this case, there obviously will not be a path to that actor, so "No path exists" should be printed out.
+
+
+
+<h4>Part IV: Finding longest path in MST</h4>
+
+For menu option 3, you will compute the longest path in the minimum spanning tree. You will likely need to convert your MST HashSet<Edge> to be an adjaceny list of HashMap<String, LinkedList<String>>. You must use depth first search or breadth first search for this. You should use the aproach the was discussed during lecture on April 1st. It should print out the Actors of the longest path, and the number of hops for the longest path. Note that movies are not used at all for this part, so you can totally ignore them.
+Your longest path will depend on the MST that you created. It is possible for your longest to be shorter or longer than what is seen in the sample output. You should verify you answer and make sure it makes sense for your MST.
+
+
+<h3> Coding Style and Readability </h3>
+I want to ensure that you are writing quality, readable code, so 10% of your grade will come from code readability and coding style. These are the things that the TAs and I will be checking for:
+<ul>
+  <li><b>Comments.</b> Each method should have a brief comment explaining what it does or why its there. Getter and Setter methods don't need comments. If you have a long, complex line of code, you should probably leave a comment explaining that line of code as well.</li>
+  <li><b>Indentation.</b> Your indentation should be consistent. Code that belong inside of a class, method, loop, if statement should be indented inside of it. If you are using Eclipse, you can press CTRL + A to highlight all your code, and then CTRL + I to auto format/indent your code. </li>
+  <li><b>Dead code.</b> Large chunks of code that are commented out, or never executed should not be submitted. Delete any dead code before you submit. If you have a few print statements for debugging purposes commented out, that is fine.</li>
+  <li><b>Naming Conventions.</b> Class names need to be capitalized. The first letter of method names and variable names should not be capitalized.</li>
+</ul>
+
+
+
+<h3> Input files </h3>
+<ul>
+    <li><a href="actors.txt"><tt>actors.txt</tt></a> is an input file for building a graph that might look like <a href="program3_actor_graph.png">this</a>. You should use this file when writing your code. This is the file the TAs will use during the grading process.</li>
+    <li><a href="actors_big.txt"><tt>actors_big.txt</tt></a> contains over 70,000 lines of movie actor information. This is a really big dataset, and you should only use when you have your program completely working, and want to see how your program functions with thousands of pieces of information. This file will definitely lag your IDE and Computer, so you should only use this file if you have very beefy hardware</li>
+    <li><a href="actors_small.txt"><tt>actors_small.txt</tt></a> is a much smaller version of actors.txt, and can be used to create a graph <a href="program3_small_actor_graph.PNG">that looks like this.</a> (one possible MST is highlighted in red) </li>
+</ul>
+
+<h3> Sample Output </h3>
+
+<ul>
+  <li> Menu Option #1</li>
+  <ul>
+      <li> <a href="program3_mst.out">Sample output for actors.txt </a></li>
+      <li> <a href="program3_mst_small.PNG">Sample output for actors_small.txt</a></li>
+      <li> If you try to run this method with the big file, it might crash your IDE</li>
+  </ul>
+  <li>Menu Option #2</li>
+  <ul>
+    <li><a href="program3_shortestpath.PNG">Computing the shortest path from one actor to another (actors.txt)</a></li>
+    <li><a href="program3_shortestpath2.PNG">Another screenshot of computing the shortest path from one actor to another (actors.txt)</a></li>
+    <li><a href="program3_invalidpath.PNG">Computing the shortest path to an actor that does not exist (actors.txt)</a></li>
+    <br>
+    <li><a href="program3_bigfile_path.png">Computing the path from one actor to another using the big text file (actors_big.txt)</a></li>
+  </ul>
+  <li>Menu Option #3</li>
+  <ul>
+    <li><a href="program3_longestpath.txt">Finding the longest path in the MST (actors.txt). Note that your solution may be slightly different if your MST from part 2 is different from mine.</a></li>
+  </ul>
+
+</ul>
+
+
+
+<h3>Optional Hints</h3>
+
+<ul>
+  <li>Try to use as much code from lecture as you can. You should be able to use quite a bit of code from lecture (especially for shortest path and MST)</li>
+  <li>By the end of the assignment, I have six Java classes (Edge, MinimumSpanningTree, PriorityVertex, Program3Demo, ShortestPath, and UndirectedWeightedGraph)</li>
+
+</ul>
+
+<h3>Grading (100 points) </h3>
+
+When grading, the TAs will use actors.txt
+
+<style type="text/css">
+  .tg  {border-collapse:collapse;border-spacing:0;}
+  .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    overflow:hidden;padding:10px 5px;word-break:normal;}
+  .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+  .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+  .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+  .tg .tg-0lax{text-align:left;vertical-align:top}
+  </style>
+  <table class="tg">
+  <thead>
+    <tr>
+      <th class="tg-0pky">Criteria</th>
+      <th class="tg-c3ow">Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-0pky">Your program has menu that loops and asks for user input</td>
+      <td class="tg-c3ow">5</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">An undirected graph (adjacency list) is properly created from the input file</td>
+      <td class="tg-c3ow">20</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">Menu option #1 computes a valid, optimal minimum spanning tree, and the unique movies of the MST</td>
+      <td class="tg-c3ow">20</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">Menu option #2 computes a valid, optimal (shortest) path from one actor to another </td>
+      <td class="tg-c3ow">20</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">Menu option #2 identifies that there is not a path if the user provides an actor that does not exists</td>
+      <td class="tg-c3ow">5</td>
+    </tr>
+    <tr>
+      <td class="tg-0lax">Menu option #3 Finds the longest path in the MST correctly</td>
+      <td class="tg-0lax">20</td>
+    </tr>
+    <tr>
+      <td class="tg-0lax">Your code follows good style and readability practices</td>
+      <td class="tg-0lax">10</td>
+    </tr>
+  </tbody>
+  </table>
+
+<br><br>
+
+NOTE: If your code does not compile, correctness cannot be verified, and you won’t receive any points for your code. Turn in code that compiles!
+
+<br><br><br><br><br><br>
+
+<a href="https://www.youtube.com/watch?v=NuQfkrjH3fc">Program 3 solution</a>
+<br><br>
+</body>
+</html>

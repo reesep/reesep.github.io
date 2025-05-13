@@ -1,0 +1,242 @@
+How many challengers do you want?
+8
+Challengers Remaining:
+---------------------------
+Darth Vader
+Class: Rogue
+
+Wonder Woman
+Class: Warrior
+
+Harry Potter
+Class: Mage
+
+Eleven
+Class: Mage
+
+Captain America
+Class: Warrior
+
+Indiana Jones
+Class: Rogue
+
+Meatball the Cat
+Class: Mage
+
+Doctor Octopus
+Class: Rogue
+
+Would you like to continue (y/n) ?
+y
+
+j: 4
+k: 5
++---------------------+
+Nodes selected:
+Eleven
+Class: Mage
+vs.
+Captain America
+Class: Warrior
++---------------------+
+Captain America wins!
+Eleven is eliminated.
+
+Challengers Remaining:
+---------------------------
+Darth Vader
+Class: Rogue
+
+Wonder Woman
+Class: Warrior
+
+Harry Potter
+Class: Mage
+
+Captain America
+Class: Warrior
+
+Indiana Jones
+Class: Rogue
+
+Meatball the Cat
+Class: Mage
+
+Doctor Octopus
+Class: Rogue
+
+Would you like to continue (y/n) ?
+y
+
+j: 5
+k: 1
++---------------------+
+Nodes selected:
+Indiana Jones
+Class: Rogue
+vs.
+Darth Vader
+Class: Rogue
++---------------------+
+Two equally-matched challengers....
+Indiana Jones wins!
+Darth Vader is eliminated.
+
+Challengers Remaining:
+---------------------------
+Wonder Woman
+Class: Warrior
+
+Harry Potter
+Class: Mage
+
+Captain America
+Class: Warrior
+
+Indiana Jones
+Class: Rogue
+
+Meatball the Cat
+Class: Mage
+
+Doctor Octopus
+Class: Rogue
+
+Would you like to continue (y/n) ?
+y
+
+j: 3
+k: 5
++---------------------+
+Nodes selected:
+Captain America
+Class: Warrior
+vs.
+Indiana Jones
+Class: Rogue
++---------------------+
+Indiana Jones wins!
+Captain America is eliminated.
+
+Challengers Remaining:
+---------------------------
+Wonder Woman
+Class: Warrior
+
+Harry Potter
+Class: Mage
+
+Indiana Jones
+Class: Rogue
+
+Meatball the Cat
+Class: Mage
+
+Doctor Octopus
+Class: Rogue
+
+Would you like to continue (y/n) ?
+y
+
+j: 3
+k: 2
++---------------------+
+Nodes selected:
+Indiana Jones
+Class: Rogue
+vs.
+Doctor Octopus
+Class: Rogue
++---------------------+
+Two equally-matched challengers....
+Indiana Jones wins!
+Doctor Octopus is eliminated.
+
+Challengers Remaining:
+---------------------------
+Wonder Woman
+Class: Warrior
+
+Harry Potter
+Class: Mage
+
+Indiana Jones
+Class: Rogue
+
+Meatball the Cat
+Class: Mage
+
+Would you like to continue (y/n) ?
+y
+
+j: 2
+k: 2
++---------------------+
+Nodes selected:
+Harry Potter
+Class: Mage
+vs.
+Meatball the Cat
+Class: Mage
++---------------------+
+Two equally-matched challengers....
+Meatball the Cat wins!
+Harry Potter is eliminated.
+
+Challengers Remaining:
+---------------------------
+Wonder Woman
+Class: Warrior
+
+Indiana Jones
+Class: Rogue
+
+Meatball the Cat
+Class: Mage
+
+Would you like to continue (y/n) ?
+y
+
+j: 3
+k: 3
++---------------------+
+Nodes selected:
+Meatball the Cat
+Class: Mage
+vs.
+Indiana Jones
+Class: Rogue
++---------------------+
+Meatball the Cat wins!
+Indiana Jones is eliminated.
+
+Challengers Remaining:
+---------------------------
+Wonder Woman
+Class: Warrior
+
+Meatball the Cat
+Class: Mage
+
+Would you like to continue (y/n) ?
+y
+
+j: 2
+k: 1
++---------------------+
+Nodes selected:
+Meatball the Cat
+Class: Mage
+vs.
+Wonder Woman
+Class: Warrior
++---------------------+
+Wonder Woman wins!
+Meatball the Cat is eliminated.
+
+Challengers Remaining:
+---------------------------
+Wonder Woman
+Class: Warrior
+
+The winner is: Wonder Woman

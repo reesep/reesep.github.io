@@ -1,0 +1,75 @@
+Cillian Murphy|Oppenheimer
+Cillian Murphy|The Dark Knight Rises
+Robert Downey Jr.|Oppenheimer
+Robert Downey Jr.|Avengers
+Matt Damon|Oppenheimer
+Matt Damon|Interstellar
+Matt Damon|Ford vs. Ferrari
+Matt Damon|Ocean's 11
+Matt Damon|The Departed
+Matt Damon|Dogma
+Christian Bale|Ford vs. Ferrari
+Christian Bale|The Dark Knight Rises
+Christian Bale|Thor: Love and Thunder
+Christian Bale|The Big Short
+Brad Pitt|The Big Short
+Brad Pitt|Ocean's 11
+Brad Pitt|The Curious Case of Benjamin Button
+Brad Pitt|Megamind
+Brad Pitt|Once Upon a Time in Hollywood
+Leonardo DiCaprio|The Departed
+Leonardo DiCaprio|Once Upon a Time in Hollywood
+Margot Robbie|Barbie
+Margot Robbie|Once Upon a Time in Hollywood
+Margot Robbie|Birds of Prey
+Ryan Gosling|Barbie
+Ryan Gosling|The Big Short
+Ryan Gosling|La La Land
+Ryan Gosling|Blade Runner 2049
+Emma Stone|La La Land
+Harrison Ford|Star Wars: A New Hope
+Harrison Ford|Indiana Jones: Kingdom of the Crystal Skull
+Harrison Ford|Indiana Jones: The Last Crusade
+Harrison Ford|Blade Runner 2049
+Florence Pugh|Oppenheimer
+Florence Pugh|Black Widow
+Scarlett Johansson|Black Widow
+Scarlett Johansson|Avengers
+Scarlett Johansson|Sing
+Scarlett Johansson|The Island
+Ewan McGregor|Star Wars: Revenge of the Sith
+Ewan McGregor|The Island
+Ewan McGregor|Birds of Prey
+Taron Egerton|Sing
+Taron Egerton|Rocketman
+Chris Hemsworth|Avengers
+Chris Hemsworth|Thor: Love and Thunder
+Natalie Portman|Thor: Love and Thunder
+Natalie Portman|Star Wars: Revenge of the Sith
+Christopher Lee|Fellowship of the Ring
+Christopher Lee|Star Wars: Revenge of the Sith
+Cate Blanchett|Fellowship of the Ring
+Cate Blanchett|Indiana Jones: Kingdom of the Crystal Skull
+Cate Blanchett|The Curious Case of Benjamin Button
+Cate Blanchett|Ocean's 8
+Orlando Bloom|Fellowship of the Ring
+Orlando Bloom|Pirates of the Caribbean
+Anne Hathaway|Ocean's 8
+Anne Hathaway|Interstellar
+Anne Hathaway|Alice in Wonderland
+Anne Hathaway|The Dark Knight Rises
+Johnny Depp|Pirates of the Caribbean
+Johnny Depp|Alice in Wonderland
+Alan Rickman|Alice in Wonderland
+Alan Rickman|Dogma
+Alan Rickman|Harry Potter
+Emma Watson|Harry Potter
+Jessica Chastain|Interstellar
+Julia Roberts|Ocean's 11
+Will Ferrell|Megamind
+Will Ferrell|Barbie
+John Rhys-Davis|Indiana Jones: The Last Crusade
+John Rhys-Davis|Fellowship of the Ring
+Carrie Fisher|Star Wars: A New Hope
+George Clooney|Ocean's 11
+Bryce Dallas Howard|Rocketman

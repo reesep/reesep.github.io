@@ -1,0 +1,16 @@
+5,furry
+3,bipedal
+9,aquatic
+1,reclusive
+4,a dog
+7,legged
+13,legged
+0,a bigfoot
+2,a human
+6,a salamander
+8,a fish
+11,slimy
+14,a snake
+10,a frog
+12,a lizard
+

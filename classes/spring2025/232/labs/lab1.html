@@ -1,0 +1,101 @@
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 232, Lab 1 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 1: Shopping Cart Data Structure</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Friday, January 24th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solution (ShoppingCartArray.java and ShoppingCartLinkedList.java),  to the BrightSpace(D2L) Lab 1 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience using the Array and LinkedList data structures  </li>
+
+</ul>
+
+<hr />
+
+
+<h3>Directions </h3>
+Using the code we've been working with this week (you should download a fresh set of files below). Do not change any code other than adding the body of the four methods described below (and the demo class for additional testing). You do not need to add any more instance fields or methods.
+
+<br>
+
+Fill in the body of the <b> searchForItem(String name) </b> method for the <tt>ShoppingCartArray</tt> and <tt>ShoppingCartLinkedList</tt> classes. <br> This method takes in an item name to search for in the shopping cart. If the item is found, the item is printed out. If the item is not in the shopping cart, then "[item_name] is not in the shopping cart" should be printed out.
+
+
+<br> <br>
+
+Next, you will need to fill in the body of the <b>  removeItem(String name) </b> method for the <tt>ShoppingCartArray</tt> and <tt>ShoppingCartLinkedList</tt> classes. This method takes in an item name to be removed from the data structure. 
+
+Actually remove the entry, don’t just set it to null: In the array implementation, the array needs to shrink
+in size by 1 and in the linked list implementation, the Item object needs to be removed from the list (you
+can just use a method from the Linked List documentation). You can assume the item they are trying to remove exists somewhere in the data structure (ie they will never try to remove an item that does not exist). Additionally, there is no need to handle duplicate names.
+
+<br><br>
+
+That is <b>four</b> methods in total. You are welcome to change the demo class to test your code.
+
+
+<h3> Required Output </h3>
+<p> When you run your program, it should look exactly like output seen in <a href="lab1_output.PNG"> in this screenshot </a> . 
+
+<h3>Starting Code</h3>
+<ul>
+  <li><a href="Item.java">Item.java</a></li>
+  <li><a href="ShoppingCartArray.java">ShoppingCartArray.java</a></li>
+  <li><a href="ShoppingCartLinkedList.java">ShoppingCartLinkedList.java</a></li>
+  <li><a href="ShoppingCartDemo.java">ShoppingCartDemo.java</a></li>
+
+</ul>
+
+
+<h3> Assumptions </h3>
+<p> There won't be duplicate item names in the data structure </p>
+<p> Users wont try to remove an item that does not exist</p>
+<p> If you are removing an item with a quantity greater than one, it should still remove the entire item (not decrease the quantity by one)</p>
+
+
+
+
+<h3>Grading (10 points) </h3>
+
+
+<ul>
+  <li>2 points - searchForItem() is correct for array </li> 
+  <li>2 points - searchForItem() is correct for LL </li> 
+  <li>3 points - removeItem() is correct for array </li> 
+  <li>3 points - removeItem() is correct for LL </li>  
+</ul>
+
+
+<h2> Grading deductions </h2>
+<p> If your code does not compile, you will receive an automatic zero </p>
+
+
+
+</body>
+</html>

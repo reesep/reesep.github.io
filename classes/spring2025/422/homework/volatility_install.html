@@ -1,0 +1,31 @@
+<html>
+
+<head>Volatility Install Instructions</head>
+
+<body>
+
+<p> First, we will need to install some dependencies. Kali Linux should already have most of these.</p>
+<ul>
+    <li><tt>sudo apt install -y python3 python3-dev libpython3-dev python3-pip python3-setuptools python3-wheel</tt></li>
+    <li><tt>python3 -m pip install -U distorm3 yara pycrypto pillow openpyxl ujson pytz ipython --break-system-packages</tt></li>
+</ul>
+<p>If you get an error, that is fine. A lot of these are additional python libraries that volatility might use, but arent actually required (I think).</p>
+
+
+
+<p>Now, we will get the source code for volatility via GitHub. Make sure you run this command while in your home directory.</p>
+<ul>
+    <li><tt>git clone https://github.com/volatilityfoundation/volatility3.git</tt></li>
+</ul>
+
+<br>
+You should be ready to go! You can verify things were installed correctly with:
+<ul>
+    <li><tt>python3 volatility3/vol.py -h</tt></li>
+</ul>
+
+</body>
+
+
+
+</html>

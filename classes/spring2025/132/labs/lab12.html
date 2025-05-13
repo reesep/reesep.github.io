@@ -1,0 +1,80 @@
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 12
+</title>
+</head>
+
+<body>
+
+<h1>Lab 12:  Searching</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Tuesday, April 22nd at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Submit your Lab12Demo.java file to the appropriate D2L dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Understand how Binary Search works, and compare against a linear search.</li>
+</ul>
+
+<hr />
+
+
+<h3>Directions </h3>
+
+    For this assignment, you will be comparing binary search and linear search. You will keep track of the time it takes for each algorithm to complete (in milliseconds), and the amound of array spots that are checked during each algorithm. Using <a href="Lab12Demo.java">Lab12Demo.java</a> as a starting point, you will fill in the methods for linear_search() and binary_search(). You will also need to write some code to complete the main() method. <br>
+    <br><br>
+    You will compare binary search and linear search for an array size of 50, 500, 5000, and 50000. You can use the method getRandomArray() to fill the contents of these arrays. You will select a random index, and then search for that element with the two different algorithms. You will need to keep track of how many array spots are checked, and the running time in milliseconds (we talked about how to do that in class). Remember to sort your array before binary search (but the running time should not include the time it takes to sort).
+    <br><br>
+    Then, you must print out the results (see sample output).
+
+    
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab12Demo.java">Lab12Demo.java</a> </li>
+        
+    </ul>
+
+    <h3> Output</h3>
+    When you run your program, your output should look something like this: <a href="lab12_output.PNG">sample output</a>. Your values will definitely be different that my sample output, but you should find that binary search checks a lot less array spots, and has a shorter running time.
+
+</p>	
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>3 points- Binary search is implemented correctly</li>
+  <li>2 points- Linear search is implemented correctly</li>
+  <li>3 points- Your program keeps track of array spots checked</li>
+  <li>2 points- Your program keeps track of running time in ms</li>
+
+</ul>
+
+
+<br><br>
+
+
+<br><br><br>
+
+
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 10
+</title>
+</head>
+
+<body>
+
+<h1>Lab 10: Recursion</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Tuesday, April 8th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: You will submit your Lab10.java to the appropriate D2L dropbox </li>
+  <li> If you are in Andras's section, please also copy and paste your code into the D2L submission text box</li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience using recursion</li>
+</ul>
+
+<hr />
+
+
+<h3>Directions </h3>
+
+    You will download Lab10Demo.java as a starting point. Your program should print all palindromes that can be made from a list of characters (<tt>characters</tt>), which is an ArrayList of Strings. A palindrome is a word that is spelled the same forwards and backwards (ex. racecar, ABBA, tacocat). You are going to do this by generating all permutations of the string that can be made from the characters, and then checking to see if each word is a palindrome. You are going to write two recursive methods:
+    <br><br>
+    <b>generate_permutations(???)</b>- This method will generate all permutations from a list of characters that is defined in the main method. We wrote some of this in class last Wednesday, however that implementations does not allow for repeated characters, which we must allow here. This will require you to change some of the code from Wednesday. Consider adding a boolean[] array as a parameter to this method, where array[i] represents if character at index i from the list of characters has been used in the string.  You must use recursion here.
+    <br><br>
+	<b>isPalindrome(String word)</b>- Given a string, this method will return true if a word is a palindrome, and false if the word is not a palindrome. This method must use recursion. Consider looking at the first character and last character of the word, and then recursively calling the method with the "middle" word. You may find the Java <tt>substring</tt> String method to be helpful here. 
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab10Demo.java">Lab10Demo.java</a> </li>
+        
+    </ul>
+
+    <h3> Output</h3>
+    When you run your program, your output should look <b>exactly</b> <a href="lab10_output.PNG">like this screenshot</a>
+
+</p>	
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+  <li>generate_permutations correctly generates all permutations- 4 points</li>
+  <li>isPalindrome correctly identifies if a word is a palindrome or not- 4 points </li>
+  <li>Recursion was used in each method- 2 points</li>
+
+</ul>
+
+<h3>Penalties</h3>
+<ul>
+	<li> Recursion not used -10 points</li>
+<ul>
+
+<br><br>
+
+
+<br><br><br>
+
+
+
+</body>
+</html>

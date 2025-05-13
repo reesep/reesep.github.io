@@ -1,0 +1,118 @@
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Lab 6 
+</title>
+</head>
+
+<body>
+
+<h1>Lab 6: Circular Linked Lists</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Tuesday, February 25th at 11:59 p.m.</li>
+  <li>Partner Information: This is an individual assignment. You are allowed to collaborate with other students, but each student must submit their individual, independent solution.</li> 
+  <li> Submission Instructions: Upload your solutions (.java file), entitled <b>Node.java</b>, and <b>CircularLinkedList.java</b>  to the BrightSpace(D2L) Lab 6 Dropbox. </li>
+	  <li> If you are in Andras's section, please copy and paste your code into the submission text box too</li>
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience using Circular Linked Lists </li>
+  <li> Write methods that manipulate data inside a LinkedList</li>
+</ul>
+
+<hr />
+
+
+<h3> Background and Directions </h3>
+
+<a href="https://indianajones.bethesda.net/en-US">Indiana Jones and the Great Circle</a> is a new video game that came out last year. This game involves Indiana Jones visiting multiple historical landmarks around the world to stop some bad guy. If you were to draw a line through all these locations on a globe, it would form a perfect circle (hence the title "the great circle"). This gimmick seems hard to believe, but I am giving it a pass since it's Indiana Jones.
+
+In this lab, you will use a doubly circular linked list to keep track of the different locations in the great circle. Each Node in this linked list will have the location, the continent, and the elevation (in feet) of the location. You will need to make a Node class.
+
+The Nodes are created from an input file <a href="locations.txt">locations.txt</a>, which you will then load into your linked list.
+
+
+
+
+<br><br>
+
+Using <a href="Lab6Demo.java">Lab6Demo.java</a> as a starting point, you will need to define the necessary classes and methods so that this program produces the correct output.
+
+<br><br>
+CircularLinkedList.java <b>implements</b> the Lab6Methods interface, which tells you all the methods you need to write. 
+
+<br>
+<ul>
+    <li> <tt>fillLinkedList()</tt>- This method will open the correct file, create node objects from the file, and then call the append() method to add nodes to the linked list</li>
+    <li> <tt>append(Node newNode)</tt>- This will add a Node to the linked list. The newNode will become the new tail of the circular linked list</li>
+    <li> <tt>printLinkedList()</tt>- Prints the nodes of the linked lists from head to tail.</li>
+    <li> <tt>search(Node newNode)</tt>- This method searches for a particular location in the linked list. If it finds the location, it should print out what spot that location is at. If the location is not found, then "(location) is not part of the great circle" should be printed out</li>
+    <li> <tt>findGreatestElevationDifference()</tt>- This method finds the greatest difference in elevation between two <b>consecutive</b> Nodes in the linked list. The answer must include two consecutive nodes-- it can't be two nodes on opposite ends of the linked list. </li> 
+</ul>
+
+
+
+
+<br><br>
+
+    
+
+
+    <h3> Rules </h3>
+    <p> <b> You are NOT allowed to import java.util.LinkedList; </b></p>
+    <p> This must be a circular, doubly linked list</p>
+
+
+    <h3> Starting Code </h3>    
+    <ul>
+        <li> <a href="Lab6Demo.java">Lab6Demo.Java</a> </li>
+	<li> <a href="locations.txt">locations.txt</a> </li>
+        <li> <a href="Lab6Methods.java">Lab6Methods.Java</a> </li>
+        <li> <a href="CircularLinkedList.java">CircularLinkedList.java</a></li>
+    </ul>
+
+
+	
+
+<h3> Required Output </h3>
+<p> When your program is run, your output should look <b>exactly</b >the same as seen <a href="lab6_output.png"> in this screenshot </a>. Ignore any weird things you seeing with the font. 
+
+<h3>Grading (10 points) </h3>
+
+<ul>
+    <li> 4 points - Nodes are added to a circular linked list (append() and fillLinkedList())</li>
+    <li> 1 point - printLinkedList() is correct </li>
+    <li> 2 points - search() is correct</li>
+    <li> 3 points - findGreatestElevationDifference() is correct </li>
+</ul>
+
+
+
+<br><br>
+Deductions
+<li>-10 points if you dont use a Linked List </li>
+<li>-100 points if you dont implement the interface </li>
+
+<br><br><br>
+
+
+
+</body>
+</html>

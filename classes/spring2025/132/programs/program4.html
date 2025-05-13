@@ -1,0 +1,147 @@
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Program 4 
+</title>
+</head>
+
+<body>
+
+<h1>Program 4: Golf Simulation</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Monday, April 21st at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your .java files to the Program 4 Dropbox. </li>
+ <li> If you are in Andras's section, please copy and paste your code into the submission text box too</li>
+
+</ul>
+
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Gain experience working with a priority queue data structure </li>
+  <li> Gain experience with manipulating a queue data structure </li>
+</ul>
+
+
+<h3>Background and Directions </h3>
+In this assignment, you will write a program that simulates a game of golf between several players, which will use a priority queue to keep track of turns. In golf, players play through a series of holes, and each hole has a par value. The par represents the number of strokes (or turns) a golfer is expected to finish the hole. 
+For example, if a hole is a Par 6, but it takes the golfer 8 turns to finish hole, their score for that hole is +2 (also called a "double bogey"). After every hole is finished, the player adds up their score for each hole to get their final score. In golf you want to complete each hole in the least amount of turns possible, so a score below zero is a good thing.
+
+<br><br> When you play golf with a group, the players typically take turns hitting their respective ball. The order in which players hit their balls is not necessarily FIFO. The turn order in golf
+is based on how far the players are from the hole. Once each players take their first shot, the next player up will be the one that is farthest from the hole. This order is repeated until each player finishes the hole. 
+<br>
+<img src="program4_golf.PNG" width="900" height="580">
+
+<br><br>
+We will be working with a slightly simplified version, where players are simply just trying to hit their ball past a certain marker, and players will also be very inconsistent with how far they hit the ball.
+<br><br>
+You will read in information from two different files.
+<br>
+<b>players.txt</b>- This will be a list of players in the game. For each player, you will need to keep track of their score for each hole. Your program should be able to handle any amount of player N where N is between 2 and 100.
+<br>
+<b>holes.txt</b>- This holds information about each hole in the golf course. Each golf hole has its par value, and the total distance (in yards). Your program should be able to handle any amount of golf holes N where N is between 1 and 18.  
+<br><br>
+Your program needs to keep track of the order of player turns, which must use a priority queue. The "priority" of this queue is whoever is the farthest distance away from the finish point. 
+<br><br>
+When it is their turn, a player will hit the ball a random distance between 50 and 200 yards (inclusive). After that, they are placed in the priority queue and will wait until their next turn. If they finish a hole, they should not be placed back into the priority queue until the next hole. 
+Every N turns (where N is the number active players for the hole), your program should print out the current order of turns, and should have a waitkey before proceeding. Note that the order of these four turns may not stay this way. Suppose the next player hits it 50 yards. It's possible it will be their again right away because they are still the farthest from the hole.
+<br><br>
+Your program will need to keep track of each player's score for each hole. This could just be an Array in the Player class. When all the holes are complete, your program should print out their final scores. If they finished over par by X strokes, their final score should be "+X". If they finished under par by X strokes, their final score should be "-X".
+
+<h3> Starting Code and Requirements</h3>
+You will develop your solution from scratch. You will need to have a PriorityQueue class, that stores Player objects to keep track of turns. This priority queue should just use a linked list.
+Here are the input files you will use:
+<ul>
+    <li><a href="players.txt">players.txt</a></li>
+    <li><a href="holes.txt">holes.txt</a></li>
+</ul>
+
+<h3>Commenting</h3>
+You will need to include an adequate amount of comments in your code. At a bare minimum each method should have a brief comment explaining what the method does. Basic getters and setters don't need a comment.
+
+
+<h3> Sample Output </h3>
+When you run your program, it should follow a similar format <a href="program4_output.out">to this screenshot</a>. Your program should clearly display hole information, how far each player hits during their turn, the turn order ever 4 turns, and the final score when all holes are complete.
+
+<h3>Optional Hints</h3>
+
+<h3>Restrictions</h3>
+You are not allowed to import java.util.PriorityQueue
+
+
+<h3>Grading (100 points) </h3>
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-baqh{text-align:center;vertical-align:top}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0pky">Criteria</th>
+    <th class="tg-c3ow">Points</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">Program reads information from players.txt and holes.txt</td>
+    <td class="tg-c3ow">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">A priority queue is used, and the order of turns is correctly followed</td>
+    <td class="tg-c3ow">20</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">Players hit a ball a random distance each time, and their distance from hole is correctly updated</td>
+    <td class="tg-baqh">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Priority queue is printed every N turns</td>
+    <td class="tg-c3ow">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Program keeps track of how many turns it took to finish a hole</td>
+    <td class="tg-c3ow">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">Program correctly loops for each hole</td>
+    <td class="tg-baqh">10</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Program keeps track of each players score, and correctly prints out the finals scores </td>
+    <td class="tg-c3ow">20</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Your program contains an adequate amount of comments</td>
+    <td class="tg-c3ow">10</td>
+  </tr>
+</tbody></table>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<a href="https://youtu.be/TCm9788Tb5g?si=u0-n2zHdICZQUW6E"> program 4 solution</a>
+
+</body>
+</html>

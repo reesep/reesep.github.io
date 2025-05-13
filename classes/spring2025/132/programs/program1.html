@@ -1,0 +1,152 @@
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" href="../../style.css" type="text/css" />
+<title>
+CSCI 132, Program 1 
+</title>
+</head>
+
+<body>
+
+<h1>Program 1: Bingo</h1>
+
+
+<h2>Due Date and Submission Requirements</h2>
+
+<ul>
+  <li>Due Date: Wednesday, February 19th at 11:59 p.m.</li>
+  <li>Partner Information: You are allowed to work with one partner. Both group members need to submit to D2L. Be sure to indicate in your submission who your partner is. Each Java class should have the name of each student in a comment at the top of the program</li> 
+  <li> Submission Instructions: Upload your solutions (.java files) to the BrightSpace(D2L) Program 1 Dropbox. </li>
+
+</ul>
+
+<hr />
+
+<h2>The goal of this lab is:</h2>
+
+<ul>
+  <li> Write a complex Java class (Instance Fields, Methods, Constructor) </li>
+  <li> Gain practice using OOP and multiple classes </li>
+  <li> Gain practice writing different kinds of methods  </li>
+  <li> Use if statements to check conditions </li>
+  <li> Use loops to iterate through a block of code or array </li> 
+  <li> Gain experience using a 2D Array </li>
+</ul>
+
+<hr />
+
+
+<h3>Background and Directions </h3>
+In this assignment, you will create a program that will simulate a game of Bingo (slightly-simplified) ! If you are not familiar with Bingo, you should spend a few a moment to <a href="https://youtu.be/nGCEpUAnkSg">learn how Bingo is played.</a> In our version of bingo, we do not use any letters.
+
+<br><br>
+Your program will read in a Bingo Card from a file, <a href="bingocard.txt"> bingocard.txt</a> and place the values into a 5x5 2D array. The middle spot (array[2][2]) is a 0, which indicates that spot is the free space. The program will print out the bingo card, and repeatedly generate random values between 1 and 45 (inclusive) until the player earns a bingo. If the random value is on the player's bingo card, then that spot is marked on the card with an X (❌). It is possible for the program the roll the same number multiple times. You dont need to handle duplicates (although it doesn't require much  code to handle duplicates if you want to try). 
+A bingo occurs when there are five marks in a row vertically, horizontally, or diagonally. The program print out the updated card and the random value until the player earns a bingo. There should be some kind of waitkey (ie the enter key) between each iteration. You should make an effort to look your bingo card look nice, and you should try to match the sample output the best that you can.
+<br><br>
+You will develop your solution from scratch, but you should at least have two Classes. You must use a 2D array to represent the bingo card. You will need to use the Scanner, Random, and FileReader libraries.
+<br><br>
+You need to include comments in your code. In general, each method should have a brief comment explaining what the method does. If there is a long, complex line of code, you should also include a brief comment for that as well. Getters and setters do not need methods.
+<br><br>
+If you work with a partner, make sure you include the name of your partner in a comment at the top of your code.
+<h3> Assumptions </h3>
+The bingo card will always be 5x5.<br>
+Free space will always be in the middle. <br>
+The random values will always be between 1 and 45 (inclusive). <br>
+
+<h3> Input file </h3>
+<ul>
+    <li><a href="bingocard.txt"> bingocard.txt</a> (you can create and use your own bingo card too)</li>
+</ul>
+
+<h3> Required Output </h3>
+The output will be pretty long, since this game will last several round before the player earns a bingo. You do not need to match the sample out exactly, but it should be very similar.
+
+<ul>
+    <li> <a href=program1_output1.out>Output of player getting a bingo (horizontal) </a></li>
+    <li> <a href=program1_output2.out>Output of player getting a bingo (vertical) </a></li>
+    <li> <a href=program1_output3.out>Output of player getting a bingo (diagonal) </a></li>
+</ul>
+
+
+
+<h3>Optional Hints</h3>
+
+I would recommend having a <b>printCard()</b> method that prints out the 2D array. A <b>isGameOver()</b> method that will determine if a bingo has been earned. a <b>roll()</b> method that will generate a random value, and update the bingo card.
+
+I would recommend having a int[][] for the bingo card, but also a boolean[][] two dimensional array that is used "behind the scenes" to keep track of which numbers have been marked. You can then use this boolean 2D array to determine if the game has been won.
+<br>
+
+<img src="cards.png">
+
+<br>
+
+
+<h3>Grading (100 points) </h3>
+
+<style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+      font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+    .tg .tg-0lax{text-align:left;vertical-align:top}
+    </style>
+    <table class="tg" style="undefined;table-layout: fixed; width: 838px"><colgroup>
+    <col style="width: 712px">
+    <col style="width: 126px">
+    </colgroup>
+    <thead>
+      <tr>
+        <th class="tg-0pky">Requirement</th>
+        <th class="tg-0pky">Points</th>
+      </tr></thead>
+    <tbody>
+      <tr>
+        <td class="tg-0pky">Your program reads in from the input file into a 2D array correctly</td>
+        <td class="tg-0pky">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">The program repeately generates a random value between 1 and 45</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">The bingo card get correctly updated and printed out nicely after each number rolled</td>
+        <td class="tg-0pky">20</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Bingos are detected vertically</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Bingos are detected horizontally</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">Bingos are detected diagonally</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0pky">The program ends when a bingo is earned</td>
+        <td class="tg-0pky">10</td>
+      </tr>
+      <tr>
+        <td class="tg-0lax">Your programs contains an adequate amount of comments</td>
+        <td class="tg-0lax">10</td>
+      </tr>
+    </tbody></table>
+
+
+<br><br><br><br><br><br>
+
+<a href="https://www.youtube.com/watch?v=upM-c5T99yw">Program 1 solution</a>
+</body>
+</html>
